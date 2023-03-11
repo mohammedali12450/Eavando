@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sixvalley_ecommerce/localization/language_constrants.dart';
+import 'package:flutter_axtro_soft_ecommerce/localization/language_constrants.dart';
 
-import 'package:flutter_sixvalley_ecommerce/provider/auth_provider.dart';
-import 'package:flutter_sixvalley_ecommerce/provider/localization_provider.dart';
-import 'package:flutter_sixvalley_ecommerce/provider/wishlist_provider.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/color_resources.dart';
-import 'package:flutter_sixvalley_ecommerce/view/basewidget/custom_app_bar.dart';
-import 'package:flutter_sixvalley_ecommerce/view/basewidget/no_internet_screen.dart';
-import 'package:flutter_sixvalley_ecommerce/view/basewidget/not_loggedin_widget.dart';
-import 'package:flutter_sixvalley_ecommerce/view/screen/wishlist/widget/wishlist_widget.dart';
+import 'package:flutter_axtro_soft_ecommerce/provider/auth_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/provider/localization_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/provider/wishlist_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/utill/color_resources.dart';
+import 'package:flutter_axtro_soft_ecommerce/view/basewidget/custom_app_bar.dart';
+import 'package:flutter_axtro_soft_ecommerce/view/basewidget/no_internet_screen.dart';
+import 'package:flutter_axtro_soft_ecommerce/view/basewidget/not_loggedin_widget.dart';
+import 'package:flutter_axtro_soft_ecommerce/view/screen/wishlist/widget/wishlist_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 

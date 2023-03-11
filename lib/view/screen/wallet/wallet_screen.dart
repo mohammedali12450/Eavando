@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sixvalley_ecommerce/helper/price_converter.dart';
-import 'package:flutter_sixvalley_ecommerce/localization/language_constrants.dart';
-import 'package:flutter_sixvalley_ecommerce/provider/auth_provider.dart';
-import 'package:flutter_sixvalley_ecommerce/provider/profile_provider.dart';
-import 'package:flutter_sixvalley_ecommerce/provider/theme_provider.dart';
-import 'package:flutter_sixvalley_ecommerce/provider/wallet_transaction_provider.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/color_resources.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/dimensions.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/images.dart';
-import 'package:flutter_sixvalley_ecommerce/view/basewidget/not_loggedin_widget.dart';
-import 'package:flutter_sixvalley_ecommerce/view/screen/wallet/widget/transaction_list_view.dart';
+import 'package:flutter_axtro_soft_ecommerce/helper/price_converter.dart';
+import 'package:flutter_axtro_soft_ecommerce/localization/language_constrants.dart';
+import 'package:flutter_axtro_soft_ecommerce/provider/auth_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/provider/profile_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/provider/theme_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/provider/wallet_transaction_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/utill/color_resources.dart';
+import 'package:flutter_axtro_soft_ecommerce/utill/dimensions.dart';
+import 'package:flutter_axtro_soft_ecommerce/utill/images.dart';
+import 'package:flutter_axtro_soft_ecommerce/view/basewidget/not_loggedin_widget.dart';
+import 'package:flutter_axtro_soft_ecommerce/view/screen/wallet/widget/transaction_list_view.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 class WalletScreen extends StatelessWidget {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sixvalley_ecommerce/data/model/response/product_model.dart';
-import 'package:flutter_sixvalley_ecommerce/provider/product_provider.dart';
-import 'package:flutter_sixvalley_ecommerce/view/basewidget/product_shimmer.dart';
-import 'package:flutter_sixvalley_ecommerce/view/basewidget/product_widget.dart';
+import 'package:flutter_axtro_soft_ecommerce/data/model/response/product_model.dart';
+import 'package:flutter_axtro_soft_ecommerce/provider/product_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/view/basewidget/product_shimmer.dart';
+import 'package:flutter_axtro_soft_ecommerce/view/basewidget/product_widget.dart';
 import 'package:provider/provider.dart';
 
 class LatestProductView extends StatelessWidget {

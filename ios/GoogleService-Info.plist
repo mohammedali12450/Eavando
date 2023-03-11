@@ -15,11 +15,11 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.sixamtech.sixValley</string>
+	<string>com.sixamtech.axtro_soft</string>
 	<key>PROJECT_ID</key>
-	<string>sixvally-ecommerce</string>
+	<string>axtro_soft-ecommerce</string>
 	<key>STORAGE_BUCKET</key>
-	<string>sixvally-ecommerce.appspot.com</string>
+	<string>axtro_soft-ecommerce.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>

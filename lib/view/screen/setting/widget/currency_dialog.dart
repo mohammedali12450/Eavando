@@ -1,18 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sixvalley_ecommerce/localization/language_constrants.dart';
-import 'package:flutter_sixvalley_ecommerce/provider/brand_provider.dart';
-import 'package:flutter_sixvalley_ecommerce/provider/category_provider.dart';
-import 'package:flutter_sixvalley_ecommerce/provider/featured_deal_provider.dart';
-import 'package:flutter_sixvalley_ecommerce/provider/home_category_product_provider.dart';
-import 'package:flutter_sixvalley_ecommerce/provider/localization_provider.dart';
-import 'package:flutter_sixvalley_ecommerce/provider/product_provider.dart';
-import 'package:flutter_sixvalley_ecommerce/provider/splash_provider.dart';
-import 'package:flutter_sixvalley_ecommerce/provider/top_seller_provider.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/app_constants.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/color_resources.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/custom_themes.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/dimensions.dart';
+import 'package:flutter_axtro_soft_ecommerce/localization/language_constrants.dart';
+import 'package:flutter_axtro_soft_ecommerce/provider/brand_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/provider/category_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/provider/featured_deal_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/provider/home_category_product_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/provider/localization_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/provider/product_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/provider/splash_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/provider/top_seller_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/utill/app_constants.dart';
+import 'package:flutter_axtro_soft_ecommerce/utill/color_resources.dart';
+import 'package:flutter_axtro_soft_ecommerce/utill/custom_themes.dart';
+import 'package:flutter_axtro_soft_ecommerce/utill/dimensions.dart';
 import 'package:provider/provider.dart';
 
 class CurrencyDialog extends StatelessWidget {
