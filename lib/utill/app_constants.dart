@@ -1,9 +1,9 @@
-import 'package:flutter_sixvalley_ecommerce/data/model/response/language_model.dart';
+import 'package:flutter_axtro_soft_ecommerce/data/model/response/language_model.dart';
 
 class AppConstants {
-  static const String APP_NAME = '6valley';
+  static const String APP_NAME = 'axtro-soft';
   static const String APP_VERSION = '13.0';
-  static const String BASE_URL = 'https://6valley.6amtech.com';
+  static const String BASE_URL = 'https://axtro-soft.6amtech.com';
   static const String USER_ID = 'userId';
   static const String NAME = 'name';
   static const String CATEGORIES_URI = '/api/v1/categories';
@@ -128,7 +128,7 @@ class AppConstants {
   static const String COUNTRY_CODE = 'country_code';
   static const String LANGUAGE_CODE = 'language_code';
   static const String THEME = 'theme';
-  static const String TOPIC = 'sixvalley';
+  static const String TOPIC = 'axtro_soft';
   static const String USER_ADDRESS = 'user_address';
 
   static List<LanguageModel> languages = [

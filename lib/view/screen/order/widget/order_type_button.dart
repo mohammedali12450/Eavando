@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sixvalley_ecommerce/data/model/response/order_model.dart';
-import 'package:flutter_sixvalley_ecommerce/provider/order_provider.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/color_resources.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/custom_themes.dart';
+import 'package:flutter_axtro_soft_ecommerce/data/model/response/order_model.dart';
+import 'package:flutter_axtro_soft_ecommerce/provider/order_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/utill/color_resources.dart';
+import 'package:flutter_axtro_soft_ecommerce/utill/custom_themes.dart';
 import 'package:provider/provider.dart';
 
 class OrderTypeButton extends StatelessWidget {

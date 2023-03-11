@@ -1,5 +1,5 @@
-import 'package:flutter_sixvalley_ecommerce/data/model/response/product_model.dart';
-import 'package:flutter_sixvalley_ecommerce/data/model/response/seller_model.dart';
+import 'package:flutter_axtro_soft_ecommerce/data/model/response/product_model.dart';
+import 'package:flutter_axtro_soft_ecommerce/data/model/response/seller_model.dart';
 
 class OrderDetailsModel {
   int _id;

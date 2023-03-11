@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sixvalley_ecommerce/data/model/response/message_model.dart';
-import 'package:flutter_sixvalley_ecommerce/helper/date_converter.dart';
-import 'package:flutter_sixvalley_ecommerce/provider/chat_provider.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/color_resources.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/custom_themes.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/dimensions.dart';
-import 'package:flutter_sixvalley_ecommerce/provider/splash_provider.dart';
-import 'package:flutter_sixvalley_ecommerce/view/basewidget/custom_image.dart';
+import 'package:flutter_axtro_soft_ecommerce/data/model/response/message_model.dart';
+import 'package:flutter_axtro_soft_ecommerce/helper/date_converter.dart';
+import 'package:flutter_axtro_soft_ecommerce/provider/chat_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/utill/color_resources.dart';
+import 'package:flutter_axtro_soft_ecommerce/utill/custom_themes.dart';
+import 'package:flutter_axtro_soft_ecommerce/utill/dimensions.dart';
+import 'package:flutter_axtro_soft_ecommerce/provider/splash_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/view/basewidget/custom_image.dart';
 import 'package:provider/provider.dart';
 
 class MessageBubble extends StatelessWidget {

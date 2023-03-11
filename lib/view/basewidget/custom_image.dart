@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/images.dart';
+import 'package:flutter_axtro_soft_ecommerce/utill/images.dart';
 
 class CustomImage extends StatelessWidget {
   final String image;

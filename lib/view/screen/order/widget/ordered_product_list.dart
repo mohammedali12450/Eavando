@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sixvalley_ecommerce/provider/order_provider.dart';
-import 'package:flutter_sixvalley_ecommerce/view/basewidget/show_custom_snakbar.dart';
-import 'package:flutter_sixvalley_ecommerce/view/screen/order/widget/order_details_widget.dart';
+import 'package:flutter_axtro_soft_ecommerce/provider/order_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/view/basewidget/show_custom_snakbar.dart';
+import 'package:flutter_axtro_soft_ecommerce/view/screen/order/widget/order_details_widget.dart';
 
 class OrderProductList extends StatelessWidget {
   final OrderProvider order;

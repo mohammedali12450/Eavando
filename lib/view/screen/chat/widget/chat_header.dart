@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sixvalley_ecommerce/localization/language_constrants.dart';
-import 'package:flutter_sixvalley_ecommerce/provider/chat_provider.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/dimensions.dart';
-import 'package:flutter_sixvalley_ecommerce/view/basewidget/custom_search_widget.dart';
-import 'package:flutter_sixvalley_ecommerce/view/screen/chat/widget/chat_type_button.dart';
+import 'package:flutter_axtro_soft_ecommerce/localization/language_constrants.dart';
+import 'package:flutter_axtro_soft_ecommerce/provider/chat_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/utill/dimensions.dart';
+import 'package:flutter_axtro_soft_ecommerce/view/basewidget/custom_search_widget.dart';
+import 'package:flutter_axtro_soft_ecommerce/view/screen/chat/widget/chat_type_button.dart';
 import 'package:provider/provider.dart';
 
 

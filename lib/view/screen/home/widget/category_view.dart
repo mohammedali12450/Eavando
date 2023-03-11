@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sixvalley_ecommerce/provider/category_provider.dart';
-import 'package:flutter_sixvalley_ecommerce/view/screen/home/widget/category_widget.dart';
-import 'package:flutter_sixvalley_ecommerce/view/screen/product/brand_and_category_product_screen.dart';
+import 'package:flutter_axtro_soft_ecommerce/provider/category_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/view/screen/home/widget/category_widget.dart';
+import 'package:flutter_axtro_soft_ecommerce/view/screen/product/brand_and_category_product_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'category_shimmer.dart';

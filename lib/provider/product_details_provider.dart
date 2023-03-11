@@ -1,14 +1,14 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_sixvalley_ecommerce/data/model/body/review_body.dart';
-import 'package:flutter_sixvalley_ecommerce/data/model/response/base/api_response.dart';
-import 'package:flutter_sixvalley_ecommerce/data/model/response/product_details_model.dart';
-import 'package:flutter_sixvalley_ecommerce/data/model/response/response_model.dart';
-import 'package:flutter_sixvalley_ecommerce/data/model/response/review_model.dart';
-import 'package:flutter_sixvalley_ecommerce/data/repository/product_details_repo.dart';
-import 'package:flutter_sixvalley_ecommerce/helper/api_checker.dart';
-import 'package:flutter_sixvalley_ecommerce/view/basewidget/show_custom_snakbar.dart';
+import 'package:flutter_axtro_soft_ecommerce/data/model/body/review_body.dart';
+import 'package:flutter_axtro_soft_ecommerce/data/model/response/base/api_response.dart';
+import 'package:flutter_axtro_soft_ecommerce/data/model/response/product_details_model.dart';
+import 'package:flutter_axtro_soft_ecommerce/data/model/response/response_model.dart';
+import 'package:flutter_axtro_soft_ecommerce/data/model/response/review_model.dart';
+import 'package:flutter_axtro_soft_ecommerce/data/repository/product_details_repo.dart';
+import 'package:flutter_axtro_soft_ecommerce/helper/api_checker.dart';
+import 'package:flutter_axtro_soft_ecommerce/view/basewidget/show_custom_snakbar.dart';
 import 'package:http/http.dart' as http;
 
 class ProductDetailsProvider extends ChangeNotifier {

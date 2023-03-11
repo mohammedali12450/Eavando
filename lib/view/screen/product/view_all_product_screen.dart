@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sixvalley_ecommerce/helper/product_type.dart';
+import 'package:flutter_axtro_soft_ecommerce/helper/product_type.dart';
 
-import 'package:flutter_sixvalley_ecommerce/provider/theme_provider.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/color_resources.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/custom_themes.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/dimensions.dart';
-import 'package:flutter_sixvalley_ecommerce/view/screen/home/widget/products_view.dart';
+import 'package:flutter_axtro_soft_ecommerce/provider/theme_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/utill/color_resources.dart';
+import 'package:flutter_axtro_soft_ecommerce/utill/custom_themes.dart';
+import 'package:flutter_axtro_soft_ecommerce/utill/dimensions.dart';
+import 'package:flutter_axtro_soft_ecommerce/view/screen/home/widget/products_view.dart';
 import 'package:provider/provider.dart';
 
 class AllProductScreen extends StatelessWidget {
