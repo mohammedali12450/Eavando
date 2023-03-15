@@ -3,7 +3,7 @@ import 'package:flutter_axtro_soft_ecommerce/data/model/response/language_model.
 class AppConstants {
   static const String APP_NAME = 'axtro-soft';
   static const String APP_VERSION = '13.0';
-  static const String BASE_URL = 'https://axtro-soft.6amtech.com';
+  static const String BASE_URL = 'https://eavando.axtro-soft.com';
   static const String USER_ID = 'userId';
   static const String NAME = 'name';
   static const String CATEGORIES_URI = '/api/v1/categories';
@@ -97,8 +97,6 @@ class AppConstants {
   static const String PLACE_DETAILS_URI = '/api/v1/mapapi/place-api-details';
   static const String DISTANCE_MATRIX_URI = '/api/v1/mapapi/distance-api';
   static const String CHAT_WITH_DELIVERY_MAN = '/api/v1/mapapi/distance-api';
-
-
 
   // sharePreference
   static const String TOKEN = 'token';
