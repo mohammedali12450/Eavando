@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 
 class ProductImageScreen extends StatefulWidget {
   final String title;
-  final List<String> imageList;
+  final Map<String,List<String>> imageList;
   ProductImageScreen({@required this.title, @required this.imageList});
 
   @override
