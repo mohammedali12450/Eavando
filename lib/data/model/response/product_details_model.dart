@@ -1,6 +1,6 @@
 import 'package:flutter_axtro_soft_ecommerce/data/model/response/product_model.dart';
 
-class ProductDetailsModel {
+class ProductDetailsModel  {
   int _id;
   String _addedBy;
   int _userId;
@@ -14,7 +14,8 @@ class ProductDetailsModel {
   int _refundable;
   String _digitalProductType;
   String _digitalFileReady;
-  List<String> _images;
+  Map<String,dynamic> _imagesWithColor;
+  List<dynamic> _imagesWithOutColor;
   String _thumbnail;
   int _featured;
   String _videoProvider;
@@ -66,7 +67,8 @@ class ProductDetailsModel {
     String digitalProductType,
     String digitalFileReady,
     //TODO images throw exiptions when images have a color
-    List<String> images,
+    Map<String,List<dynamic>> imagesWithColor,
+    List<dynamic> imagesWithOutColors,
     String thumbnail,
     int featured,
     String videoProvider,
@@ -142,8 +144,11 @@ class ProductDetailsModel {
     if (digitalFileReady != null) {
       this._digitalFileReady = digitalFileReady;
     }
-    if (images != null) {
-      this._images = images;
+    if (imagesWithColor != null) {
+      this._imagesWithColor = imagesWithColor;
+    }
+    if (imagesWithOutColors != null) {
+      this._imagesWithOutColor = imagesWithOutColor;
     }
     if (thumbnail != null) {
       this._thumbnail = thumbnail;
@@ -267,7 +272,8 @@ class ProductDetailsModel {
   int get refundable => _refundable;
   String get digitalProductType => _digitalProductType;
   String get digitalFileReady => _digitalFileReady;
-  List<String> get images => _images;
+  Map<String,dynamic> get imagesWithColor => _imagesWithColor;
+  List<dynamic> get imagesWithOutColor => _imagesWithOutColor;
   String get thumbnail => _thumbnail;
   int get featured => _featured;
   String get videoProvider => _videoProvider;
@@ -323,7 +329,12 @@ class ProductDetailsModel {
     _refundable = json['refundable'];
     _digitalProductType = json['digital_product_type'];
     _digitalFileReady = json['digital_file_ready'];
-    _images = json['images'].cast<String>();
+    try{
+      _imagesWithColor = json['images'];
+
+    }catch(_){
+      _imagesWithOutColor=json['images'];
+    }
     _thumbnail = json['thumbnail'];
     _featured = json['featured'];
     _videoProvider = json['video_provider'];
@@ -403,7 +414,11 @@ class ProductDetailsModel {
     data['refundable'] = this._refundable;
     data['digital_product_type'] = this._digitalProductType;
     data['digital_file_ready'] = this._digitalFileReady;
-    data['images'] = this._images;
+    try{
+      data['images'] = this._imagesWithColor;
+    }catch(_){
+      data['images']=this._imagesWithOutColor;
+    }
     data['thumbnail'] = this._thumbnail;
     data['featured'] = this._featured;
     data['video_provider'] = this._videoProvider;

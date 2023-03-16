@@ -51,7 +51,8 @@ class Product {
   String _productType;
   List<CategoryIds> _categoryIds;
   String _unit;
-  List<String> _images;
+  Map<String,dynamic> _imagesWithColor;
+  List<dynamic> _imagesWithOutColor;
   String _thumbnail;
   List<ProductColors> _colors;
   List<String> _attributes;
@@ -91,7 +92,8 @@ class Product {
     int refundable,
     String digitalProductType,
     String digitalFileReady,
-    List<String> images,
+    Map<String,List<dynamic>> imagesWithColor,
+    List<dynamic> imagesWithOutColors,
     String thumbnail,
     List<ProductColors> colors,
     String variantProduct,
@@ -134,8 +136,12 @@ class Product {
     if (digitalFileReady != null) {
       this._digitalFileReady = digitalFileReady;
     }
-    this._images = images;
-    this._thumbnail = thumbnail;
+    if (imagesWithColor != null) {
+      this._imagesWithColor = imagesWithColor;
+    }
+    if (imagesWithOutColor != null) {
+      this._imagesWithOutColor = imagesWithOutColor;
+    }    this._thumbnail = thumbnail;
     this._colors = colors;
     this._attributes = attributes;
     this._choiceOptions = choiceOptions;
@@ -172,7 +178,8 @@ class Product {
   int get refundable => _refundable;
   String get digitalProductType => _digitalProductType;
   String get digitalFileReady => _digitalFileReady;
-  List<String> get images => _images;
+  Map<String,dynamic> get imagesWithColor => _imagesWithColor;
+  List<dynamic> get imagesWithOutColor => _imagesWithOutColor;
   String get thumbnail => _thumbnail;
   List<ProductColors> get colors => _colors;
   List<String> get attributes => _attributes;
@@ -227,13 +234,11 @@ class Product {
       _digitalFileReady = json['digital_file_ready'];
     }
 
-    if (json['images'] != null) {
-      try {
-        _images = json['images'] != null ? json['images'].cast<String>() : [];
-      } catch (e) {
-        //TODO process images with color
-        //_images = json['images'] != null ? jsonDecode(json['images']).cast<String>() : [];
-      }
+    try{
+      _imagesWithColor = json['images'];
+
+    }catch(_){
+      _imagesWithOutColor=json['images'];
     }
 
     _thumbnail = json['thumbnail'];
@@ -337,7 +342,12 @@ class Product {
     }
     data['unit'] = this._unit;
     data['min_qty'] = this._minQty;
-    data['images'] = this._images;
+    // data['images'] = this._images;
+    try{
+      data['images'] = this._imagesWithColor;
+    }catch(_){
+      data['images']=this._imagesWithOutColor;
+    }
     data['thumbnail'] = this._thumbnail;
     if (this._colors != null) {
       data['colors_formatted'] = this._colors.map((v) => v.toJson()).toList();
@@ -504,6 +514,33 @@ class Rating {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['average'] = this._average;
     data['product_id'] = this._productId;
+    return data;
+  }
+}
+
+class ColorImages {
+  String _id;
+  List<String> _images;
+
+  ColorImages({String id, List<String> imgs}) {
+    this._id = id;
+    this._images = imgs;
+  }
+
+  String get id => _id;
+  List<String> get images => _images;
+
+  ColorImages.fromJson(Map<String, dynamic> json) {
+    _id = json['id'];
+    if (json['images'] != null) {
+      _images = json['images'].cast<String>();
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this._id;
+    data['images'] = this._images;
     return data;
   }
 }
