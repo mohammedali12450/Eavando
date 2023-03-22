@@ -71,13 +71,15 @@ class _RefundResultBottomSheetState extends State<RefundResultBottomSheet> {
 
                             Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
-                              children: [Text(widget.product.name,
+                              children: [
+                                Text(widget.product.name,
                                 style: titilliumSemiBold.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL,
                                     color: Theme.of(context).hintColor),
                                 maxLines: 2, overflow: TextOverflow.ellipsis,),
 
 
-                                Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                                Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
                                   Text(PriceConverter.convertPrice(context, widget.orderDetailsModel.price),
                                     style: titilliumSemiBold.copyWith(color: ColorResources.getPrimary(context)),),
 
@@ -103,16 +105,21 @@ class _RefundResultBottomSheetState extends State<RefundResultBottomSheet> {
 
                                 (widget.orderDetailsModel.variant != null && widget.orderDetailsModel.variant.isNotEmpty) ?
                                 Padding(padding: EdgeInsets.only(top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                                  child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                                    SizedBox(width: 65),
+                                  child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                    // SizedBox(width: 65),
 
 
                                     Text('${getTranslated('variations', context)}: ',
                                           style: titilliumSemiBold.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL)),
 
-                                    Text(widget.orderDetailsModel.variant,
-                                        style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL,
-                                          color: Theme.of(context).disabledColor,)),]),) : SizedBox(),
+                                    Flexible(
+                                      child: Text(widget.orderDetailsModel.variant,
+                                          style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL,
+                                            color: Theme.of(context).disabledColor,)),
+                                    ),]),) : SizedBox(),
                               ],),),],),
                         Divider(thickness: .1),
 

@@ -49,7 +49,7 @@ class GuestDialog extends StatelessWidget {
                   child: Container(
                     padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
                     alignment: Alignment.center,
-                    decoration: BoxDecoration(color: Theme.of(context).primaryColor, borderRadius: BorderRadius.only(bottomRight: Radius.circular(10))),
+                    decoration: BoxDecoration(color: Theme.of(context).buttonColor, borderRadius: BorderRadius.only(bottomRight: Radius.circular(10))),
                     child: Text(getTranslated('LOGIN', context), style: titilliumBold.copyWith(color: Colors.white)),
                   ),
                 )),

@@ -24,7 +24,7 @@ class _ChatHeaderState extends State<ChatHeader> {
             padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
             child: Container(height: 48,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.secondary,
+                  color: Theme.of(context).primaryColor,
                   borderRadius: BorderRadius.circular(Dimensions.topSpace),
                 ),
                 child: Stack(
@@ -51,7 +51,6 @@ class _ChatHeaderState extends State<ChatHeader> {
                       helpText: "Search Text...",
                       autoFocus: true,
                       closeSearchOnSuffixTap: true,
-
                       animationDurationInMilli: 200,
                       rtl: false,
                     ),

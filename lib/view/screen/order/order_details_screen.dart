@@ -67,7 +67,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 widget.isNotification?
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => DashBoardScreen())):Navigator.pop(context);
               },
-              child: Icon(Icons.keyboard_backspace)),title: Text(getTranslated('ORDER_DETAILS', context),
+              child: Icon(Icons.arrow_back_ios,color: Theme.of(context).primaryColor,)),title: Text(getTranslated('ORDER_DETAILS', context),
               style: robotoRegular.copyWith(color: Theme.of(context).primaryColor,
                   fontSize: Dimensions.FONT_SIZE_LARGE),)),
         body: Column(
@@ -203,7 +203,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           ),
                         ),
                       ):SizedBox(),
-                      SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
+                      // SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
 
 
 
@@ -223,7 +223,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       SizedBox(height: Dimensions.MARGIN_SIZE_DEFAULT),
 
                       // Amounts
-                      Container(padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                      Container(padding: EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
                         color: Theme.of(context).highlightColor,
                         child: Column(crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

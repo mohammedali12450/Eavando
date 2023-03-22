@@ -37,7 +37,7 @@ class BrandView extends StatelessWidget {
                     )));
                    },
                   child: Padding(
-                    padding:  EdgeInsets.only(right: 10),
+                    padding: EdgeInsets.only(right: 10),
                     child: Container(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,

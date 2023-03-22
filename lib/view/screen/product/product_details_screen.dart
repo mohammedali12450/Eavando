@@ -116,7 +116,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         children: [
                           ProductImageView(
                               productModel: details.productDetailsModel,
-                              indexColor:
+                              indexColor: details.productDetailsModel.colors.length == 0 ? "" :
                                   details.productDetailsModel.colors[index].name),
                           Container(
                             transform:
@@ -131,216 +131,219 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   topRight: Radius.circular(
                                       Dimensions.PADDING_SIZE_EXTRA_LARGE)),
                             ),
-                            child: Column(
-                              children: [
-                                ProductTitleView(
-                                  callback: (val){
-                                    index=val;
-                                    setState(() {
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 5),
+                              child: Column(
+                                children: [
+                                  ProductTitleView(
+                                    callback: (val){
+                                      index=val;
+                                      setState(() {
 
-                                    });
+                                      });
 
-                                  },
-                                    colorIndex: index,
-                                    productModel: details.productDetailsModel,
-                                    averageRatting: details.productDetailsModel
-                                                ?.averageReview !=
-                                            null
-                                        ? details
-                                            .productDetailsModel.averageReview
-                                        : "0"),
-                                (details.productDetailsModel?.details != null &&
-                                        details.productDetailsModel.details
-                                            .isNotEmpty)
-                                    ? Container(
-                                        height: 250,
-                                        margin: EdgeInsets.only(
-                                            top: Dimensions.PADDING_SIZE_SMALL),
-                                        padding: EdgeInsets.all(
-                                            Dimensions.PADDING_SIZE_SMALL),
-                                        child: ProductSpecification(
-                                            productSpecification: details
-                                                    .productDetailsModel
-                                                    .details ??
-                                                ''),
-                                      )
-                                    : SizedBox(),
-                                details.productDetailsModel?.videoUrl != null
-                                    ? YoutubeVideoWidget(
-                                        url: details
-                                            .productDetailsModel.videoUrl)
-                                    : SizedBox(),
-                                Container(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical:
-                                            Dimensions.PADDING_SIZE_DEFAULT,
-                                        horizontal:
-                                            Dimensions.FONT_SIZE_DEFAULT),
-                                    decoration: BoxDecoration(
-                                        color: Theme.of(context).cardColor),
-                                    child: PromiseScreen()),
-                                details.productDetailsModel?.addedBy == 'seller'
-                                    ? SellerView(
-                                        sellerId: details
-                                            .productDetailsModel.userId
-                                            .toString())
-                                    : SizedBox.shrink(),
-                                Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  margin: EdgeInsets.only(
-                                      top: Dimensions.PADDING_SIZE_SMALL),
-                                  padding: EdgeInsets.all(
-                                      Dimensions.PADDING_SIZE_DEFAULT),
-                                  color: Theme.of(context).cardColor,
-                                  child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          getTranslated(
-                                              'customer_reviews', context),
-                                          style: titilliumSemiBold.copyWith(
-                                              fontSize:
-                                                  Dimensions.FONT_SIZE_LARGE),
-                                        ),
-                                        SizedBox(
-                                          height:
+                                    },
+                                      colorIndex: index,
+                                      productModel: details.productDetailsModel,
+                                      averageRatting: details.productDetailsModel
+                                                  ?.averageReview !=
+                                              null
+                                          ? details
+                                              .productDetailsModel.averageReview
+                                          : "0"),
+                                  (details.productDetailsModel?.details != null &&
+                                          details.productDetailsModel.details
+                                              .isNotEmpty)
+                                      ? Container(
+                                          height: 250,
+                                          margin: EdgeInsets.only(
+                                              top: Dimensions.PADDING_SIZE_SMALL),
+                                          padding: EdgeInsets.all(
+                                              Dimensions.PADDING_SIZE_SMALL),
+                                          child: ProductSpecification(
+                                              productSpecification: details
+                                                      .productDetailsModel
+                                                      .details ??
+                                                  ''),
+                                        )
+                                      : SizedBox(),
+                                  details.productDetailsModel?.videoUrl != null
+                                      ? YoutubeVideoWidget(
+                                          url: details
+                                              .productDetailsModel.videoUrl)
+                                      : SizedBox(),
+                                  Container(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical:
                                               Dimensions.PADDING_SIZE_DEFAULT,
-                                        ),
-                                        Container(
-                                          width: 230,
-                                          height: 30,
-                                          decoration: BoxDecoration(
-                                            color: ColorResources.visitShop(
-                                                context),
-                                            borderRadius: BorderRadius.circular(
-                                                Dimensions
-                                                    .PADDING_SIZE_EXTRA_LARGE),
+                                          horizontal:
+                                              Dimensions.FONT_SIZE_DEFAULT),
+                                      decoration: BoxDecoration(
+                                          color: Theme.of(context).cardColor),
+                                      child: PromiseScreen()),
+                                  details.productDetailsModel?.addedBy == 'seller'
+                                      ? SellerView(
+                                          sellerId: details
+                                              .productDetailsModel.userId
+                                              .toString())
+                                      : SizedBox.shrink(),
+                                  Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    margin: EdgeInsets.only(
+                                        top: Dimensions.PADDING_SIZE_SMALL),
+                                    padding: EdgeInsets.all(
+                                        Dimensions.PADDING_SIZE_DEFAULT),
+                                    color: Theme.of(context).cardColor,
+                                    child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            getTranslated(
+                                                'customer_reviews', context),
+                                            style: titilliumSemiBold.copyWith(
+                                                fontSize:
+                                                    Dimensions.FONT_SIZE_LARGE),
                                           ),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              RatingBar(
-                                                rating: double.parse(details
-                                                    .productDetailsModel
-                                                    .averageReview),
-                                                size: 18,
-                                              ),
-                                              SizedBox(
-                                                  width: Dimensions
-                                                      .PADDING_SIZE_DEFAULT),
-                                              Text('${double.parse(details.productDetailsModel.averageReview).toStringAsFixed(1)}' +
-                                                  ' ' +
-                                                  '${getTranslated('out_of_5', context)}'),
-                                            ],
+                                          SizedBox(
+                                            height:
+                                                Dimensions.PADDING_SIZE_DEFAULT,
                                           ),
-                                        ),
-                                        SizedBox(
-                                            height: Dimensions
-                                                .PADDING_SIZE_DEFAULT),
-                                        Text('${getTranslated('total', context)}' +
-                                            ' ' +
-                                            '${details.reviewList != null ? details.reviewList.length : 0}' +
-                                            ' ' +
-                                            '${getTranslated('reviews', context)}'),
-                                        details.reviewList != null
-                                            ? details.reviewList.length != 0
-                                                ? ReviewWidget(
-                                                    reviewModel:
-                                                        details.reviewList[0])
-                                                : SizedBox()
-                                            : ReviewShimmer(),
-                                        details.reviewList != null
-                                            ? details.reviewList.length > 1
-                                                ? ReviewWidget(
-                                                    reviewModel:
-                                                        details.reviewList[1])
-                                                : SizedBox()
-                                            : ReviewShimmer(),
-                                        details.reviewList != null
-                                            ? details.reviewList.length > 2
-                                                ? ReviewWidget(
-                                                    reviewModel:
-                                                        details.reviewList[2])
-                                                : SizedBox()
-                                            : ReviewShimmer(),
-                                        InkWell(
-                                            onTap: () {
-                                              if (details.reviewList != null) {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (_) => ReviewScreen(
-                                                            reviewList: details
-                                                                .reviewList)));
-                                              }
-                                            },
-                                            child: details.reviewList != null &&
-                                                    details.reviewList.length >
-                                                        3
-                                                ? Text(
-                                                    getTranslated(
-                                                        'view_more', context),
-                                                    style: titilliumRegular
-                                                        .copyWith(
-                                                            color: Theme.of(
-                                                                    context)
-                                                                .primaryColor),
-                                                  )
-                                                : SizedBox())
-                                      ]),
-                                ),
-                                details.productDetailsModel.addedBy == 'seller'
-                                    ? Padding(
-                                        padding: EdgeInsets.all(
-                                            Dimensions.PADDING_SIZE_DEFAULT),
-                                        child: TitleRow(
-                                            title: getTranslated(
-                                                'more_from_the_shop', context),
-                                            isDetailsPage: true),
-                                      )
-                                    : SizedBox(),
-                                details.productDetailsModel.addedBy == 'seller'
-                                    ? Padding(
-                                        padding: EdgeInsets.all(Dimensions
-                                            .PADDING_SIZE_EXTRA_SMALL),
-                                        child: ProductView(
-                                            isHomePage: true,
-                                            productType:
-                                                ProductType.SELLER_PRODUCT,
-                                            scrollController: _scrollController,
-                                            sellerId: details
-                                                .productDetailsModel.userId
-                                                .toString()),
-                                      )
-                                    : SizedBox(),
-                                Container(
-                                  margin: EdgeInsets.only(
-                                      top: Dimensions.PADDING_SIZE_SMALL),
-                                  padding: EdgeInsets.all(
-                                      Dimensions.PADDING_SIZE_DEFAULT),
-                                  child: Column(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: Dimensions
-                                                .PADDING_SIZE_EXTRA_SMALL,
-                                            vertical: Dimensions
-                                                .PADDING_SIZE_EXTRA_SMALL),
-                                        child: TitleRow(
-                                            title: getTranslated(
-                                                'related_products', context),
-                                            isDetailsPage: true),
-                                      ),
-                                      SizedBox(height: 5),
-                                      RelatedProductView(),
-                                    ],
+                                          Container(
+                                            width: 230,
+                                            height: 30,
+                                            decoration: BoxDecoration(
+                                              color: ColorResources.visitShop(
+                                                  context),
+                                              borderRadius: BorderRadius.circular(
+                                                  Dimensions
+                                                      .PADDING_SIZE_EXTRA_LARGE),
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                RatingBar(
+                                                  rating: double.parse(details
+                                                      .productDetailsModel
+                                                      .averageReview),
+                                                  size: 18,
+                                                ),
+                                                SizedBox(
+                                                    width: Dimensions
+                                                        .PADDING_SIZE_DEFAULT),
+                                                Text('${double.parse(details.productDetailsModel.averageReview).toStringAsFixed(1)}' +
+                                                    ' ' +
+                                                    '${getTranslated('out_of_5', context)}'),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(
+                                              height: Dimensions
+                                                  .PADDING_SIZE_DEFAULT),
+                                          Text('${getTranslated('total', context)}' +
+                                              ' ' +
+                                              '${details.reviewList != null ? details.reviewList.length : 0}' +
+                                              ' ' +
+                                              '${getTranslated('reviews', context)}'),
+                                          details.reviewList != null
+                                              ? details.reviewList.length != 0
+                                                  ? ReviewWidget(
+                                                      reviewModel:
+                                                          details.reviewList[0])
+                                                  : SizedBox()
+                                              : ReviewShimmer(),
+                                          details.reviewList != null
+                                              ? details.reviewList.length > 1
+                                                  ? ReviewWidget(
+                                                      reviewModel:
+                                                          details.reviewList[1])
+                                                  : SizedBox()
+                                              : ReviewShimmer(),
+                                          details.reviewList != null
+                                              ? details.reviewList.length > 2
+                                                  ? ReviewWidget(
+                                                      reviewModel:
+                                                          details.reviewList[2])
+                                                  : SizedBox()
+                                              : ReviewShimmer(),
+                                          InkWell(
+                                              onTap: () {
+                                                if (details.reviewList != null) {
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (_) => ReviewScreen(
+                                                              reviewList: details
+                                                                  .reviewList)));
+                                                }
+                                              },
+                                              child: details.reviewList != null &&
+                                                      details.reviewList.length >
+                                                          3
+                                                  ? Text(
+                                                      getTranslated(
+                                                          'view_more', context),
+                                                      style: titilliumRegular
+                                                          .copyWith(
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .primaryColor),
+                                                    )
+                                                  : SizedBox())
+                                        ]),
                                   ),
-                                ),
-                              ],
+                                  details.productDetailsModel.addedBy == 'seller'
+                                      ? Padding(
+                                          padding: EdgeInsets.all(
+                                              Dimensions.PADDING_SIZE_DEFAULT),
+                                          child: TitleRow(
+                                              title: getTranslated(
+                                                  'more_from_the_shop', context),
+                                              isDetailsPage: true),
+                                        )
+                                      : SizedBox(),
+                                  details.productDetailsModel.addedBy == 'seller'
+                                      ? Padding(
+                                          padding: EdgeInsets.all(Dimensions
+                                              .PADDING_SIZE_EXTRA_SMALL),
+                                          child: ProductView(
+                                              isHomePage: true,
+                                              productType:
+                                                  ProductType.SELLER_PRODUCT,
+                                              scrollController: _scrollController,
+                                              sellerId: details
+                                                  .productDetailsModel.userId
+                                                  .toString()),
+                                        )
+                                      : SizedBox(),
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                        top: Dimensions.PADDING_SIZE_SMALL),
+                                    padding: EdgeInsets.all(
+                                        Dimensions.PADDING_SIZE_DEFAULT),
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: Dimensions
+                                                  .PADDING_SIZE_EXTRA_SMALL,
+                                              vertical: Dimensions
+                                                  .PADDING_SIZE_EXTRA_SMALL),
+                                          child: TitleRow(
+                                              title: getTranslated(
+                                                  'related_products', context),
+                                              isDetailsPage: true),
+                                        ),
+                                        SizedBox(height: 10),
+                                        RelatedProductView(),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],

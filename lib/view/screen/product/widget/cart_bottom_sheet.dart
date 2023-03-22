@@ -119,12 +119,12 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                   child: Container(
                     width: 25,
                     height: 25,
-                    decoration: BoxDecoration(shape: BoxShape.circle, color: Theme.of(context).highlightColor, boxShadow: [BoxShadow(
+                    decoration: BoxDecoration(shape: BoxShape.circle, color: ColorResources.getRed(context), boxShadow: [BoxShadow(
                       color: Theme.of(context).hintColor,
                       spreadRadius: 1,
                       blurRadius: 5,
                     )]),
-                    child: Icon(Icons.clear, size: Dimensions.ICON_SIZE_SMALL),
+                    child: Icon(Icons.clear, size: Dimensions.ICON_SIZE_SMALL,color: Colors.white,),
                   ),
                 )),
 
@@ -185,7 +185,7 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                           padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
-                            color:Theme.of(context).primaryColor,
+                            color: ColorResources.getRed(context),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Padding(
@@ -240,7 +240,7 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(Dimensions.PADDING_SIZE_EXTRA_SMALL),
                                 border: details.variantIndex == index ? Border.all(width: 1,
-                                    color: Theme.of(context).primaryColor):null
+                                    color: Theme.of(context).colorScheme.primary):null
                               ),
                               child: Padding(padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
 
@@ -276,35 +276,49 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
 
                       Expanded(
                         child: Padding(padding: const EdgeInsets.all(2.0),
-                          child: GridView.builder(
-                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 4,
-                              crossAxisSpacing: 5,
-                              mainAxisSpacing: 5,
-                              childAspectRatio: (1 / .7),
-                            ),
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: widget.product.choiceOptions[index].options.length,
-                            itemBuilder: (ctx, i) {
-                              return InkWell(
-                                onTap: () => Provider.of<ProductDetailsProvider>(context, listen: false).setCartVariationIndex(widget.product.minimumOrderQty, index, i, context),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    border: details.variationIndex[index] != i ?  null:
-                                    Border.all(color: Theme.of(context).primaryColor,),),
-                                  child: Center(
-                                    child: Text(widget.product.choiceOptions[index].options[i].trim(), maxLines: 1,
-                                        overflow: TextOverflow.ellipsis, style: titilliumRegular.copyWith(
-                                      fontSize: Dimensions.FONT_SIZE_DEFAULT,
-                                      color: details.variationIndex[index] != i ?
-                                      ColorResources.getTextTitle(context) : Theme.of(context).primaryColor,
-                                    )),
+                          child: Container(
+                            height: 25,
+                            child: ListView.builder(
+                              // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              //   crossAxisCount: 4,
+                              //   crossAxisSpacing: 5,
+                              //   mainAxisSpacing: 5,
+                              //   childAspectRatio: (1 / .7),
+                              // ),
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: widget.product.choiceOptions[index].options.length,
+                              itemBuilder: (ctx, i) {
+                                return InkWell(
+                                  onTap: () => Provider.of<ProductDetailsProvider>(context, listen: false).setCartVariationIndex(widget.product.minimumOrderQty, index, i, context),
+                                  child: Container(
+                                    margin: EdgeInsets.symmetric(horizontal: 3),
+                                    padding: EdgeInsets.symmetric(horizontal: 3),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      // border: details.variationIndex[index] != i ?  null :
+                                      // Border.all(color: Theme.of(context).primaryColor,),
+                                      border: details.variationIndex[index] == i ?  null :
+                                      Border.all(color: Theme.of(context).primaryColor,),
+                                    ),
+                                    child: Center(
+                                      child: Text(widget.product.choiceOptions[index].options[i] + "  ",
+                                          // .trim(), maxLines: 1,
+                                          // overflow: TextOverflow.ellipsis,
+                                          style: titilliumRegular.copyWith(
+                                        fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                                        // color: details.variationIndex[index] != i ?
+                                        // ColorResources.getTextTitle(context) : Theme.of(context).primaryColor,
+                                          color: details.variationIndex[index] == i ?
+                                          Theme.of(context).colorScheme.primary :
+                                          ColorResources.getTextTitle(context),
+                                      )),
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
+                                );
+                              },
+                            ),
                           ),
                         ),
                       ),
@@ -332,7 +346,7 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                   Text(getTranslated('total_price', context), style: robotoBold),
                   SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
                   Text(PriceConverter.convertPrice(context, priceWithQuantity),
-                    style: titilliumBold.copyWith(color: ColorResources.getPrimary(context), fontSize: Dimensions.FONT_SIZE_LARGE),
+                    style: titilliumBold.copyWith(color: Theme.of(context).colorScheme.primary, fontSize: Dimensions.FONT_SIZE_LARGE),
                   ),
                 ]),
                 SizedBox(height: Dimensions.PADDING_SIZE_SMALL),

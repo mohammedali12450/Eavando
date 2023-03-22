@@ -105,7 +105,7 @@ class _ProductImageViewState extends State<ProductImageView> {
 
                   Provider.of<ProductDetailsProvider>(context).imageSliderIndex != null?
                   Padding(
-                    padding: const EdgeInsets.only(right: Dimensions.PADDING_SIZE_DEFAULT,bottom: Dimensions.PADDING_SIZE_DEFAULT),
+                    padding: const EdgeInsets.only(right: Dimensions.PADDING_SIZE_DEFAULT,/*bottom: Dimensions.PADDING_SIZE_DEFAULT*/),
                     child: Text('${Provider.of<ProductDetailsProvider>(context).imageSliderIndex+1}'+'/'+'${imagesForIndex.length.toString()}'),
                   ):SizedBox(),
                 ],
@@ -154,7 +154,7 @@ class _ProductImageViewState extends State<ProductImageView> {
                     padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
+                      color: ColorResources.getRed(context),
                       borderRadius: BorderRadius.only(bottomRight: Radius.circular(Dimensions.PADDING_SIZE_SMALL))
                     ),
                     child: Text('${PriceConverter.percentageCalculation(context, widget.productModel.unitPrice,
@@ -181,7 +181,7 @@ class _ProductImageViewState extends State<ProductImageView> {
     for (int index = 0; index < imagesForIndex.length; index++) {
       indicators.add(TabPageSelectorIndicator(
         backgroundColor: index == Provider.of<ProductDetailsProvider>(context).imageSliderIndex ?
-        Theme.of(context).primaryColor : ColorResources.WHITE,
+        Theme.of(context).colorScheme.primary : ColorResources.WHITE,
         borderColor: ColorResources.WHITE,
         size: 10,
       ));

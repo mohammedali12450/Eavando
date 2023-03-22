@@ -24,7 +24,7 @@ class ChatTypeButton extends StatelessWidget {
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: chat.userTypeIndex == index ?
-              Theme.of(context).primaryColor : Theme.of(context).hintColor.withOpacity(.25),
+              Theme.of(context).colorScheme.primary : Theme.of(context).hintColor.withOpacity(.25),
               borderRadius: BorderRadius.circular(Dimensions.PADDING_SIZE_OVER_LARGE),
             ),
             child: Text(text, style: chat.userTypeIndex == index ?

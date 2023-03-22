@@ -73,10 +73,12 @@ class OrderWidget extends StatelessWidget {
             Container(alignment: Alignment.center,
               padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_SMALL,vertical: Dimensions.PADDING_SIZE_SMALL),
               decoration: BoxDecoration(
-                color: ColorResources.getLowGreen(context),
+                color: orderModel.orderStatus == "delivered" ?
+                ColorResources.getGreen(context) :
+                orderModel.orderStatus == "pending" ? ColorResources.getYellow(context) : ColorResources.getRed(context),
                 borderRadius: BorderRadius.circular(5),
               ),
-              child: Text(getTranslated('${orderModel.orderStatus}', context), style: titilliumSemiBold),
+              child: Text(getTranslated('${orderModel.orderStatus}', context), style: titilliumSemiBold.copyWith(color: Colors.white)),
             ),
 
           ]),

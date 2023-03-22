@@ -108,9 +108,13 @@ class TrackingResultScreen extends StatelessWidget {
                 Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => DashBoardScreen()), (route) => false),
               child: Container(width: double.infinity,
                 alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).buttonColor,
+                  borderRadius: BorderRadius.circular(Dimensions.PADDING_SIZE_EXTRA_SMALL)
+                ),
                 child: Text(getTranslated('ORDER_MORE', context),
                   style: titilliumSemiBold.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE,
-                      color: ColorResources.getPrimary(context)),
+                      color: Colors.white),
                 ),
               ),
             ),

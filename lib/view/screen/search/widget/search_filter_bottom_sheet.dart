@@ -132,7 +132,7 @@ class MyCheckBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return CheckboxListTile(
       title: Text(title, style: titilliumSemiBold.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL)),
-      checkColor: Theme.of(context).primaryColor,
+      checkColor: Theme.of(context).colorScheme.primary,
       activeColor: Colors.transparent,
       value: Provider.of<SearchProvider>(context).filterIndex == index,
       onChanged: (isChecked) {

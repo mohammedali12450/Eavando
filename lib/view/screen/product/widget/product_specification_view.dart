@@ -17,10 +17,6 @@ class ProductSpecification extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
-
-
     if(Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
     return Column(
       children: [
@@ -59,7 +55,7 @@ class ProductSpecification extends StatelessWidget {
         InkWell(
             onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SpecificationScreen(specification: productSpecification))),
             child: Text(getTranslated('view_full_detail', context),
-              style: titleRegular.copyWith(color: Theme.of(context).primaryColor),))
+              style: titleRegular.copyWith(color: Theme.of(context).colorScheme.primary),))
 
       ],
     );

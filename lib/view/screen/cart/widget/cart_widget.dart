@@ -85,7 +85,6 @@ class CartWidget extends StatelessWidget {
                     SizedBox(height: Dimensions.PADDING_SIZE_SMALL,),
                     Row(
                       children: [
-
                         cartModel.discount>0?
                         Text(
                           PriceConverter.convertPrice(context, cartModel.price),maxLines: 1,overflow: TextOverflow.ellipsis,
@@ -93,13 +92,13 @@ class CartWidget extends StatelessWidget {
                               decoration: TextDecoration.lineThrough,
                           ),
                         ):SizedBox(),
-                        SizedBox(width: Dimensions.FONT_SIZE_DEFAULT,),
+                        SizedBox(width: cartModel.discount>0 ? Dimensions.FONT_SIZE_DEFAULT : 0),
                         Text(
                           PriceConverter.convertPrice(context, cartModel.price,
                               discount: cartModel.discount,discountType: 'amount'),
                           maxLines: 1,overflow: TextOverflow.ellipsis,
                           style: titilliumRegular.copyWith(
-                              color: ColorResources.getPrimary(context),
+                              color: Theme.of(context).colorScheme.primary,
 
                               fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE
                               ),
@@ -117,7 +116,8 @@ class CartWidget extends StatelessWidget {
                               color: ColorResources.getReviewRattingColor(context),))),
                       ]),
                     ) : SizedBox(),
-                    SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
+
+                    SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
 
 
                     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,

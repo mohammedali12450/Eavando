@@ -22,7 +22,7 @@ class OrderTypeButton extends StatelessWidget {
           height: 40,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: Provider.of<OrderProvider>(context, listen: false).orderTypeIndex == index ? ColorResources.getPrimary(context) : Theme.of(context).highlightColor,
+            color: Provider.of<OrderProvider>(context, listen: false).orderTypeIndex == index ? Theme.of(context).colorScheme.primary : Theme.of(context).highlightColor,
             borderRadius: BorderRadius.circular(6),
           ),
           child: Text(text + '(${orderList.length})',

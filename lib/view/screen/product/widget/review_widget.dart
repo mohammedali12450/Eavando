@@ -51,7 +51,7 @@ class ReviewWidget extends StatelessWidget {
 
 
             Row(children: [
-              Icon(Icons.star,color: Colors.orange),
+              Icon(Icons.star,color: Colors.orange,size: 18,),
 
               Text('${reviewModel.rating.toDouble()}' + ' '+ '/5',
                 style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_DEFAULT),

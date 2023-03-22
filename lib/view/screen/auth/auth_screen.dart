@@ -27,10 +27,10 @@ class AuthScreen extends StatelessWidget{
         clipBehavior: Clip.none,
         children: [
 
-          Provider.of<ThemeProvider>(context).darkTheme ? SizedBox() 
-              : Image.asset(Images.background, fit: BoxFit.fill,
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width),
+          // Provider.of<ThemeProvider>(context).darkTheme ? SizedBox()
+          //     : Image.asset(Images.background, fit: BoxFit.fill,
+          //     height: MediaQuery.of(context).size.height,
+          //     width: MediaQuery.of(context).size.width),
 
           Consumer<AuthProvider>(
             builder: (context, auth, child) => SafeArea(
@@ -38,8 +38,7 @@ class AuthScreen extends StatelessWidget{
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(height: Dimensions.topSpace),
-                  Image.asset(Images.logo_with_name_image, height: 150, width: 200),
-
+                  Image.asset(Images.eavando_logo, height: 150, width: 250),
 
                   Padding(
                     padding: EdgeInsets.all(Dimensions.MARGIN_SIZE_LARGE),
