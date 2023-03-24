@@ -50,7 +50,7 @@ class _InboxScreenState extends State<InboxScreen> {
 
         Container(
             height: 100,decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).hintColor,
             borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(Dimensions.PADDING_SIZE_OVER_LARGE),
                 bottomRight: Radius.circular(Dimensions.PADDING_SIZE_OVER_LARGE))),
             padding: const EdgeInsets.symmetric(vertical:Dimensions.PADDING_SIZE_EXTRA_SMALL),

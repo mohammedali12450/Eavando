@@ -72,7 +72,7 @@ class BottomCartView extends StatelessWidget {
             alignment: Alignment.center,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: ColorResources.getPrimary(context),
+              color: Theme.of(context).buttonColor,
             ),
             child: Text(
               getTranslated('add_to_cart', context),

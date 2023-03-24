@@ -33,7 +33,7 @@ class CustomAppBar extends StatelessWidget {
 
           isBackButtonExist ? IconButton(
             icon: Icon(Icons.arrow_back_ios, size: 20,
-                color: Provider.of<ThemeProvider>(context).darkTheme ? Colors.white : Colors.black),
+                color: Provider.of<ThemeProvider>(context).darkTheme ? Colors.white : Theme.of(context).primaryColor),
             onPressed: () => onBackPressed != null ? onBackPressed() : Navigator.of(context).pop(),
           ) : SizedBox.shrink(),
           SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
@@ -41,7 +41,7 @@ class CustomAppBar extends StatelessWidget {
           Expanded(
             child: Text(
               title, style: titilliumRegular.copyWith(fontSize: 20,
-              color: Provider.of<ThemeProvider>(context).darkTheme ? Colors.white : Colors.black,),
+              color: Provider.of<ThemeProvider>(context).darkTheme ? Colors.white : Theme.of(context).primaryColor),
               maxLines: 1, overflow: TextOverflow.ellipsis,
             ),
           ),

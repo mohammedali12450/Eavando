@@ -51,16 +51,23 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       },
       child: Scaffold(
         key: _scaffoldKey,
-        bottomNavigationBar: BottomNavigationBar(
-          selectedItemColor: Theme.of(context).colorScheme.secondary,
-          unselectedItemColor: Theme.of(context).primaryColor,
-          showUnselectedLabels: true,
-          currentIndex: _pageIndex,
-          type: BottomNavigationBarType.fixed,
-          items: _getBottomWidget(singleVendor),
-          onTap: (int index) {
-            _setPage(index);
-          },
+        bottomNavigationBar: ClipRRect(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20)
+          ),
+          child: BottomNavigationBar(
+            backgroundColor: Theme.of(context).primaryColor.withOpacity(0.9),
+            selectedItemColor: Theme.of(context).colorScheme.primary ,
+            unselectedItemColor: Colors.white.withOpacity(0.5),
+            showUnselectedLabels: true,
+            currentIndex: _pageIndex,
+            type: BottomNavigationBarType.fixed,
+            items: _getBottomWidget(singleVendor),
+            onTap: (int index) {
+              _setPage(index);
+            },
+          ),
         ),
         body: PageView.builder(
           controller: _pageController,
@@ -78,7 +85,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     return BottomNavigationBarItem(
       icon: Image.asset(
         icon,
-        color: index == _pageIndex ? Theme.of(context).colorScheme.secondary : Theme.of(context).primaryColor,
+        color: index == _pageIndex ? Theme.of(context).colorScheme.primary : Colors.white.withOpacity(0.5),
         height: 25,
         width: 25,
       ),

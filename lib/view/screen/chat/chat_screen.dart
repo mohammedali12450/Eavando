@@ -62,6 +62,7 @@ class ChatScreen extends StatelessWidget {
                           child: TextField(
                             controller: _controller,
                             style: titilliumRegular,
+                            textAlignVertical: TextAlignVertical.center,
                             keyboardType: TextInputType.multiline,
                             maxLines: null,
                             expands: true,
@@ -90,7 +91,7 @@ class ChatScreen extends StatelessWidget {
                           },
                           child: Icon(
                             Icons.send,
-                            color: Provider.of<ChatProvider>(context).isSendButtonActive ? Theme.of(context).primaryColor : ColorResources.HINT_TEXT_COLOR,
+                            color: Provider.of<ChatProvider>(context).isSendButtonActive ? Theme.of(context).primaryColor : Theme.of(context).colorScheme.primary,
                             size: Dimensions.ICON_SIZE_DEFAULT,
                           ),
                         ),

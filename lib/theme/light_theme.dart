@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 ThemeData light = ThemeData(
   fontFamily: 'TitilliumWeb',
   primaryColor: Color(0XFF605C56),
+  buttonColor: Color(0XFFF8A606),
   brightness: Brightness.light,
   highlightColor: Colors.white,
   hintColor: Color(0xFF9E9E9E),

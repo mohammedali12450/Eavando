@@ -60,7 +60,8 @@ class RecommendedProductView extends StatelessWidget {
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.only(bottomLeft: Radius.circular(Dimensions.PADDING_SIZE_EXTRA_SMALL),
                                       bottomRight: Radius.circular(Dimensions.PADDING_SIZE_EXTRA_SMALL)),
-                                  color: Theme.of(context).primaryColor
+                                  color: Theme.of(context).colorScheme.primary
+
                               ),
                             ),
                           ),

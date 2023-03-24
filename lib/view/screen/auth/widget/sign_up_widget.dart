@@ -170,7 +170,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
             children: [
               // for first and last name
               Container(
-                margin: EdgeInsets.only(left: Dimensions.MARGIN_SIZE_DEFAULT, right: Dimensions.MARGIN_SIZE_DEFAULT),
+                margin: EdgeInsets.only(left: Dimensions.MARGIN_SIZE_LARGE, right: Dimensions.MARGIN_SIZE_LARGE),
                 child: Row(
                   children: [
                     Expanded(child: CustomTextField(
@@ -197,7 +197,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
 
 
               Container(
-                margin: EdgeInsets.only(left: Dimensions.MARGIN_SIZE_DEFAULT, right: Dimensions.MARGIN_SIZE_DEFAULT,
+                margin: EdgeInsets.only(left: Dimensions.MARGIN_SIZE_LARGE, right: Dimensions.MARGIN_SIZE_LARGE,
                     top: Dimensions.MARGIN_SIZE_SMALL),
                 child: CustomTextField(
                   hintText: getTranslated('ENTER_YOUR_EMAIL', context),
@@ -211,8 +211,8 @@ class _SignUpWidgetState extends State<SignUpWidget> {
 
 
               Container(
-                margin: EdgeInsets.only(left: Dimensions.MARGIN_SIZE_DEFAULT,
-                    right: Dimensions.MARGIN_SIZE_DEFAULT, top: Dimensions.MARGIN_SIZE_SMALL),
+                margin: EdgeInsets.only(left: Dimensions.MARGIN_SIZE_LARGE,
+                    right: Dimensions.MARGIN_SIZE_LARGE, top: Dimensions.MARGIN_SIZE_SMALL),
                 child: Row(children: [
                   CodePickerWidget(
                     onChanged: (CountryCode countryCode) {
@@ -246,8 +246,8 @@ class _SignUpWidgetState extends State<SignUpWidget> {
 
 
               Container(
-                margin: EdgeInsets.only(left: Dimensions.MARGIN_SIZE_DEFAULT,
-                    right: Dimensions.MARGIN_SIZE_DEFAULT, top: Dimensions.MARGIN_SIZE_SMALL),
+                margin: EdgeInsets.only(left: Dimensions.MARGIN_SIZE_LARGE,
+                    right: Dimensions.MARGIN_SIZE_LARGE, top: Dimensions.MARGIN_SIZE_SMALL),
                 child: CustomPasswordTextField(
                   hintTxt: getTranslated('PASSWORD', context),
                   controller: _passwordController,
@@ -260,8 +260,8 @@ class _SignUpWidgetState extends State<SignUpWidget> {
 
 
               Container(
-                margin: EdgeInsets.only(left: Dimensions.MARGIN_SIZE_DEFAULT,
-                    right: Dimensions.MARGIN_SIZE_DEFAULT, top: Dimensions.MARGIN_SIZE_SMALL),
+                margin: EdgeInsets.only(left: Dimensions.MARGIN_SIZE_LARGE,
+                    right: Dimensions.MARGIN_SIZE_LARGE, top: Dimensions.MARGIN_SIZE_SMALL),
                 child: CustomPasswordTextField(
                   hintTxt: getTranslated('RE_ENTER_PASSWORD', context),
                   controller: _confirmPasswordController,

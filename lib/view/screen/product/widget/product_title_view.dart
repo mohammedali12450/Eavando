@@ -209,47 +209,52 @@ class _ProductTitleViewState extends State<ProductTitleView> {
                                       Expanded(
                                         child: Padding(
                                           padding: const EdgeInsets.all(2.0),
-                                          child: GridView.builder(
-                                            gridDelegate:
-                                                SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 6,
-                                              crossAxisSpacing: 5,
-                                              mainAxisSpacing: 5,
-                                              childAspectRatio: (1 / .7),
+                                          child: Container(
+                                            height: 30,
+                                            child: ListView.builder(
+                                              // gridDelegate:
+                                              //     SliverGridDelegateWithFixedCrossAxisCount(
+                                              //   crossAxisCount: 6,
+                                              //   crossAxisSpacing: 5,
+                                              //   mainAxisSpacing: 5,
+                                              //   childAspectRatio: (1 / .7),
+                                              // ),
+                                              scrollDirection: Axis.horizontal,
+                                              shrinkWrap: true,
+                                              physics:
+                                                  NeverScrollableScrollPhysics(),
+                                              itemCount: widget.productModel
+                                                  .choiceOptions[index]
+                                                  .options
+                                                  .length,
+                                              itemBuilder: (context, i) {
+                                                return Container(
+                                                  decoration: BoxDecoration(
+                                                    // border: Border.all(
+                                                    //     width: .3,
+                                                    //     color: Colors.grey),
+                                                    borderRadius:
+                                                        BorderRadius.circular(5),
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                        widget.productModel
+                                                            .choiceOptions[index]
+                                                            .options[i] + "  ",
+                                                            // .trim(),
+                                                        // maxLines: 2,
+                                                        // overflow:
+                                                        //     TextOverflow.ellipsis,
+                                                        style: titilliumRegular
+                                                            .copyWith(
+                                                          color: Theme.of(context).primaryColor,
+                                                          fontSize: Dimensions
+                                                              .FONT_SIZE_DEFAULT,
+                                                        )),
+                                                  ),
+                                                );
+                                              },
                                             ),
-                                            shrinkWrap: true,
-                                            physics:
-                                                NeverScrollableScrollPhysics(),
-                                            itemCount: widget.productModel
-                                                .choiceOptions[index]
-                                                .options
-                                                .length,
-                                            itemBuilder: (context, i) {
-                                              return Container(
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      width: .3,
-                                                      color: Colors.grey),
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                ),
-                                                child: Center(
-                                                  child: Text(
-                                                      widget.productModel
-                                                          .choiceOptions[index]
-                                                          .options[i]
-                                                          .trim(),
-                                                      maxLines: 2,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      style: titilliumRegular
-                                                          .copyWith(
-                                                        fontSize: Dimensions
-                                                            .FONT_SIZE_DEFAULT,
-                                                      )),
-                                                ),
-                                              );
-                                            },
                                           ),
                                         ),
                                       ),

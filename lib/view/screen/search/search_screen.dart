@@ -33,7 +33,7 @@ class SearchScreen extends StatelessWidget {
               child: Row(children: [
                 Padding(padding: EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT),
                   child: InkWell(onTap: ()=>Navigator.pop(context),
-                      child: Icon(Icons.arrow_back_ios)),),
+                      child: Icon(Icons.arrow_back_ios,color: Theme.of(context).primaryColor,)),),
 
 
                   Expanded(child: Container(
@@ -88,7 +88,7 @@ class SearchScreen extends StatelessWidget {
                                     vertical:Dimensions.PADDING_SIZE_LARGE ),
                                     child: Text(getTranslated('REMOVE', context),
                                       style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL,
-                                          color: Theme.of(context).primaryColor),)))
+                                          color: Theme.of(context).colorScheme.primary),)))
                           ],
                         ),
                         Expanded(

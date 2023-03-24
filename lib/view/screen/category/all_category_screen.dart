@@ -20,11 +20,17 @@ class AllCategoryScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: ColorResources.getIconBg(context),
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
+        title: Text(getTranslated('CATEGORY', context),),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios, size: 20, color: ColorResources.WHITE),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+    ),
       body: Column(
         children: [
-
-          CustomAppBar(title: getTranslated('CATEGORY', context)),
-
+          // CustomAppBar(title: getTranslated('CATEGORY', context)),
           Expanded(child: Consumer<CategoryProvider>(
             builder: (context, categoryProvider, child) {
               return categoryProvider.categoryList.length != 0 ? Row(children: [
@@ -70,8 +76,8 @@ class AllCategoryScreen extends StatelessWidget {
                       return Ink(
                         color: Theme.of(context).highlightColor,
                         child: ListTile(
-                          title: Text(getTranslated('all', context), style: titilliumSemiBold, maxLines: 2, overflow: TextOverflow.ellipsis),
-                          trailing: Icon(Icons.navigate_next),
+                          title: Text(getTranslated('all', context), style: titilliumSemiBold.copyWith(color: Theme.of(context).primaryColor), maxLines: 2, overflow: TextOverflow.ellipsis),
+                          trailing: Icon(Icons.navigate_next,color: Theme.of(context).colorScheme.primary,),
                           onTap: () {
                             Navigator.push(context, MaterialPageRoute(builder: (_) => BrandAndCategoryProductScreen(
                               isBrand: false,
@@ -191,7 +197,7 @@ class CategoryItem extends StatelessWidget {
     return Container(
       width: 100,
       height: 100,
-      margin: EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL, horizontal: 2),
+      margin: EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL, horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: isSelected ? ColorResources.getPrimary(context) : null,

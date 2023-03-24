@@ -165,9 +165,10 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                       },
 
                       ///suffixIcon is of type Icon
-                      child: widget.suffixIcon ?? const Icon(
+                      child: widget.suffixIcon ?? Icon(
                         Icons.close,
                         size: 20.0,
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
                     builder: (context, widget) {
@@ -213,7 +214,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
 
                     ///style is of type TextStyle, the default is just a color black
                     style: widget.style ?? const TextStyle(color: Colors.black),
-                    cursorColor: Colors.black,
+                    cursorColor: Theme.of(context).colorScheme.primary,
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.only(bottom: 5),
                       isDense: true,
@@ -253,6 +254,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                     : Icon(
                   toggle == 1 ? Icons.arrow_back_ios : Icons.search,
                   size: 20.0,
+                  color: Theme.of(context).primaryColor,
                 ),
                 onPressed: () {
                   setState(

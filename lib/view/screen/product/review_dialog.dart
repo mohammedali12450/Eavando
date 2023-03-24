@@ -58,7 +58,7 @@ class _ReviewBottomSheetState extends State<ReviewBottomSheet> {
               padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: ColorResources.getLowGreen(context),
+                color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
                 borderRadius: BorderRadius.circular(15),
               ),
               child: ListView.builder(
@@ -127,7 +127,7 @@ class _ReviewBottomSheetState extends State<ReviewBottomSheet> {
                             Icon(Icons.cloud_upload_outlined, color: Theme.of(context).primaryColor),
                             CustomPaint(
                               size: Size(100, 40),
-                              foregroundPainter: new MyPainter(completeColor: ColorResources.getColombiaBlue(context), width: 2),
+                              foregroundPainter: new MyPainter(completeColor: ColorResources.getYellow(context), width: 2),
                             ),
                           ],
                         ),

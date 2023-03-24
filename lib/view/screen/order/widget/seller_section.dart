@@ -16,7 +16,7 @@ class SellerSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: Dimensions.MARGIN_SIZE_EXTRA_LARGE),
+      padding: EdgeInsets.symmetric(horizontal: Dimensions.MARGIN_SIZE_DEFAULT),
       color: Theme.of(context).highlightColor,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -43,7 +43,7 @@ class SellerSection extends StatelessWidget {
                     style: titilliumRegular.copyWith(color: ColorResources.HINT_TEXT_COLOR),
                   ),
                   SizedBox(width: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                  Icon(Icons.chat, color: Theme.of(context).primaryColor, size: 20),
+                  Icon(Icons.chat, color: Theme.of(context).colorScheme.primary, size: 20),
                 ]),
               ),
             ),

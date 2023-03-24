@@ -25,7 +25,7 @@ class SearchProductWidget extends StatelessWidget {
               children: [
                 TextSpan(text: '${getTranslated('searched_item', context)}',
                     style: robotoBold.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE,
-                    color: ColorResources.getReviewRattingColor(context))),
+                    color: Theme.of(context).colorScheme.primary)),
 
                 TextSpan(text: '(${products.length} ' + '${getTranslated('item_found', context)})'),
               ],

@@ -137,7 +137,7 @@ class _CartScreenState extends State<CartScreen> {
                                 fontSize: Dimensions.FONT_SIZE_DEFAULT),
                             ),
                             Text(PriceConverter.convertPrice(context, amount+shippingAmount), style: titilliumSemiBold.copyWith(
-                                color: Theme.of(context).primaryColor,fontSize: Dimensions.FONT_SIZE_LARGE),
+                                color: Theme.of(context).colorScheme.primary,fontSize: Dimensions.FONT_SIZE_LARGE),
                             ),
                           ],
                         ))),
@@ -175,7 +175,7 @@ class _CartScreenState extends State<CartScreen> {
 
                     child: Container(width: MediaQuery.of(context).size.width/3.5,
                       decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
+                        color: Theme.of(context).buttonColor,
                         borderRadius: BorderRadius.circular(Dimensions.PADDING_SIZE_SMALL),
                       ),
                       child: Center(
@@ -226,12 +226,12 @@ class _CartScreenState extends State<CartScreen> {
                                 padding: EdgeInsets.only(bottom: Dimensions.PADDING_SIZE_SMALL),
                                 child: Column(crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      sellerGroupList[index].shopInfo.isNotEmpty ? Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(sellerGroupList[index].shopInfo,
-                                            textAlign: TextAlign.end, style: titilliumSemiBold.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE,
-                                            )),
-                                      ) : SizedBox(),
+                                      // sellerGroupList[index].shopInfo.isNotEmpty ? Padding(
+                                      //   padding: const EdgeInsets.all(8.0),
+                                      //   child: Text(sellerGroupList[index].shopInfo,
+                                      //       textAlign: TextAlign.end, style: titilliumSemiBold.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE,
+                                      //       )),
+                                      // ) : SizedBox(),
                                       Card(
                                         child: Container(
                                           padding: EdgeInsets.only(bottom: Dimensions.PADDING_SIZE_LARGE),
@@ -326,7 +326,7 @@ class _CartScreenState extends State<CartScreen> {
                         child: Container(
                           decoration: BoxDecoration(
                             border: Border.all(width: 0.5,color: Colors.grey),
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            // borderRadius: BorderRadius.all(Radius.circular(10)),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),

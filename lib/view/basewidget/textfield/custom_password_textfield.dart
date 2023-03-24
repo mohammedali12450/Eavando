@@ -38,7 +38,7 @@ class _CustomPasswordTextFieldState extends State<CustomPasswordTextField> {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(6),
         child: TextFormField(
-          cursorColor: Theme.of(context).primaryColor,
+          cursorColor: Theme.of(context).colorScheme.primary,
           controller: widget.controller,
           obscureText: _obscureText,
           focusNode: widget.focusNode,
@@ -60,7 +60,7 @@ class _CustomPasswordTextFieldState extends State<CustomPasswordTextField> {
               isDense: true,
               filled: true,
               fillColor: Theme.of(context).highlightColor,
-              focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).primaryColor)),
+              focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).colorScheme.primary)),
               hintStyle: titilliumRegular.copyWith(color: Theme.of(context).hintColor),
               border: InputBorder.none),
         ),

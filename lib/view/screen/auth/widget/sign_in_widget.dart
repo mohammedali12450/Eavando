@@ -154,19 +154,19 @@ class _SignInWidgetState extends State<SignInWidget> {
                   Consumer<AuthProvider>(
                     builder: (context, authProvider, child) => Checkbox(
                       checkColor: ColorResources.WHITE,
-                      activeColor: Theme.of(context).primaryColor,
+                      activeColor: Theme.of(context).colorScheme.primary,
                       value: authProvider.isRemember,
                       onChanged: authProvider.updateRemember,),),
 
 
-                  Text(getTranslated('REMEMBER', context), style: titilliumRegular),
+                  Text(getTranslated('REMEMBER', context), style: titilliumRegular.copyWith(color: Theme.of(context).primaryColor)),
                 ],),
 
                   InkWell(
                     onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ForgetPasswordScreen())),
                     child: Text(getTranslated('FORGET_PASSWORD', context),
                         style: titilliumRegular.copyWith(
-                        color: ColorResources.getLightSkyBlue(context))),
+                        color: Theme.of(context).colorScheme.primary)),
                   ),
                 ],
               ),
@@ -175,7 +175,7 @@ class _SignInWidgetState extends State<SignInWidget> {
 
 
             Container(
-              margin: EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 30),
+              margin: EdgeInsets.only( bottom: 20, top: 30),
               child: Provider.of<AuthProvider>(context).isLoading ?
               Center(
                 child: CircularProgressIndicator(
@@ -189,7 +189,7 @@ class _SignInWidgetState extends State<SignInWidget> {
             SizedBox(width: Dimensions.PADDING_SIZE_DEFAULT),
 
             Center(child: Text(getTranslated('OR', context),
-                style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_DEFAULT))),
+                style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_DEFAULT,color: Theme.of(context).primaryColor))),
 
 
 

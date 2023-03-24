@@ -44,10 +44,10 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
       key: _key,
 
       body: Container(
-        decoration: BoxDecoration(
-          image: Provider.of<ThemeProvider>(context).darkTheme ? null :
-          DecorationImage(image: AssetImage(Images.background), fit: BoxFit.fill),
-        ),
+        // decoration: BoxDecoration(
+        //   image: Provider.of<ThemeProvider>(context).darkTheme ? null :
+        //   DecorationImage(image: AssetImage(Images.background), fit: BoxFit.fill),
+        // ),
 
 
         child: Column(
@@ -55,7 +55,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
 
             SafeArea(child: Align(
               alignment: Alignment.centerLeft,
-              child: IconButton(icon: Icon(Icons.arrow_back_ios_outlined),
+              child: IconButton(icon: Icon(Icons.arrow_back_ios_outlined,color: Theme.of(context).primaryColor),
                 onPressed: () => Navigator.pop(context),
               ),
             )),
@@ -65,27 +65,36 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
 
                 Padding(
                   padding: EdgeInsets.all(50),
-                  child: Image.asset(Images.logo_with_name_image, height: 150, width: 200),
+                  child: Image.asset(Images.eavando_logo, height: 150, width: 250),
                 ),
-                Text(getTranslated('FORGET_PASSWORD', context), style: titilliumSemiBold),
+                Container(
+                  padding: EdgeInsets.all(Dimensions.MARGIN_SIZE_SMALL),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(getTranslated('FORGET_PASSWORD', context), style: titilliumSemiBold),
 
+                      Row(children: [
+                        Expanded(flex: 1, child: Divider(thickness: 1,
+                            color: Theme.of(context).primaryColor)),
+                        Expanded(flex: 2, child: Divider(thickness: 0.2,
+                            color: Theme.of(context).primaryColor)),
+                      ]),
 
-                Row(children: [
-                  Expanded(flex: 1, child: Divider(thickness: 1,
-                      color: Theme.of(context).primaryColor)),
-                  Expanded(flex: 2, child: Divider(thickness: 0.2,
-                      color: Theme.of(context).primaryColor)),
-                ]),
+                      SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
 
-                Provider.of<SplashProvider>(context,listen: false).configModel.forgetPasswordVerification == "phone"?
-                Text(getTranslated('enter_phone_number_for_password_reset', context),
-                    style: titilliumRegular.copyWith(color: Theme.of(context).hintColor,
-                        fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL)):
-                Text(getTranslated('enter_email_for_password_reset', context),
-                    style: titilliumRegular.copyWith(color: Theme.of(context).hintColor,
-                        fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL)),
+                      Provider.of<SplashProvider>(context,listen: false).configModel.forgetPasswordVerification == "phone"?
+                      Text(getTranslated('enter_phone_number_for_password_reset', context),
+                          style: titilliumRegular.copyWith(color: Theme.of(context).hintColor,
+                              fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL)):
+                      Text(getTranslated('enter_email_for_password_reset', context),
+                          style: titilliumRegular.copyWith(color: Theme.of(context).hintColor,
+                              fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL)),
+                    ],
+                  ),
+                ),
+
                 SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
-
 
                 Provider.of<SplashProvider>(context,listen: false).configModel.forgetPasswordVerification == "phone"?
                 Row(children: [
@@ -102,89 +111,98 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   ),
 
 
-                  Expanded(child: CustomTextField(
-                    hintText: getTranslated('number_hint', context),
-                    controller: _numberController,
-                    focusNode: _numberFocus,
-                    isPhoneNumber: true,
-                    textInputAction: TextInputAction.done,
-                    textInputType: TextInputType.phone,
+                  Expanded(child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: Dimensions.MARGIN_SIZE_SMALL),
+                    child: CustomTextField(
+                      hintText: getTranslated('number_hint', context),
+                      controller: _numberController,
+                      focusNode: _numberFocus,
+                      isPhoneNumber: true,
+                      textInputAction: TextInputAction.done,
+                      textInputType: TextInputType.phone,
+                    ),
                   )),
                 ]) :
 
-                CustomTextField(
-                  controller: _controller,
-                  hintText: getTranslated('ENTER_YOUR_EMAIL', context),
-                  textInputAction: TextInputAction.done,
-                  textInputType: TextInputType.emailAddress,
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: Dimensions.MARGIN_SIZE_SMALL),
+                  child: CustomTextField(
+                    controller: _controller,
+                    hintText: getTranslated('ENTER_YOUR_EMAIL', context),
+                    textInputAction: TextInputAction.done,
+                    textInputType: TextInputType.emailAddress,
+                  ),
                 ),
                 SizedBox(height: 100),
 
 
                 Builder(
                   builder: (context) => !Provider.of<AuthProvider>(context).isLoading ?
-                  CustomButton(
-                    buttonText: Provider.of<SplashProvider>(context,listen: false).configModel.forgetPasswordVerification == "phone"?
-                    getTranslated('send_otp', context):getTranslated('send_email', context),
-                    onTap: () {
-                      if(Provider.of<SplashProvider>(context,listen: false).configModel.forgetPasswordVerification == "phone"){
-                        if(_numberController.text.isEmpty) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(getTranslated('PHONE_MUST_BE_REQUIRED', context)),
-                                backgroundColor: Colors.red,)
-                          );
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: Dimensions.MARGIN_SIZE_SMALL),
+                    child: CustomButton(
+                      buttonText: Provider.of<SplashProvider>(context,listen: false).configModel.forgetPasswordVerification == "phone"?
+                      getTranslated('send_otp', context):getTranslated('send_email', context),
+                      onTap: () {
+                        if(Provider.of<SplashProvider>(context,listen: false).configModel.forgetPasswordVerification == "phone"){
+                          if(_numberController.text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(getTranslated('PHONE_MUST_BE_REQUIRED', context)),
+                                  backgroundColor: Colors.red,)
+                            );
+
+                          }else{
+                            Provider.of<AuthProvider>(context, listen: false).
+                            forgetPassword(_countryDialCode+_numberController.text.trim()).then((value) {
+                              if(value.isSuccess) {
+                                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                                    builder: (_) => VerificationScreen('',
+                                        _countryDialCode +_numberController.text.trim(),'', fromForgetPassword: true)),
+                                        (route) => false);
+                              }else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text(getTranslated('input_valid_phone_number', context)),
+                                      backgroundColor: Colors.red,)
+                                );
+
+                              }
+                            });
+                          }
 
                         }else{
-                          Provider.of<AuthProvider>(context, listen: false).
-                          forgetPassword(_countryDialCode+_numberController.text.trim()).then((value) {
-                            if(value.isSuccess) {
-                              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                                  builder: (_) => VerificationScreen('',
-                                      _countryDialCode +_numberController.text.trim(),'', fromForgetPassword: true)),
-                                      (route) => false);
-                            }else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text(getTranslated('input_valid_phone_number', context)),
-                                    backgroundColor: Colors.red,)
-                              );
+                          if(_controller.text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(getTranslated('EMAIL_MUST_BE_REQUIRED', context)),
+                                  backgroundColor: Colors.red,)
+                            );
+                          }
+                          else {
+                            Provider.of<AuthProvider>(context, listen: false).forgetPassword(_controller.text).then((value) {
+                              if(value.isSuccess) {
+                                FocusScopeNode currentFocus = FocusScope.of(context);
+                                if (!currentFocus.hasPrimaryFocus) {
+                                  currentFocus.unfocus();
+                                }
+                                _controller.clear();
 
-                            }
-                          });
-                        }
-
-                      }else{
-                        if(_controller.text.isEmpty) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(getTranslated('EMAIL_MUST_BE_REQUIRED', context)),
-                                backgroundColor: Colors.red,)
-                          );
-                        }
-                        else {
-                          Provider.of<AuthProvider>(context, listen: false).forgetPassword(_controller.text).then((value) {
-                            if(value.isSuccess) {
-                              FocusScopeNode currentFocus = FocusScope.of(context);
-                              if (!currentFocus.hasPrimaryFocus) {
-                                currentFocus.unfocus();
+                                showAnimatedDialog(context, MyDialog(
+                                  icon: Icons.send,
+                                  title: getTranslated('sent', context),
+                                  description: getTranslated('recovery_link_sent', context),
+                                  rotateAngle: 5.5,
+                                ), dismissible: false);
+                              }else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text(value.message),backgroundColor: Colors.red,)
+                                );
                               }
-                              _controller.clear();
-
-                              showAnimatedDialog(context, MyDialog(
-                                icon: Icons.send,
-                                title: getTranslated('sent', context),
-                                description: getTranslated('recovery_link_sent', context),
-                                rotateAngle: 5.5,
-                              ), dismissible: false);
-                            }else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text(value.message),backgroundColor: Colors.red,)
-                              );
-                            }
-                          });
+                            });
+                          }
                         }
-                      }
 
 
-                    },
+                      },
+                    ),
                   ) : Center(child: CircularProgressIndicator(
                       valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor))),
                 ),

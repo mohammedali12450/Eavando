@@ -105,12 +105,12 @@ class TitleRow extends StatelessWidget {
                     isDetailsPage == null
                         ? Text(getTranslated('VIEW_ALL', context),
                         style: titilliumRegular.copyWith(
-                          color: ColorResources.getArrowButtonColor(context),
+                          color: Theme.of(context).colorScheme.primary,
                           fontSize: Dimensions.FONT_SIZE_DEFAULT,
                         ))
                         : SizedBox.shrink(),
                     Icon(Icons.arrow_forward_outlined,
-                      color: isDetailsPage == null ? ColorResources.getArrowButtonColor(context) : Theme.of(context).hintColor,
+                      color: isDetailsPage == null ? Theme.of(context).colorScheme.primary : Theme.of(context).hintColor,
                       size: Dimensions.FONT_SIZE_DEFAULT,
                     ),
                   ]),

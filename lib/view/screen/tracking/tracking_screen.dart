@@ -47,7 +47,7 @@ class TrackingScreen extends StatelessWidget {
                           color: ColorResources.colorMap[50],),
 
 
-                        Container(width: 70, height: 1,
+                        Container(width: 80, height: 1,
                           margin: EdgeInsets.only(top: Dimensions.MARGIN_SIZE_SMALL),
                           decoration: BoxDecoration(color: ColorResources.getPrimary(context),
                               borderRadius: BorderRadius.circular(1)),),

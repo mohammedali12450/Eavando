@@ -95,17 +95,17 @@ class _SplashScreenState extends State<SplashScreen> {
           Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
-            color: Provider.of<ThemeProvider>(context).darkTheme ? Colors.black : ColorResources.getPrimary(context),
-            child: CustomPaint(
-              painter: SplashPainter(),
-            ),
+            // color: Provider.of<ThemeProvider>(context).darkTheme ? Colors.black : ColorResources.getPrimary(context),
+            // child: CustomPaint(
+            //   painter: SplashPainter(),
+            // ),
           ),
           Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Image.asset(Images.splashScreenLogo, height: 250.0, fit: BoxFit.scaleDown,
-                  width: 250.0,),
+                Image.asset(Images.eavando_logo, height: 300.0, fit: BoxFit.scaleDown,
+                  width: 300.0,),
               ],
             ),
           ),

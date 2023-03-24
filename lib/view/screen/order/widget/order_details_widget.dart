@@ -303,7 +303,7 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
               );
             }
           ) : SizedBox(),
-          SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
+          // SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
         ],
       ),
     );

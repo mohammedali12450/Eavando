@@ -120,7 +120,7 @@ class _HomePageState extends State<HomePage> {
                     centerTitle: false,
                     automaticallyImplyLeading: false,
                     backgroundColor: Theme.of(context).highlightColor,
-                    title: Image.asset(Images.logo_with_name_image, height: 35),
+                    title: Image.asset(Images.eavando_logo, height: 35),
                     actions: [
                       Padding(
                         padding: const EdgeInsets.only(right: 12.0),
@@ -359,13 +359,13 @@ class _HomePageState extends State<HomePage> {
                           ),
                           SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
                           LatestProductView(scrollController: _scrollController),
-                          SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                          // SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
 
 
 
-                          //Home category
-                          HomeCategoryProductView(isHomePage: true),
-                          SizedBox(height: Dimensions.HOME_PAGE_PADDING),
+                          // //Home category
+                          // HomeCategoryProductView(isHomePage: true),
+                          // SizedBox(height: Dimensions.HOME_PAGE_PADDING),
 
 
 

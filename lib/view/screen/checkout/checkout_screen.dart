@@ -79,7 +79,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         height: 60,
         padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_LARGE, vertical: Dimensions.PADDING_SIZE_DEFAULT),
         decoration: BoxDecoration(
-          color: ColorResources.getPrimary(context),
+          color: Theme.of(context).buttonColor,
          ),
         child: Center(
           child: Consumer<OrderProvider>(
@@ -211,13 +211,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                   Row(mainAxisAlignment:MainAxisAlignment.start, crossAxisAlignment:CrossAxisAlignment.start,
                                     children: [
                                       Expanded(child: Text('${getTranslated('shipping_address', context)}',
-                                          style: titilliumRegular.copyWith(fontWeight: FontWeight.w600))),
+                                          style: titilliumRegular.copyWith(fontWeight: FontWeight.w600,color: Theme.of(context).primaryColor))),
 
 
                                       InkWell(
                                         onTap: () => Navigator.of(context).push(
                                             MaterialPageRoute(builder: (BuildContext context) => SavedAddressListScreen())),
-                                        child: Image.asset(Images.address, scale: 3),
+                                        child: Image.asset(Images.address, scale: 3,color: Theme.of(context).colorScheme.primary),
                                       ),
 
                                     ],
@@ -270,13 +270,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                   Row(mainAxisAlignment:MainAxisAlignment.start, crossAxisAlignment:CrossAxisAlignment.start,
                                     children: [
                                       Expanded(child: Text('${getTranslated('billing_address', context)}',
-                                          style: titilliumRegular.copyWith(fontWeight: FontWeight.w600))),
+                                          style: titilliumRegular.copyWith(fontWeight: FontWeight.w600,color: Theme.of(context).primaryColor))),
 
 
                                       InkWell(
                                         onTap: () => Navigator.of(context).push(MaterialPageRoute(
                                             builder: (BuildContext context) => SavedBillingAddressListScreen())),
-                                        child: Image.asset(Images.address, scale: 3),
+                                        child: Image.asset(Images.address, scale: 3,color: Theme.of(context).colorScheme.primary),
                                       ),
                                     ],
                                   ),
@@ -360,7 +360,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                   ),
                                   SizedBox(width: Dimensions.PADDING_SIZE_SMALL,),
                                   Text(PriceConverter.convertPrice(context, Provider.of<CartProvider>(context,listen: false).cartList[index].price),
-                                    style: titilliumSemiBold.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE),),
+                                    style: titilliumSemiBold.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE,color: Theme.of(context).colorScheme.primary),),
 
                                 ],
                               ),
@@ -392,23 +392,23 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   ),
                   child: Row(children: [
                     Expanded(
-                      child: SizedBox(
+                      child: Container(
                         height: 50,
                         child: Padding(
-                          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_SMALL,bottom: 5),
+                          padding: const EdgeInsets.all(0),
                           child: Center(
                             child: TextField(controller: _controller, decoration: InputDecoration(
                               hintText: 'Have a coupon?',
                               hintStyle: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_DEFAULT),
-                              filled: false,
-                              fillColor: ColorResources.getIconBg(context),
+                              filled: true,
+                              fillColor: Colors.white,
                               border: InputBorder.none,
                             )),
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
+                    // SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
                     !Provider.of<CouponProvider>(context).isLoading ? InkWell(
                       onTap: () {
                         if(_controller.text.isNotEmpty) {
@@ -446,7 +446,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               // Total bill
               Container(
                 margin: EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
-                padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                padding: EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
                 color: Theme.of(context).highlightColor,
                 child: Consumer<OrderProvider>(
                   builder: (context, order, child) {
@@ -473,7 +473,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
                 height: 100,
                 margin: EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
-                padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                padding: EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
                 color: Theme.of(context).highlightColor,
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -492,7 +492,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
               Container(
                 margin: EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
-                padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                padding: EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
                 color: Theme.of(context).highlightColor,
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

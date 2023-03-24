@@ -132,7 +132,7 @@ class _TopSellerProductScreenState extends State<TopSellerProductScreen> {
                                                   )));
                                         }
                                       },
-                                      child : Image.asset(Images.chat_image, height: Dimensions.ICON_SIZE_DEFAULT),
+                                      child : Image.asset(Images.chat_image, height: Dimensions.ICON_SIZE_DEFAULT,color: Theme.of(context).colorScheme.primary),
                                     ),
                                   ],
                                 ),

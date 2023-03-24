@@ -32,9 +32,9 @@ class CustomButton extends StatelessWidget {
               Color(0xffFE961C),
             ]):
             LinearGradient(colors: [
-              Theme.of(context).primaryColor,
-              Theme.of(context).primaryColor,
-              Theme.of(context).primaryColor,
+              Theme.of(context).buttonColor,
+              Theme.of(context).buttonColor,
+              Theme.of(context).buttonColor,
             ]),
             borderRadius: BorderRadius.circular(isBorder? Dimensions.PADDING_SIZE_EXTRA_SMALL : Dimensions.PADDING_SIZE_SMALL)),
         child: Text(buttonText,

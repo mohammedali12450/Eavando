@@ -4,6 +4,7 @@ import 'package:flutter_axtro_soft_ecommerce/helper/price_converter.dart';
 import 'package:flutter_axtro_soft_ecommerce/localization/language_constrants.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/cart_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/theme_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/utill/color_resources.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/dimensions.dart';
 import 'package:provider/provider.dart';
 
@@ -52,9 +53,9 @@ class _ShippingMethodBottomSheetState extends State<ShippingMethodBottomSheet> {
               height: 25,
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Theme.of(context).highlightColor,
+                  color: ColorResources.getRed(context),
                   boxShadow: [BoxShadow(color: Colors.grey[Provider.of<ThemeProvider>(context).darkTheme ? 700 : 200], spreadRadius: 1, blurRadius: 5)]),
-              child: Icon(Icons.clear, size: Dimensions.ICON_SIZE_SMALL),
+              child: Icon(Icons.clear, size: Dimensions.ICON_SIZE_SMALL,color: Colors.white),
             ),
           ),
         ),
