@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 
 class ProductImageScreen extends StatefulWidget {
   final String title;
-  final Map<String,List<String>> imageList;
+  final List<dynamic> imageList;
   ProductImageScreen({@required this.title, @required this.imageList});
 
   @override
@@ -42,8 +42,8 @@ class _ProductImageScreenState extends State<ProductImageScreen> {
                 scrollPhysics: const BouncingScrollPhysics(),
                 builder: (BuildContext context, int index) {
                   return PhotoViewGalleryPageOptions(
-                    imageProvider: NetworkImage('${Provider.of<SplashProvider>(context,listen: false).baseUrls.productImageUrl}/${widget.imageList[index]}'),
-                    initialScale: PhotoViewComputedScale.contained,
+                    imageProvider: NetworkImage('${Provider.of<SplashProvider>(context,listen: false).baseUrls.productImageUrl}/${widget.imageList[index]}',),
+                    initialScale: PhotoViewComputedScale.covered,
                     heroAttributes: PhotoViewHeroAttributes(tag: index.toString()),
                   );
                 },
@@ -68,11 +68,11 @@ class _ProductImageScreenState extends State<ProductImageScreen> {
               ),
 
               pageIndex != 0 ? Positioned(
-                left: 5, top: 0, bottom: 0,
+                left: 10, top: 0, bottom: 0,
                 child: Container(
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: Colors.grey,
+                    color: Theme.of(context).buttonColor,
                     shape: BoxShape.circle,
                   ),
                   child: InkWell(
@@ -81,17 +81,17 @@ class _ProductImageScreenState extends State<ProductImageScreen> {
                         _pageController.animateToPage(pageIndex-1, duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
                       }
                     },
-                    child: Icon(Icons.chevron_left_outlined, size: 40),
+                    child: Icon(Icons.chevron_left_outlined, size: 35),
                   ),
                 ),
               ) : SizedBox.shrink(),
 
               pageIndex != widget.imageList.length-1 ? Positioned(
-                right: 5, top: 0, bottom: 0,
+                right: 10, top: 0, bottom: 0,
                 child: Container(
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: Colors.grey,
+                    color: Theme.of(context).buttonColor,
                     shape: BoxShape.circle,
                   ),
                   child: InkWell(
@@ -100,7 +100,7 @@ class _ProductImageScreenState extends State<ProductImageScreen> {
                         _pageController.animateToPage(pageIndex+1, duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
                       }
                     },
-                    child: Icon(Icons.chevron_right_outlined, size: 40),
+                    child: Icon(Icons.chevron_right_outlined, size: 35),
                   ),
                 ),
               ) : SizedBox.shrink(),
