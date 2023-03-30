@@ -85,13 +85,14 @@ class _MoreScreenState extends State<MoreScreen> {
           right: Dimensions.PADDING_SIZE_SMALL,
           child: Consumer<ProfileProvider>(
             builder: (context, profile, child) {
-              return Row(children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_LARGE),
-                  child: Image.asset(Images.logo_with_name_image_white, height: 35),
+              return Row(
+                  children: [
+                    Padding(
+                  padding: const EdgeInsets.only(top: Dimensions.HOME_PAGE_PADDING),
+                  child: Image.asset(Images.eavando_logo, height: 35),
                 ),
-                Expanded(child: SizedBox.shrink()),
-                InkWell(
+                    Expanded(child: SizedBox.shrink()),
+                    InkWell(
                   onTap: () {
                     if (isGuestMode) {
                       showAnimatedDialog(context, GuestDialog(), isFlip: true);
@@ -101,33 +102,36 @@ class _MoreScreenState extends State<MoreScreen> {
                       }
                     }
                   },
-                  child: Row(children: [
-                    Text(
-                        !isGuestMode
-                            ? profile.userInfoModel != null
-                                ? '${profile.userInfoModel.fName} ${profile.userInfoModel.lName}'
-                                : 'Full Name'
-                            : 'Guest',
-                        style: titilliumRegular.copyWith(color: ColorResources.WHITE)),
-                    SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
-                    isGuestMode
-                        ? CircleAvatar(child: Icon(Icons.person, size: 35))
-                        : profile.userInfoModel == null
-                            ? CircleAvatar(child: Icon(Icons.person, size: 35))
-                            : ClipRRect(
-                                borderRadius: BorderRadius.circular(15),
-                                child: FadeInImage.assetNetwork(
-                                  placeholder: Images.logo_image,
-                                  width: 35,
-                                  height: 35,
-                                  fit: BoxFit.fill,
-                                  image:
-                                      '${Provider.of<SplashProvider>(context, listen: false).baseUrls.customerImageUrl}/'
-                                      '${profile.userInfoModel.image}',
-                                  imageErrorBuilder: (c, o, s) => CircleAvatar(child: Icon(Icons.person, size: 35)),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: Dimensions.HOME_PAGE_PADDING),
+                    child: Row(children: [
+                      Text(
+                          !isGuestMode
+                              ? profile.userInfoModel != null
+                                  ? '${profile.userInfoModel.fName} ${profile.userInfoModel.lName}'
+                                  : 'Full Name'
+                              : 'Guest',
+                          style: titilliumRegular.copyWith(color: ColorResources.WHITE)),
+                      SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
+                      isGuestMode
+                          ? CircleAvatar(backgroundColor: Theme.of(context).buttonColor,child: Icon(Icons.person, size: 30,color: Colors.white,))
+                          : profile.userInfoModel == null
+                              ? CircleAvatar(backgroundColor: Theme.of(context).buttonColor,child: Icon(Icons.person, size: 30,color: Colors.white,))
+                              : ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: FadeInImage.assetNetwork(
+                                    placeholder: Images.placeholder,
+                                    width: 35,
+                                    height: 35,
+                                    fit: BoxFit.cover,
+                                    image:
+                                        '${Provider.of<SplashProvider>(context, listen: false).baseUrls.customerImageUrl}/'
+                                        '${profile.userInfoModel.image}',
+                                    imageErrorBuilder: (c, o, s) => CircleAvatar(backgroundColor: Theme.of(context).buttonColor,child: Icon(Icons.person, size: 30,color: Colors.white,)),
+                                  ),
                                 ),
-                              ),
-                  ]),
+                    ]),
+                  ),
                 ),
               ]);
             },
@@ -146,7 +150,7 @@ class _MoreScreenState extends State<MoreScreen> {
 
               // Top Row Items
               Container(
-                height: MediaQuery.of(context).size.width / 3.6,
+                height: MediaQuery.of(context).size.width / 4.5,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                   child: Row(
@@ -308,18 +312,18 @@ class _MoreScreenState extends State<MoreScreen> {
 
               ListTile(
                 leading: Image.asset(Images.logo_image,
-                    width: 25, height: 25, fit: BoxFit.fill, color: ColorResources.getPrimary(context)),
+                    width: 25, height: 25, fit: BoxFit.fill, color: Theme.of(context).colorScheme.primary),
                 title: Text(getTranslated('app_info', context),
-                    style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                    style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE,color: Theme.of(context).primaryColor)),
                 trailing: Text(AppConstants.APP_VERSION),
               ),
 
               isGuestMode
                   ? SizedBox()
                   : ListTile(
-                      leading: Icon(Icons.exit_to_app, color: ColorResources.getPrimary(context), size: 25),
+                      leading: Icon(Icons.exit_to_app, color: Theme.of(context).colorScheme.primary, size: 25),
                       title: Text(getTranslated('sign_out', context),
-                          style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                          style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE,color: Theme.of(context).primaryColor)),
                       onTap: () => showAnimatedDialog(context, SignOutConfirmationDialog(), isFlip: true),
                     ),
             ]),
@@ -353,8 +357,8 @@ class SquareButton extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
-            width: width / 4,
-            height: width / 4,
+            width: width / 5,
+            height: width / 5,
             padding: EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
@@ -366,8 +370,8 @@ class SquareButton extends StatelessWidget {
                 Image.asset(image, color: Theme.of(context).highlightColor),
                 hasCount
                     ? Positioned(
-                        top: -4,
-                        right: -4,
+                        top: -5,
+                        right: -5,
                         child: Consumer<CartProvider>(builder: (context, cart, child) {
                           return CircleAvatar(
                             radius: 7,
@@ -389,7 +393,7 @@ class SquareButton extends StatelessWidget {
           child: Text(title,
               maxLines: 1,
               overflow: TextOverflow.clip,
-              style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_DEFAULT)),
+              style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL),),
         ),
       ]),
     );
@@ -412,7 +416,7 @@ class TitleButton extends StatelessWidget {
         fit: BoxFit.fill,
         color: Theme.of(context).colorScheme.secondary,
       ),
-      title: Text(title, style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+      title: Text(title, style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE,color: Theme.of(context).primaryColor)),
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(builder: (_) => navigateTo),
