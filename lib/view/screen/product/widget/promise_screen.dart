@@ -12,7 +12,7 @@ class PromiseScreen extends StatelessWidget {
       children: [
       Expanded(child: Column(children: [
         Container(width: width, child: Image.asset(Images.seven_day_easy_return),),
-          Text(getTranslated('seven_days_return', context),maxLines: 2,
+          Text(getTranslated('fourteen_days_return', context),maxLines: 2,
             overflow: TextOverflow.ellipsis,textAlign: TextAlign.center,),],),
       ),
       SizedBox(width: Dimensions.PADDING_SIZE_DEFAULT,),
