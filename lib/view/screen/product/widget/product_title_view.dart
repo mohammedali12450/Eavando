@@ -221,8 +221,8 @@ class _ProductTitleViewState extends State<ProductTitleView> {
                                               // ),
                                               scrollDirection: Axis.horizontal,
                                               shrinkWrap: true,
-                                              physics:
-                                                  NeverScrollableScrollPhysics(),
+                                              // physics:
+                                              //     NeverScrollableScrollPhysics(),
                                               itemCount: widget.productModel
                                                   .choiceOptions[index]
                                                   .options

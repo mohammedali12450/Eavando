@@ -287,7 +287,7 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                               // ),
                               shrinkWrap: true,
                               scrollDirection: Axis.horizontal,
-                              physics: NeverScrollableScrollPhysics(),
+                              // physics: NeverScrollableScrollPhysics(),
                               itemCount: widget.product.choiceOptions[index].options.length,
                               itemBuilder: (ctx, i) {
                                 return InkWell(
