@@ -21,7 +21,7 @@ class LocalizationProvider extends ChangeNotifier {
 
   void setLanguage(Locale locale) {
     _locale = locale;
-    _isLtr = _locale.languageCode != 'ar';
+    _isLtr = _locale.languageCode != 'en';
     dioClient.updateHeader(null, locale.countryCode);
     for(int index=0; index<AppConstants.languages.length; index++) {
       if(AppConstants.languages[index].languageCode == locale.languageCode) {
@@ -36,7 +36,7 @@ class LocalizationProvider extends ChangeNotifier {
   _loadCurrentLanguage() async {
     _locale = Locale(sharedPreferences.getString(AppConstants.LANGUAGE_CODE) ?? AppConstants.languages[0].languageCode,
         sharedPreferences.getString(AppConstants.COUNTRY_CODE) ?? AppConstants.languages[0].countryCode);
-    _isLtr = _locale.languageCode != 'ar';
+    _isLtr = _locale.languageCode != 'en';
     for(int index=0; index<AppConstants.languages.length; index++) {
       if(AppConstants.languages[index].languageCode == locale.languageCode) {
         _languageIndex = index;
