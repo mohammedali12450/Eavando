@@ -13,7 +13,7 @@ class AddressListPage extends StatelessWidget {
       leading: Image.asset(
         address.addressType == 'Home' ? Images.home_image
             : address.addressType == 'Workplace' ? Images.bag : Images.more_image,
-        color: ColorResources.getSellerTxt(context), height: 30, width: 30,
+        color: Theme.of(context).colorScheme.secondary, height: 30, width: 30,
       ),
       title: Text(address.address, style: titilliumRegular),
     );

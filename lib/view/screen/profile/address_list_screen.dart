@@ -26,8 +26,8 @@ class AddressListScreen extends StatelessWidget {
       floatingActionButton: isGuestMode ? null : FloatingActionButton(
         onPressed: () => Navigator.of(context).push(MaterialPageRoute(
             builder: (BuildContext context) => AddNewAddressScreen(isBilling: false))),
-        child: Icon(Icons.add, color: Theme.of(context).highlightColor),
-        backgroundColor: ColorResources.getPrimary(context),
+        child: Icon(Icons.add, color: Colors.white),
+        backgroundColor: Theme.of(context).buttonColor,
       ),
       body: Column(
         children: [
@@ -46,7 +46,7 @@ class AddressListScreen extends StatelessWidget {
                   },
                   backgroundColor: Theme.of(context).primaryColor,
                   child: ListView.builder(
-                    padding: EdgeInsets.all(0),
+                    padding: EdgeInsets.all(10),
                     itemCount: profileProvider.shippingAddressList.length,
                     itemBuilder: (context, index) => Card(
                       child: Stack(
@@ -83,13 +83,13 @@ class AddressListScreen extends StatelessWidget {
                             child: Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5),topLeft: Radius.circular(5)),
-                                color: Theme.of(context).primaryColor,
+                                color: Theme.of(context).colorScheme.secondary,
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.all(5.0),
                                 child: Text(profileProvider.shippingAddressList[index].isBilling ==0?
                             getTranslated('shipping_address', context):getTranslated('billing_address', context),
-                                  style: robotoRegular.copyWith(fontSize: 8, color: Theme.of(context).cardColor),),
+                                  style: robotoRegular.copyWith(fontSize: 8, color: Colors.white),),
                               ),),
                           )
                         ],

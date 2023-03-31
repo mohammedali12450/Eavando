@@ -20,7 +20,7 @@ class SavedBillingAddressListScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => AddNewAddressScreen(isBilling: true))),
         child: Icon(Icons.add, color: Theme.of(context).highlightColor),
-        backgroundColor: ColorResources.getPrimary(context),
+        backgroundColor: Theme.of(context).buttonColor,
       ),
       appBar: AppBar(title: Text(getTranslated('BILLING_ADDRESS_LIST', context))),
       body: SafeArea(child: Consumer<ProfileProvider>(
@@ -45,7 +45,7 @@ class SavedBillingAddressListScreen extends StatelessWidget {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               color: ColorResources.getIconBg(context),
-                              border: index == Provider.of<OrderProvider>(context).billingAddressIndex ? Border.all(width: 2, color: Theme.of(context).primaryColor) : null,
+                              border: index == Provider.of<OrderProvider>(context).billingAddressIndex ? Border.all(width: 1, color: Theme.of(context).primaryColor) : null,
                             ),
                             child: AddressListPage(address: profile.billingAddressList[index]),
                           ),
