@@ -43,7 +43,7 @@ class WishListWidget extends StatelessWidget {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(Dimensions.PADDING_SIZE_EXTRA_SMALL),
                           child: FadeInImage.assetNetwork(
-                            placeholder: Images.placeholder, fit: BoxFit.scaleDown, width: 80, height: 80,
+                            placeholder: Images.placeholder, fit: BoxFit.cover, width: 80, height: 80,
                             image: '${Provider.of<SplashProvider>(context, listen: false).baseUrls.productThumbnailUrl}/${product.thumbnail}',
                             imageErrorBuilder: (c, o, s) => Image.asset(Images.placeholder, fit: BoxFit.scaleDown, width: 80, height: 80),
                           ),
@@ -79,7 +79,7 @@ class WishListWidget extends StatelessWidget {
                         Row(children: [
                           Expanded(
                             child: Text(product.name ?? '',maxLines: 1,overflow: TextOverflow.ellipsis,
-                              style: titilliumSemiBold.copyWith(color: ColorResources.getReviewRattingColor(context),
+                              style: titilliumSemiBold.copyWith(color: ColorResources.getPrimary(context),
                                 fontSize: Dimensions.FONT_SIZE_DEFAULT,
                               ),
                             ),
@@ -125,7 +125,7 @@ class WishListWidget extends StatelessWidget {
                           Text(PriceConverter.convertPrice(context, product.unitPrice,
                               discount: product.discount,discountType: product.discountType),
                               maxLines: 1,overflow: TextOverflow.ellipsis,
-                              style: titilliumRegular.copyWith(color: ColorResources.getPrimary(context),
+                              style: titilliumRegular.copyWith(color: Theme.of(context).colorScheme.secondary,
                                   fontSize: Dimensions.FONT_SIZE_LARGE),)
                         ],),
 
@@ -153,11 +153,9 @@ class WishListWidget extends StatelessWidget {
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
                                     boxShadow: [BoxShadow(color: Colors.grey.withOpacity(0.2), spreadRadius: 1,
-                                      blurRadius: 7, offset: Offset(0, 1),),], gradient: LinearGradient(
-                                    colors: [Theme.of(context).primaryColor, Theme.of(context).primaryColor,
-                                      Theme.of(context).primaryColor,]),
+                                      blurRadius: 7, offset: Offset(0, 1),),],
+                                    color: Theme.of(context).buttonColor,
                                     borderRadius: BorderRadius.circular(Dimensions.PADDING_SIZE_EXTRA_SMALL)),
-
 
 
                                 child: Row(
