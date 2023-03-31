@@ -46,7 +46,9 @@ class WalletScreen extends StatelessWidget {
           controller: _scrollController,
           slivers: [
             SliverAppBar(
-              leading: Icon(Icons.arrow_back_ios,color: ColorResources.getPrimary(context)),
+              leading: InkWell(
+                  onTap: () => Navigator.of(context).pop(),
+                  child: Icon(Icons.arrow_back_ios,color: ColorResources.getPrimary(context))),
               floating: true,
               pinned: true,
               backgroundColor: Theme.of(context).cardColor,
