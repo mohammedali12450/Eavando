@@ -34,12 +34,12 @@ class SupportTicketScreen extends StatelessWidget {
 
       bottomChild: InkWell(
         onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => IssueTypeScreen())),
-        child: Material(color: ColorResources.getColombiaBlue(context),
+        child: Material(color: ColorResources.getYellow(context).withOpacity(0.6),
           elevation: 5,
           borderRadius: BorderRadius.circular(50),
           child: Row(mainAxisSize: MainAxisSize.min, children: [
             Container(padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
-              decoration: BoxDecoration(color: ColorResources.getFloatingBtn(context),
+              decoration: BoxDecoration(color: ColorResources.getYellow(context),
                 shape: BoxShape.circle,),
               child: Icon(Icons.add, color: Colors.white, size: 35),),
 
@@ -74,9 +74,9 @@ class SupportTicketScreen extends StatelessWidget {
                       padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
                       margin: EdgeInsets.only(bottom: Dimensions.PADDING_SIZE_SMALL),
                       decoration: BoxDecoration(
-                        color: ColorResources.getImageBg(context),
+                       color: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: ColorResources.getSellerTxt(context), width: 2),
+                        border: Border.all(color: Theme.of(context).colorScheme.secondary, width: 1),
                       ),
                       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                         Text('Place date: ${DateConverter.localDateToIsoStringAMPM(DateTime.parse(supportTicketList[index].createdAt))}',
@@ -86,13 +86,13 @@ class SupportTicketScreen extends StatelessWidget {
 
 
                         Row(children: [
-                          Icon(Icons.notifications, color: ColorResources.getPrimary(context), size: 20),
+                          Icon(Icons.notifications, color: Theme.of(context).colorScheme.secondary, size: 20),
                           SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
                           Expanded(child: Text(supportTicketList[index].type, style: titilliumSemiBold)),
                           TextButton(onPressed: null,
                             style: TextButton.styleFrom(
                               backgroundColor: supportTicketList[index].status == 'open' ?
-                              ColorResources.getGreen(context) : Theme.of(context).primaryColor,),
+                              ColorResources.getGreen(context) : Theme.of(context).buttonColor),
 
                             child: Text(
                               supportTicketList[index].status == 'pending' ?
