@@ -24,7 +24,7 @@ class TransactionWidget extends StatelessWidget {
           Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start,children: [
             Text(PriceConverter.convertPrice(context,
                 transactionModel.credit > 0 ? transactionModel.credit: transactionModel.debit),
-              style: robotoRegular.copyWith(color: ColorResources.getTextTitle(context),
+              style: robotoRegular.copyWith(color: ColorResources.getYellow(context),
                   fontSize: Dimensions.FONT_SIZE_LARGE),
             ),
             SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL,),
