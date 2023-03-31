@@ -143,12 +143,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
           return Stack(clipBehavior: Clip.none,
             children: [
+              // Padding(
+              //   padding: const EdgeInsets.only(bottom: 100),
+              //   child: Image.asset(Images.toolbar_background, fit: BoxFit.fill, height: 500,
+              //     color: Provider.of<ThemeProvider>(context).darkTheme ? Colors.black : null,),
+              // ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 100),
-                child: Image.asset(Images.toolbar_background, fit: BoxFit.fill, height: 500,
-                  color: Provider.of<ThemeProvider>(context).darkTheme ? Colors.black : null,),
+                child: Container(
+                  color: Theme.of(context).primaryColor,
+                )
               ),
-
               Container(padding: EdgeInsets.only(top: 35, left: 15),
                 child: Row(children: [
                   CupertinoNavigationBarBackButton(
@@ -186,7 +191,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               Image.file(file, width: Dimensions.profileImageSize,
                                   height: Dimensions.profileImageSize, fit: BoxFit.fill),),
                             Positioned(bottom: 0, right: -10,
-                              child: CircleAvatar(backgroundColor: ColorResources.LIGHT_SKY_BLUE,
+                              child: CircleAvatar(backgroundColor: ColorResources.getYellow(context),
                                 radius: 14,
                                 child: IconButton(onPressed: _choose,
                                   padding: EdgeInsets.all(0),
@@ -195,7 +200,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ],
                         ),
                       ),
-
+                      SizedBox(height: Dimensions.PADDING_SIZE_DEFAULT),
                       Text('${profile.userInfoModel.fName} ${profile.userInfoModel.lName ?? ''}',
                         style: titilliumSemiBold.copyWith(color: ColorResources.WHITE, fontSize: 20.0),)
                     ],
@@ -217,9 +222,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: Row(children: [
                             Expanded(child: Column(
                               children: [Row(children: [
-                                Icon(Icons.person, color: ColorResources.getLightSkyBlue(context), size: 20),
+                                Icon(Icons.person, color: Theme.of(context).colorScheme.primary, size: 20),
                                 SizedBox(width: Dimensions.MARGIN_SIZE_EXTRA_SMALL),
-                                Text(getTranslated('FIRST_NAME', context), style: titilliumRegular)
+                                Text(getTranslated('FIRST_NAME', context), style: titilliumRegular.copyWith(color: Theme.of(context).primaryColor))
                               ],
                               ),
                                 SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
@@ -237,9 +242,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Expanded(child: Column(
                               children: [
                                 Row(children: [
-                                  Icon(Icons.person, color: ColorResources.getLightSkyBlue(context), size: 20),
+                                  Icon(Icons.person, color: Theme.of(context).colorScheme.primary, size: 20),
                                   SizedBox(width: Dimensions.MARGIN_SIZE_EXTRA_SMALL),
-                                  Text(getTranslated('LAST_NAME', context), style: titilliumRegular)
+                                  Text(getTranslated('LAST_NAME', context), style: titilliumRegular.copyWith(color: Theme.of(context).primaryColor))
                                 ],),
                                 SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
@@ -264,9 +269,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             right: Dimensions.MARGIN_SIZE_DEFAULT),
                           child: Column(children: [
                             Row(children: [Icon(Icons.alternate_email,
-                                color: ColorResources.getLightSkyBlue(context), size: 20),
+                                color: Theme.of(context).colorScheme.primary, size: 20),
                                 SizedBox(width: Dimensions.MARGIN_SIZE_EXTRA_SMALL,),
-                                Text(getTranslated('EMAIL', context), style: titilliumRegular)
+                                Text(getTranslated('EMAIL', context), style: titilliumRegular.copyWith(color: Theme.of(context).primaryColor))
                               ],
                             ),
                             SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
@@ -288,9 +293,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             right: Dimensions.MARGIN_SIZE_DEFAULT),
                           child: Column(children: [
                             Row(children: [
-                              Icon(Icons.dialpad, color: ColorResources.getLightSkyBlue(context), size: 20),
+                              Icon(Icons.dialpad, color: Theme.of(context).colorScheme.primary, size: 20),
                               SizedBox(width: Dimensions.MARGIN_SIZE_EXTRA_SMALL),
-                              Text(getTranslated('PHONE_NO', context), style: titilliumRegular)
+                              Text(getTranslated('PHONE_NO', context), style: titilliumRegular.copyWith(color: Theme.of(context).primaryColor))
                             ],),
                             SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
@@ -311,9 +316,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             right: Dimensions.MARGIN_SIZE_DEFAULT),
                           child: Column(children: [
                             Row(children: [
-                              Icon(Icons.lock_open, color: ColorResources.getPrimary(context), size: 20),
+                              Icon(Icons.lock_open, color: Theme.of(context).colorScheme.primary, size: 20),
                               SizedBox(width: Dimensions.MARGIN_SIZE_EXTRA_SMALL),
-                              Text(getTranslated('PASSWORD', context), style: titilliumRegular)
+                              Text(getTranslated('PASSWORD', context), style: titilliumRegular.copyWith(color: Theme.of(context).primaryColor))
                             ],),
                             SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
@@ -333,9 +338,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: Column(children: [
                             Row(
                               children: [
-                                Icon(Icons.lock_open, color: ColorResources.getPrimary(context), size: 20),
+                                Icon(Icons.lock_open, color: Theme.of(context).colorScheme.primary, size: 20),
                                 SizedBox(width: Dimensions.MARGIN_SIZE_EXTRA_SMALL),
-                                Text(getTranslated('RE_ENTER_PASSWORD', context), style: titilliumRegular)
+                                Text(getTranslated('RE_ENTER_PASSWORD', context), style: titilliumRegular.copyWith(color: Theme.of(context).primaryColor))
                               ],),
                             SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
