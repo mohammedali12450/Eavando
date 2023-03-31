@@ -61,7 +61,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
       _address = Address.shipping;
     }
 
-    country = 'BD';
+    country = 'DE';
     _countryCodeController.text = country;
     Provider.of<LocationProvider>(context, listen: false).initializeAllAddressType(context: context);
     Provider.of<ProfileProvider>(context, listen: false).initAddressTypeList(context);
@@ -105,13 +105,12 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
           child: Column(
             children: [
               CustomAppBar(title: widget.isEnableUpdate ? getTranslated('update_address', context) : getTranslated('add_new_address', context)),
+              SizedBox(height: Dimensions.PADDING_SIZE_DEFAULT),
               Consumer<LocationProvider>(
                 builder: (context, locationProvider, child) {
                   return Container(
                     padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
-
                     child: Column(
-
                       children: [
                         Center(
                           child: SizedBox(
@@ -164,7 +163,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                           child: Icon(
                                             Icons.location_on,
                                             size: 40,
-                                            color: Theme.of(context).primaryColor,
+                                            color: ColorResources.getRed(context),
                                           )),
                                       Positioned(
                                         bottom: 10,
@@ -237,7 +236,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                     Theme.of(context).textTheme.headline3.copyWith(color: ColorResources.getHint(context), fontSize: Dimensions.FONT_SIZE_LARGE),
                                   ),
                                 ),
-
+                                SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                                 Container(
                                   height: 50,
                                   child: ListView.builder(
@@ -258,9 +257,9 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                             ),
                                             border: Border.all(
                                                 color: locationProvider.selectAddressIndex == index
-                                                    ? Theme.of(context).primaryColor : ColorResources.getHint(context)),
+                                                    ? Theme.of(context).colorScheme.secondary : ColorResources.getHint(context)),
                                             color: locationProvider.selectAddressIndex == index
-                                                ? Theme.of(context).primaryColor : ColorResources.getChatIcon(context)),
+                                                ? Theme.of(context).colorScheme.secondary : ColorResources.getChatIcon(context)),
                                         child: Text(
                                           getTranslated(locationProvider.getAllAddressType[index].toLowerCase(), context),
                                           style: robotoRegular.copyWith(
@@ -286,7 +285,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                             });
                                           },
                                         ),
-                                        Text(getTranslated('shipping_address', context)),
+                                        Text(getTranslated('shipping_address', context),style: TextStyle(color: Theme.of(context).primaryColor)),
 
                                       ],
                                   ),
@@ -301,7 +300,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                             });
                                           },
                                         ),
-                                        Text(getTranslated('billing_address', context)),
+                                        Text(getTranslated('billing_address', context),style: TextStyle(color: Theme.of(context).primaryColor)),
 
 
                                       ],
@@ -314,7 +313,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                   padding: const EdgeInsets.only(top: 5,),
                                   child: Text(
                                     getTranslated('delivery_address', context),
-                                    style: Theme.of(context).textTheme.headline3.copyWith(color: ColorResources.getHint(context), fontSize: Dimensions.FONT_SIZE_LARGE),
+                                    style: Theme.of(context).textTheme.headline3.copyWith(color: Theme.of(context).primaryColor, fontSize: Dimensions.FONT_SIZE_LARGE),
                                   ),
                                 ),
 
@@ -331,7 +330,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                 SizedBox(height: Dimensions.PADDING_SIZE_DEFAULT_ADDRESS),
                                 Text(
                                   getTranslated('city', context),
-                                  style: robotoRegular.copyWith(color: ColorResources.getHint(context)),
+                                  style: robotoRegular.copyWith(color: Theme.of(context).primaryColor),
                                 ),
                                 SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
                                 CustomTextField(
@@ -345,7 +344,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                 SizedBox(height: Dimensions.PADDING_SIZE_DEFAULT_ADDRESS),
                                 Text(
                                   getTranslated('zip', context),
-                                  style: robotoRegular.copyWith(color: ColorResources.getHint(context)),
+                                  style: robotoRegular.copyWith(color: Theme.of(context).primaryColor),
                                 ),
                                 SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
 
@@ -378,7 +377,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                 Padding(
                                   padding: const EdgeInsets.only(bottom : 8.0),
                                   child: Text(getTranslated('country', context),
-                                    style: robotoRegular.copyWith(color: ColorResources.getHint(context)),
+                                    style: robotoRegular.copyWith(color: Theme.of(context).primaryColor),
                                   ),
                                 ),
                                 Consumer<LocationProvider>(
@@ -401,7 +400,6 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                           _countryCodeController.text = value;
                                           print('value===>$value');
                                         },
-
                                       ):
                                       Container(
                                         padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_SMALL,
@@ -430,7 +428,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                 // for Contact Person Name
                                 Text(
                                   getTranslated('contact_person_name', context),
-                                  style: robotoRegular.copyWith(color: ColorResources.getHint(context)),
+                                  style: robotoRegular.copyWith(color: Theme.of(context).primaryColor),
                                 ),
                                 SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
                                 CustomTextField(
@@ -447,7 +445,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                 // for Contact Person Number
                                 Text(
                                   getTranslated('contact_person_number', context),
-                                  style: robotoRegular.copyWith(color: ColorResources.getHint(context)),),
+                                  style: robotoRegular.copyWith(color: Theme.of(context).primaryColor),),
                                 SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
                                 CustomTextField(
                                   hintText: getTranslated('enter_contact_person_number', context),
