@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_axtro_soft_ecommerce/helper/price_converter.dart';
 import 'package:flutter_axtro_soft_ecommerce/localization/language_constrants.dart';
@@ -43,15 +45,15 @@ class WalletScreen extends StatelessWidget {
         child: CustomScrollView(
           controller: _scrollController,
           slivers: [
-            SliverAppBar(floating: true,
+            SliverAppBar(
+              leading: Icon(Icons.arrow_back_ios,color: ColorResources.getPrimary(context)),
+              floating: true,
               pinned: true,
-              iconTheme:  IconThemeData(color: ColorResources.getTextTitle(context)),
               backgroundColor: Theme.of(context).cardColor,
-              title: Text(getTranslated('wallet', context),style: TextStyle(color: ColorResources.getTextTitle(context)),),),
+              title: Text(getTranslated('wallet', context),style: TextStyle(color: ColorResources.getPrimary(context)),),),
             SliverToBoxAdapter(
               child: Column(
                 children: [
-
                   isGuestMode ? NotLoggedInWidget() :
                   Column(
                     children: [
@@ -84,7 +86,7 @@ class WalletScreen extends StatelessWidget {
                                           SizedBox(height: Dimensions.PADDING_SIZE_SMALL,),
                                           Text(PriceConverter.convertPrice(context, (profile.walletBalance != null && profile.walletBalance.totalWalletBalance != null) ?
                                           profile.walletBalance.totalWalletBalance ?? 0 : 0),
-                                              style: TextStyle(fontWeight: FontWeight.w700, color: Colors.white,
+                                              style: TextStyle(fontWeight: FontWeight.w700, color: ColorResources.getYellow(context),
                                                   fontSize: Dimensions.FONT_SIZE_OVER_LARGE)),
                                         ],
                                       ),
