@@ -41,16 +41,16 @@ class _AddTicketScreenState extends State<AddTicketScreen> {
           physics: BouncingScrollPhysics(),
           padding: EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE), children: [
 
-        Text(getTranslated('add_new_ticket', context), style: titilliumSemiBold.copyWith(fontSize: 20)),
+        Text(getTranslated('add_new_ticket', context), style: titilliumSemiBold.copyWith(fontSize: 20,color: Theme.of(context).primaryColor)),
         SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_LARGE),
 
 
         Container(
-          color: ColorResources.getLowGreen(context),
+          color: Theme.of(context).primaryColor.withOpacity(0.1),
           margin: EdgeInsets.only(bottom: Dimensions.PADDING_SIZE_LARGE),
           child: ListTile(
-            leading: Icon(Icons.query_builder, color: ColorResources.getPrimary(context)),
-            title: Text(widget.type, style: robotoBold), onTap: () {},
+            leading: Icon(Icons.query_builder, color: Theme.of(context).colorScheme.secondary),
+            title: Text(widget.type, style: robotoBold.copyWith(color: Theme.of(context).primaryColor)), onTap: () {},
         ),
       ),
 

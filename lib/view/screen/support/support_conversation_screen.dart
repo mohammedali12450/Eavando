@@ -74,6 +74,7 @@ class SupportConversationScreen extends StatelessWidget {
               child: Row(children: [
                 Expanded(
                   child: TextField(
+                    textAlignVertical: TextAlignVertical.center,
                     controller: _controller,
                     style: titilliumRegular,
                     keyboardType: TextInputType.multiline,
@@ -95,7 +96,7 @@ class SupportConversationScreen extends StatelessWidget {
                     }
                   },
                   child: Icon(Icons.send,
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).colorScheme.secondary,
                     size: Dimensions.ICON_SIZE_DEFAULT,
                   ),
                 ),

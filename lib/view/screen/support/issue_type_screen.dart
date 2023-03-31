@@ -20,12 +20,12 @@ class IssueTypeScreen extends StatelessWidget {
 
       Padding(
         padding: EdgeInsets.only(top: Dimensions.PADDING_SIZE_LARGE, left: Dimensions.PADDING_SIZE_LARGE),
-        child: Text(getTranslated('add_new_ticket', context), style: titilliumSemiBold.copyWith(fontSize: 20)),
+        child: Text(getTranslated('add_new_ticket', context), style: titilliumSemiBold.copyWith(fontSize: 20,color: Theme.of(context).primaryColor)),
       ),
 
       Padding(
         padding: EdgeInsets.only(left: Dimensions.PADDING_SIZE_LARGE, bottom: Dimensions.PADDING_SIZE_LARGE),
-        child: Text(getTranslated('select_your_category', context), style: titilliumRegular),
+        child: Text(getTranslated('select_your_category', context), style: titilliumRegular.copyWith(color: Theme.of(context).colorScheme.secondary)),
       ),
 
       Expanded(child: ListView.builder(
@@ -34,11 +34,11 @@ class IssueTypeScreen extends StatelessWidget {
         itemCount: issueTypeList.length,
         itemBuilder: (context, index) {
           return Container(
-            color: ColorResources.getLowGreen(context),
+            color: Theme.of(context).primaryColor.withOpacity(0.1),
             margin: EdgeInsets.only(bottom: Dimensions.PADDING_SIZE_SMALL),
             child: ListTile(
-              leading: Icon(Icons.query_builder, color: ColorResources.getPrimary(context)),
-              title: Text(issueTypeList[index], style: robotoBold),
+              leading: Icon(Icons.query_builder, color: Theme.of(context).colorScheme.secondary),
+              title: Text(issueTypeList[index], style: robotoBold.copyWith(color: Theme.of(context).primaryColor)),
               onTap: () {
                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => AddTicketScreen(type: issueTypeList[index])));
               },
