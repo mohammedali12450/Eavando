@@ -29,18 +29,18 @@ class SettingsScreen extends StatelessWidget {
             Padding(padding: EdgeInsets.only(top: Dimensions.PADDING_SIZE_LARGE,
                 left: Dimensions.PADDING_SIZE_LARGE),
               child: Text(getTranslated('settings', context),
-                  style: titilliumSemiBold.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                  style: titilliumSemiBold.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE,color: Theme.of(context).primaryColor)),
             ),
 
             Expanded(child: ListView(
               physics: BouncingScrollPhysics(),
               padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL),
               children: [
-                SwitchListTile(value: Provider.of<ThemeProvider>(context).darkTheme,
-                  onChanged: (bool isActive) =>Provider.of<ThemeProvider>(context, listen: false).toggleTheme(),
-                  title: Text(getTranslated('dark_theme', context),
-                      style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),),
-
+                // SwitchListTile(value: Provider.of<ThemeProvider>(context).darkTheme,
+                //   onChanged: (bool isActive) =>Provider.of<ThemeProvider>(context, listen: false).toggleTheme(),
+                //   title: Text(getTranslated('dark_theme', context),
+                //       style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),),
+                SizedBox(height: Dimensions.PADDING_SIZE_DEFAULT),
                 TitleButton(image: Images.language,
                   title: getTranslated('choose_language', context),
                   onTap: () => showAnimatedDialog(context, CurrencyDialog(isCurrency: false)),),
@@ -67,8 +67,8 @@ class TitleButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Image.asset(image, width: 25, height: 25, fit: BoxFit.fill, color: ColorResources.getPrimary(context)),
-      title: Text(title, style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+      leading: Image.asset(image, width: 25, height: 25, fit: BoxFit.fill, color: Theme.of(context).colorScheme.secondary),
+      title: Text(title, style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE,color: Theme.of(context).primaryColor)),
       onTap: onTap,
     );
   }
