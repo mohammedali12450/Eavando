@@ -82,7 +82,7 @@ class _ProductImageViewState extends State<ProductImageView> {
                       child: FadeInImage.assetNetwork(fit: BoxFit.cover,
                         placeholder: Images.placeholder, height: MediaQuery.of(context).size.width,
                         width: MediaQuery.of(context).size.width,
-                        image: '${Provider.of<SplashProvider>(context,listen: true).baseUrls.productImageUrl}/${imagesForIndex[index]}',
+                        image: '${Provider.of<SplashProvider>(context,listen: true).baseUrls.productImageUrl}/${widget.indexColor}/${imagesForIndex[index]}',
                         imageErrorBuilder: (c, o, s) => Image.asset(
                           Images.placeholder, height: MediaQuery.of(context).size.width,
                           width: MediaQuery.of(context).size.width,fit: BoxFit.cover,
