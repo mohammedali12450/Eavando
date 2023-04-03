@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_axtro_soft_ecommerce/provider/product_details_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/splash_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/view/basewidget/custom_app_bar.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/data/model/response/product_details_model.dart' as c;
+
 
 class ProductImageScreen extends StatefulWidget {
+  final c.ProductDetailsModel productModel;
   final String title;
   final List<dynamic> imageList;
-  ProductImageScreen({@required this.title, @required this.imageList});
+  ProductImageScreen({@required this.title, @required this.imageList,@required this.productModel});
 
   @override
   _ProductImageScreenState createState() => _ProductImageScreenState();
@@ -25,24 +27,23 @@ class _ProductImageScreenState extends State<ProductImageScreen> {
     super.initState();
     pageIndex = Provider.of<ProductDetailsProvider>(context, listen: false).imageSliderIndex;
     _pageController = PageController(initialPage: pageIndex);
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(children: [
-
         CustomAppBar(title: widget.title),
-
         Expanded(
           child: Stack(
             children: [
               PhotoViewGallery.builder(
                 scrollPhysics: const BouncingScrollPhysics(),
                 builder: (BuildContext context, int index) {
+                  print('--------------------------------------------------------------');
+                  // print(widget.productModel.colors[0].name);
                   return PhotoViewGalleryPageOptions(
-                    imageProvider: NetworkImage('${Provider.of<SplashProvider>(context,listen: false).baseUrls.productImageUrl}/${widget.imageList[index]}',),
+                    imageProvider: NetworkImage('${Provider.of<SplashProvider>(context,listen: false).baseUrls.productImageUrl}/${widget.imageList[index]}'),
                     initialScale: PhotoViewComputedScale.covered,
                     heroAttributes: PhotoViewHeroAttributes(tag: index.toString()),
                   );
