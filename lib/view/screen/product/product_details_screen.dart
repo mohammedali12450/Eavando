@@ -45,6 +45,8 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   _loadData(BuildContext context) async {
     Provider.of<ProductDetailsProvider>(context, listen: false)
+        .getColorIndex(index);
+    Provider.of<ProductDetailsProvider>(context, listen: false)
         .getProductDetails(context, widget.slug.toString());
     Provider.of<ProductDetailsProvider>(context, listen: false)
         .removePrevReview();

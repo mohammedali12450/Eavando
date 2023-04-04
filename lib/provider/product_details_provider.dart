@@ -30,6 +30,7 @@ class ProductDetailsProvider extends ChangeNotifier {
   bool _hasConnection = true;
   bool _isDetails = false;
   bool get isDetails =>_isDetails;
+  int _colorIndex;
 
   List<ReviewModel> get reviewList => _reviewList;
   int get imageSliderIndex => _imageSliderIndex;
@@ -46,8 +47,13 @@ class ProductDetailsProvider extends ChangeNotifier {
   bool get hasConnection => _hasConnection;
   ProductDetailsModel _productDetailsModel;
   ProductDetailsModel get productDetailsModel => _productDetailsModel;
+  int get colorIndex => _colorIndex;
 
 
+  Future<void> getColorIndex(int index) async {
+    _colorIndex = index;
+    notifyListeners();
+  }
 
   Future<void> getProductDetails(BuildContext context, String productId) async {
 
