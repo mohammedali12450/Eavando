@@ -120,7 +120,7 @@ class _HomePageState extends State<HomePage> {
                     centerTitle: false,
                     automaticallyImplyLeading: false,
                     backgroundColor: Theme.of(context).highlightColor,
-                    title: Image.asset(Images.eavando_logo, height: 35),
+                    title: Image.asset(Images.eavando_logo, height: 35,width: 180),
                     actions: [
                       Padding(
                         padding: const EdgeInsets.only(right: 12.0),
