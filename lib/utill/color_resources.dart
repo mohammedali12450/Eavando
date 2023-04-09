@@ -86,6 +86,10 @@ class ColorResources {
     return Provider.of<ThemeProvider>(context).darkTheme ? Color(0xFFC8E4FF) : Color(0xFFC8E4FF);
   }
 
+  static Color axtroSoftLogo(BuildContext context) {
+    return Provider.of<ThemeProvider>(context).darkTheme ? Colors.transparent : Color(0xFF007AEA);
+  }
+
 
   static const Color BLACK = Color(0xff000000);
   static const Color WHITE = Color(0xffFFFFFF);

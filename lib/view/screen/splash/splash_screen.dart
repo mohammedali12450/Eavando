@@ -7,6 +7,7 @@ import 'package:flutter_axtro_soft_ecommerce/provider/profile_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/splash_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/theme_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/color_resources.dart';
+import 'package:flutter_axtro_soft_ecommerce/utill/custom_themes.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/images.dart';
 import 'package:flutter_axtro_soft_ecommerce/view/basewidget/no_internet_screen.dart';
 import 'package:flutter_axtro_soft_ecommerce/view/screen/auth/auth_screen.dart';
@@ -102,6 +103,22 @@ class _SplashScreenState extends State<SplashScreen> {
             // child: CustomPaint(
             //   painter: SplashPainter(),
             // ),
+          ),
+          Positioned(
+            bottom: 0,
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text("From", style: titilliumBold.copyWith(color: ColorResources.axtroSoftLogo(context))),
+                  SizedBox(height: 8),
+                  Image.asset(Images.axtro_soft_logo,width: 110),
+                  SizedBox(height: 15)
+                ],
+              ),
+            ),
           ),
           Center(
             child: Column(

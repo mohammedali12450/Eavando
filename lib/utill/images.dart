@@ -2,6 +2,7 @@
 class Images {
   /// new
   static const String eavando_logo = 'assets/images/eavando_logo.png';
+  static const String axtro_soft_logo = 'assets/images/axtro-soft.png';
 
   static const String splash_logo = 'assets/images/logo_splash.png';
   static const String more_filled_image = 'assets/images/more_filled.png';
