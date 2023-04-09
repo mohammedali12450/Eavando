@@ -89,8 +89,8 @@ class _MoreScreenState extends State<MoreScreen> {
                   children: [
                     Padding(
                   padding: const EdgeInsets.only(top: Dimensions.HOME_PAGE_PADDING),
-                  child: Image.asset(Images.eavando_logo, height: 35),
-                ),
+                  child: Image.asset(Images.eavando_logo, height: 35,width: 180,),
+                    ),
                     Expanded(child: SizedBox.shrink()),
                     InkWell(
                   onTap: () {
