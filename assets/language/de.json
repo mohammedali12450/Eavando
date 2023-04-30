@@ -388,5 +388,6 @@
   "discount": "Rabatt",
   "refund_policy": "Rücknahmegarantie",
   "return_policy": "Rücknahmegarantie",
-  "cancellation_policy": "Stornierungsbedingungen"
+  "cancellation_policy": "Stornierungsbedingungen",
+  "included_vat": "inkel. MwSt"
 }
