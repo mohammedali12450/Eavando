@@ -199,22 +199,39 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                           ),
                         ) : SizedBox(width: 93),
                         SizedBox(width: Dimensions.PADDING_SIZE_DEFAULT),
-                        widget.product.discount > 0 ? Text(
-                          PriceConverter.convertPrice(context, widget.product.unitPrice),
-                          style: titilliumRegular.copyWith(color: ColorResources.getRed(context),
-                              decoration: TextDecoration.lineThrough),
-                        ) : SizedBox(),
-                        SizedBox(width: Dimensions.PADDING_SIZE_DEFAULT),
-                        Text(
-                          PriceConverter.convertPrice(context, widget.product.unitPrice, discountType: widget.product.discountType, discount: widget.product.discount),
-                          style: titilliumRegular.copyWith(color: ColorResources.getPrimary(context), fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  PriceConverter.convertPrice(context, widget.product.unitPrice, discountType: widget.product.discountType, discount: widget.product.discount),
+                                  style: titilliumRegular.copyWith(color: ColorResources.getPrimary(context), fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE),
+                                ),
+                                SizedBox(height: 5),
+                                Text('${getTranslated('included_vat', context)}',
+                                    style: titilliumRegular.copyWith(
+                                      color: Theme.of(context).buttonColor,
+                                      fontSize: Dimensions.FONT_SIZE_SMALL,
+                                    )),
+                              ],
+                            ),
+                            widget.product.discount <= 0 ? Padding(
+                              padding: const EdgeInsets.only(top: 3),
+                              child: Text(
+                                PriceConverter.convertPrice(context, widget.product.unitPrice),
+                                style: titilliumRegular.copyWith(color: ColorResources.getRed(context),
+                                    decoration: TextDecoration.lineThrough),
+                              ),
+                            ) : SizedBox(),
+                          ],
                         ),
-
+                        // SizedBox(width: Dimensions.PADDING_SIZE_DEFAULT),
                       ],
                     ),
                   ],
                 ),
-
 
                 SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
                 // Variant
