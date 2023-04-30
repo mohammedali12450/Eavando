@@ -56,33 +56,39 @@ class _ProductTitleViewState extends State<ProductTitleView> {
                                 style: titleRegular.copyWith(
                                     fontSize: Dimensions.FONT_SIZE_LARGE),
                                 maxLines: 2)),
-                        SizedBox(width: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                        Column(
-                          children: [
-                            widget.productModel.discount != null &&
-                                    widget.productModel.discount > 0
-                                ? Text(
-                                    '${PriceConverter.convertPrice(context, _startingPrice)}'
-                                    '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice)}' : ''}',
-                                    style: titilliumRegular.copyWith(
-                                        color: Theme.of(context).hintColor,
-                                        decoration: TextDecoration.lineThrough),
-                                  )
-                                : SizedBox(),
-                            SizedBox(
-                                height:
-                                    Dimensions.PADDING_SIZE_EXTRA_EXTRA_SMALL),
-                            Text(
-                              '${_startingPrice != null ? PriceConverter.convertPrice(context, _startingPrice, discount: widget.productModel.discount, discountType: widget.productModel.discountType) : ''}'
-                              '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice, discount: widget.productModel.discount, discountType: widget.productModel.discountType)}' : ''}',
-                              style: titilliumBold.copyWith(
-                                  color: ColorResources.getPrimary(context),
-                                  fontSize: Dimensions.FONT_SIZE_LARGE),
-                            ),
-                          ],
-                        ),
                       ]),
-                      SizedBox(height: Dimensions.PADDING_SIZE_DEFAULT),
+                      SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                      Row(
+                        children: [
+                          Text(
+                            '${_startingPrice != null ? PriceConverter.convertPrice(context, _startingPrice, discount: widget.productModel.discount, discountType: widget.productModel.discountType) : ''}'
+                                '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice, discount: widget.productModel.discount, discountType: widget.productModel.discountType)}' : ''}',
+                            style: titilliumBold.copyWith(
+                                color: ColorResources.getPrimary(context),
+                                fontSize: Dimensions.FONT_SIZE_LARGE),
+                          ),
+                          SizedBox(
+                              width:
+                              Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                          widget.productModel.discount != null &&
+                              widget.productModel.discount > 0
+                              ? Text(
+                            '${PriceConverter.convertPrice(context, _startingPrice)}'
+                                '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice)}' : ''}',
+                            style: titilliumRegular.copyWith(
+                                color: Theme.of(context).hintColor,
+                                decoration: TextDecoration.lineThrough),
+                          )
+                              : SizedBox(),
+                        ],
+                      ),
+                      SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                      Text('${getTranslated('included_vat', context)}',
+                          style: titilliumRegular.copyWith(
+                            color: Theme.of(context).buttonColor,
+                            fontSize: Dimensions.FONT_SIZE_SMALL,
+                          )),
+                      SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                       Row(children: [
                         Text(
                             '${details.reviewList != null ? details.reviewList.length : 0} reviews | ',
