@@ -3,6 +3,7 @@ import 'package:flutter_axtro_soft_ecommerce/localization/language_constrants.da
 import 'package:flutter_axtro_soft_ecommerce/provider/auth_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/cart_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/profile_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/provider/social_media_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/splash_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/theme_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/wallet_transaction_provider.dart';
@@ -31,6 +32,8 @@ import 'package:flutter_axtro_soft_ecommerce/view/screen/support/support_ticket_
 import 'package:flutter_axtro_soft_ecommerce/view/screen/wallet/wallet_screen.dart';
 import 'package:flutter_axtro_soft_ecommerce/view/screen/wishlist/wishlist_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'faq_screen.dart';
 
@@ -60,8 +63,13 @@ class _MoreScreenState extends State<MoreScreen> {
       }
     }
     singleVendor = Provider.of<SplashProvider>(context, listen: false).configModel.businessMode == "single";
-
     super.initState();
+  }
+
+  Future<void> _launchUrl(String url) async {
+    if (!await launchUrl(Uri.parse(url))) {
+      throw Exception('Could not launch $url');
+    }
   }
 
   @override
@@ -88,52 +96,52 @@ class _MoreScreenState extends State<MoreScreen> {
               return Row(
                   children: [
                     Padding(
-                  padding: const EdgeInsets.only(top: Dimensions.HOME_PAGE_PADDING),
-                  child: Image.asset(Images.eavando_logo, height: 35,width: 180,),
+                      padding: const EdgeInsets.only(top: Dimensions.HOME_PAGE_PADDING),
+                      child: Image.asset(Images.eavando_logo, height: 35,width: 180,),
                     ),
                     Expanded(child: SizedBox.shrink()),
                     InkWell(
-                  onTap: () {
-                    if (isGuestMode) {
-                      showAnimatedDialog(context, GuestDialog(), isFlip: true);
-                    } else {
-                      if (Provider.of<ProfileProvider>(context, listen: false).userInfoModel != null) {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProfileScreen()));
-                      }
-                    }
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: Dimensions.HOME_PAGE_PADDING),
-                    child: Row(children: [
-                      Text(
-                          !isGuestMode
-                              ? profile.userInfoModel != null
+                      onTap: () {
+                        if (isGuestMode) {
+                          showAnimatedDialog(context, GuestDialog(), isFlip: true);
+                        } else {
+                          if (Provider.of<ProfileProvider>(context, listen: false).userInfoModel != null) {
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProfileScreen()));
+                          }
+                        }
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: Dimensions.HOME_PAGE_PADDING),
+                        child: Row(children: [
+                          Text(
+                              !isGuestMode
+                                  ? profile.userInfoModel != null
                                   ? '${profile.userInfoModel.fName} ${profile.userInfoModel.lName}'
                                   : 'Full Name'
-                              : 'Guest',
-                          style: titilliumRegular.copyWith(color: ColorResources.WHITE)),
-                      SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
-                      isGuestMode
-                          ? CircleAvatar(backgroundColor: Theme.of(context).buttonColor,child: Icon(Icons.person, size: 30,color: Colors.white,))
-                          : profile.userInfoModel == null
+                                  : 'Guest',
+                              style: titilliumRegular.copyWith(color: ColorResources.WHITE)),
+                          SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
+                          isGuestMode
+                              ? CircleAvatar(backgroundColor: Theme.of(context).buttonColor,child: Icon(Icons.person, size: 30,color: Colors.white,))
+                              : profile.userInfoModel == null
                               ? CircleAvatar(backgroundColor: Theme.of(context).buttonColor,child: Icon(Icons.person, size: 30,color: Colors.white,))
                               : ClipRRect(
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: FadeInImage.assetNetwork(
-                                    placeholder: Images.placeholder,
-                                    width: 35,
-                                    height: 35,
-                                    fit: BoxFit.cover,
-                                    image:
-                                        '${Provider.of<SplashProvider>(context, listen: false).baseUrls.customerImageUrl}/'
-                                        '${profile.userInfoModel.image}',
-                                    imageErrorBuilder: (c, o, s) => CircleAvatar(backgroundColor: Theme.of(context).buttonColor,child: Icon(Icons.person, size: 30,color: Colors.white,)),
-                                  ),
-                                ),
-                    ]),
-                  ),
-                ),
-              ]);
+                            borderRadius: BorderRadius.circular(20),
+                            child: FadeInImage.assetNetwork(
+                              placeholder: Images.placeholder,
+                              width: 35,
+                              height: 35,
+                              fit: BoxFit.cover,
+                              image:
+                              '${Provider.of<SplashProvider>(context, listen: false).baseUrls.customerImageUrl}/'
+                                  '${profile.userInfoModel.image}',
+                              imageErrorBuilder: (c, o, s) => CircleAvatar(backgroundColor: Theme.of(context).buttonColor,child: Icon(Icons.person, size: 30,color: Colors.white,)),
+                            ),
+                          ),
+                        ]),
+                      ),
+                    ),
+                  ]);
             },
           ),
         ),
@@ -160,20 +168,20 @@ class _MoreScreenState extends State<MoreScreen> {
                         child: ListView(scrollDirection: Axis.horizontal, physics: BouncingScrollPhysics(), children: [
                           Provider.of<SplashProvider>(context, listen: false).configModel.walletStatus == 1
                               ? SquareButton(
-                                  image: Images.wallet,
-                                  title: getTranslated('wallet', context),
-                                  navigateTo: WalletScreen(),
-                                  count: 1,
-                                  hasCount: false)
+                              image: Images.wallet,
+                              title: getTranslated('wallet', context),
+                              navigateTo: WalletScreen(),
+                              count: 1,
+                              hasCount: false)
                               : SizedBox(),
                           Provider.of<SplashProvider>(context, listen: false).configModel.loyaltyPointStatus == 1
                               ? SquareButton(
-                                  image: Images.loyalty_point,
-                                  title: getTranslated('loyalty_point', context),
-                                  navigateTo: LoyaltyPointScreen(),
-                                  count: 1,
-                                  hasCount: false,
-                                )
+                            image: Images.loyalty_point,
+                            title: getTranslated('loyalty_point', context),
+                            navigateTo: LoyaltyPointScreen(),
+                            count: 1,
+                            hasCount: false,
+                          )
                               : SizedBox(),
                           SquareButton(
                             image: Images.shopping_image,
@@ -201,8 +209,8 @@ class _MoreScreenState extends State<MoreScreen> {
                             title: getTranslated('wishlist', context),
                             navigateTo: WishListScreen(),
                             count: Provider.of<AuthProvider>(context, listen: false).isLoggedIn() &&
-                                    Provider.of<WishListProvider>(context, listen: false).wishList != null &&
-                                    Provider.of<WishListProvider>(context, listen: false).wishList.length > 0
+                                Provider.of<WishListProvider>(context, listen: false).wishList != null &&
+                                Provider.of<WishListProvider>(context, listen: false).wishList.length > 0
                                 ? Provider.of<WishListProvider>(context, listen: false).wishList.length
                                 : 0,
                             hasCount: false,
@@ -321,12 +329,54 @@ class _MoreScreenState extends State<MoreScreen> {
               isGuestMode
                   ? SizedBox()
                   : ListTile(
-                      leading: Icon(Icons.exit_to_app, color: Theme.of(context).colorScheme.primary, size: 25),
-                      title: Text(getTranslated('sign_out', context),
-                          style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE,color: Theme.of(context).primaryColor)),
-                      onTap: () => showAnimatedDialog(context, SignOutConfirmationDialog(), isFlip: true),
-                    ),
+                leading: Icon(Icons.exit_to_app, color: Theme.of(context).colorScheme.primary, size: 25),
+                title: Text(getTranslated('sign_out', context),
+                    style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE,color: Theme.of(context).primaryColor)),
+                onTap: () => showAnimatedDialog(context, SignOutConfirmationDialog(), isFlip: true),
+              ),
               SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
+
+              //social media
+              Consumer<SocialMediaProvider>(
+                builder: (context, social, child) {
+                  return Container(
+                    width: MediaQuery.of(context).size.width * 0.7,
+                    child: GridView.builder(
+                      padding: EdgeInsets.all(0),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 6,
+                            childAspectRatio: 1,
+                          crossAxisSpacing: 10
+                        ),
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: social.socialMediaList.length,
+                        itemBuilder: (ctx, index){
+                              return InkWell(
+                                onTap: () {
+                                  _launchUrl(social.socialMediaList[index].link);
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(color: Theme.of(context).colorScheme.secondary)
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(3),
+                                    child: SvgPicture.network(
+                                        social.socialMediaList[index].iconUrl,color: Theme.of(context).colorScheme.secondary),
+                                  ),
+                                ),
+                              );
+                        }),
+                  );
+                },
+              ),
+
+              SizedBox(height: Dimensions.PADDING_SIZE_DEFAULT),
+              SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
 
               Container(
                 width: MediaQuery.of(context).size.width,
