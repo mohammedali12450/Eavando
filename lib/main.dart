@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_axtro_soft_ecommerce/provider/social_media_provider.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -100,6 +101,8 @@ Future<void> main() async {
       ChangeNotifierProvider(create: (context) => di.sl<FacebookLoginProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<LocationProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<WalletTransactionProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<SocialMediaProvider>()),
+
     ],
     child: MyApp(orderId: _orderID),
   ));
