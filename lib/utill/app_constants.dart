@@ -89,6 +89,7 @@ class AppConstants {
   static const String DELIVERY_RESTRICTED_COUNTY_LIST = '/api/v1/customer/get-restricted-country-list';
   static const String DELIVERY_RESTRICTED_ZIP_LIST = '/api/v1/customer/get-restricted-zip-list';
   static const String GET_ORDER_FROM_ORDER_ID = '/api/v1/customer/order/get-order-by-id?order_id=';
+  static const String SOCIAL_MEDIA_URI = '/api/v1/social_media_pages';
 
   //address
   static const String UPDATE_ADDRESS_URI = '/api/v1/customer/address/update/';

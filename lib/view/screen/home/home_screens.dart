@@ -11,6 +11,7 @@ import 'package:flutter_axtro_soft_ecommerce/provider/featured_deal_provider.dar
 import 'package:flutter_axtro_soft_ecommerce/provider/flash_deal_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/home_category_product_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/product_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/provider/social_media_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/splash_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/theme_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/top_seller_provider.dart';
@@ -65,6 +66,7 @@ class _HomePageState extends State<HomePage> {
     await Provider.of<FeaturedDealProvider>(context, listen: false).getFeaturedDealList(reload, context);
     await Provider.of<ProductProvider>(context, listen: false).getLProductList('1', context, reload: reload);
     await Provider.of<ProductProvider>(context, listen: false).getRecommendedProduct(context);
+    await Provider.of<SocialMediaProvider>(context,listen: false).getSocialMediaList(context,reload);
   }
 
   void passData(int index, String title) {

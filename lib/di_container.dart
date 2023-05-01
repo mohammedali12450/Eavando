@@ -19,6 +19,7 @@ import 'package:flutter_axtro_soft_ecommerce/data/repository/product_repo.dart';
 import 'package:flutter_axtro_soft_ecommerce/data/repository/profile_repo.dart';
 import 'package:flutter_axtro_soft_ecommerce/data/repository/search_repo.dart';
 import 'package:flutter_axtro_soft_ecommerce/data/repository/seller_repo.dart';
+import 'package:flutter_axtro_soft_ecommerce/data/repository/social_media_repo.dart';
 import 'package:flutter_axtro_soft_ecommerce/data/repository/splash_repo.dart';
 import 'package:flutter_axtro_soft_ecommerce/data/repository/support_ticket_repo.dart';
 import 'package:flutter_axtro_soft_ecommerce/data/repository/top_seller_repo.dart';
@@ -47,6 +48,7 @@ import 'package:flutter_axtro_soft_ecommerce/provider/product_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/profile_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/search_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/seller_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/provider/social_media_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/splash_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/support_ticket_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/theme_provider.dart';
@@ -92,6 +94,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => SupportTicketRepo(dioClient: sl()));
   sl.registerLazySingleton(() => LocationRepo(dioClient: sl()));
   sl.registerLazySingleton(() => WalletTransactionRepo(dioClient: sl()));
+  sl.registerLazySingleton(() => SocialMediaRepo(dioClient: sl()));
 
   // Provider
   sl.registerFactory(() => CategoryProvider(categoryRepo: sl()));
@@ -122,6 +125,7 @@ Future<void> init() async {
   sl.registerFactory(() => FacebookLoginProvider());
   sl.registerFactory(() => LocationProvider(sharedPreferences: sl(), locationRepo: sl()));
   sl.registerFactory(() => WalletTransactionProvider(transactionRepo: sl()));
+  sl.registerFactory(() => SocialMediaProvider(socialMediaRepo: sl()));
 
   // External
   final sharedPreferences = await SharedPreferences.getInstance();
