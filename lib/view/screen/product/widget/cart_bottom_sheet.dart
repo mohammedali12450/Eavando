@@ -217,7 +217,7 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                                     )),
                               ],
                             ),
-                            widget.product.discount <= 0 ? Padding(
+                            widget.product.discount > 0 ? Padding(
                               padding: const EdgeInsets.only(top: 3),
                               child: Text(
                                 PriceConverter.convertPrice(context, widget.product.unitPrice),
