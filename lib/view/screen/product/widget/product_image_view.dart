@@ -28,7 +28,6 @@ class _ProductImageViewState extends State<ProductImageView> {
   final PageController _controller = PageController();
 
    List<dynamic> imagesForIndex;
-
    //int imagesIndex=0;
 
    @override
@@ -82,7 +81,9 @@ class _ProductImageViewState extends State<ProductImageView> {
                       child: FadeInImage.assetNetwork(fit: BoxFit.cover,
                         placeholder: Images.placeholder, height: MediaQuery.of(context).size.width,
                         width: MediaQuery.of(context).size.width,
-                        image: '${Provider.of<SplashProvider>(context,listen: true).baseUrls.productImageUrl}/${widget.indexColor}/${imagesForIndex[index]}',
+                        image: widget.productModel.imagesListToEachColor == 0 ?
+                            '${Provider.of<SplashProvider>(context,listen: true).baseUrls.productImageUrl}/${imagesForIndex[index]}':
+                        '${Provider.of<SplashProvider>(context,listen: true).baseUrls.productImageUrl}/${widget.indexColor}/${imagesForIndex[index]}',
                         imageErrorBuilder: (c, o, s) => Image.asset(
                           Images.placeholder, height: MediaQuery.of(context).size.width,
                           width: MediaQuery.of(context).size.width,fit: BoxFit.cover,
