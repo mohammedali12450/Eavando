@@ -52,7 +52,7 @@ class ProductDetailsProvider extends ChangeNotifier {
 
   Future<void> getColorIndex(int index) async {
     _colorIndex = index;
-    notifyListeners();
+    // notifyListeners();
   }
 
   Future<void> getProductDetails(BuildContext context, String productId) async {
