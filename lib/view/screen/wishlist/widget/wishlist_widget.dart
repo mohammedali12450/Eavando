@@ -19,7 +19,23 @@ class WishListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    double _startingPrice = 0;
+    double _endingPrice;
+    if (product.variation != null &&
+        product.variation.length != 0) {
+      List<double> _priceList = [];
+      product.variation
+          .forEach((variation) => _priceList.add(variation.price));
+      _priceList.sort((a, b) => a.compareTo(b));
+      _startingPrice = _priceList[0];
+      if (_priceList[0] < _priceList[_priceList.length - 1]) {
+        _endingPrice = _priceList[_priceList.length - 1];
+      }
+    } else {
+      _startingPrice = product.unitPrice;
+    }
+    var startTotalPrice = ((double.parse(PriceConverter.convertPrice(context, _startingPrice, discount: product.discount, discountType: product.discountType).replaceAll(RegExp(r'€'), ""))) * (1+(product.tax)/100)).toStringAsFixed(2);
+    print(startTotalPrice);
     return Container(
       padding: EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
       margin: EdgeInsets.only(top: Dimensions.MARGIN_SIZE_SMALL),
@@ -113,7 +129,10 @@ class WishListWidget extends StatelessWidget {
                         SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
 
                         Row(children: [product.discount != null && product.discount>0?
-                          Text(product.unitPrice != null?PriceConverter.convertPrice(context, product.unitPrice):'',
+                          Text(product.unitPrice != null?
+                              "€" + startTotalPrice
+                          // PriceConverter.convertPrice(context, product.unitPrice)
+                              :'',
                             style: titilliumSemiBold.copyWith(color: ColorResources.getRed(context),
                                 decoration: TextDecoration.lineThrough),):SizedBox(),
 
@@ -122,8 +141,10 @@ class WishListWidget extends StatelessWidget {
                           SizedBox(width: Dimensions.PADDING_SIZE_DEFAULT):SizedBox(),
 
 
-                          Text(PriceConverter.convertPrice(context, product.unitPrice,
-                              discount: product.discount,discountType: product.discountType),
+                          Text(
+                            "€" + startTotalPrice,
+                            // PriceConverter.convertPrice(context, product.unitPrice,
+                            //   discount: product.discount,discountType: product.discountType),
                               maxLines: 1,overflow: TextOverflow.ellipsis,
                               style: titilliumRegular.copyWith(color: Theme.of(context).colorScheme.secondary,
                                   fontSize: Dimensions.FONT_SIZE_LARGE),)

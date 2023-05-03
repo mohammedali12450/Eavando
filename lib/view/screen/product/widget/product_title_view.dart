@@ -41,7 +41,8 @@ class _ProductTitleViewState extends State<ProductTitleView> {
     } else {
       _startingPrice = widget.productModel.unitPrice;
     }
-
+    var startTotalPrice = ((double.parse(PriceConverter.convertPrice(context, _startingPrice, discount: widget.productModel.discount, discountType: widget.productModel.discountType).replaceAll(RegExp(r'€'), ""))) * (1+(widget.productModel.tax)/100)).toStringAsFixed(2);
+    // print(startTotalPrice);
     return widget.productModel != null
         ? Container(
             padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
@@ -61,8 +62,9 @@ class _ProductTitleViewState extends State<ProductTitleView> {
                       Row(
                         children: [
                           Text(
-                            '${_startingPrice != null ? PriceConverter.convertPrice(context, _startingPrice, discount: widget.productModel.discount, discountType: widget.productModel.discountType) : ''}'
-                                '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice, discount: widget.productModel.discount, discountType: widget.productModel.discountType)}' : ''}',
+                            // '${_startingPrice != null ? PriceConverter.convertPrice(context, _startingPrice, discount: widget.productModel.discount, discountType: widget.productModel.discountType) : ''}'
+                            _startingPrice != null ? "€" + startTotalPrice :
+                            '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice, discount: widget.productModel.discount, discountType: widget.productModel.discountType)}' : ''}',
                             style: titilliumBold.copyWith(
                                 color: ColorResources.getPrimary(context),
                                 fontSize: Dimensions.FONT_SIZE_LARGE),
@@ -73,7 +75,8 @@ class _ProductTitleViewState extends State<ProductTitleView> {
                           widget.productModel.discount != null &&
                               widget.productModel.discount > 0
                               ? Text(
-                            '${PriceConverter.convertPrice(context, _startingPrice)}'
+                            _startingPrice != null ? "€" + startTotalPrice :
+                            // '${PriceConverter.convertPrice(context, _startingPrice)}'
                                 '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice)}' : ''}',
                             style: titilliumRegular.copyWith(
                                 color: Theme.of(context).hintColor,

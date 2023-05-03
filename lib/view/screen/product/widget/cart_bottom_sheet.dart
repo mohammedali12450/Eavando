@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_axtro_soft_ecommerce/data/model/response/cart_model.dart';
 import 'package:flutter_axtro_soft_ecommerce/data/model/response/product_details_model.dart' as pd;
@@ -49,9 +48,6 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-
-
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -86,11 +82,32 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                   }
                 });
               }
+              double _startingPrice = 0;
+              double _endingPrice;
+              if (widget.product.variation != null &&
+                  widget.product.variation.length != 0) {
+                List<double> _priceList = [];
+                widget.product.variation
+                    .forEach((variation) => _priceList.add(variation.price));
+                _priceList.sort((a, b) => a.compareTo(b));
+                _startingPrice = _priceList[0];
+                if (_priceList[0] < _priceList[_priceList.length - 1]) {
+                  _endingPrice = _priceList[_priceList.length - 1];
+                }
+              } else {
+                _startingPrice = widget.product.unitPrice;
+              }
+              var startTotalPrice = ((double.parse(PriceConverter.convertPrice(context, _startingPrice, discount: widget.product.discount, discountType: widget.product.discountType).replaceAll(RegExp(r'€'), ""))) * (1+(widget.product.tax)/100)).toStringAsFixed(2);
+              // print(startTotalPrice);
+
+
               double price = widget.product.unitPrice;
+              print(price);
               int _stock = widget.product.currentStock;
               variationType = variationType.replaceAll(' ', '');
               for(Variation variation in widget.product.variation) {
                 if(variation.type == variationType) {
+                  // print(price);
                   price = variation.price;
                   _variation = variation;
                   _stock = variation.qty;
@@ -98,6 +115,7 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                 }
               }
               double priceWithDiscount = PriceConverter.convertWithDiscount(context, price, widget.product.discount, widget.product.discountType);
+              // print(priceWithDiscount);
               double priceWithQuantity = priceWithDiscount * details.quantity;
 
               double total = 0, avg = 0;
@@ -154,10 +172,9 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                       Expanded(
                         child: Column(crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                          Text(widget.product.name ?? '',
+                              Text(widget.product.name ?? '',
                               style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE),
                               maxLines: 2, overflow: TextOverflow.ellipsis),
-
                               SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
                               Row(
                                 children: [
@@ -167,15 +184,8 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                                       maxLines: 2, overflow: TextOverflow.ellipsis),
                                 ],
                               ),
-
-
-
                         ]),
                       ),
-
-
-
-
                     ]),
                     Row(
                       children: [
@@ -191,7 +201,7 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              PriceConverter.percentageCalculation(context, widget.product.unitPrice,
+                              PriceConverter.percentageCalculation(context, double.parse(startTotalPrice),
                                   widget.product.discount, widget.product.discountType),
                               style: titilliumRegular.copyWith(color: Theme.of(context).cardColor,
                                   fontSize: Dimensions.FONT_SIZE_DEFAULT),
@@ -206,7 +216,8 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  PriceConverter.convertPrice(context, widget.product.unitPrice, discountType: widget.product.discountType, discount: widget.product.discount),
+                                  "€" + startTotalPrice,
+                                  // PriceConverter.convertPrice(context, widget.product.unitPrice, discountType: widget.product.discountType, discount: widget.product.discount),
                                   style: titilliumRegular.copyWith(color: ColorResources.getPrimary(context), fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE),
                                 ),
                                 SizedBox(height: 5),
@@ -220,7 +231,8 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                             widget.product.discount > 0 ? Padding(
                               padding: const EdgeInsets.only(top: 3),
                               child: Text(
-                                PriceConverter.convertPrice(context, widget.product.unitPrice),
+                                "€" + startTotalPrice,
+                                // PriceConverter.convertPrice(context, widget.product.unitPrice),
                                 style: titilliumRegular.copyWith(color: ColorResources.getRed(context),
                                     decoration: TextDecoration.lineThrough),
                               ),
@@ -362,7 +374,7 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Text(getTranslated('total_price', context), style: robotoBold),
                   SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
-                  Text(PriceConverter.convertPrice(context, priceWithQuantity),
+                  Text(PriceConverter.convertPrice(context, double.parse((priceWithQuantity * (1+(widget.product.tax)/100)).toStringAsFixed(2))),
                     style: titilliumBold.copyWith(color: Theme.of(context).colorScheme.primary, fontSize: Dimensions.FONT_SIZE_LARGE),
                   ),
                 ]),
@@ -389,7 +401,7 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                                 widget.product.addedBy == 'seller' ?
                                 '${Provider.of<SellerProvider>(context, listen: false).sellerModel.seller.fName} '
                                     '${Provider.of<SellerProvider>(context, listen: false).sellerModel.seller.lName}' : 'admin',
-                                price, priceWithDiscount, details.quantity, _stock,
+                                double.parse(startTotalPrice), priceWithDiscount, details.quantity, _stock,
                                 widget.product.colors.length > 0 ? widget.product.colors[details.variantIndex].name : '',
                                 widget.product.colors.length > 0 ? widget.product.colors[details.variantIndex].code : '',
                                 _variation, widget.product.discount, widget.product.discountType, widget.product.tax,
@@ -398,7 +410,6 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                                 widget.product.multiplyQty==1? widget.product.shippingCost*details.quantity : widget.product.shippingCost ??0,
                                 widget.product.minimumOrderQty, widget.product.productType,widget.product.slug
                             );
-
 
 
                             // cart.variations = _variation;
@@ -428,7 +439,7 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                                 widget.product.addedBy == 'seller' ?
                                 '${Provider.of<SellerProvider>(context, listen: false).sellerModel.seller.fName} '
                                     '${Provider.of<SellerProvider>(context, listen: false).sellerModel.seller.lName}' : 'admin',
-                                price, priceWithDiscount, details.quantity, _stock,
+                                double.parse(startTotalPrice), priceWithDiscount, details.quantity, _stock,
                                 widget.product.colors.length > 0 ? widget.product.colors[details.variantIndex].name : '',
                                 widget.product.colors.length > 0 ? widget.product.colors[details.variantIndex].code : '',
                                 _variation, widget.product.discount, widget.product.discountType, widget.product.tax,
