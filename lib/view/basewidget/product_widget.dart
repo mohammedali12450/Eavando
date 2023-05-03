@@ -17,6 +17,24 @@ class ProductWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String ratting = productModel.rating != null && productModel.rating.length != 0? productModel.rating[0].average : "0";
+    /// price
+    double _startingPrice = 0;
+    double _endingPrice;
+    if (productModel.variation != null &&
+        productModel.variation.length != 0) {
+      List<double> _priceList = [];
+      productModel.variation
+          .forEach((variation) => _priceList.add(variation.price));
+      _priceList.sort((a, b) => a.compareTo(b));
+      _startingPrice = _priceList[0];
+      if (_priceList[0] < _priceList[_priceList.length - 1]) {
+        _endingPrice = _priceList[_priceList.length - 1];
+      }
+    } else {
+      _startingPrice = productModel.unitPrice;
+    }
+    var startTotalPrice = ((double.parse(PriceConverter.convertPrice(context, _startingPrice, discount: productModel.discount, discountType: productModel.discountType).replaceAll(RegExp(r'€'), ""))) * (1+(productModel.tax)/100)).toStringAsFixed(2);
+
 
     return InkWell(
       onTap: () {
@@ -88,7 +106,8 @@ class ProductWidget extends StatelessWidget {
 
 
                         productModel.discount!= null && productModel.discount > 0 ?
-                        Text(PriceConverter.convertPrice(context, productModel.unitPrice),
+                        Text(PriceConverter.convertPrice(context,productModel.unitPrice),
+                          // "€" + startTotalPrice,
                         style: titleRegular.copyWith(
                           color: ColorResources.getRed(context),
                           decoration: TextDecoration.lineThrough,
@@ -99,9 +118,9 @@ class ProductWidget extends StatelessWidget {
                       SizedBox(height: 2,),
 
 
-                      Text(PriceConverter.convertPrice(context,
-                          productModel.unitPrice, discountType: productModel.discountType,
-                          discount: productModel.discount),
+                      Text(
+                        // PriceConverter.convertPrice(context,productModel.unitPrice),
+                        "€" + startTotalPrice,
                         style: titilliumSemiBold.copyWith(color: ColorResources.getPrimary(context)),
                       ),
 
@@ -127,7 +146,9 @@ class ProductWidget extends StatelessWidget {
 
 
               child: Center(
-                child: Text(PriceConverter.percentageCalculation(context, productModel.unitPrice,
+                child: Text(PriceConverter.percentageCalculation(context, 
+                    // productModel.unitPrice,
+                    double.parse(startTotalPrice),
                       productModel.discount, productModel.discountType),
                   style: robotoRegular.copyWith(color: Theme.of(context).highlightColor,
                       fontSize: Dimensions.FONT_SIZE_SMALL),
