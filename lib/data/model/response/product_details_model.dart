@@ -51,6 +51,7 @@ class ProductDetailsModel  {
   int _reviewsCount;
   String _averageReview;
   List<Reviews> _reviews;
+  int _imagesListToEachColor;
 
   ProductDetailsModel({
     int id,
@@ -104,6 +105,8 @@ class ProductDetailsModel  {
     int reviewsCount,
     String averageReview,
     List<Reviews> reviews,
+    int imagesListToEachColor,
+
   }) {
     if (id != null) {
       this._id = id;
@@ -257,6 +260,9 @@ class ProductDetailsModel  {
     if (reviews != null) {
       this._reviews = reviews;
     }
+    if (imagesListToEachColor != null) {
+      this._imagesListToEachColor = imagesListToEachColor;
+    }
   }
 
   int get id => _id;
@@ -309,6 +315,7 @@ class ProductDetailsModel  {
   int get reviewsCount => _reviewsCount;
   String get averageReview => _averageReview;
   List<Reviews> get reviews => _reviews;
+  int get imagesListToEachColor => _imagesListToEachColor;
 
   ProductDetailsModel.fromJson(Map<String, dynamic> json) {
     _id = json['id'];
@@ -389,6 +396,7 @@ class ProductDetailsModel  {
     _code = json['code'];
     _reviewsCount = int.parse(json['reviews_count'].toString());
     _averageReview = json['average_review'].toString();
+    _imagesListToEachColor=  json["images_list_to_each_color"];
     if (json['reviews'] != null) {
       _reviews = <Reviews>[];
       json['reviews'].forEach((v) {
@@ -459,6 +467,7 @@ class ProductDetailsModel  {
     data['code'] = this._code;
     data['reviews_count'] = this._reviewsCount;
     data['average_review'] = this._averageReview;
+    data['images_list_to_each_color'] =  this._imagesListToEachColor;
     if (this._reviews != null) {
       data['reviews'] = this._reviews.map((v) => v.toJson()).toList();
     }

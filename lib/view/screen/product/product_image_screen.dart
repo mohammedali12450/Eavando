@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/product_details_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/splash_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/view/basewidget/custom_app_bar.dart';
@@ -20,13 +21,15 @@ class _ProductImageScreenState extends State<ProductImageScreen> {
   int pageIndex;
   PageController _pageController;
   int colorIndex;
+  int imagesToEachColor;
 
   @override
   void initState() {
     super.initState();
-    colorIndex = Provider.of<ProductDetailsProvider>(context, listen: false).colorIndex;
-    _pageController = PageController(initialPage: pageIndex);
+    _pageController = PageController();
     pageIndex = Provider.of<ProductDetailsProvider>(context, listen: false).imageSliderIndex;
+    colorIndex = Provider.of<ProductDetailsProvider>(context, listen: false).colorIndex;
+    imagesToEachColor = Provider.of<ProductDetailsProvider>(context, listen: false).productDetailsModel.imagesListToEachColor;
   }
 
   @override
@@ -37,37 +40,62 @@ class _ProductImageScreenState extends State<ProductImageScreen> {
         Expanded(
           child: Stack(
             children: [
-              PhotoViewGallery.builder(
-                scrollPhysics: const BouncingScrollPhysics(),
-                builder: (BuildContext context, int index) {
-                  return PhotoViewGalleryPageOptions(
-                    imageProvider: NetworkImage('${Provider.of<SplashProvider>(context,listen: false).baseUrls.productImageUrl}/'
-                        '${Provider.of<ProductDetailsProvider>(context, listen: false).productDetailsModel.colors[colorIndex].name}'
-                        '/${widget.imageList[index]}'),
-                    initialScale: PhotoViewComputedScale.covered,
-                    heroAttributes: PhotoViewHeroAttributes(tag: index.toString()),
-                  );
-                },
-                backgroundDecoration: BoxDecoration(color: Theme.of(context).highlightColor),
-                itemCount: widget.imageList.length,
-                loadingBuilder: (context, event) => Center(
-                  child: Container(
-                    width: 20.0,
-                    height: 20.0,
-                    child: CircularProgressIndicator(
-                      value: event == null ? 0 : event.cumulativeBytesLoaded / event.expectedTotalBytes,
-                        valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
-                    ),
-                  ),
-                ),
-                pageController: _pageController,
-                onPageChanged: (int index) {
+              RawKeyboardListener(
+                autofocus: true,
+                onKey: (key){
                   setState(() {
-                    pageIndex = index;
+                    if (key.runtimeType == RawKeyDownEvent) {
+                      //right
+                      if(key.data.logicalKey == LogicalKeyboardKey.arrowRight){
+                        if(pageIndex<widget.imageList.length-1) {
+                          pageIndex++;
+                        }
+                      }
+                      //left
+                      else if(key.data.logicalKey == LogicalKeyboardKey.arrowLeft){
+                        if(pageIndex>0) {
+                          pageIndex--;
+                        }
+                      }
+                    }
                   });
                 },
+                focusNode: FocusNode(),
+                child: PhotoViewGallery.builder(
+                  scrollPhysics: const BouncingScrollPhysics(),
+                  builder: (BuildContext context, int index) {
+                    return PhotoViewGalleryPageOptions(
+                      imageProvider: NetworkImage(imagesToEachColor == 0 ?
+                      '${Provider.of<SplashProvider>(context,listen: false).baseUrls.productImageUrl}'
+                          '/${widget.imageList[pageIndex]}' :
+                      '${Provider.of<SplashProvider>(context,listen: false).baseUrls.productImageUrl}/'
+                          '${Provider.of<ProductDetailsProvider>(context, listen: false).productDetailsModel.colors[colorIndex].name}'
+                          '/${widget.imageList[pageIndex]}'),
+                      initialScale: PhotoViewComputedScale.covered,
+                      heroAttributes: PhotoViewHeroAttributes(tag: index.toString()),
+                    );
+                  },
+                  backgroundDecoration: BoxDecoration(color: Theme.of(context).highlightColor),
+                  itemCount: widget.imageList.length,
+                  loadingBuilder: (context, event) => Center(
+                    child: Container(
+                      width: 20.0,
+                      height: 20.0,
+                      child: CircularProgressIndicator(
+                        value: event == null ? 0 : event.cumulativeBytesLoaded / event.expectedTotalBytes,
+                        valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+                      ),
+                    ),
+                  ),
+                  pageController: _pageController,
+                  onPageChanged: (int index) {
+                    setState(() {
+                      pageIndex = index;
+                      print(index);
+                    });
+                  },
+                ),
               ),
-
               pageIndex != 0 ? Positioned(
                 left: 10, top: 0, bottom: 0,
                 child: Container(
@@ -78,15 +106,17 @@ class _ProductImageScreenState extends State<ProductImageScreen> {
                   ),
                   child: InkWell(
                     onTap: () {
-                      if(pageIndex > 0) {
-                        _pageController.animateToPage(pageIndex-1, duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
-                      }
+                      setState(() {
+                        if(pageIndex > 0) {
+                          pageIndex--;
+                          // _pageController.animateToPage(pageIndex-1, duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
+                        }
+                      });
                     },
                     child: Icon(Icons.chevron_left_outlined, size: 35),
                   ),
                 ),
               ) : SizedBox.shrink(),
-
               pageIndex != widget.imageList.length-1 ? Positioned(
                 right: 10, top: 0, bottom: 0,
                 child: Container(
@@ -97,9 +127,12 @@ class _ProductImageScreenState extends State<ProductImageScreen> {
                   ),
                   child: InkWell(
                     onTap: () {
-                      if(pageIndex < widget.imageList.length) {
-                        _pageController.animateToPage(pageIndex+1, duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
-                      }
+                      setState(() {
+                        if(pageIndex < widget.imageList.length) {
+                          pageIndex++;
+                          // _pageController.animateToPage(pageIndex+1, duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
+                        }
+                      });
                     },
                     child: Icon(Icons.chevron_right_outlined, size: 35),
                   ),
