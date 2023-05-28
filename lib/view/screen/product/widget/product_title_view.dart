@@ -9,15 +9,18 @@ import 'package:flutter_axtro_soft_ecommerce/utill/custom_themes.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/dimensions.dart';
 import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class ProductTitleView extends StatefulWidget {
-   pd.ProductDetailsModel productModel;
+  pd.ProductDetailsModel productModel;
   final String averageRatting;
   ValueChanged callback;
   int colorIndex;
 
-
   ProductTitleView(
-      {@required this.productModel, this.averageRatting, this.colorIndex,this.callback});
+      {@required this.productModel,
+      this.averageRatting,
+      this.colorIndex,
+      this.callback});
 
   @override
   State<ProductTitleView> createState() => _ProductTitleViewState();
@@ -41,7 +44,13 @@ class _ProductTitleViewState extends State<ProductTitleView> {
     } else {
       _startingPrice = widget.productModel.unitPrice;
     }
-    var startTotalPrice = ((double.parse(PriceConverter.convertPrice(context, _startingPrice, discount: widget.productModel.discount, discountType: widget.productModel.discountType).replaceAll(RegExp(r'€'), ""))) * (1+(widget.productModel.tax)/100)).toStringAsFixed(2);
+    var startTotalPrice = ((double.parse(PriceConverter.convertPrice(
+                    context, _startingPrice,
+                    discount: widget.productModel.discount,
+                    discountType: widget.productModel.discountType)
+                .replaceAll(RegExp(r'€'), ""))) *
+            (1 + (widget.productModel.tax) / 100))
+        .toStringAsFixed(2);
     // print(startTotalPrice);
     return widget.productModel != null
         ? Container(
@@ -63,31 +72,33 @@ class _ProductTitleViewState extends State<ProductTitleView> {
                         children: [
                           Text(
                             // '${_startingPrice != null ? PriceConverter.convertPrice(context, _startingPrice, discount: widget.productModel.discount, discountType: widget.productModel.discountType) : ''}'
-                            _startingPrice != null ? "€" + startTotalPrice :
-                            '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice, discount: widget.productModel.discount, discountType: widget.productModel.discountType)}' : ''}',
+                            _startingPrice != null
+                                ? "€" + startTotalPrice
+                                : '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice, discount: widget.productModel.discount, discountType: widget.productModel.discountType)}' : ''}',
                             style: titilliumBold.copyWith(
                                 color: ColorResources.getPrimary(context),
                                 fontSize: Dimensions.FONT_SIZE_LARGE),
                           ),
-                          SizedBox(
-                              width:
-                              Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                          SizedBox(width: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                           widget.productModel.discount != null &&
-                              widget.productModel.discount > 0
+                                  widget.productModel.discount > 0
                               ? Text(
-                            _startingPrice != null ? "€" + startTotalPrice :
-                            // '${PriceConverter.convertPrice(context, _startingPrice)}'
-                                '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice)}' : ''}',
-                            style: titilliumRegular.copyWith(
-                                color: Theme.of(context).hintColor,
-                                decoration: TextDecoration.lineThrough),
-                          )
+                                  _startingPrice != null
+                                      ? "€" + startTotalPrice
+                                      :
+                                      // '${PriceConverter.convertPrice(context, _startingPrice)}'
+                                      '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice)}' : ''}',
+                                  style: titilliumRegular.copyWith(
+                                      color: Theme.of(context).hintColor,
+                                      decoration: TextDecoration.lineThrough),
+                                )
                               : SizedBox(),
                         ],
                       ),
                       SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                       Text('${getTranslated('included_vat', context)}',
                           style: titilliumRegular.copyWith(
+                            // ignore: deprecated_member_use
                             color: Theme.of(context).buttonColor,
                             fontSize: Dimensions.FONT_SIZE_SMALL,
                           )),
@@ -143,11 +154,9 @@ class _ProductTitleViewState extends State<ProductTitleView> {
                                               .substring(1, 7);
                                       return InkWell(
                                         onTap: () {
-
-                                           // Provider.of<ProductDetailsProvider>(context, listen: false).changeIndex(index);
-                                            widget.callback(index);
-                                       //   widget.productModel=  Provider.of<ProductDetailsProvider>(context,listen: true).productDetailsModel;
-
+                                          // Provider.of<ProductDetailsProvider>(context, listen: false).changeIndex(index);
+                                          widget.callback(index);
+                                          //   widget.productModel=  Provider.of<ProductDetailsProvider>(context,listen: true).productDetailsModel;
 
                                           //widget.colorIndex = index;
                                         },
@@ -201,7 +210,8 @@ class _ProductTitleViewState extends State<ProductTitleView> {
                               physics: NeverScrollableScrollPhysics(),
                               itemBuilder: (context, index) {
                                 return Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
@@ -269,19 +279,21 @@ class _ProductTitleViewState extends State<ProductTitleView> {
                                       Wrap(
                                         runSpacing: 5,
                                         alignment: WrapAlignment.spaceBetween,
-                                        crossAxisAlignment: WrapCrossAlignment.center,
-                                        children: widget.productModel.choiceOptions[index].options.map((e) =>
-                                            SizedBox(
-                                              child: Text(
-                                                  e + "  ",
-                                                  style: titilliumRegular
-                                                      .copyWith(
-                                                    color: Theme.of(context).primaryColor,
-                                                    fontSize: Dimensions
-                                                        .FONT_SIZE_DEFAULT,
-                                                  )),
-                                            )
-                                        ).toList(),
+                                        crossAxisAlignment:
+                                            WrapCrossAlignment.center,
+                                        children: widget.productModel
+                                            .choiceOptions[index].options
+                                            .map((e) => SizedBox(
+                                                  child: Text(e + "  ",
+                                                      style: titilliumRegular
+                                                          .copyWith(
+                                                        color: Theme.of(context)
+                                                            .primaryColor,
+                                                        fontSize: Dimensions
+                                                            .FONT_SIZE_DEFAULT,
+                                                      )),
+                                                ))
+                                            .toList(),
                                       )
                                     ]);
                               },

@@ -1,6 +1,6 @@
 import 'package:flutter_axtro_soft_ecommerce/data/model/response/product_model.dart';
 
-class ProductDetailsModel  {
+class ProductDetailsModel {
   int _id;
   String _addedBy;
   int _userId;
@@ -14,7 +14,7 @@ class ProductDetailsModel  {
   int _refundable;
   String _digitalProductType;
   String _digitalFileReady;
-  Map<String,dynamic> _imagesWithColor;
+  Map<String, dynamic> _imagesWithColor;
   List<dynamic> _imagesWithOutColor;
   String _thumbnail;
   int _featured;
@@ -67,8 +67,7 @@ class ProductDetailsModel  {
     int refundable,
     String digitalProductType,
     String digitalFileReady,
-    //TODO images throw exiptions when images have a color
-    Map<String,List<dynamic>> imagesWithColor,
+    Map<String, List<dynamic>> imagesWithColor,
     List<dynamic> imagesWithOutColors,
     String thumbnail,
     int featured,
@@ -106,7 +105,6 @@ class ProductDetailsModel  {
     String averageReview,
     List<Reviews> reviews,
     int imagesListToEachColor,
-
   }) {
     if (id != null) {
       this._id = id;
@@ -278,7 +276,7 @@ class ProductDetailsModel  {
   int get refundable => _refundable;
   String get digitalProductType => _digitalProductType;
   String get digitalFileReady => _digitalFileReady;
-  Map<String,dynamic> get imagesWithColor => _imagesWithColor;
+  Map<String, dynamic> get imagesWithColor => _imagesWithColor;
   List<dynamic> get imagesWithOutColor => _imagesWithOutColor;
   String get thumbnail => _thumbnail;
   int get featured => _featured;
@@ -336,11 +334,10 @@ class ProductDetailsModel  {
     _refundable = json['refundable'];
     _digitalProductType = json['digital_product_type'];
     _digitalFileReady = json['digital_file_ready'];
-    try{
+    try {
       _imagesWithColor = json['images'];
-
-    }catch(_){
-      _imagesWithOutColor=json['images'];
+    } catch (_) {
+      _imagesWithOutColor = json['images'];
     }
     _thumbnail = json['thumbnail'];
     _featured = json['featured'];
@@ -396,7 +393,7 @@ class ProductDetailsModel  {
     _code = json['code'];
     _reviewsCount = int.parse(json['reviews_count'].toString());
     _averageReview = json['average_review'].toString();
-    _imagesListToEachColor=  json["images_list_to_each_color"];
+    _imagesListToEachColor = json["images_list_to_each_color"];
     if (json['reviews'] != null) {
       _reviews = <Reviews>[];
       json['reviews'].forEach((v) {
@@ -422,10 +419,10 @@ class ProductDetailsModel  {
     data['refundable'] = this._refundable;
     data['digital_product_type'] = this._digitalProductType;
     data['digital_file_ready'] = this._digitalFileReady;
-    try{
+    try {
       data['images'] = this._imagesWithColor;
-    }catch(_){
-      data['images']=this._imagesWithOutColor;
+    } catch (_) {
+      data['images'] = this._imagesWithOutColor;
     }
     data['thumbnail'] = this._thumbnail;
     data['featured'] = this._featured;
@@ -437,7 +434,8 @@ class ProductDetailsModel  {
     data['variant_product'] = this._variantProduct;
     data['attributes'] = this._attributes;
     if (this._choiceOptions != null) {
-      data['choice_options'] = this._choiceOptions.map((v) => v.toJson()).toList();
+      data['choice_options'] =
+          this._choiceOptions.map((v) => v.toJson()).toList();
     }
     if (this._variation != null) {
       data['variation'] = this._variation.map((v) => v.toJson()).toList();
@@ -467,7 +465,7 @@ class ProductDetailsModel  {
     data['code'] = this._code;
     data['reviews_count'] = this._reviewsCount;
     data['average_review'] = this._averageReview;
-    data['images_list_to_each_color'] =  this._imagesListToEachColor;
+    data['images_list_to_each_color'] = this._imagesListToEachColor;
     if (this._reviews != null) {
       data['reviews'] = this._reviews.map((v) => v.toJson()).toList();
     }
@@ -610,7 +608,9 @@ class Reviews {
     _status = json['status'];
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
-    _customer = json['customer'] != null ? new Customer.fromJson(json['customer']) : null;
+    _customer = json['customer'] != null
+        ? new Customer.fromJson(json['customer'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {

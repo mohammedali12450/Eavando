@@ -83,7 +83,6 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                 });
               }
               double _startingPrice = 0;
-              double _endingPrice;
               if (widget.product.variation != null &&
                   widget.product.variation.length != 0) {
                 List<double> _priceList = [];
@@ -92,7 +91,6 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                 _priceList.sort((a, b) => a.compareTo(b));
                 _startingPrice = _priceList[0];
                 if (_priceList[0] < _priceList[_priceList.length - 1]) {
-                  _endingPrice = _priceList[_priceList.length - 1];
                 }
               } else {
                 _startingPrice = widget.product.unitPrice;
@@ -223,6 +221,7 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                                 SizedBox(height: 5),
                                 Text('${getTranslated('included_vat', context)}',
                                     style: titilliumRegular.copyWith(
+                                       // ignore: deprecated_member_use
                                       color: Theme.of(context).buttonColor,
                                       fontSize: Dimensions.FONT_SIZE_SMALL,
                                     )),

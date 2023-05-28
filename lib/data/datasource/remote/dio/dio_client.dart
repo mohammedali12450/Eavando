@@ -14,43 +14,53 @@ class DioClient {
   String token;
   String countryCode;
 
-  DioClient(this.baseUrl,
-      Dio dioC, {
-        this.loggingInterceptor,
-        this.sharedPreferences,
-      }) {
+  DioClient(
+    this.baseUrl,
+    Dio dioC, {
+    this.loggingInterceptor,
+    this.sharedPreferences,
+  }) {
     token = sharedPreferences.getString(AppConstants.TOKEN);
-    countryCode = sharedPreferences.getString(AppConstants.COUNTRY_CODE) ?? AppConstants.languages[0].countryCode;
+    countryCode = sharedPreferences.getString(AppConstants.COUNTRY_CODE) ??
+        AppConstants.languages[0].countryCode;
     print("NNNN $token");
     dio = dioC ?? Dio();
     dio
       ..options.baseUrl = baseUrl
-      ..options.connectTimeout = 30000
-      ..options.receiveTimeout = 30000
+      ..options.connectTimeout = Duration(minutes: 3)
+      ..options.receiveTimeout = Duration(minutes: 3)
       ..httpClientAdapter
       ..options.headers = {
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $token',
-        AppConstants.LANG_KEY : countryCode == 'DE'? 'de':countryCode.toLowerCase(),
-
+        AppConstants.LANG_KEY:
+            countryCode == 'DE' ? 'de' : countryCode.toLowerCase(),
       };
     dio.interceptors.add(loggingInterceptor);
   }
 
   void updateHeader(String token, String countryCode) {
     token = token == null ? this.token : token;
-    countryCode = countryCode == null ? this.countryCode == 'DE' ? 'de': this.countryCode.toLowerCase(): countryCode == 'DE' ? 'de' : countryCode.toLowerCase();
+    countryCode = countryCode == null
+        ? this.countryCode == 'DE'
+            ? 'de'
+            : this.countryCode.toLowerCase()
+        : countryCode == 'DE'
+            ? 'de'
+            : countryCode.toLowerCase();
     this.token = token;
     this.countryCode = countryCode;
     print('===Country code====>$countryCode');
     dio.options.headers = {
       'Content-Type': 'application/json; charset=UTF-8',
       'Authorization': 'Bearer $token',
-      AppConstants.LANG_KEY: countryCode == 'DE'? 'de':countryCode.toLowerCase(),
+      AppConstants.LANG_KEY:
+          countryCode == 'DE' ? 'de' : countryCode.toLowerCase(),
     };
   }
 
-  Future<Response> get(String uri, {
+  Future<Response> get(
+    String uri, {
     Map<String, dynamic> queryParameters,
     Options options,
     CancelToken cancelToken,
@@ -74,7 +84,8 @@ class DioClient {
     }
   }
 
-  Future<Response> post(String uri, {
+  Future<Response> post(
+    String uri, {
     data,
     Map<String, dynamic> queryParameters,
     Options options,
@@ -100,7 +111,8 @@ class DioClient {
     }
   }
 
-  Future<Response> put(String uri, {
+  Future<Response> put(
+    String uri, {
     data,
     Map<String, dynamic> queryParameters,
     Options options,
@@ -126,7 +138,8 @@ class DioClient {
     }
   }
 
-  Future<Response> delete(String uri, {
+  Future<Response> delete(
+    String uri, {
     data,
     Map<String, dynamic> queryParameters,
     Options options,

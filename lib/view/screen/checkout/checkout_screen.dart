@@ -79,6 +79,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         height: 60,
         padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_LARGE, vertical: Dimensions.PADDING_SIZE_DEFAULT),
         decoration: BoxDecoration(
+           // ignore: deprecated_member_use
           color: Theme.of(context).buttonColor,
          ),
         child: Center(

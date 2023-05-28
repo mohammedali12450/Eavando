@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_axtro_soft_ecommerce/localization/language_constrants.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/auth_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/profile_provider.dart';
-import 'package:flutter_axtro_soft_ecommerce/provider/theme_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/color_resources.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/custom_themes.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/dimensions.dart';
@@ -12,13 +11,14 @@ import 'package:flutter_axtro_soft_ecommerce/view/screen/auth/widget/sign_in_wid
 import 'package:flutter_axtro_soft_ecommerce/view/screen/auth/widget/sign_up_widget.dart';
 import 'package:provider/provider.dart';
 
-class AuthScreen extends StatelessWidget{
+class AuthScreen extends StatelessWidget {
   final int initialPage;
   AuthScreen({this.initialPage = 0});
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<ProfileProvider>(context, listen: false).initAddressTypeList(context);
+    Provider.of<ProfileProvider>(context, listen: false)
+        .initAddressTypeList(context);
     Provider.of<AuthProvider>(context, listen: false).isRemember;
     PageController _pageController = PageController(initialPage: initialPage);
 
@@ -26,7 +26,6 @@ class AuthScreen extends StatelessWidget{
       body: Stack(
         clipBehavior: Clip.none,
         children: [
-
           // Provider.of<ThemeProvider>(context).darkTheme ? SizedBox()
           //     : Image.asset(Images.background, fit: BoxFit.fill,
           //     height: MediaQuery.of(context).size.height,
@@ -39,73 +38,77 @@ class AuthScreen extends StatelessWidget{
                 children: [
                   SizedBox(height: Dimensions.topSpace),
                   Image.asset(Images.eavando_logo, height: 150, width: 250),
-
                   Padding(
                     padding: EdgeInsets.all(Dimensions.MARGIN_SIZE_LARGE),
                     child: Stack(
                       clipBehavior: Clip.none,
                       children: [
-                        Positioned(bottom: 0,
-                          right: Dimensions.MARGIN_SIZE_EXTRA_SMALL, left: 0,
+                        Positioned(
+                          bottom: 0,
+                          right: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                          left: 0,
                           child: Container(
                             width: MediaQuery.of(context).size.width,
-                            height: 1, color: ColorResources.getGainsBoro(context),
+                            height: 1,
+                            color: ColorResources.getGainsBoro(context),
                           ),
                         ),
-
-
                         Consumer<AuthProvider>(
-                          builder: (context,authProvider,child)=>Row(
+                          builder: (context, authProvider, child) => Row(
                             children: [
                               InkWell(
-                                onTap: () => _pageController.animateToPage(0, duration: Duration(seconds: 1), curve: Curves.easeInOut),
+                                onTap: () => _pageController.animateToPage(0,
+                                    duration: Duration(seconds: 1),
+                                    curve: Curves.easeInOut),
                                 child: Column(
                                   children: [
                                     Text(getTranslated('SIGN_IN', context),
-                                        style: authProvider.selectedIndex == 0 ?
-                                        titilliumSemiBold : titilliumRegular),
+                                        style: authProvider.selectedIndex == 0
+                                            ? titilliumSemiBold
+                                            : titilliumRegular),
                                     Container(
-                                      height: 1, width: 40,
+                                      height: 1,
+                                      width: 40,
                                       margin: EdgeInsets.only(top: 8),
-                                      color: authProvider.selectedIndex == 0 ?
-                                      Theme.of(context).primaryColor : Colors.transparent,
+                                      color: authProvider.selectedIndex == 0
+                                          ? Theme.of(context).primaryColor
+                                          : Colors.transparent,
                                     ),
                                   ],
                                 ),
                               ),
-                              SizedBox(width: Dimensions.PADDING_SIZE_EXTRA_LARGE),
-
-
+                              SizedBox(
+                                  width: Dimensions.PADDING_SIZE_EXTRA_LARGE),
                               InkWell(
                                 onTap: () => _pageController.animateToPage(1,
-                                    duration: Duration(seconds: 1), curve: Curves.easeInOut),
+                                    duration: Duration(seconds: 1),
+                                    curve: Curves.easeInOut),
                                 child: Column(
                                   children: [
-
                                     Text(getTranslated('SIGN_UP', context),
-                                        style: authProvider.selectedIndex == 1 ?
-                                        titilliumSemiBold : titilliumRegular),
-
-                                    Container(height: 1, width: 50,
+                                        style: authProvider.selectedIndex == 1
+                                            ? titilliumSemiBold
+                                            : titilliumRegular),
+                                    Container(
+                                        height: 1,
+                                        width: 50,
                                         margin: EdgeInsets.only(top: 8),
-                                        color: authProvider.selectedIndex == 1 ?
-                                        Theme.of(context).primaryColor : Colors.transparent
-                                    ),
+                                        color: authProvider.selectedIndex == 1
+                                            ? Theme.of(context).primaryColor
+                                            : Colors.transparent),
                                   ],
                                 ),
                               ),
-
                             ],
                           ),
                         ),
                       ],
                     ),
                   ),
-
-
                   Expanded(
                     child: Consumer<AuthProvider>(
-                      builder: (context,authProvider,child)=>PageView.builder(
+                      builder: (context, authProvider, child) =>
+                          PageView.builder(
                         itemCount: 2,
                         controller: _pageController,
                         itemBuilder: (context, index) {
@@ -121,7 +124,6 @@ class AuthScreen extends StatelessWidget{
                       ),
                     ),
                   ),
-
                 ],
               ),
             ),
@@ -131,4 +133,3 @@ class AuthScreen extends StatelessWidget{
     );
   }
 }
-
