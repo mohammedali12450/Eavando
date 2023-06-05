@@ -64,8 +64,8 @@ class FlashDealModel {
   FlashDealModel.fromJson(Map<String, dynamic> json) {
     _id = json['id'] ?? -1;
     _title = json['title'] ?? "";
-    _startDate = json['start_date'] ?? "";
-    _endDate = json['end_date'] ?? "";
+    _startDate = json['start_date'] ?? DateTime.now().toString();
+    _endDate = json['end_date'] ?? DateTime.now().toString();
     _status = json['status'] ?? 0;
     _featured = json['featured'] ?? 0;
     _backgroundColor = json['background_color'] ?? "";

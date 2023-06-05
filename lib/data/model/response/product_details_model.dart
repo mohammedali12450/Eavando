@@ -282,9 +282,11 @@ class ProductDetailsModel {
     _digitalFileReady = json['digital_file_ready'] ?? "";
     try {
       _imagesWithColor = json['images'] ?? {};
-    } catch (_) {
+    } catch (_) {}
+
+    try {
       _imagesWithOutColor = json['images'] ?? [];
-    }
+    } catch (_) {}
     _thumbnail = json['thumbnail'] ?? "";
     _featured = json['featured'] ?? 0;
     _videoProvider = json['video_provider'] ?? "";

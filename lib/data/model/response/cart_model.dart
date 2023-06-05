@@ -90,7 +90,7 @@ class CartModel {
         shippingMethodId = json['shipping_method_id'] ?? -1,
         cartGroupId = json['cart_group_id'] ?? "-1",
         shopInfo = json['shop_info'] ?? "",
-        choiceOptions = (json['choice_options'] as List)
+        choiceOptions = ((json['choice_options'] ?? []) as List)
             .map((e) => ChoiceOptions.fromJson(e))
             .toList(),
         variationIndexes = json['variation_indexes'] != null
@@ -98,7 +98,7 @@ class CartModel {
             : [],
         shippingCost = double.parse(json['shipping_cost']?.toString() ?? "0.0"),
         shippingType = json['shipping_type'] ?? "",
-        minimumOrderQuantity = json['minimum_order_quantity'] ?? 0.0,
+        minimumOrderQuantity = json['minimum_order_quantity'] ?? 0,
         productInfo = ProductInfo.fromJson(json['product'] ?? {}),
         productType = json['product_type'] ?? "",
         slug = json['slug'] ?? "";
