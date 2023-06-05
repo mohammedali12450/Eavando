@@ -36,7 +36,7 @@ class SupportTicketProvider extends ChangeNotifier {
       callback(true, message);
       _isLoading = false;
       _supportTicketList?.add(
-        SupportTicketModel.core(
+        SupportTicketModel(
           description: supportTicketBody.description,
           type: supportTicketBody.type,
           subject: supportTicketBody.subject,
@@ -53,8 +53,8 @@ class SupportTicketProvider extends ChangeNotifier {
         errorMessage = apiResponse.error.toString();
       } else {
         ErrorResponse errorResponse = apiResponse.error;
-        print(errorResponse.errors[0].message);
-        errorMessage = errorResponse.errors[0].message;
+        print(errorResponse.errors?[0].message ?? "");
+        errorMessage = errorResponse.errors?[0].message ?? "";
       }
       callback(false, errorMessage);
       _isLoading = false;
@@ -98,7 +98,7 @@ class SupportTicketProvider extends ChangeNotifier {
     if (apiResponse.response != null &&
         apiResponse.response!.statusCode == 200) {
       _supportReplyList?.add(
-        SupportReplyModel.core(
+        SupportReplyModel(
           customerMessage: message,
           createdAt: DateConverter.localDateToIsoString(
             DateTime.now(),

@@ -1,52 +1,26 @@
 class ChosenShippingMethodModel {
-  late int _id;
-  late String _cartGroupId;
-  late int _shippingMethodId;
-  late double _shippingCost;
-  late String _createdAt;
-  late String _updatedAt;
+  int? id;
+  String? cartGroupId;
+  int? shippingMethodId;
+  double? shippingCost;
+  String? createdAt;
+  String? updatedAt;
 
   ChosenShippingMethodModel({
-    required int id,
-    required String cartGroupId,
-    required int shippingMethodId,
-    required double shippingCost,
-    required String createdAt,
-    required String updatedAt,
-  }) {
-    this._id = id;
-    this._cartGroupId = cartGroupId;
-    this._shippingMethodId = shippingMethodId;
-    this._shippingCost = shippingCost;
-    this._createdAt = createdAt;
-    this._updatedAt = updatedAt;
-  }
-
-  int get id => _id;
-  String get cartGroupId => _cartGroupId;
-  int get shippingMethodId => _shippingMethodId;
-  double get shippingCost => _shippingCost;
-  String get createdAt => _createdAt;
-  String get updatedAt => _updatedAt;
+    this.id,
+    this.cartGroupId,
+    this.shippingMethodId,
+    this.shippingCost,
+    this.createdAt,
+    this.updatedAt,
+  });
 
   ChosenShippingMethodModel.fromJson(Map<String, dynamic> json) {
-    _id = json['id'] ?? -1;
-    _cartGroupId = json['cart_group_id'] ?? "-1";
-    _shippingMethodId =
-        int.parse(json['shipping_method_id']?.toString() ?? "-1");
-    _shippingCost = double.parse(json['shipping_cost']?.toString() ?? "0.0");
-    _createdAt = json['created_at'] ?? "";
-    _updatedAt = json['updated_at'] ?? "";
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this._id;
-    data['cart_group_id'] = this._cartGroupId;
-    data['shipping_method_id'] = this._shippingMethodId;
-    data['shipping_cost'] = this._shippingCost;
-    data['created_at'] = this._createdAt;
-    data['updated_at'] = this._updatedAt;
-    return data;
+    id = json['id'];
+    cartGroupId = json['cart_group_id'];
+    shippingMethodId = int.parse(json['shipping_method_id'].toString());
+    shippingCost = double.parse(json['shipping_cost'].toString());
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
   }
 }
