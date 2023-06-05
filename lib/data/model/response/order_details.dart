@@ -2,52 +2,52 @@ import 'package:flutter_axtro_soft_ecommerce/data/model/response/product_model.d
 import 'package:flutter_axtro_soft_ecommerce/data/model/response/seller_model.dart';
 
 class OrderDetailsModel {
-  int _id;
-  int _orderId;
-  int _productId;
-  int _sellerId;
-  String _digitalFileAfterSell;
-  Product _productDetails;
-  int _qty;
-  double _price;
-  double _tax;
-  double _discount;
-  String _deliveryStatus;
-  String _paymentStatus;
-  String _createdAt;
-  String _updatedAt;
-  int _shippingMethodId;
-  String _variant;
-  int _refundReq;
-  Seller _seller;
+  late int _id;
+  late int _orderId;
+  late int _productId;
+  late int _sellerId;
+  late String _digitalFileAfterSell;
+  late Product _productDetails;
+  late int _qty;
+  late double _price;
+  late double _tax;
+  late double _discount;
+  late String _deliveryStatus;
+  late String _paymentStatus;
+  late String _createdAt;
+  late String _updatedAt;
+  late int _shippingMethodId;
+  late String _variant;
+  late int _refundReq;
+  late Seller _seller;
 
-  OrderDetailsModel(
-      {int id,
-        int orderId,
-        int productId,
-        int sellerId,
-        String digitalFileAfterSell,
-        Product productDetails,
-        int qty,
-        double price,
-        double tax,
-        double discount,
-        String deliveryStatus,
-        String paymentStatus,
-        String createdAt,
-        String updatedAt,
-        int shippingMethodId,
-        String variant,
-        int refundReq,
-        Seller seller,
-      }) {
+  OrderDetailsModel({
+    required int id,
+    required int orderId,
+    required int productId,
+    required int sellerId,
+    required String digitalFileAfterSell,
+    required Product productDetails,
+    required int qty,
+    required double price,
+    required double tax,
+    required double discount,
+    required String deliveryStatus,
+    required String paymentStatus,
+    required String createdAt,
+    required String updatedAt,
+    required int shippingMethodId,
+    required String variant,
+    required int refundReq,
+    required Seller seller,
+  }) {
     this._id = id;
     this._orderId = orderId;
     this._productId = productId;
     this._sellerId = sellerId;
-    if(digitalFileAfterSell != null){
-      this._digitalFileAfterSell = digitalFileAfterSell;
-    }
+
+    this._digitalFileAfterSell = digitalFileAfterSell;
+
     this._productDetails = productDetails;
     this._qty = qty;
     this._price = price;
@@ -60,10 +60,8 @@ class OrderDetailsModel {
     this._shippingMethodId = shippingMethodId;
     this._variant = variant;
     this._refundReq = refundReq;
-    if (seller != null) {
-      this._seller = seller;
-    }
 
+    this._seller = seller;
   }
 
   int get id => _id;
@@ -86,29 +84,28 @@ class OrderDetailsModel {
   Seller get seller => _seller;
 
   OrderDetailsModel.fromJson(Map<String, dynamic> json) {
-    _id = json['id'];
-    _orderId = json['order_id'];
-    _productId = json['product_id'];
-    _sellerId = json['seller_id'];
-    if(json['digital_file_after_sell'] != null) {
-      _digitalFileAfterSell = json['digital_file_after_sell'];
+    _id = json['id'] ?? -1;
+    _orderId = json['order_id'] ?? -1;
+    _productId = json['product_id'] ?? -1;
+    _sellerId = json['seller_id'] ?? -1;
+    if (json['digital_file_after_sell'] != null) {
+      _digitalFileAfterSell = json['digital_file_after_sell'] ?? "";
     }
-    if(json['product_details'] != null) {
-      _productDetails = Product.fromJson(json['product_details']);
+    if (json['product_details'] != null) {
+      _productDetails = Product.fromJson(json['product_details'] ?? {});
     }
-    _qty = json['qty'];
-    _price = json['price'].toDouble();
-    _tax = json['tax'].toDouble();
-    _discount = json['discount'].toDouble();
-    _deliveryStatus = json['delivery_status'];
-    _paymentStatus = json['payment_status'];
-    _createdAt = json['created_at'];
-    _updatedAt = json['updated_at'];
-    _shippingMethodId = json['shipping_method_id'];
-    _variant = json['variant'];
-    _refundReq = json['refund_request'];
-    _seller = json['seller'] != null ? new Seller.fromJson(json['seller']) : null;
-
+    _qty = json['qty'] ?? 0;
+    _price = json['price']?.toDouble() ?? 0.0;
+    _tax = json['tax']?.toDouble() ?? 0.0;
+    _discount = json['discount']?.toDouble() ?? 0.0;
+    _deliveryStatus = json['delivery_status'] ?? "";
+    _paymentStatus = json['payment_status'] ?? "";
+    _createdAt = json['created_at'] ?? "";
+    _updatedAt = json['updated_at'] ?? "";
+    _shippingMethodId = json['shipping_method_id'] ?? -1;
+    _variant = json['variant'] ?? "";
+    _refundReq = json['refund_request'] ?? 0;
+    _seller = Seller.fromJson(json['seller'] ?? {});
   }
 
   Map<String, dynamic> toJson() {
@@ -118,9 +115,7 @@ class OrderDetailsModel {
     data['product_id'] = this._productId;
     data['seller_id'] = this._sellerId;
     data['digital_file_after_sell'] = this._digitalFileAfterSell;
-    if(this._productDetails != null) {
-      data['product_details'] = this._productDetails.toJson();
-    }
+    data['product_details'] = this._productDetails.toJson();
     data['qty'] = this._qty;
     data['price'] = this._price;
     data['tax'] = this._tax;
@@ -132,9 +127,9 @@ class OrderDetailsModel {
     data['shipping_method_id'] = this._shippingMethodId;
     data['variant'] = this._variant;
     data['refund_request'] = this._refundReq;
-    if (this._seller != null) {
-      data['seller'] = this._seller.toJson();
-    }
+
+    data['seller'] = this._seller.toJson();
+
     return data;
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/product_details_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/splash_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/theme/light_theme.dart';
 import 'package:flutter_axtro_soft_ecommerce/view/basewidget/custom_app_bar.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
@@ -10,30 +11,33 @@ import 'package:provider/provider.dart';
 class ProductImageScreen extends StatefulWidget {
   final String title;
   final List<dynamic> imageList;
-  ProductImageScreen({@required this.title, @required this.imageList});
+  ProductImageScreen({required this.title, required this.imageList});
 
   @override
   _ProductImageScreenState createState() => _ProductImageScreenState();
 }
 
 class _ProductImageScreenState extends State<ProductImageScreen> {
-  int pageIndex;
-  PageController _pageController;
-  int colorIndex;
-  int imagesToEachColor;
+  late int pageIndex;
+  late PageController _pageController;
+  late int colorIndex;
+  late int imagesToEachColor;
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController();
     pageIndex = Provider.of<ProductDetailsProvider>(context, listen: false)
-        .imageSliderIndex;
-    colorIndex =
-        Provider.of<ProductDetailsProvider>(context, listen: false).colorIndex;
+            .imageSliderIndex ??
+        0;
+    colorIndex = Provider.of<ProductDetailsProvider>(context, listen: false)
+            .colorIndex ??
+        0;
     imagesToEachColor =
         Provider.of<ProductDetailsProvider>(context, listen: false)
-            .productDetailsModel
-            .imagesListToEachColor;
+                .productDetailsModel
+                ?.imagesListToEachColor ??
+            0;
   }
 
   @override
@@ -72,10 +76,10 @@ class _ProductImageScreenState extends State<ProductImageScreen> {
                   builder: (BuildContext context, int index) {
                     return PhotoViewGalleryPageOptions(
                       imageProvider: NetworkImage(imagesToEachColor == 0
-                          ? '${Provider.of<SplashProvider>(context, listen: false).baseUrls.productImageUrl}'
+                          ? '${Provider.of<SplashProvider>(context, listen: false).baseUrls?.productImageUrl ?? ""}'
                               '/${widget.imageList[pageIndex]}'
-                          : '${Provider.of<SplashProvider>(context, listen: false).baseUrls.productImageUrl}/'
-                              '${Provider.of<ProductDetailsProvider>(context, listen: false).productDetailsModel.colors[colorIndex].name}'
+                          : '${Provider.of<SplashProvider>(context, listen: false).baseUrls?.productImageUrl ?? ""}/'
+                              '${Provider.of<ProductDetailsProvider>(context, listen: false).productDetailsModel?.colors[colorIndex].name}'
                               '/${widget.imageList[pageIndex]}'),
                       initialScale: PhotoViewComputedScale.covered,
                       heroAttributes:
@@ -93,7 +97,7 @@ class _ProductImageScreenState extends State<ProductImageScreen> {
                         value: event == null
                             ? 0
                             : event.cumulativeBytesLoaded /
-                                event.expectedTotalBytes,
+                                (event.expectedTotalBytes ?? 0),
                         valueColor: AlwaysStoppedAnimation<Color>(
                             Theme.of(context).primaryColor),
                       ),
@@ -116,8 +120,11 @@ class _ProductImageScreenState extends State<ProductImageScreen> {
                       child: Container(
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          // ignore: deprecated_member_use
-                          color: Theme.of(context).buttonColor,
+                          color: Theme.of(context)
+                                  .buttonTheme
+                                  .colorScheme
+                                  ?.primary ??
+                              primaryColor,
                           shape: BoxShape.circle,
                         ),
                         child: InkWell(
@@ -142,8 +149,11 @@ class _ProductImageScreenState extends State<ProductImageScreen> {
                       child: Container(
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          // ignore: deprecated_member_use
-                          color: Theme.of(context).buttonColor,
+                          color: Theme.of(context)
+                                  .buttonTheme
+                                  .colorScheme
+                                  ?.primary ??
+                              primaryColor,
                           shape: BoxShape.circle,
                         ),
                         child: InkWell(

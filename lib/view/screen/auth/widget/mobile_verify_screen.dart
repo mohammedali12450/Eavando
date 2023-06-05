@@ -22,7 +22,7 @@ class MobileVerificationScreen extends StatefulWidget {
 }
 
 class _MobileVerificationScreenState extends State<MobileVerificationScreen> {
-  TextEditingController _numberController;
+  late TextEditingController _numberController;
   final FocusNode _numberFocus = FocusNode();
   String _countryDialCode = '+880';
 
@@ -31,16 +31,18 @@ class _MobileVerificationScreenState extends State<MobileVerificationScreen> {
     super.initState();
     _numberController = TextEditingController();
     _countryDialCode = CountryCode.fromCountryCode(
-            Provider.of<SplashProvider>(context, listen: false)
-                .configModel
-                .countryCode)
-        .dialCode;
+          Provider.of<SplashProvider>(context, listen: false)
+                  .configModel
+                  ?.countryCode ??
+              "1",
+        ).dialCode ??
+        "1";
   }
 
   @override
   Widget build(BuildContext context) {
-    final number = ModalRoute.of(context).settings.arguments;
-    _numberController.text = number;
+    final number = ModalRoute.of(context)?.settings.arguments as String?;
+    _numberController.text = number ?? "";
     return Scaffold(
       body: SafeArea(
         child: Scrollbar(
@@ -81,7 +83,7 @@ class _MobileVerificationScreenState extends State<MobileVerificationScreen> {
                         child: Row(children: [
                           CodePickerWidget(
                             onChanged: (CountryCode countryCode) {
-                              _countryDialCode = countryCode.dialCode;
+                              _countryDialCode = countryCode.dialCode ?? "1";
                             },
                             initialSelection: _countryDialCode,
                             favorite: [_countryDialCode],
@@ -89,10 +91,11 @@ class _MobileVerificationScreenState extends State<MobileVerificationScreen> {
                             padding: EdgeInsets.zero,
                             showFlagMain: true,
                             textStyle: TextStyle(
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .displayLarge
-                                    .color),
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .displayLarge
+                                  ?.color,
+                            ),
                           ),
                           Expanded(
                               child: CustomTextField(

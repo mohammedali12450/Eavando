@@ -1,27 +1,26 @@
 class SellerModel {
-  Seller _seller;
-  int _avgRating;
-  int _totalReview;
-  int _totalOrder;
-  int _totalProduct;
+  late Seller _seller;
+  late int _avgRating;
+  late int _totalReview;
+  late int _totalOrder;
+  late int _totalProduct;
 
-  SellerModel(
-      {Seller seller, int avgRating, int totalReview, int totalOrder, int totalProduct}) {
-    if (seller != null) {
-      this._seller = seller;
-    }
-    if (avgRating != null) {
-      this._avgRating = avgRating;
-    }
-    if (totalReview != null) {
-      this._totalReview = totalReview;
-    }
-    if (totalOrder != null) {
-      this._totalOrder = totalOrder;
-    }
-    if (totalProduct != null) {
-      this._totalProduct = totalProduct;
-    }
+  SellerModel({
+    required Seller seller,
+    required int avgRating,
+    required int totalReview,
+    required int totalOrder,
+    required int totalProduct,
+  }) {
+    this._seller = seller;
+
+    this._avgRating = avgRating;
+
+    this._totalReview = totalReview;
+
+    this._totalOrder = totalOrder;
+
+    this._totalProduct = totalProduct;
   }
 
   Seller get seller => _seller;
@@ -30,21 +29,19 @@ class SellerModel {
   int get totalOrder => _totalOrder;
   int get totalProduct => _totalProduct;
 
-
   SellerModel.fromJson(Map<String, dynamic> json) {
-    _seller =
-    json['seller'] != null ? new Seller.fromJson(json['seller']) : null;
-    _avgRating = json['avg_rating'];
-    _totalReview = json['total_review'];
-    _totalOrder = json['total_order'];
-    _totalProduct = json['total_product'];
+    _seller = Seller.fromJson(json['seller'] ?? {});
+    _avgRating = json['avg_rating'] ?? 0;
+    _totalReview = json['total_review'] ?? 0;
+    _totalOrder = json['total_order'] ?? 0;
+    _totalProduct = json['total_product'] ?? 0;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this._seller != null) {
-      data['seller'] = this._seller.toJson();
-    }
+
+    data['seller'] = this._seller.toJson();
+
     data['avg_rating'] = this._avgRating;
     data['total_review'] = this._totalReview;
     data['total_order'] = this._totalOrder;
@@ -54,38 +51,32 @@ class SellerModel {
 }
 
 class Seller {
-  int _id;
-  String _fName;
-  String _lName;
-  String _phone;
-  String _image;
-  Shop _shop;
+  late int _id;
+  late String _fName;
+  late String _lName;
+  late String _phone;
+  late String _image;
+  late Shop _shop;
 
-  Seller(
-      {int id,
-        String fName,
-        String lName,
-        String phone,
-        String image,
-        Shop shop}) {
-    if (id != null) {
-      this._id = id;
-    }
-    if (fName != null) {
-      this._fName = fName;
-    }
-    if (lName != null) {
-      this._lName = lName;
-    }
-    if (phone != null) {
-      this._phone = phone;
-    }
-    if (image != null) {
-      this._image = image;
-    }
-    if (shop != null) {
-      this._shop = shop;
-    }
+  Seller({
+    required int id,
+    required String fName,
+    required String lName,
+    required String phone,
+    required String image,
+    required Shop shop,
+  }) {
+    this._id = id;
+
+    this._fName = fName;
+
+    this._lName = lName;
+
+    this._phone = phone;
+
+    this._image = image;
+
+    this._shop = shop;
   }
 
   int get id => _id;
@@ -96,12 +87,12 @@ class Seller {
   Shop get shop => _shop;
 
   Seller.fromJson(Map<String, dynamic> json) {
-    _id = json['id'];
-    _fName = json['f_name'];
-    _lName = json['l_name'];
-    _phone = json['phone'];
-    _image = json['image'];
-    _shop = json['shop'] != null ? new Shop.fromJson(json['shop']) : null;
+    _id = json['id'] ?? -1;
+    _fName = json['f_name'] ?? "";
+    _lName = json['l_name'] ?? "";
+    _phone = json['phone'] ?? "";
+    _image = json['image'] ?? "";
+    _shop = Shop.fromJson(json['shop'] ?? {});
   }
 
   Map<String, dynamic> toJson() {
@@ -111,61 +102,52 @@ class Seller {
     data['l_name'] = this._lName;
     data['phone'] = this._phone;
     data['image'] = this._image;
-    if (this._shop != null) {
-      data['shop'] = this._shop.toJson();
-    }
+
+    data['shop'] = this._shop.toJson();
+
     return data;
   }
 }
 
 class Shop {
-  int _id;
-  int _sellerId;
-  String _name;
-  String _address;
-  String _contact;
-  String _image;
-  String _createdAt;
-  String _updatedAt;
-  String _banner;
+  late int _id;
+  late int _sellerId;
+  late String _name;
+  late String _address;
+  late String _contact;
+  late String _image;
+  late String _createdAt;
+  late String _updatedAt;
+  late String _banner;
 
-  Shop(
-      {int id,
-        int sellerId,
-        String name,
-        String address,
-        String contact,
-        String image,
-        String createdAt,
-        String updatedAt,
-        String banner}) {
-    if (id != null) {
-      this._id = id;
-    }
-    if (sellerId != null) {
-      this._sellerId = sellerId;
-    }
-    if (name != null) {
-      this._name = name;
-    }
-    if (address != null) {
-      this._address = address;
-    }
-    if (contact != null) {
-      this._contact = contact;
-    }
-    if (image != null) {
-      this._image = image;
-    }
-    if (createdAt != null) {
-      this._createdAt = createdAt;
-    }
-    if (updatedAt != null) {
-      this._updatedAt = updatedAt;
-    }
-    if (banner != null) {
-      this._banner = banner;
-    }
+  Shop({
+    required int id,
+    required int sellerId,
+    required String name,
+    required String address,
+    required String contact,
+    required String image,
+    required String createdAt,
+    required String updatedAt,
+    required String banner,
+  }) {
+    this._id = id;
+
+    this._sellerId = sellerId;
+
+    this._name = name;
+
+    this._address = address;
+
+    this._contact = contact;
+
+    this._image = image;
+
+    this._createdAt = createdAt;
+
+    this._updatedAt = updatedAt;
+
+    this._banner = banner;
   }
 
   int get id => _id;
@@ -178,17 +160,16 @@ class Shop {
   String get updatedAt => _updatedAt;
   String get banner => _banner;
 
-
   Shop.fromJson(Map<String, dynamic> json) {
-    _id = json['id'];
-    _sellerId = int.parse(json['seller_id'].toString());
-    _name = json['name'];
-    _address = json['address'];
-    _contact = json['contact'];
-    _image = json['image'];
-    _createdAt = json['created_at'];
-    _updatedAt = json['updated_at'];
-    _banner = json['banner'];
+    _id = json['id'] ?? -1;
+    _sellerId = int.parse(json['seller_id']?.toString() ?? "-1");
+    _name = json['name'] ?? "";
+    _address = json['address'] ?? "";
+    _contact = json['contact'] ?? "";
+    _image = json['image'] ?? "";
+    _createdAt = json['created_at'] ?? "";
+    _updatedAt = json['updated_at'] ?? "";
+    _banner = json['banner'] ?? "";
   }
 
   Map<String, dynamic> toJson() {

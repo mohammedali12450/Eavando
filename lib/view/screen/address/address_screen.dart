@@ -17,14 +17,14 @@ import 'add_new_address_screen.dart';
 
 class AddressScreen extends StatefulWidget {
   final AddressModel addressModel;
-  AddressScreen({this.addressModel});
+  AddressScreen({required this.addressModel});
 
   @override
   State<AddressScreen> createState() => _AddressScreenState();
 }
 
 class _AddressScreenState extends State<AddressScreen> {
-  bool _isLoggedIn;
+  late bool _isLoggedIn;
 
   @override
   void initState() {
@@ -84,7 +84,7 @@ class _AddressScreenState extends State<AddressScreen> {
                       ),
                     ),
                     locationProvider.addressList != null
-                        ? locationProvider.addressList.length > 0
+                        ? locationProvider.addressList!.length > 0
                             ? Expanded(
                                 child: RefreshIndicator(
                                   onRefresh: () async {
@@ -101,11 +101,11 @@ class _AddressScreenState extends State<AddressScreen> {
                                           padding: EdgeInsets.all(
                                               Dimensions.PADDING_SIZE_SMALL),
                                           itemCount: locationProvider
-                                              .addressList.length,
+                                              .addressList!.length,
                                           itemBuilder: (context, index) =>
                                               AddressWidget(
                                             addressModel: locationProvider
-                                                .addressList[index],
+                                                .addressList![index],
                                             index: index,
                                           ),
                                         ),
@@ -117,8 +117,11 @@ class _AddressScreenState extends State<AddressScreen> {
                             : NoInternetOrDataScreen(isNoInternet: false)
                         : Center(
                             child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                    Theme.of(context).primaryColor))),
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                Theme.of(context).primaryColor,
+                              ),
+                            ),
+                          ),
                   ],
                 );
               },

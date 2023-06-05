@@ -5,7 +5,7 @@ import 'package:flutter_axtro_soft_ecommerce/utill/images.dart';
 
 class AddressListPage extends StatelessWidget {
   final AddressModel address;
-  AddressListPage({Key key, this.address}) : super(key: key);
+  AddressListPage({Key? key, required this.address}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -44,7 +44,7 @@ class WalletScreen extends StatelessWidget {
           onRefresh: () async {
             Provider.of<WalletTransactionProvider>(context, listen: false)
                 .getTransactionList(context, 1, reload: true);
-            return false;
+            return;
           },
           child: CustomScrollView(
             controller: _scrollController,
@@ -87,8 +87,9 @@ class WalletScreen extends StatelessWidget {
                                         Dimensions.PADDING_SIZE_SMALL),
                                     boxShadow: [
                                       BoxShadow(
-                                          color:
-                                              Colors.grey[darkMode ? 900 : 200],
+                                          color: darkMode
+                                              ? Colors.grey.withOpacity(0.95)
+                                              : Colors.grey.withOpacity(0.8),
                                           spreadRadius: 0.5,
                                           blurRadius: 0.3)
                                     ],
@@ -134,11 +135,11 @@ class WalletScreen extends StatelessWidget {
                                                       (profile.walletBalance !=
                                                                   null &&
                                                               profile.walletBalance
-                                                                      .totalWalletBalance !=
+                                                                      ?.totalWalletBalance !=
                                                                   null)
                                                           ? profile
                                                                   .walletBalance
-                                                                  .totalWalletBalance ??
+                                                                  ?.totalWalletBalance ??
                                                               0
                                                           : 0),
                                                   style: TextStyle(
@@ -185,8 +186,8 @@ class OrderShimmer extends StatelessWidget {
           padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
           color: Theme.of(context).highlightColor,
           child: Shimmer.fromColors(
-            baseColor: Colors.grey[300],
-            highlightColor: Colors.grey[100],
+            baseColor: Colors.grey.withOpacity(0.5),
+            highlightColor: Colors.grey.withOpacity(0.2),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -229,7 +230,7 @@ class OrderShimmer extends StatelessWidget {
 
 class SliverDelegate extends SliverPersistentHeaderDelegate {
   Widget child;
-  SliverDelegate({@required this.child});
+  SliverDelegate({required this.child});
 
   @override
   Widget build(

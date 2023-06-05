@@ -1,8 +1,8 @@
 class MessageBody {
-  int _id;
-  String _message;
+  late final int _id;
+  late final String _message;
 
-  MessageBody({int id, String message}) {
+  MessageBody({required int id, required String message}) {
     this._id = id;
     this._message = message;
   }
@@ -11,8 +11,8 @@ class MessageBody {
   String get message => _message;
 
   MessageBody.fromJson(Map<String, dynamic> json) {
-    _id = json['id'];
-    _message = json['message'];
+    _id = json['id'] ?? -1;
+    _message = json['message'] ?? "";
   }
 
   Map<String, dynamic> toJson() {

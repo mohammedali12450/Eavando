@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 showCustomModalDialog(
   BuildContext context, {
-  String title,
-  String content,
-  Function cancelOnPressed,
-  Function submitOnPressed,
-  String cancelButtonText,
-  String submitButtonText,
+  String title = "",
+  String content = "",
+  Function()? cancelOnPressed,
+  Function()? submitOnPressed,
+  String cancelButtonText = "",
+  String submitButtonText = "",
 }) {
   showGeneralDialog(
     context: context,

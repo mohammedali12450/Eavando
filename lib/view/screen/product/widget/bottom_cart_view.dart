@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_axtro_soft_ecommerce/data/model/response/product_details_model.dart';
 import 'package:flutter_axtro_soft_ecommerce/localization/language_constrants.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/cart_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/theme/light_theme.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/color_resources.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/custom_themes.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/dimensions.dart';
@@ -12,8 +13,8 @@ import 'package:flutter_axtro_soft_ecommerce/view/screen/product/widget/cart_bot
 import 'package:provider/provider.dart';
 
 class BottomCartView extends StatelessWidget {
-  final ProductDetailsModel product;
-  BottomCartView({@required this.product});
+  final ProductDetailsModel? product;
+  BottomCartView({this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +27,10 @@ class BottomCartView extends StatelessWidget {
             topLeft: Radius.circular(10), topRight: Radius.circular(10)),
         boxShadow: [
           BoxShadow(
-              color: Theme.of(context).hintColor,
-              blurRadius: .5,
-              spreadRadius: .1)
+            color: Theme.of(context).hintColor,
+            blurRadius: .5,
+            spreadRadius: .1,
+          )
         ],
       ),
       child: Row(children: [
@@ -73,19 +75,19 @@ class BottomCartView extends StatelessWidget {
             child: InkWell(
               onTap: () {
                 showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    backgroundColor:
-                        Theme.of(context).primaryColor.withOpacity(0),
-                    builder: (con) => CartBottomSheet(
-                          product: product,
-                          callback: () {
-                            showCustomSnackBar(
-                                getTranslated('added_to_cart', context),
-                                context,
-                                isError: false);
-                          },
-                        ));
+                  context: context,
+                  isScrollControlled: true,
+                  backgroundColor:
+                      Theme.of(context).primaryColor.withOpacity(0),
+                  builder: (con) => CartBottomSheet(
+                    product: product,
+                    callback: () {
+                      showCustomSnackBar(
+                          getTranslated('added_to_cart', context), context,
+                          isError: false);
+                    },
+                  ),
+                );
               },
               child: Container(
                 height: 50,
@@ -93,8 +95,8 @@ class BottomCartView extends StatelessWidget {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  // ignore: deprecated_member_use
-                  color: Theme.of(context).buttonColor,
+                  color: Theme.of(context).buttonTheme.colorScheme?.primary ??
+                      primaryColor,
                 ),
                 child: Text(
                   getTranslated('add_to_cart', context),

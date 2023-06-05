@@ -32,7 +32,8 @@ class AllCategoryScreen extends StatelessWidget {
           // CustomAppBar(title: getTranslated('CATEGORY', context)),
           Expanded(child: Consumer<CategoryProvider>(
             builder: (context, categoryProvider, child) {
-              return categoryProvider.categoryList.length != 0
+              return categoryProvider.categoryList != null &&
+                      categoryProvider.categoryList!.length != 0
                   ? Row(children: [
                       Container(
                         width: 100,
@@ -42,22 +43,21 @@ class AllCategoryScreen extends StatelessWidget {
                           color: Theme.of(context).highlightColor,
                           boxShadow: [
                             BoxShadow(
-                                color: Colors.grey[
-                                    Provider.of<ThemeProvider>(context)
-                                            .darkTheme
-                                        ? 700
-                                        : 200],
+                                color: Provider.of<ThemeProvider>(context)
+                                        .darkTheme
+                                    ? Color(0xFF616161)
+                                    : Color(0xFFEEEEEE),
                                 spreadRadius: 1,
                                 blurRadius: 1)
                           ],
                         ),
                         child: ListView.builder(
                           physics: BouncingScrollPhysics(),
-                          itemCount: categoryProvider.categoryList.length,
+                          itemCount: categoryProvider.categoryList!.length,
                           padding: EdgeInsets.all(0),
                           itemBuilder: (context, index) {
                             Category _category =
-                                categoryProvider.categoryList[index];
+                                categoryProvider.categoryList![index];
                             return InkWell(
                               onTap: () => Provider.of<CategoryProvider>(
                                       context,
@@ -78,17 +78,17 @@ class AllCategoryScreen extends StatelessWidget {
                           child: ListView.builder(
                         padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
                         itemCount: categoryProvider
-                                .categoryList[
-                                    categoryProvider.categorySelectedIndex]
+                                .categoryList![
+                                    categoryProvider.categorySelectedIndex ?? 0]
                                 .subCategories
                                 .length +
                             1,
                         itemBuilder: (context, index) {
-                          SubCategory _subCategory;
+                          SubCategory _subCategory = SubCategory.init();
                           if (index != 0) {
                             _subCategory = categoryProvider
-                                .categoryList[
-                                    categoryProvider.categorySelectedIndex]
+                                .categoryList![
+                                    categoryProvider.categorySelectedIndex ?? 0]
                                 .subCategories[index - 1];
                           }
                           if (index == 0) {
@@ -112,20 +112,22 @@ class AllCategoryScreen extends StatelessWidget {
                                               BrandAndCategoryProductScreen(
                                                 isBrand: false,
                                                 id: categoryProvider
-                                                    .categoryList[categoryProvider
-                                                        .categorySelectedIndex]
+                                                    .categoryList![categoryProvider
+                                                            .categorySelectedIndex ??
+                                                        0]
                                                     .id
                                                     .toString(),
                                                 name: categoryProvider
-                                                    .categoryList[categoryProvider
-                                                        .categorySelectedIndex]
+                                                    .categoryList![categoryProvider
+                                                            .categorySelectedIndex ??
+                                                        0]
                                                     .name,
                                               )));
                                 },
                               ),
                             );
-                          } else if (_subCategory.subSubCategories.length !=
-                              0) {
+                          } else if (_subCategory.subSubCategories != null &&
+                              _subCategory.subSubCategories!.length != 0) {
                             return Ink(
                               color: Theme.of(context).highlightColor,
                               child: Theme(
@@ -136,12 +138,12 @@ class AllCategoryScreen extends StatelessWidget {
                                 child: ExpansionTile(
                                   key: Key(
                                       '${Provider.of<CategoryProvider>(context).categorySelectedIndex}$index'),
-                                  title: Text(_subCategory.name,
+                                  title: Text(_subCategory.name ?? "",
                                       style: titilliumSemiBold.copyWith(
                                           color: Theme.of(context)
                                               .textTheme
                                               .bodyLarge
-                                              .color),
+                                              ?.color),
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis),
                                   children: _getSubSubCategories(
@@ -153,7 +155,7 @@ class AllCategoryScreen extends StatelessWidget {
                             return Ink(
                               color: Theme.of(context).highlightColor,
                               child: ListTile(
-                                title: Text(_subCategory.name,
+                                title: Text(_subCategory.name ?? "",
                                     style: titilliumSemiBold,
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis),
@@ -161,17 +163,19 @@ class AllCategoryScreen extends StatelessWidget {
                                     color: Theme.of(context)
                                         .textTheme
                                         .bodyLarge
-                                        .color),
+                                        ?.color),
                                 onTap: () {
                                   Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (_) =>
-                                              BrandAndCategoryProductScreen(
-                                                isBrand: false,
-                                                id: _subCategory.id.toString(),
-                                                name: _subCategory.name,
-                                              )));
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) =>
+                                          BrandAndCategoryProductScreen(
+                                        isBrand: false,
+                                        id: _subCategory.id.toString(),
+                                        name: _subCategory.name ?? "",
+                                      ),
+                                    ),
+                                  );
                                 },
                               ),
                             );
@@ -181,8 +185,10 @@ class AllCategoryScreen extends StatelessWidget {
                     ])
                   : Center(
                       child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                              Theme.of(context).primaryColor)));
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                            Theme.of(context).primaryColor),
+                      ),
+                    );
             },
           )),
         ],
@@ -212,7 +218,8 @@ class AllCategoryScreen extends StatelessWidget {
                 child: Text(
               getTranslated('all', context),
               style: titilliumSemiBold.copyWith(
-                  color: Theme.of(context).textTheme.bodyLarge.color),
+                color: Theme.of(context).textTheme.bodyLarge?.color,
+              ),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             )),
@@ -220,17 +227,21 @@ class AllCategoryScreen extends StatelessWidget {
         ),
         onTap: () {
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (_) => BrandAndCategoryProductScreen(
-                        isBrand: false,
-                        id: subCategory.id.toString(),
-                        name: subCategory.name,
-                      )));
+            context,
+            MaterialPageRoute(
+              builder: (_) => BrandAndCategoryProductScreen(
+                isBrand: false,
+                id: subCategory.id.toString(),
+                name: subCategory.name ?? "",
+              ),
+            ),
+          );
         },
       ),
     ));
-    for (int index = 0; index < subCategory.subSubCategories.length; index++) {
+    for (int index = 0;
+        index < (subCategory.subSubCategories?.length ?? 0);
+        index++) {
       _subSubCategories.add(Container(
         color: ColorResources.getIconBg(context),
         margin: EdgeInsets.symmetric(
@@ -248,9 +259,10 @@ class AllCategoryScreen extends StatelessWidget {
               SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
               Flexible(
                   child: Text(
-                subCategory.subSubCategories[index].name,
+                subCategory.subSubCategories![index].name,
                 style: titilliumSemiBold.copyWith(
-                    color: Theme.of(context).textTheme.bodyLarge.color),
+                  color: Theme.of(context).textTheme.bodyLarge?.color,
+                ),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               )),
@@ -258,13 +270,15 @@ class AllCategoryScreen extends StatelessWidget {
           ),
           onTap: () {
             Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (_) => BrandAndCategoryProductScreen(
-                          isBrand: false,
-                          id: subCategory.subSubCategories[index].id.toString(),
-                          name: subCategory.subSubCategories[index].name,
-                        )));
+              context,
+              MaterialPageRoute(
+                builder: (_) => BrandAndCategoryProductScreen(
+                  isBrand: false,
+                  id: subCategory.subSubCategories![index].id.toString(),
+                  name: subCategory.subSubCategories![index].name,
+                ),
+              ),
+            );
           },
         ),
       ));
@@ -277,8 +291,11 @@ class CategoryItem extends StatelessWidget {
   final String title;
   final String icon;
   final bool isSelected;
-  CategoryItem(
-      {@required this.title, @required this.icon, @required this.isSelected});
+  CategoryItem({
+    required this.title,
+    required this.icon,
+    required this.isSelected,
+  });
 
   Widget build(BuildContext context) {
     return Container(
@@ -311,7 +328,7 @@ class CategoryItem extends StatelessWidget {
                 placeholder: Images.placeholder,
                 fit: BoxFit.cover,
                 image:
-                    '${Provider.of<SplashProvider>(context, listen: false).baseUrls.categoryImageUrl}/$icon',
+                    '${Provider.of<SplashProvider>(context, listen: false).baseUrls?.categoryImageUrl ?? ""}/$icon',
                 imageErrorBuilder: (c, o, s) =>
                     Image.asset(Images.placeholder, fit: BoxFit.cover),
               ),

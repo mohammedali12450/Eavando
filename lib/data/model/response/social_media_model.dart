@@ -1,4 +1,3 @@
-
 class SocialMedia {
   int id;
   String name;
@@ -6,18 +5,17 @@ class SocialMedia {
   String iconUrl;
 
   SocialMedia({
-    this.id,
-    this.name,
-    this.link,
-    this.iconUrl,
+    required this.id,
+    required this.name,
+    required this.link,
+    required this.iconUrl,
   });
 
-  SocialMedia.fromJson(Map<String, dynamic> json) {
-    id = json["id"];
-    name = json["name"];
-    link = json["link"];
-    iconUrl = json["icon_url"];
-  }
+  SocialMedia.fromJson(Map<String, dynamic> json)
+      : id = json["id"] ?? -1,
+        name = json["name"] ?? "",
+        link = json["link"] ?? "",
+        iconUrl = json["icon_url"] ?? "";
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();

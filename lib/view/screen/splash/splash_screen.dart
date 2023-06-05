@@ -21,7 +21,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   GlobalKey<ScaffoldMessengerState> _globalKey = GlobalKey();
-  StreamSubscription<ConnectivityResult> _onConnectivityChanged;
+  late StreamSubscription<ConnectivityResult> _onConnectivityChanged;
 
   @override
   void initState() {
@@ -73,8 +73,9 @@ class _SplashScreenState extends State<SplashScreen> {
             .initSharedPrefData();
         Timer(Duration(seconds: 1), () {
           if (Provider.of<SplashProvider>(context, listen: false)
-              .configModel
-              .maintenanceMode) {
+                  .configModel
+                  ?.maintenanceMode ??
+              false) {
             Navigator.of(context).pushReplacement(MaterialPageRoute(
                 builder: (BuildContext context) => MaintenanceScreen()));
           } else {

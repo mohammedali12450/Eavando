@@ -8,8 +8,8 @@ import 'package:provider/provider.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 class LocationSearchDialog extends StatelessWidget {
-  final GoogleMapController mapController;
-  LocationSearchDialog({@required this.mapController});
+  final GoogleMapController? mapController;
+  LocationSearchDialog({required this.mapController});
 
   @override
   Widget build(BuildContext context) {
@@ -35,15 +35,16 @@ class LocationSearchDialog extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     borderSide: BorderSide(style: BorderStyle.none, width: 0),
                   ),
-                  hintStyle: Theme.of(context).textTheme.displayMedium.copyWith(
-                        fontSize: Dimensions.FONT_SIZE_DEFAULT,
-                        color: Theme.of(context).disabledColor,
-                      ),
+                  hintStyle:
+                      Theme.of(context).textTheme.displayMedium?.copyWith(
+                            fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                            color: Theme.of(context).disabledColor,
+                          ),
                   filled: true,
                   fillColor: Theme.of(context).cardColor,
                 ),
-                style: Theme.of(context).textTheme.displayMedium.copyWith(
-                      color: Theme.of(context).textTheme.bodyLarge.color,
+                style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                      color: Theme.of(context).textTheme.bodyLarge?.color,
                       fontSize: Dimensions.FONT_SIZE_LARGE,
                     ),
               ),
@@ -58,15 +59,17 @@ class LocationSearchDialog extends StatelessWidget {
                   child: Row(children: [
                     Icon(Icons.location_on),
                     Expanded(
-                      child: Text(suggestion.description,
+                      child: Text(suggestion.description ?? "",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context)
                               .textTheme
                               .displayMedium
-                              .copyWith(
-                                color:
-                                    Theme.of(context).textTheme.bodyLarge.color,
+                              ?.copyWith(
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge
+                                    ?.color,
                                 fontSize: Dimensions.FONT_SIZE_LARGE,
                               )),
                     ),
@@ -75,8 +78,8 @@ class LocationSearchDialog extends StatelessWidget {
               },
               onSuggestionSelected: (Prediction suggestion) {
                 Provider.of<LocationProvider>(context, listen: false)
-                    .setLocation(suggestion.placeId, suggestion.description,
-                        mapController);
+                    .setLocation(suggestion.placeId ?? "0",
+                        suggestion.description ?? "", mapController);
                 Navigator.pop(context);
               },
             )),

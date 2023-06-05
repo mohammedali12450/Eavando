@@ -22,10 +22,13 @@ class CurrencyDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     int index;
     if (isCurrency) {
-      index = Provider.of<SplashProvider>(context, listen: false).currencyIndex;
+      index =
+          Provider.of<SplashProvider>(context, listen: false).currencyIndex ??
+              0;
     } else {
       index = Provider.of<LocalizationProvider>(context, listen: false)
-          .languageIndex;
+              .languageIndex ??
+          0;
     }
 
     return Dialog(
@@ -50,7 +53,7 @@ class CurrencyDialog extends StatelessWidget {
                   builder: (context, splash, child) {
                     List<String> _valueList = [];
                     if (isCurrency) {
-                      splash.configModel.currencyList
+                      splash.configModel?.currencyList
                           .forEach((currency) => _valueList.add(currency.name));
                     } else {
                       AppConstants.languages.forEach(
@@ -67,12 +70,14 @@ class CurrencyDialog extends StatelessWidget {
                       },
                       children: _valueList.map((value) {
                         return Center(
-                            child: Text(value,
-                                style: TextStyle(
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        .color)));
+                          child: Text(
+                            value,
+                            style: TextStyle(
+                              color:
+                                  Theme.of(context).textTheme.bodyLarge?.color,
+                            ),
+                          ),
+                        );
                       }).toList(),
                     );
                   },

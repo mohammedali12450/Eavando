@@ -10,22 +10,32 @@ class PreferenceDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Padding(padding: EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-          child: Text(getTranslated('preference', context), style: titilliumSemiBold.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
-        ),
-        SwitchTile(title: 'Location', value: true),
-        SwitchTile(title: 'Storage', value: true),
-        SwitchTile(title: 'Push Notification', value: true),
-        Divider(height: Dimensions.PADDING_SIZE_EXTRA_SMALL, color: ColorResources.HINT_TEXT_COLOR),
-        Align(
-          alignment: Alignment.centerRight,
-          child: TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(getTranslated('CANCEL', context), style: robotoRegular.copyWith(color: ColorResources.YELLOW)),
-          ),
-        ),
-      ]),
+      child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+              child: Text(getTranslated('preference', context),
+                  style: titilliumSemiBold.copyWith(
+                      fontSize: Dimensions.FONT_SIZE_LARGE)),
+            ),
+            SwitchTile(title: 'Location', value: true),
+            SwitchTile(title: 'Storage', value: true),
+            SwitchTile(title: 'Push Notification', value: true),
+            Divider(
+                height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                color: ColorResources.HINT_TEXT_COLOR),
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(getTranslated('CANCEL', context),
+                    style:
+                        robotoRegular.copyWith(color: ColorResources.YELLOW)),
+              ),
+            ),
+          ]),
     );
   }
 }
@@ -33,7 +43,7 @@ class PreferenceDialog extends StatelessWidget {
 class SwitchTile extends StatelessWidget {
   final String title;
   final bool value;
-  SwitchTile({@required this.title, @required this.value});
+  SwitchTile({required this.title, required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -49,4 +59,3 @@ class SwitchTile extends StatelessWidget {
     );
   }
 }
-

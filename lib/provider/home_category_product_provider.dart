@@ -5,31 +5,38 @@ import 'package:flutter_axtro_soft_ecommerce/data/model/response/base/api_respon
 import 'package:flutter_axtro_soft_ecommerce/helper/api_checker.dart';
 import 'package:flutter_axtro_soft_ecommerce/data/model/response/product_model.dart';
 
-
 class HomeCategoryProductProvider extends ChangeNotifier {
   final HomeCategoryProductRepo homeCategoryProductRepo;
-  HomeCategoryProductProvider({@required this.homeCategoryProductRepo});
 
+  HomeCategoryProductProvider({
+    required this.homeCategoryProductRepo,
+  });
 
   List<HomeCategoryProduct> _homeCategoryProductList = [];
-  List<Product> _productList;
-  int _productIndex;
-  int get productIndex => _productIndex;
-  List<HomeCategoryProduct> get homeCategoryProductList => _homeCategoryProductList;
+  List<HomeCategoryProduct> get homeCategoryProductList =>
+      _homeCategoryProductList;
+
+  int? _productIndex;
+  int? get productIndex => _productIndex;
+
+  List<Product> _productList = [];
   List<Product> get productList => _productList;
 
-  Future<void> getHomeCategoryProductList(bool reload, BuildContext context) async {
+  Future<void> getHomeCategoryProductList(
+      bool reload, BuildContext context) async {
     if (_homeCategoryProductList.length == 0 || reload) {
-      ApiResponse apiResponse = await homeCategoryProductRepo.getHomeCategoryProductList();
-      if (apiResponse.response != null  && apiResponse.response.statusCode == 200) {
-
-        if(apiResponse.response.data.toString() == '{}'){
-          print('==yup====>${apiResponse.response.data}');
-
-        }else{
+      ApiResponse apiResponse =
+          await homeCategoryProductRepo.getHomeCategoryProductList();
+      if (apiResponse.response != null &&
+          apiResponse.response!.statusCode == 200) {
+        if (apiResponse.response!.data.toString() == '{}') {
+          print('==yup====>${apiResponse.response!.data}');
+        } else {
           _productList = [];
           _homeCategoryProductList.clear();
-          apiResponse.response.data.forEach((homeCategoryProduct) => _homeCategoryProductList.add(HomeCategoryProduct.fromJson(homeCategoryProduct)));
+          apiResponse.response!.data.forEach((homeCategoryProduct) =>
+              _homeCategoryProductList
+                  .add(HomeCategoryProduct.fromJson(homeCategoryProduct)));
           _homeCategoryProductList.forEach((product) {
             _productList.addAll(product.products);
           });
@@ -40,5 +47,4 @@ class HomeCategoryProductProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
-
 }

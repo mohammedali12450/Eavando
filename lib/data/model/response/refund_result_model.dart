@@ -8,30 +8,42 @@ class RefundResultModel {
   double refundAmount;
   List<RefundRequest> refundRequest;
 
-  RefundResultModel(
-      {this.productPrice,
-        this.quntity,
-        this.productTotalDiscount,
-        this.productTotalTax,
-        this.subtotal,
-        this.couponDiscount,
-        this.refundAmount,
-        this.refundRequest});
+  RefundResultModel({
+    required this.productPrice,
+    required this.quntity,
+    required this.productTotalDiscount,
+    required this.productTotalTax,
+    required this.subtotal,
+    required this.couponDiscount,
+    required this.refundAmount,
+    required this.refundRequest,
+  });
 
-  RefundResultModel.fromJson(Map<String, dynamic> json) {
-    productPrice = json['product_price'].toDouble();
-    quntity = json['quntity'];
-    productTotalDiscount = json['product_total_discount'].toDouble();
-    productTotalTax = json['product_total_tax'].toDouble();
-    subtotal = json['subtotal'].toDouble();
-    couponDiscount = json['coupon_discount'].toDouble();
-    refundAmount = json['refund_amount'].toDouble();
+  factory RefundResultModel.fromJson(Map<String, dynamic> json) {
+    final productPrice = json['product_price']?.toDouble() ?? 0.0;
+    final quntity = json['quntity'] ?? 0;
+    final productTotalDiscount =
+        json['product_total_discount']?.toDouble() ?? 0.0;
+    final productTotalTax = json['product_total_tax']?.toDouble() ?? 0.0;
+    final subtotal = json['subtotal']?.toDouble() ?? 0.0;
+    final couponDiscount = json['coupon_discount']?.toDouble() ?? 0.0;
+    final refundAmount = json['refund_amount']?.toDouble() ?? 0.0;
+    final refundRequest = <RefundRequest>[];
     if (json['refund_request'] != null) {
-      refundRequest = <RefundRequest>[];
       json['refund_request'].forEach((v) {
         refundRequest.add(new RefundRequest.fromJson(v));
       });
     }
+
+    return RefundResultModel(
+        productPrice: productPrice,
+        quntity: quntity,
+        productTotalDiscount: productTotalDiscount,
+        productTotalTax: productTotalTax,
+        subtotal: subtotal,
+        couponDiscount: couponDiscount,
+        refundAmount: refundAmount,
+        refundRequest: refundRequest);
   }
 
   Map<String, dynamic> toJson() {
@@ -43,10 +55,9 @@ class RefundResultModel {
     data['subtotal'] = this.subtotal;
     data['coupon_discount'] = this.couponDiscount;
     data['refund_amount'] = this.refundAmount;
-    if (this.refundRequest != null) {
-      data['refund_request'] =
-          this.refundRequest.map((v) => v.toJson()).toList();
-    }
+
+    data['refund_request'] = this.refundRequest.map((v) => v.toJson()).toList();
+
     return data;
   }
 }
@@ -68,43 +79,40 @@ class RefundRequest {
   String paymentInfo;
   String changeBy;
 
-  RefundRequest(
-      {this.id,
-        this.orderDetailsId,
-        this.customerId,
-        this.status,
-        this.amount,
-        this.productId,
-        this.orderId,
-        this.refundReason,
-        this.images,
-        this.createdAt,
-        this.updatedAt,
-        this.approvedNote,
-        this.rejectedNote,
-        this.paymentInfo,
-        this.changeBy});
+  RefundRequest({
+    required this.id,
+    required this.orderDetailsId,
+    required this.customerId,
+    required this.status,
+    required this.amount,
+    required this.productId,
+    required this.orderId,
+    required this.refundReason,
+    required this.images,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.approvedNote,
+    required this.rejectedNote,
+    required this.paymentInfo,
+    required this.changeBy,
+  });
 
-  RefundRequest.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    orderDetailsId = json['order_details_id'];
-    customerId = json['customer_id'];
-    status = json['status'];
-    amount = json['amount'].toDouble();
-    productId = json['product_id'];
-    orderId = json['order_id'];
-    refundReason = json['refund_reason'];
-    if(json['images'] != null){
-      images = json['images'].cast<String>();
-    }
-
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    approvedNote = json['approved_note'];
-    rejectedNote = json['rejected_note'];
-    paymentInfo = json['payment_info'];
-    changeBy = json['change_by'];
-  }
+  RefundRequest.fromJson(Map<String, dynamic> json)
+      : id = json['id'] ?? -1,
+        orderDetailsId = json['order_details_id'] ?? -1,
+        customerId = json['customer_id'] ?? -1,
+        status = json['status'] ?? "",
+        amount = json['amount']?.toDouble() ?? 0.0,
+        productId = json['product_id'] ?? -1,
+        orderId = json['order_id'] ?? -1,
+        refundReason = json['refund_reason'] ?? "",
+        images = json['images']?.cast<String>() ?? [],
+        createdAt = json['created_at'] ?? "",
+        updatedAt = json['updated_at'] ?? "",
+        approvedNote = json['approved_note'] ?? "",
+        rejectedNote = json['rejected_note'] ?? "",
+        paymentInfo = json['payment_info'] ?? "",
+        changeBy = json['change_by'] ?? "";
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();

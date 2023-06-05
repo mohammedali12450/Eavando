@@ -18,19 +18,26 @@ class DashBoardScreen extends StatefulWidget {
 class _DashBoardScreenState extends State<DashBoardScreen> {
   PageController _pageController = PageController();
   int _pageIndex = 0;
-  List<Widget> _screens;
+  late List<Widget> _screens;
   GlobalKey<ScaffoldMessengerState> _scaffoldKey = GlobalKey();
 
   bool singleVendor = false;
   @override
   void initState() {
     super.initState();
-    singleVendor = Provider.of<SplashProvider>(context, listen: false).configModel.businessMode == "single";
+    singleVendor = Provider.of<SplashProvider>(context, listen: false)
+            .configModel
+            ?.businessMode ==
+        "single";
 
     _screens = [
       HomePage(),
-      singleVendor ? OrderScreen(isBacButtonExist: false) : InboxScreen(isBackButtonExist: false),
-      singleVendor ? NotificationScreen(isBacButtonExist: false) : OrderScreen(isBacButtonExist: false),
+      singleVendor
+          ? OrderScreen(isBacButtonExist: false)
+          : InboxScreen(isBackButtonExist: false),
+      singleVendor
+          ? NotificationScreen(isBacButtonExist: false)
+          : OrderScreen(isBacButtonExist: false),
       singleVendor ? MoreScreen() : NotificationScreen(isBacButtonExist: false),
       singleVendor ? SizedBox() : MoreScreen(),
     ];
@@ -53,12 +60,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         key: _scaffoldKey,
         bottomNavigationBar: ClipRRect(
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20)
-          ),
+              topLeft: Radius.circular(20), topRight: Radius.circular(20)),
           child: BottomNavigationBar(
             backgroundColor: Theme.of(context).primaryColor.withOpacity(0.9),
-            selectedItemColor: Theme.of(context).colorScheme.primary ,
+            selectedItemColor: Theme.of(context).colorScheme.primary,
             unselectedItemColor: Colors.white.withOpacity(0.5),
             showUnselectedLabels: true,
             currentIndex: _pageIndex,
@@ -85,7 +90,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     return BottomNavigationBarItem(
       icon: Image.asset(
         icon,
-        color: index == _pageIndex ? Theme.of(context).colorScheme.primary : Colors.white.withOpacity(0.5),
+        color: index == _pageIndex
+            ? Theme.of(context).colorScheme.primary
+            : Colors.white.withOpacity(0.5),
         height: 25,
         width: 25,
       ),
@@ -105,14 +112,19 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
     if (!isSingleVendor) {
       _list.add(_barItem(Images.home_image, getTranslated('home', context), 0));
-      _list.add(_barItem(Images.message_image, getTranslated('inbox', context), 1));
-      _list.add(_barItem(Images.shopping_image, getTranslated('orders', context), 2));
-      _list.add(_barItem(Images.notification, getTranslated('notification', context), 3));
+      _list.add(
+          _barItem(Images.message_image, getTranslated('inbox', context), 1));
+      _list.add(
+          _barItem(Images.shopping_image, getTranslated('orders', context), 2));
+      _list.add(_barItem(
+          Images.notification, getTranslated('notification', context), 3));
       _list.add(_barItem(Images.more_image, getTranslated('more', context), 4));
     } else {
       _list.add(_barItem(Images.home_image, getTranslated('home', context), 0));
-      _list.add(_barItem(Images.shopping_image, getTranslated('orders', context), 1));
-      _list.add(_barItem(Images.notification, getTranslated('notification', context), 2));
+      _list.add(
+          _barItem(Images.shopping_image, getTranslated('orders', context), 1));
+      _list.add(_barItem(
+          Images.notification, getTranslated('notification', context), 2));
       _list.add(_barItem(Images.more_image, getTranslated('more', context), 3));
     }
 

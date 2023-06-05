@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_axtro_soft_ecommerce/localization/language_constrants.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/order_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/profile_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/theme/light_theme.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/color_resources.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/dimensions.dart';
 import 'package:flutter_axtro_soft_ecommerce/view/basewidget/no_internet_screen.dart';
@@ -11,7 +12,7 @@ import 'package:provider/provider.dart';
 import 'add_new_address_screen.dart';
 
 class SavedAddressListScreen extends StatelessWidget {
-  const SavedAddressListScreen({Key key}) : super(key: key);
+  const SavedAddressListScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +22,8 @@ class SavedAddressListScreen extends StatelessWidget {
             builder: (BuildContext context) =>
                 AddNewAddressScreen(isBilling: false))),
         child: Icon(Icons.add, color: Theme.of(context).highlightColor),
-        // ignore: deprecated_member_use
-        backgroundColor: Theme.of(context).buttonColor,
+        backgroundColor:
+            Theme.of(context).buttonTheme.colorScheme?.primary ?? primaryColor,
       ),
       appBar: AppBar(
         title: Text(getTranslated('SHIPPING_ADDRESS_LIST', context)),
@@ -33,11 +34,11 @@ class SavedAddressListScreen extends StatelessWidget {
             child: Column(
               children: [
                 profile.addressList != null
-                    ? profile.addressList.length != 0
+                    ? profile.addressList!.length != 0
                         ? SizedBox(
                             child: ListView.builder(
                               physics: NeverScrollableScrollPhysics(),
-                              itemCount: profile.addressList.length,
+                              itemCount: profile.addressList!.length,
                               shrinkWrap: true,
                               itemBuilder: (context, index) {
                                 return InkWell(
@@ -69,7 +70,7 @@ class SavedAddressListScreen extends StatelessWidget {
                                             : null,
                                       ),
                                       child: AddressListPage(
-                                          address: profile.addressList[index]),
+                                          address: profile.addressList![index]),
                                     ),
                                   ),
                                 );

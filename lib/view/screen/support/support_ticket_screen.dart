@@ -5,6 +5,7 @@ import 'package:flutter_axtro_soft_ecommerce/helper/date_converter.dart';
 import 'package:flutter_axtro_soft_ecommerce/localization/language_constrants.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/auth_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/support_ticket_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/theme/light_theme.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/color_resources.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/custom_themes.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/dimensions.dart';
@@ -61,14 +62,15 @@ class SupportTicketScreen extends StatelessWidget {
       ),
       child: Provider.of<SupportTicketProvider>(context).supportTicketList !=
               null
-          ? Provider.of<SupportTicketProvider>(context)
-                      .supportTicketList
-                      .length !=
+          ? (Provider.of<SupportTicketProvider>(context)
+                          .supportTicketList
+                          ?.length ??
+                      0) !=
                   0
               ? Consumer<SupportTicketProvider>(
                   builder: (context, support, child) {
                     List<SupportTicketModel> supportTicketList =
-                        support.supportTicketList.reversed.toList();
+                        support.supportTicketList?.reversed.toList() ?? [];
                     return RefreshIndicator(
                       backgroundColor: Theme.of(context).primaryColor,
                       onRefresh: () async {
@@ -133,7 +135,11 @@ class SupportTicketScreen extends StatelessWidget {
                                                   'open'
                                               ? ColorResources.getGreen(context)
                                               // ignore: deprecated_member_use
-                                              : Theme.of(context).buttonColor,
+                                              : Theme.of(context)
+                                                      .buttonTheme
+                                                      .colorScheme
+                                                      ?.primary ??
+                                                  primaryColor,
                                         ),
                                         child: Text(
                                           supportTicketList[index].status ==
@@ -177,8 +183,8 @@ class SupportTicketShimmer extends StatelessWidget {
             border: Border.all(color: ColorResources.SELLER_TXT, width: 2),
           ),
           child: Shimmer.fromColors(
-            baseColor: Colors.grey[300],
-            highlightColor: Colors.grey[100],
+            baseColor: Colors.grey.withOpacity(0.5),
+            highlightColor: Colors.grey.withOpacity(0.2),
             enabled:
                 Provider.of<SupportTicketProvider>(context).supportTicketList ==
                     null,

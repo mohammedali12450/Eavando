@@ -31,7 +31,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _confirmPasswordController = TextEditingController();
-  GlobalKey<FormState> _formKey;
+  GlobalKey<FormState> _formKey = GlobalKey();
 
   FocusNode _fNameFocus = FocusNode();
   FocusNode _lNameFocus = FocusNode();
@@ -40,12 +40,12 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   FocusNode _passwordFocus = FocusNode();
   FocusNode _confirmPasswordFocus = FocusNode();
 
-  RegisterModel register = RegisterModel();
+  RegisterModel register = RegisterModel.init();
   bool isEmailVerified = false;
 
   addUser() async {
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
+    if (_formKey.currentState?.validate() ?? false) {
+      _formKey.currentState?.save();
       isEmailVerified = true;
 
       String _firstName = _firstNameController.text.trim();
@@ -99,7 +99,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
         ));
       } else {
         register.fName = '${_firstNameController.text}';
-        register.lName = _lastNameController.text ?? " ";
+        register.lName = _lastNameController.text;
         register.email = _emailController.text;
         register.phone = _phoneNumber;
         register.password = _passwordController.text;
@@ -116,8 +116,9 @@ class _SignUpWidgetState extends State<SignUpWidget> {
     String _phone = _countryDialCode + _phoneController.text.trim();
     if (isRoute) {
       if (Provider.of<SplashProvider>(context, listen: false)
-          .configModel
-          .emailVerification) {
+              .configModel
+              ?.emailVerification ??
+          false) {
         Provider.of<AuthProvider>(context, listen: false)
             .checkEmail(_emailController.text.toString(), tempToken)
             .then((value) async {
@@ -133,8 +134,9 @@ class _SignUpWidgetState extends State<SignUpWidget> {
           }
         });
       } else if (Provider.of<SplashProvider>(context, listen: false)
-          .configModel
-          .phoneVerification) {
+              .configModel
+              ?.phoneVerification ??
+          false) {
         Provider.of<AuthProvider>(context, listen: false)
             .checkPhone(_phone, tempToken)
             .then((value) async {
@@ -174,10 +176,12 @@ class _SignUpWidgetState extends State<SignUpWidget> {
     super.initState();
     Provider.of<SplashProvider>(context, listen: false).configModel;
     _countryDialCode = CountryCode.fromCountryCode(
-            Provider.of<SplashProvider>(context, listen: false)
-                .configModel
-                .countryCode)
-        .dialCode;
+                Provider.of<SplashProvider>(context, listen: false)
+                        .configModel
+                        ?.countryCode ??
+                    "1")
+            .dialCode ??
+        "1";
 
     _formKey = GlobalKey<FormState>();
   }
@@ -243,7 +247,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                 child: Row(children: [
                   CodePickerWidget(
                     onChanged: (CountryCode countryCode) {
-                      _countryDialCode = countryCode.dialCode;
+                      _countryDialCode = countryCode.dialCode ?? "1";
                     },
                     initialSelection: _countryDialCode,
                     favorite: [_countryDialCode],
@@ -251,7 +255,8 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                     padding: EdgeInsets.zero,
                     showFlagMain: true,
                     textStyle: TextStyle(
-                        color: Theme.of(context).textTheme.displayLarge.color),
+                      color: Theme.of(context).textTheme.displayLarge?.color,
+                    ),
                   ),
                   Expanded(
                       child: CustomTextField(

@@ -1,17 +1,28 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+
 import 'package:flutter_axtro_soft_ecommerce/utill/custom_themes.dart';
 
+// ignore: must_be_immutable
 class CustomPasswordTextField extends StatefulWidget {
   final TextEditingController controller;
-  final String hintTxt;
+  final String? hintTxt;
   final FocusNode focusNode;
-  final FocusNode nextNode;
-  final TextInputAction textInputAction;
+  final FocusNode? nextNode;
+  TextInputAction? textInputAction;
 
-  CustomPasswordTextField({this.controller, this.hintTxt, this.focusNode, this.nextNode, this.textInputAction});
+  CustomPasswordTextField({
+    Key? key,
+    required this.controller,
+    this.hintTxt,
+    required this.focusNode,
+    this.nextNode,
+    this.textInputAction,
+  }) : super(key: key);
 
   @override
-  _CustomPasswordTextFieldState createState() => _CustomPasswordTextFieldState();
+  _CustomPasswordTextFieldState createState() =>
+      _CustomPasswordTextFieldState();
 }
 
 class _CustomPasswordTextFieldState extends State<CustomPasswordTextField> {
@@ -32,7 +43,11 @@ class _CustomPasswordTextFieldState extends State<CustomPasswordTextField> {
         color: Theme.of(context).highlightColor,
         borderRadius: BorderRadius.circular(6),
         boxShadow: [
-          BoxShadow(color: Colors.grey.withOpacity(0.2), spreadRadius: 1, blurRadius: 7, offset: Offset(0, 1)) // changes position of shadow
+          BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 1,
+              blurRadius: 7,
+              offset: Offset(0, 1)) // changes position of shadow
         ],
       ),
       child: ClipRRect(
@@ -54,14 +69,21 @@ class _CustomPasswordTextFieldState extends State<CustomPasswordTextField> {
             return null;
           },
           decoration: InputDecoration(
-              suffixIcon: IconButton(icon: Icon(_obscureText ? Icons.visibility_off : Icons.visibility), onPressed: _toggle),
+              suffixIcon: IconButton(
+                  icon: Icon(
+                      _obscureText ? Icons.visibility_off : Icons.visibility),
+                  onPressed: _toggle),
               hintText: widget.hintTxt ?? '',
-              contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 15),
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 15),
               isDense: true,
               filled: true,
               fillColor: Theme.of(context).highlightColor,
-              focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).colorScheme.primary)),
-              hintStyle: titilliumRegular.copyWith(color: Theme.of(context).hintColor),
+              focusedBorder: OutlineInputBorder(
+                  borderSide:
+                      BorderSide(color: Theme.of(context).colorScheme.primary)),
+              hintStyle:
+                  titilliumRegular.copyWith(color: Theme.of(context).hintColor),
               border: InputBorder.none),
         ),
       ),

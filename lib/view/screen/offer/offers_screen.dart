@@ -14,45 +14,65 @@ import 'package:url_launcher/url_launcher.dart';
 class OffersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Provider.of<BannerProvider>(context, listen: false).getFooterBannerList(context);
+    Provider.of<BannerProvider>(context, listen: false)
+        .getFooterBannerList(context);
 
-
-    return CustomExpandedAppBar(title: getTranslated('offers', context), child: Consumer<BannerProvider>(
-      builder: (context, banner, child) {
-        return banner.footerBannerList != null ? banner.footerBannerList.length != 0 ? RefreshIndicator(
-          backgroundColor: Theme.of(context).primaryColor,
-          onRefresh: () async {
-            await Provider.of<BannerProvider>(context, listen: false).getFooterBannerList( context);
+    return CustomExpandedAppBar(
+        title: getTranslated('offers', context),
+        child: Consumer<BannerProvider>(
+          builder: (context, banner, child) {
+            return banner.footerBannerList != null
+                ? banner.footerBannerList!.length != 0
+                    ? RefreshIndicator(
+                        backgroundColor: Theme.of(context).primaryColor,
+                        onRefresh: () async {
+                          await Provider.of<BannerProvider>(context,
+                                  listen: false)
+                              .getFooterBannerList(context);
+                        },
+                        child: ListView.builder(
+                          padding:
+                              EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                          itemCount: Provider.of<BannerProvider>(context)
+                              .footerBannerList!
+                              .length,
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              onTap: () => _launchUrl(Uri.parse(
+                                  banner.footerBannerList![index].url)),
+                              child: Container(
+                                margin: EdgeInsets.only(
+                                    bottom: Dimensions.PADDING_SIZE_SMALL),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                      width: 1,
+                                      color: Theme.of(context).primaryColor),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: FadeInImage.assetNetwork(
+                                    placeholder: Images.placeholder,
+                                    fit: BoxFit.fill,
+                                    height: 150,
+                                    image:
+                                        '${Provider.of<SplashProvider>(context, listen: false).baseUrls?.bannerImageUrl ?? ""}'
+                                        '/${banner.footerBannerList![index].photo}',
+                                    imageErrorBuilder: (c, o, s) => Image.asset(
+                                        Images.placeholder,
+                                        fit: BoxFit.fill,
+                                        height: 150),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      )
+                    : Center(child: Text('No banner available'))
+                : OfferShimmer();
           },
-          child: ListView.builder(
-            padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-            itemCount: Provider.of<BannerProvider>(context).footerBannerList.length,
-            itemBuilder: (context, index) {
-
-              return InkWell(
-                onTap: () => _launchUrl(Uri.parse(banner.footerBannerList[index].url)),
-                child: Container(
-                  margin: EdgeInsets.only(bottom: Dimensions.PADDING_SIZE_SMALL),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(width: 1, color: Theme.of(context).primaryColor),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: FadeInImage.assetNetwork(
-                      placeholder: Images.placeholder, fit: BoxFit.fill, height: 150,
-                      image: '${Provider.of<SplashProvider>(context,listen: false).baseUrls.bannerImageUrl}'
-                          '/${banner.footerBannerList[index].photo}',
-                      imageErrorBuilder: (c, o, s) => Image.asset(Images.placeholder, fit: BoxFit.fill, height: 150),
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
-        ) : Center(child: Text('No banner available')) : OfferShimmer();
-      },
-    ));
+        ));
   }
 
   // _launchUrl(String url) async {
@@ -65,7 +85,7 @@ class OffersScreen extends StatelessWidget {
   Future<void> _launchUrl(Uri url) async {
     await canLaunchUrl(url)
         ? await launchUrl(url)
-        :  throw 'Could not launch $url';
+        : throw 'Could not launch $url';
   }
 }
 
@@ -77,17 +97,21 @@ class OfferShimmer extends StatelessWidget {
       physics: BouncingScrollPhysics(),
       itemBuilder: (context, index) {
         return Shimmer.fromColors(
-          baseColor: Colors.grey[300],
-          highlightColor: Colors.grey[100],
-          enabled: Provider.of<BannerProvider>(context).footerBannerList == null,
+          baseColor: Color(0xFFE0E0E0),
+          highlightColor: Color(0xFFF5F5F5),
+          enabled:
+              Provider.of<BannerProvider>(context).footerBannerList == null,
           child: Container(
             height: 100,
-            margin: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_LARGE, vertical: Dimensions.PADDING_SIZE_SMALL),
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: ColorResources.WHITE),
+            margin: EdgeInsets.symmetric(
+                horizontal: Dimensions.PADDING_SIZE_LARGE,
+                vertical: Dimensions.PADDING_SIZE_SMALL),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: ColorResources.WHITE),
           ),
         );
       },
     );
   }
 }
-

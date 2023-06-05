@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_axtro_soft_ecommerce/data/datasource/remote/dio/dio_client.dart';
 import 'package:flutter_axtro_soft_ecommerce/data/datasource/remote/exception/api_error_handler.dart';
 import 'package:flutter_axtro_soft_ecommerce/data/model/response/base/api_response.dart';
@@ -6,7 +5,7 @@ import 'package:flutter_axtro_soft_ecommerce/utill/app_constants.dart';
 
 class TopSellerRepo {
   final DioClient dioClient;
-  TopSellerRepo({@required this.dioClient});
+  TopSellerRepo({required this.dioClient});
 
   Future<ApiResponse> getTopSeller() async {
     try {

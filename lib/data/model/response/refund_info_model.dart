@@ -3,22 +3,22 @@ class RefundInfoModel {
   bool expired;
   Refund refund;
 
-  RefundInfoModel({this.alreadyRequested, this.expired, this.refund});
+  RefundInfoModel({
+    required this.alreadyRequested,
+    required this.expired,
+    required this.refund,
+  });
 
-  RefundInfoModel.fromJson(Map<String, dynamic> json) {
-    alreadyRequested = json['already_requested'];
-    expired = json['expired'];
-    refund =
-    json['refund'] != null ? new Refund.fromJson(json['refund']) : null;
-  }
+  RefundInfoModel.fromJson(Map<String, dynamic> json)
+      : alreadyRequested = json['already_requested'] ?? false,
+        expired = json['expired'] ?? false,
+        refund = Refund.fromJson(json['refund'] ?? {});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['already_requested'] = this.alreadyRequested;
     data['expired'] = this.expired;
-    if (this.refund != null) {
-      data['refund'] = this.refund.toJson();
-    }
+    data['refund'] = this.refund.toJson();
     return data;
   }
 }
@@ -33,23 +33,23 @@ class Refund {
   double refundAmount;
 
   Refund(
-      {this.productPrice,
-        this.quntity,
-        this.productTotalDiscount,
-        this.productTotalTax,
-        this.subtotal,
-        this.couponDiscount,
-        this.refundAmount});
+      {required this.productPrice,
+      required this.quntity,
+      required this.productTotalDiscount,
+      required this.productTotalTax,
+      required this.subtotal,
+      required this.couponDiscount,
+      required this.refundAmount});
 
-  Refund.fromJson(Map<String, dynamic> json) {
-    productPrice = json['product_price'].toDouble();
-    quntity = json['quntity'];
-    productTotalDiscount = json['product_total_discount'].toDouble();
-    productTotalTax = json['product_total_tax'].toDouble();
-    subtotal = json['subtotal'].toDouble();
-    couponDiscount = json['coupon_discount'].toDouble();
-    refundAmount = json['refund_amount'].toDouble();
-  }
+  Refund.fromJson(Map<String, dynamic> json)
+      : productPrice = json['product_price']?.toDouble() ?? 0.0,
+        quntity = json['quntity'] ?? 0,
+        productTotalDiscount =
+            json['product_total_discount']?.toDouble() ?? 0.0,
+        productTotalTax = json['product_total_tax']?.toDouble() ?? 0.0,
+        subtotal = json['subtotal']?.toDouble() ?? 0.0,
+        couponDiscount = json['coupon_discount']?.toDouble() ?? 0.0,
+        refundAmount = json['refund_amount']?.toDouble() ?? 0.0;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();

@@ -56,22 +56,20 @@ Future<void> main() async {
   await Firebase.initializeApp();
   await FlutterDownloader.initialize(debug: true, ignoreSsl: true);
   await di.init();
-  final NotificationAppLaunchDetails notificationAppLaunchDetails =
+  final NotificationAppLaunchDetails? notificationAppLaunchDetails =
       await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
-  int _orderID;
+  final String? payload =
+      notificationAppLaunchDetails?.notificationResponse?.payload;
+  int? _orderID;
   if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
-    _orderID = (notificationAppLaunchDetails.notificationResponse.payload !=
-                null &&
-            notificationAppLaunchDetails
-                .notificationResponse.payload.isNotEmpty)
-        ? int.parse(notificationAppLaunchDetails.notificationResponse.payload)
-        : null;
+    _orderID =
+        (payload != null && payload.isNotEmpty) ? int.parse(payload) : null;
   }
-  final RemoteMessage remoteMessage =
+  final RemoteMessage? remoteMessage =
       await FirebaseMessaging.instance.getInitialMessage();
   if (remoteMessage != null) {
-    _orderID = remoteMessage.notification.titleLocKey != null
-        ? int.parse(remoteMessage.notification.titleLocKey)
+    _orderID = remoteMessage.notification?.titleLocKey != null
+        ? int.tryParse(remoteMessage.notification?.titleLocKey ?? "") ?? -1
         : null;
   }
   print('========-notification-----$_orderID----===========');
@@ -125,8 +123,10 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final int orderId;
-  MyApp({@required this.orderId});
+  final int? orderId;
+  MyApp({
+    required this.orderId,
+  });
 
   static final navigatorKey = new GlobalKey<NavigatorState>();
 
@@ -155,16 +155,21 @@ class MyApp extends StatelessWidget {
           : OrderDetailsScreen(
               orderId: orderId,
               orderType: 'default_type',
-              isNotification: true),
+              isNotification: true,
+            ),
     );
   }
 }
 
 class MyHttpOverrides extends HttpOverrides {
   @override
-  HttpClient createHttpClient(SecurityContext context) {
+  HttpClient createHttpClient(SecurityContext? context) {
     return super.createHttpClient(context)
-      ..badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
+      ..badCertificateCallback = (
+        X509Certificate cert,
+        String host,
+        int port,
+      ) =>
+          true;
   }
 }

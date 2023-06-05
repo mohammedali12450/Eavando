@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/order_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/localization/language_constrants.dart';
+import 'package:flutter_axtro_soft_ecommerce/theme/light_theme.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/app_constants.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/color_resources.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/custom_themes.dart';
@@ -13,7 +14,7 @@ import 'package:provider/provider.dart';
 
 class TrackingResultScreen extends StatelessWidget {
   final String orderID;
-  TrackingResultScreen({@required this.orderID});
+  TrackingResultScreen({required this.orderID});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,7 @@ class TrackingResultScreen extends StatelessWidget {
             child: Consumer<OrderProvider>(
               builder: (context, tracking, child) {
                 String status = tracking.trackingModel != null
-                    ? tracking.trackingModel.orderStatus
+                    ? tracking.trackingModel?.orderStatus ?? ""
                     : '';
                 return tracking.trackingModel != null
                     ? _statusList.contains(status)
@@ -184,10 +185,12 @@ class TrackingResultScreen extends StatelessWidget {
                 width: double.infinity,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                    // ignore: deprecated_member_use
-                    color: Theme.of(context).buttonColor,
-                    borderRadius: BorderRadius.circular(
-                        Dimensions.PADDING_SIZE_EXTRA_SMALL)),
+                  color: Theme.of(context).buttonTheme.colorScheme?.primary ??
+                      primaryColor,
+                  borderRadius: BorderRadius.circular(
+                    Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                  ),
+                ),
                 child: Text(
                   getTranslated('ORDER_MORE', context),
                   style: titilliumSemiBold.copyWith(
@@ -208,7 +211,7 @@ class CustomStepper extends StatelessWidget {
   final Color color;
   final bool isLastItem;
   CustomStepper(
-      {@required this.title, @required this.color, this.isLastItem = false});
+      {required this.title, required this.color, this.isLastItem = false});
 
   @override
   Widget build(BuildContext context) {

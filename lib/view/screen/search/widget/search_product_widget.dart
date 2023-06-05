@@ -11,7 +11,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 class SearchProductWidget extends StatelessWidget {
   final bool isViewScrollable;
   final List<Product> products;
-  SearchProductWidget({this.isViewScrollable, this.products});
+  SearchProductWidget({required this.isViewScrollable, required this.products});
 
   @override
   Widget build(BuildContext context) {

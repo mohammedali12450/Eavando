@@ -5,6 +5,7 @@ import 'package:flutter_axtro_soft_ecommerce/helper/price_converter.dart';
 import 'package:flutter_axtro_soft_ecommerce/localization/language_constrants.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/splash_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/wishlist_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/theme/light_theme.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/color_resources.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/custom_themes.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/dimensions.dart';
@@ -15,12 +16,15 @@ import 'package:provider/provider.dart';
 class WishListWidget extends StatelessWidget {
   final Product product;
   final int index;
-  WishListWidget({this.product, this.index});
+  WishListWidget({
+    required this.product,
+    required this.index,
+  });
 
   @override
   Widget build(BuildContext context) {
     double _startingPrice = 0;
-    if (product.variation != null && product.variation.length != 0) {
+    if (product.variation.length != 0) {
       List<double> _priceList = [];
       product.variation.forEach((variation) => _priceList.add(variation.price));
       _priceList.sort((a, b) => a.compareTo(b));
@@ -74,7 +78,7 @@ class WishListWidget extends StatelessWidget {
                             width: 80,
                             height: 80,
                             image:
-                                '${Provider.of<SplashProvider>(context, listen: false).baseUrls.productThumbnailUrl}/${product.thumbnail}',
+                                '${Provider.of<SplashProvider>(context, listen: false).baseUrls?.productThumbnailUrl}/${product.thumbnail}',
                             imageErrorBuilder: (c, o, s) => Image.asset(
                                 Images.placeholder,
                                 fit: BoxFit.scaleDown,
@@ -83,7 +87,7 @@ class WishListWidget extends StatelessWidget {
                           ),
                         ),
                       ),
-                      product.unitPrice != null && product.discount > 0
+                      product.discount > 0
                           ? Positioned(
                               top: 0,
                               left: 0,
@@ -101,15 +105,11 @@ class WishListWidget extends StatelessWidget {
                                             .PADDING_SIZE_EXTRA_SMALL)),
                                     color: Theme.of(context).primaryColor),
                                 child: Text(
-                                  product.unitPrice != null &&
-                                          product.discount != null &&
-                                          product.discountType != null
-                                      ? PriceConverter.percentageCalculation(
-                                          context,
-                                          product.unitPrice,
-                                          product.discount,
-                                          product.discountType)
-                                      : '',
+                                  PriceConverter.percentageCalculation(
+                                      context,
+                                      product.unitPrice,
+                                      product.discount,
+                                      product.discountType),
                                   style: titilliumRegular.copyWith(
                                       fontSize:
                                           Dimensions.FONT_SIZE_EXTRA_SMALL,
@@ -129,7 +129,7 @@ class WishListWidget extends StatelessWidget {
                           children: [
                             Expanded(
                               child: Text(
-                                product.name ?? '',
+                                product.name,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: titilliumSemiBold.copyWith(
@@ -182,18 +182,17 @@ class WishListWidget extends StatelessWidget {
                         SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
                         Row(
                           children: [
-                            product.discount != null && product.discount > 0
+                            product.discount > 0
                                 ? Text(
-                                    product.unitPrice != null
-                                        ? "€" + startTotalPrice
-                                        // PriceConverter.convertPrice(context, product.unitPrice)
-                                        : '',
+                                    "€" + startTotalPrice
+                                    // PriceConverter.convertPrice(context, product.unitPrice)
+                                    ,
                                     style: titilliumSemiBold.copyWith(
                                         color: ColorResources.getRed(context),
                                         decoration: TextDecoration.lineThrough),
                                   )
                                 : SizedBox(),
-                            product.discount != null && product.discount > 0
+                            product.discount > 0
                                 ? SizedBox(
                                     width: Dimensions.PADDING_SIZE_DEFAULT)
                                 : SizedBox(),
@@ -251,9 +250,11 @@ class WishListWidget extends StatelessWidget {
                                         offset: Offset(0, 1),
                                       ),
                                     ],
-
-                                    // ignore: deprecated_member_use
-                                    color: Theme.of(context).buttonColor,
+                                    color: Theme.of(context)
+                                            .buttonTheme
+                                            .colorScheme
+                                            ?.primary ??
+                                        primaryColor,
                                     borderRadius: BorderRadius.circular(
                                         Dimensions.PADDING_SIZE_EXTRA_SMALL)),
                                 child: Row(

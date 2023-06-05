@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_axtro_soft_ecommerce/localization/language_constrants.dart';
+import 'package:flutter_axtro_soft_ecommerce/theme/light_theme.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/custom_themes.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/dimensions.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/images.dart';
@@ -58,12 +59,17 @@ class GuestDialog extends StatelessWidget {
                     padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                        // ignore: deprecated_member_use
-                        color: Theme.of(context).buttonColor,
-                        borderRadius: BorderRadius.only(
-                            bottomRight: Radius.circular(10))),
-                    child: Text(getTranslated('LOGIN', context),
-                        style: titilliumBold.copyWith(color: Colors.white)),
+                      color:
+                          Theme.of(context).buttonTheme.colorScheme?.primary ??
+                              primaryColor,
+                      borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(10),
+                      ),
+                    ),
+                    child: Text(
+                      getTranslated('LOGIN', context),
+                      style: titilliumBold.copyWith(color: Colors.white),
+                    ),
                   ),
                 )),
               ]),

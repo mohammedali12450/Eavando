@@ -1,24 +1,31 @@
 class SupportReplyModel {
   int id;
-  String customerMessage;
-  String adminMessage;
+  String? customerMessage;
+  String? adminMessage;
   String createdAt;
   String updatedAt;
 
-  SupportReplyModel(
-      {this.id,
-        this.customerMessage,
-        this.adminMessage,
-        this.createdAt,
-        this.updatedAt});
+  SupportReplyModel({
+    required this.id,
+    this.customerMessage,
+    required this.adminMessage,
+    required this.createdAt,
+    required this.updatedAt,
+  });
 
-  SupportReplyModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    customerMessage = json['customer_message'];
-    adminMessage = json['admin_message'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-  }
+  SupportReplyModel.core({
+    this.customerMessage,
+    required this.createdAt,
+  })  : id = -1,
+        adminMessage = "",
+        updatedAt = "";
+
+  SupportReplyModel.fromJson(Map<String, dynamic> json)
+      : id = json['id'] ?? -1,
+        customerMessage = json['customer_message'] ?? "",
+        adminMessage = json['admin_message'] ?? "",
+        createdAt = json['created_at'] ?? "",
+        updatedAt = json['updated_at'] ?? "";
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();

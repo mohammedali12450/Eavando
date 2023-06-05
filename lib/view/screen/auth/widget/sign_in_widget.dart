@@ -25,9 +25,9 @@ class SignInWidget extends StatefulWidget {
 }
 
 class _SignInWidgetState extends State<SignInWidget> {
-  TextEditingController _emailController;
-  TextEditingController _passwordController;
-  GlobalKey<FormState> _formKeyLogin;
+  late TextEditingController _emailController;
+  late TextEditingController _passwordController;
+  GlobalKey<FormState> _formKeyLogin = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -35,8 +35,10 @@ class _SignInWidgetState extends State<SignInWidget> {
     _formKeyLogin = GlobalKey<FormState>();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
-    _emailController.text = Provider.of<AuthProvider>(context, listen: false).getUserEmail() ?? null;
-    _passwordController.text = Provider.of<AuthProvider>(context, listen: false).getUserPassword() ?? null;
+    _emailController.text =
+        Provider.of<AuthProvider>(context, listen: false).getUserEmail();
+    _passwordController.text =
+        Provider.of<AuthProvider>(context, listen: false).getUserPassword();
   }
 
   @override
@@ -48,11 +50,11 @@ class _SignInWidgetState extends State<SignInWidget> {
 
   FocusNode _emailNode = FocusNode();
   FocusNode _passNode = FocusNode();
-  LoginModel loginBody = LoginModel();
+  LoginModel loginBody = LoginModel.init();
 
   void loginUser() async {
-    if (_formKeyLogin.currentState.validate()) {
-      _formKeyLogin.currentState.save();
+    if (_formKeyLogin.currentState?.validate() ?? false) {
+      _formKeyLogin.currentState?.save();
 
       String _email = _emailController.text.trim();
       String _password = _passwordController.text.trim();
@@ -68,44 +70,65 @@ class _SignInWidgetState extends State<SignInWidget> {
           backgroundColor: Colors.red,
         ));
       } else {
-
         if (Provider.of<AuthProvider>(context, listen: false).isRemember) {
-          Provider.of<AuthProvider>(context, listen: false).saveUserEmail(_email, _password);
+          Provider.of<AuthProvider>(context, listen: false)
+              .saveUserEmail(_email, _password);
         } else {
-          Provider.of<AuthProvider>(context, listen: false).clearUserEmailAndPassword();
+          Provider.of<AuthProvider>(context, listen: false)
+              .clearUserEmailAndPassword();
         }
 
         loginBody.email = _email;
         loginBody.password = _password;
-        await Provider.of<AuthProvider>(context, listen: false).login(loginBody, route);
+        await Provider.of<AuthProvider>(context, listen: false)
+            .login(loginBody, route);
       }
     }
   }
 
-  route(bool isRoute, String token, String temporaryToken, String errorMessage) async {
+  route(bool isRoute, String? token, String temporaryToken,
+      String errorMessage) async {
     if (isRoute) {
-      if(token==null || token.isEmpty){
-        if(Provider.of<SplashProvider>(context,listen: false).configModel.emailVerification){
-          Provider.of<AuthProvider>(context, listen: false).checkEmail(_emailController.text.toString(),
-              temporaryToken).then((value) async {
+      if (token == null || token.isEmpty) {
+        if (Provider.of<SplashProvider>(context, listen: false)
+                .configModel
+                ?.emailVerification ??
+            false) {
+          Provider.of<AuthProvider>(context, listen: false)
+              .checkEmail(_emailController.text.toString(), temporaryToken)
+              .then((value) async {
             if (value.isSuccess) {
-              Provider.of<AuthProvider>(context, listen: false).updateEmail(_emailController.text.toString());
-              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => VerificationScreen(
-                  temporaryToken,'',_emailController.text.toString())), (route) => false);
-
+              Provider.of<AuthProvider>(context, listen: false)
+                  .updateEmail(_emailController.text.toString());
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => VerificationScreen(temporaryToken, '',
+                          _emailController.text.toString())),
+                  (route) => false);
             }
           });
-        }else if(Provider.of<SplashProvider>(context,listen: false).configModel.phoneVerification){
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => MobileVerificationScreen(
-              temporaryToken)), (route) => false);
+        } else if (Provider.of<SplashProvider>(context, listen: false)
+                .configModel
+                ?.phoneVerification ??
+            false) {
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => MobileVerificationScreen(temporaryToken)),
+              (route) => false);
         }
-      }
-      else{
-        await Provider.of<ProfileProvider>(context, listen: false).getUserInfo(context);
-        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => DashBoardScreen()), (route) => false);
+      } else {
+        await Provider.of<ProfileProvider>(context, listen: false)
+            .getUserInfo(context);
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (_) => DashBoardScreen()),
+            (route) => false);
       }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(errorMessage), backgroundColor: Colors.red));
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(errorMessage), backgroundColor: Colors.red));
     }
   }
 
@@ -114,109 +137,118 @@ class _SignInWidgetState extends State<SignInWidget> {
     Provider.of<AuthProvider>(context, listen: false).isRemember;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: Dimensions.MARGIN_SIZE_LARGE),
+      padding:
+          const EdgeInsets.symmetric(horizontal: Dimensions.MARGIN_SIZE_LARGE),
       child: Form(
         key: _formKeyLogin,
         child: ListView(
-          padding: EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_SMALL),
+          padding:
+              EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_SMALL),
           children: [
-
-
             Container(
-                margin:
-                EdgeInsets.only(bottom: Dimensions.MARGIN_SIZE_SMALL),
+                margin: EdgeInsets.only(bottom: Dimensions.MARGIN_SIZE_SMALL),
                 child: CustomTextField(
-                  hintText: getTranslated('ENTER_YOUR_EMAIL_or_mobile', context),
+                  hintText:
+                      getTranslated('ENTER_YOUR_EMAIL_or_mobile', context),
                   focusNode: _emailNode,
                   nextNode: _passNode,
                   textInputType: TextInputType.emailAddress,
                   controller: _emailController,
                 )),
-
-
-
             Container(
-                margin:
-                EdgeInsets.only(bottom: Dimensions.MARGIN_SIZE_DEFAULT),
+                margin: EdgeInsets.only(bottom: Dimensions.MARGIN_SIZE_DEFAULT),
                 child: CustomPasswordTextField(
                   hintTxt: getTranslated('ENTER_YOUR_PASSWORD', context),
                   textInputAction: TextInputAction.done,
                   focusNode: _passNode,
                   controller: _passwordController,
                 )),
-
-
-
             Container(
               margin: EdgeInsets.only(right: Dimensions.MARGIN_SIZE_SMALL),
-              child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [Row(children: [
-                  Consumer<AuthProvider>(
-                    builder: (context, authProvider, child) => Checkbox(
-                      checkColor: ColorResources.WHITE,
-                      activeColor: Theme.of(context).colorScheme.primary,
-                      value: authProvider.isRemember,
-                      onChanged: authProvider.updateRemember,),),
-
-
-                  Text(getTranslated('REMEMBER', context), style: titilliumRegular.copyWith(color: Theme.of(context).primaryColor)),
-                ],),
-
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Consumer<AuthProvider>(
+                        builder: (context, authProvider, child) => Checkbox(
+                          checkColor: ColorResources.WHITE,
+                          activeColor: Theme.of(context).colorScheme.primary,
+                          value: authProvider.isRemember,
+                          onChanged: authProvider.updateRemember,
+                        ),
+                      ),
+                      Text(getTranslated('REMEMBER', context),
+                          style: titilliumRegular.copyWith(
+                              color: Theme.of(context).primaryColor)),
+                    ],
+                  ),
                   InkWell(
-                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ForgetPasswordScreen())),
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => ForgetPasswordScreen())),
                     child: Text(getTranslated('FORGET_PASSWORD', context),
                         style: titilliumRegular.copyWith(
-                        color: Theme.of(context).colorScheme.primary)),
+                            color: Theme.of(context).colorScheme.primary)),
                   ),
                 ],
               ),
             ),
-
-
-
             Container(
-              margin: EdgeInsets.only( bottom: 20, top: 30),
-              child: Provider.of<AuthProvider>(context).isLoading ?
-              Center(
-                child: CircularProgressIndicator(
-                  valueColor: new AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor,),),) :
-              CustomButton(onTap: loginUser, buttonText: getTranslated('SIGN_IN', context)),),
+              margin: EdgeInsets.only(bottom: 20, top: 30),
+              child: Provider.of<AuthProvider>(context).isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(
+                        valueColor: new AlwaysStoppedAnimation<Color>(
+                          Theme.of(context).primaryColor,
+                        ),
+                      ),
+                    )
+                  : CustomButton(
+                      onTap: loginUser,
+                      buttonText: getTranslated('SIGN_IN', context)),
+            ),
             SizedBox(width: Dimensions.PADDING_SIZE_DEFAULT),
-
-
-
             SocialLoginWidget(),
             SizedBox(width: Dimensions.PADDING_SIZE_DEFAULT),
-
-            Center(child: Text(getTranslated('OR', context),
-                style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_DEFAULT,color: Theme.of(context).primaryColor))),
-
-
-
+            Center(
+                child: Text(getTranslated('OR', context),
+                    style: titilliumRegular.copyWith(
+                        fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                        color: Theme.of(context).primaryColor))),
             GestureDetector(
               onTap: () {
-                if (!Provider.of<AuthProvider>(context, listen: false).isLoading) {
-                  Provider.of<CartProvider>(context, listen: false).getCartData();
-                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => DashBoardScreen()),
-                          (route) => false);
+                if (!Provider.of<AuthProvider>(context, listen: false)
+                    .isLoading) {
+                  Provider.of<CartProvider>(context, listen: false)
+                      .getCartData();
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (_) => DashBoardScreen()),
+                      (route) => false);
                 }
               },
               child: Container(
-                margin: EdgeInsets.only(left: Dimensions.MARGIN_SIZE_AUTH, right: Dimensions.MARGIN_SIZE_AUTH,
+                margin: EdgeInsets.only(
+                    left: Dimensions.MARGIN_SIZE_AUTH,
+                    right: Dimensions.MARGIN_SIZE_AUTH,
                     top: Dimensions.MARGIN_SIZE_AUTH_SMALL),
-                width: double.infinity, height: 40, alignment: Alignment.center,
+                width: double.infinity,
+                height: 40,
+                alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: Colors.transparent, borderRadius: BorderRadius.circular(6),),
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(6),
+                ),
                 child: Text(getTranslated('CONTINUE_AS_GUEST', context),
-                    style: titleHeader.copyWith(color: ColorResources.getPrimary(context))),
+                    style: titleHeader.copyWith(
+                        color: ColorResources.getPrimary(context))),
               ),
             ),
           ],
         ),
       ),
     );
-
-
   }
-
 }

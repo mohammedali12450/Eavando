@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_axtro_soft_ecommerce/data/model/response/order_model.dart';
 import 'package:flutter_axtro_soft_ecommerce/helper/date_converter.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/localization_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/view/basewidget/shimmer_loading.dart';
@@ -19,18 +20,20 @@ import 'package:flutter_axtro_soft_ecommerce/view/basewidget/amount_widget.dart'
 import 'package:flutter_axtro_soft_ecommerce/view/basewidget/title_row.dart';
 import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class OrderDetailsScreen extends StatefulWidget {
   final bool isNotification;
-  final int orderId;
+  final int? orderId;
   final String orderType;
-  final double extraDiscount;
-  final String extraDiscountType;
-  OrderDetailsScreen(
-      {@required this.orderId,
-      @required this.orderType,
-      this.extraDiscount,
-      this.extraDiscountType,
-      this.isNotification = false});
+  double? extraDiscount;
+  String? extraDiscountType;
+  OrderDetailsScreen({
+    required this.orderId,
+    required this.orderType,
+    this.extraDiscount,
+    this.extraDiscountType,
+    this.isNotification = false,
+  });
 
   @override
   State<OrderDetailsScreen> createState() => _OrderDetailsScreenState();
@@ -46,8 +49,9 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
       widget.orderId.toString(),
       context,
       Provider.of<LocalizationProvider>(context, listen: false)
-          .locale
-          .countryCode,
+              .locale
+              .countryCode ??
+          "1",
     );
   }
 
@@ -103,15 +107,14 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   double _tax = 0;
 
                   if (order.orderDetails != null) {
-                    order.orderDetails.forEach((orderDetails) {
-                      if (orderDetails.productDetails?.productType != null &&
-                          orderDetails.productDetails.productType !=
-                              "physical") {
+                    order.orderDetails?.forEach((orderDetails) {
+                      if (orderDetails.productDetails.productType !=
+                          "physical") {
                         order.digitalOnly(false, isUpdate: false);
                       }
                     });
 
-                    order.orderDetails.forEach((orderDetails) {
+                    order.orderDetails?.forEach((orderDetails) {
                       _order = _order + (orderDetails.price * orderDetails.qty);
                       _discount = _discount + orderDetails.discount;
                       _tax = _tax + orderDetails.tax;
@@ -119,9 +122,9 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
                     if (widget.orderType == 'POS') {
                       if (widget.extraDiscountType == 'percent') {
-                        eeDiscount = _order * (widget.extraDiscount / 100);
+                        eeDiscount = _order * (widget.extraDiscount ?? 0 / 100);
                       } else {
-                        eeDiscount = widget.extraDiscount;
+                        eeDiscount = widget.extraDiscount ?? 0;
                       }
                     }
                   }
@@ -152,11 +155,12 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                               color: Theme.of(context)
                                                   .textTheme
                                                   .bodyLarge
-                                                  .color,
+                                                  ?.color,
                                             )),
                                         TextSpan(
-                                            text: order.trackingModel.id
-                                                .toString(),
+                                            text: order.trackingModel?.id
+                                                    .toString() ??
+                                                "",
                                             style: titilliumRegular.copyWith(
                                                 fontSize:
                                                     Dimensions.FONT_SIZE_LARGE,
@@ -169,8 +173,10 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                   Expanded(child: SizedBox()),
                                   Text(
                                       DateConverter.localDateToIsoStringAMPM(
-                                          DateTime.parse(
-                                              order.trackingModel.createdAt)),
+                                        DateTime.parse(
+                                          order.trackingModel?.createdAt ?? "",
+                                        ),
+                                      ),
                                       style: titilliumRegular.copyWith(
                                           color:
                                               ColorResources.getHint(context),
@@ -211,7 +217,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                                               .symmetric(
                                                           vertical: 1),
                                                       child: Text(
-                                                          ' ${order.orderModel != null && order.orderModel.shippingAddressData != null ? order.orderModel.shippingAddressData.address : ''}',
+                                                          ' ${order.orderModel != null && order.orderModel?.shippingAddressData != null ? order.orderModel?.shippingAddressData.address : ''}',
                                                           maxLines: 3,
                                                           overflow: TextOverflow
                                                               .ellipsis,
@@ -228,7 +234,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                           ? Dimensions.PADDING_SIZE_LARGE
                                           : 0),
                                   order.orderModel != null &&
-                                          order.orderModel.billingAddressData !=
+                                          order.orderModel
+                                                  ?.billingAddressData !=
                                               null
                                       ? Row(
                                           mainAxisAlignment:
@@ -247,7 +254,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                                   const EdgeInsets.symmetric(
                                                       vertical: 1),
                                               child: Text(
-                                                  ' ${order.orderModel.billingAddressData != null ? order.orderModel.billingAddressData.address : ''}',
+                                                  ' ${order.orderModel?.billingAddressData != null ? order.orderModel?.billingAddressData.address : ''}',
                                                   maxLines: 3,
                                                   overflow:
                                                       TextOverflow.ellipsis,
@@ -264,7 +271,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             ),
 
                             order.orderModel != null &&
-                                    order.orderModel.orderNote != null
+                                    order.orderModel?.orderNote != null
                                 ? Padding(
                                     padding: EdgeInsets.all(
                                         Dimensions.MARGIN_SIZE_SMALL),
@@ -282,7 +289,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                                           context))),
                                           TextSpan(
                                               text:
-                                                  '${order.orderModel.orderNote != null ? order.orderModel.orderNote ?? '' : ""}',
+                                                  '${order.orderModel?.orderNote != null ? order.orderModel?.orderNote ?? '' : ""}',
                                               style: titilliumRegular.copyWith(
                                                   fontSize: Dimensions
                                                       .FONT_SIZE_SMALL)),
@@ -335,9 +342,12 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                             title: getTranslated(
                                                 'SHIPPING_FEE', context),
                                             amount: PriceConverter.convertPrice(
-                                                context,
-                                                order.trackingModel
-                                                    .shippingCost)),
+                                              context,
+                                              order.trackingModel
+                                                      ?.shippingCost ??
+                                                  0.0,
+                                            ),
+                                          ),
                                     AmountWidget(
                                         title:
                                             getTranslated('DISCOUNT', context),
@@ -355,7 +365,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                           'coupon_voucher', context),
                                       amount: PriceConverter.convertPrice(
                                           context,
-                                          order.trackingModel.discountAmount),
+                                          order.trackingModel?.discountAmount ??
+                                              0.0),
                                     ),
                                     AmountWidget(
                                         title: getTranslated('TAX', context),
@@ -376,10 +387,13 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                       amount: PriceConverter.convertPrice(
                                           context,
                                           (_order +
-                                              order.trackingModel.shippingCost -
+                                              (order.trackingModel
+                                                      ?.shippingCost ??
+                                                  0) -
                                               eeDiscount -
-                                              order.trackingModel
-                                                  .discountAmount -
+                                              (order.trackingModel
+                                                      ?.discountAmount ??
+                                                  0) -
                                               _discount +
                                               _tax)),
                                     ),
@@ -390,7 +404,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                               height: Dimensions.PADDING_SIZE_SMALL,
                             ),
 
-                            order.trackingModel.deliveryMan != null
+                            order.trackingModel?.deliveryMan != null
                                 ? Container(
                                     padding: EdgeInsets.all(
                                         Dimensions.PADDING_SIZE_DEFAULT),
@@ -428,9 +442,9 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                                                 .FONT_SIZE_SMALL)),
                                                 Text(
                                                   (order.trackingModel
-                                                              .deliveryMan !=
+                                                              ?.deliveryMan !=
                                                           null)
-                                                      ? '${order.trackingModel.deliveryMan.fName} ${order.trackingModel.deliveryMan.lName}'
+                                                      ? '${order.trackingModel?.deliveryMan.fName ?? ""} ${order.trackingModel?.deliveryMan.lName ?? ""}'
                                                       : '',
                                                   style:
                                                       titilliumRegular.copyWith(
@@ -446,16 +460,20 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                                 MainAxisAlignment.end,
                                             children: [
                                               CallAndChatWidget(
-                                                  orderProvider: order,
-                                                  orderModel:
-                                                      order.trackingModel),
+                                                orderProvider: order,
+                                                orderModel:
+                                                    order.trackingModel ??
+                                                        OrderModel.fromJson(
+                                                          const {},
+                                                        ),
+                                              ),
                                             ],
                                           )
                                         ]),
                                   )
                                 :
                                 //third party
-                                order.trackingModel.thirdPartyServiceName !=
+                                order.trackingModel?.thirdPartyServiceName !=
                                         null
                                     ? ShippingInfo(order: order)
                                     : SizedBox(),

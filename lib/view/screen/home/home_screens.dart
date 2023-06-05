@@ -92,7 +92,7 @@ class _HomePageState extends State<HomePage> {
 
     singleVendor = Provider.of<SplashProvider>(context, listen: false)
             .configModel
-            .businessMode ==
+            ?.businessMode ==
         "single";
     Provider.of<FlashDealProvider>(context, listen: false)
         .getMegaDealList(true, context, true);
@@ -126,7 +126,7 @@ class _HomePageState extends State<HomePage> {
             await Provider.of<FlashDealProvider>(context, listen: false)
                 .getMegaDealList(true, context, false);
 
-            return true;
+            return;
           },
           child: Stack(
             children: [
@@ -208,11 +208,10 @@ class _HomePageState extends State<HomePage> {
                               color: Theme.of(context).cardColor,
                               boxShadow: [
                                 BoxShadow(
-                                    color: Colors.grey[
-                                        Provider.of<ThemeProvider>(context)
-                                                .darkTheme
-                                            ? 900
-                                            : 200],
+                                    color: Provider.of<ThemeProvider>(context)
+                                            .darkTheme
+                                        ? Color(0xFF212121)
+                                        : Color(0xFFEEEEEE),
                                     spreadRadius: 1,
                                     blurRadius: 1)
                               ],
@@ -280,7 +279,7 @@ class _HomePageState extends State<HomePage> {
                             builder: (context, flashDeal, child) {
                               return (flashDeal.flashDeal != null &&
                                       flashDeal.flashDealList != null &&
-                                      flashDeal.flashDealList.length > 0)
+                                      flashDeal.flashDealList!.length > 0)
                                   ? TitleRow(
                                       title:
                                           getTranslated('flash_deal', context),
@@ -304,7 +303,7 @@ class _HomePageState extends State<HomePage> {
                             builder: (context, megaDeal, child) {
                               return (megaDeal.flashDeal != null &&
                                       megaDeal.flashDealList != null &&
-                                      megaDeal.flashDealList.length > 0)
+                                      megaDeal.flashDealList!.length > 0)
                                   ? Container(
                                       height:
                                           MediaQuery.of(context).size.width *
@@ -322,7 +321,7 @@ class _HomePageState extends State<HomePage> {
                           // Brand
                           Provider.of<SplashProvider>(context, listen: false)
                                       .configModel
-                                      .brandSetting ==
+                                      ?.brandSetting ==
                                   "1"
                               ? Padding(
                                   padding: const EdgeInsets.only(
@@ -346,13 +345,13 @@ class _HomePageState extends State<HomePage> {
                               height: Provider.of<SplashProvider>(context,
                                               listen: false)
                                           .configModel
-                                          .brandSetting ==
+                                          ?.brandSetting ==
                                       "1"
                                   ? Dimensions.PADDING_SIZE_SMALL
                                   : 0),
                           Provider.of<SplashProvider>(context, listen: false)
                                       .configModel
-                                      .brandSetting ==
+                                      ?.brandSetting ==
                                   "1"
                               ? BrandView(isHomePage: true)
                               : SizedBox(),
@@ -364,11 +363,13 @@ class _HomePageState extends State<HomePage> {
                                   title: getTranslated('top_seller', context),
                                   onTap: () {
                                     Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (_) => AllTopSellerScreen(
-                                                  topSeller: null,
-                                                )));
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => AllTopSellerScreen(
+                                          topSeller: null,
+                                        ),
+                                      ),
+                                    );
                                   },
                                 ),
                           singleVendor
@@ -388,7 +389,7 @@ class _HomePageState extends State<HomePage> {
                             return footerBannerProvider.footerBannerList !=
                                         null &&
                                     footerBannerProvider
-                                            .footerBannerList.length >
+                                            .footerBannerList!.length >
                                         0
                                 ? Padding(
                                     padding: const EdgeInsets.only(
@@ -403,8 +404,7 @@ class _HomePageState extends State<HomePage> {
                           // Featured Products
                           Consumer<ProductProvider>(
                               builder: (context, featured, _) {
-                            return featured.featuredProductList != null &&
-                                    featured.featuredProductList.length > 0
+                            return featured.featuredProductList.length > 0
                                 ? Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal:
@@ -444,11 +444,8 @@ class _HomePageState extends State<HomePage> {
                           Consumer<FeaturedDealProvider>(
                             builder: (context, featuredDealProvider, child) {
                               return featuredDealProvider
-                                              .featuredDealProductList !=
-                                          null &&
-                                      featuredDealProvider
-                                              .featuredDealProductList.length >
-                                          0
+                                          .featuredDealProductList.length >
+                                      0
                                   ? Padding(
                                       padding: const EdgeInsets.only(
                                           bottom:
@@ -471,11 +468,8 @@ class _HomePageState extends State<HomePage> {
                           Consumer<FeaturedDealProvider>(
                             builder: (context, featuredDealProvider, child) {
                               return featuredDealProvider
-                                              .featuredDealProductList !=
-                                          null &&
-                                      featuredDealProvider
-                                              .featuredDealProductList.length >
-                                          0
+                                          .featuredDealProductList.length >
+                                      0
                                   ? Container(
                                       height: featuredDealProvider
                                                   .featuredDealProductList
@@ -506,11 +500,9 @@ class _HomePageState extends State<HomePage> {
                           //footer banner
                           Consumer<BannerProvider>(
                               builder: (context, footerBannerProvider, child) {
-                            return footerBannerProvider.mainSectionBannerList !=
-                                        null &&
-                                    footerBannerProvider
-                                            .mainSectionBannerList.length >
-                                        0
+                            return footerBannerProvider
+                                        .mainSectionBannerList.length >
+                                    0
                                 ? Padding(
                                     padding: const EdgeInsets.only(
                                         bottom: Dimensions.HOME_PAGE_PADDING),
@@ -553,7 +545,7 @@ class _HomePageState extends State<HomePage> {
                             return footerBannerProvider.footerBannerList !=
                                         null &&
                                     footerBannerProvider
-                                            .footerBannerList.length >
+                                            .footerBannerList!.length >
                                         1
                                 ? FooterBannersView(index: 1)
                                 : SizedBox();
@@ -577,106 +569,93 @@ class _HomePageState extends State<HomePage> {
                                                 'new_arrival', context)
                                             : prodProvider.title,
                                         style: titleHeader)),
-                                prodProvider.latestProductList != null
-                                    ? PopupMenuButton(
-                                        itemBuilder: (context) {
-                                          return [
-                                            PopupMenuItem(
-                                                value: ProductType.NEW_ARRIVAL,
-                                                child: Text(getTranslated(
-                                                    'new_arrival', context)),
-                                                textStyle:
-                                                    robotoRegular.copyWith(
-                                                  color: Theme.of(context)
-                                                      .hintColor,
-                                                )),
-                                            PopupMenuItem(
-                                                value: ProductType.TOP_PRODUCT,
-                                                child: Text(getTranslated(
-                                                    'top_product', context)),
-                                                textStyle:
-                                                    robotoRegular.copyWith(
-                                                  color: Theme.of(context)
-                                                      .hintColor,
-                                                )),
-                                            PopupMenuItem(
-                                                value: ProductType.BEST_SELLING,
-                                                child: Text(getTranslated(
-                                                    'best_selling', context)),
-                                                textStyle:
-                                                    robotoRegular.copyWith(
-                                                  color: Theme.of(context)
-                                                      .hintColor,
-                                                )),
-                                            PopupMenuItem(
-                                                value: ProductType
-                                                    .DISCOUNTED_PRODUCT,
-                                                child: Text(getTranslated(
-                                                    'discounted_product',
-                                                    context)),
-                                                textStyle:
-                                                    robotoRegular.copyWith(
-                                                  color: Theme.of(context)
-                                                      .hintColor,
-                                                )),
-                                          ];
-                                        },
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                Dimensions.PADDING_SIZE_SMALL)),
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal:
-                                                  Dimensions.PADDING_SIZE_SMALL,
-                                              vertical: Dimensions
-                                                  .PADDING_SIZE_SMALL),
-                                          child: Image.asset(
-                                            Images.dropdown,
-                                            scale: 3,
-                                          ),
-                                        ),
-                                        onSelected: (value) {
-                                          if (value ==
-                                              ProductType.NEW_ARRIVAL) {
-                                            Provider.of<ProductProvider>(
-                                                    context,
-                                                    listen: false)
-                                                .changeTypeOfProduct(
-                                                    value, types[0]);
-                                          } else if (value ==
-                                              ProductType.TOP_PRODUCT) {
-                                            Provider.of<ProductProvider>(
-                                                    context,
-                                                    listen: false)
-                                                .changeTypeOfProduct(
-                                                    value, types[1]);
-                                          } else if (value ==
-                                              ProductType.BEST_SELLING) {
-                                            Provider.of<ProductProvider>(
-                                                    context,
-                                                    listen: false)
-                                                .changeTypeOfProduct(
-                                                    value, types[2]);
-                                          } else if (value ==
-                                              ProductType.DISCOUNTED_PRODUCT) {
-                                            Provider.of<ProductProvider>(
-                                                    context,
-                                                    listen: false)
-                                                .changeTypeOfProduct(
-                                                    value, types[3]);
-                                          }
+                                PopupMenuButton(
+                                    itemBuilder: (context) {
+                                      return [
+                                        PopupMenuItem(
+                                            value: ProductType.NEW_ARRIVAL,
+                                            child: Text(getTranslated(
+                                                'new_arrival', context)),
+                                            textStyle: robotoRegular.copyWith(
+                                              color:
+                                                  Theme.of(context).hintColor,
+                                            )),
+                                        PopupMenuItem(
+                                            value: ProductType.TOP_PRODUCT,
+                                            child: Text(getTranslated(
+                                                'top_product', context)),
+                                            textStyle: robotoRegular.copyWith(
+                                              color:
+                                                  Theme.of(context).hintColor,
+                                            )),
+                                        PopupMenuItem(
+                                            value: ProductType.BEST_SELLING,
+                                            child: Text(getTranslated(
+                                                'best_selling', context)),
+                                            textStyle: robotoRegular.copyWith(
+                                              color:
+                                                  Theme.of(context).hintColor,
+                                            )),
+                                        PopupMenuItem(
+                                            value:
+                                                ProductType.DISCOUNTED_PRODUCT,
+                                            child: Text(getTranslated(
+                                                'discounted_product', context)),
+                                            textStyle: robotoRegular.copyWith(
+                                              color:
+                                                  Theme.of(context).hintColor,
+                                            )),
+                                      ];
+                                    },
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            Dimensions.PADDING_SIZE_SMALL)),
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal:
+                                              Dimensions.PADDING_SIZE_SMALL,
+                                          vertical:
+                                              Dimensions.PADDING_SIZE_SMALL),
+                                      child: Image.asset(
+                                        Images.dropdown,
+                                        scale: 3,
+                                      ),
+                                    ),
+                                    onSelected: (value) {
+                                      if (value == ProductType.NEW_ARRIVAL) {
+                                        Provider.of<ProductProvider>(context,
+                                                listen: false)
+                                            .changeTypeOfProduct(
+                                                value, types[0]);
+                                      } else if (value ==
+                                          ProductType.TOP_PRODUCT) {
+                                        Provider.of<ProductProvider>(context,
+                                                listen: false)
+                                            .changeTypeOfProduct(
+                                                value, types[1]);
+                                      } else if (value ==
+                                          ProductType.BEST_SELLING) {
+                                        Provider.of<ProductProvider>(context,
+                                                listen: false)
+                                            .changeTypeOfProduct(
+                                                value, types[2]);
+                                      } else if (value ==
+                                          ProductType.DISCOUNTED_PRODUCT) {
+                                        Provider.of<ProductProvider>(context,
+                                                listen: false)
+                                            .changeTypeOfProduct(
+                                                value, types[3]);
+                                      }
 
-                                          ProductView(
-                                              isHomePage: false,
-                                              productType: value,
-                                              scrollController:
-                                                  _scrollController);
-                                          Provider.of<ProductProvider>(context,
-                                                  listen: false)
-                                              .getLatestProductList(1, context,
-                                                  reload: true);
-                                        })
-                                    : SizedBox(),
+                                      ProductView(
+                                          isHomePage: false,
+                                          productType: value,
+                                          scrollController: _scrollController);
+                                      Provider.of<ProductProvider>(context,
+                                              listen: false)
+                                          .getLatestProductList(1, context,
+                                              reload: true);
+                                    }),
                               ]),
                             );
                           }),
@@ -693,7 +672,7 @@ class _HomePageState extends State<HomePage> {
               ),
               Provider.of<SplashProvider>(context, listen: false)
                           .configModel
-                          .announcement
+                          ?.announcement
                           .status ==
                       '1'
                   ? Positioned(
@@ -702,13 +681,14 @@ class _HomePageState extends State<HomePage> {
                       right: 0,
                       child: Consumer<SplashProvider>(
                         builder: (context, announcement, _) {
-                          return (announcement.configModel.announcement
+                          return (announcement.configModel?.announcement
                                           .announcement !=
                                       null &&
                                   announcement.onOff)
                               ? AnnouncementScreen(
                                   announcement:
-                                      announcement.configModel.announcement)
+                                      announcement.configModel!.announcement,
+                                )
                               : SizedBox();
                         },
                       ),
@@ -724,7 +704,7 @@ class _HomePageState extends State<HomePage> {
 
 class SliverDelegate extends SliverPersistentHeaderDelegate {
   Widget child;
-  SliverDelegate({@required this.child});
+  SliverDelegate({required this.child});
 
   @override
   Widget build(

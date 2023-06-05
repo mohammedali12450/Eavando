@@ -1,12 +1,16 @@
 import 'dart:convert';
 
 class ProductModel {
-  int _totalSize;
-  int _limit;
-  int _offset;
-  List<Product> _products;
+  late int _totalSize;
+  late int _limit;
+  late int _offset;
+  late List<Product> _products;
 
-  ProductModel({int totalSize, int limit, int offset, List<Product> products}) {
+  ProductModel(
+      {required int totalSize,
+      required int limit,
+      required int offset,
+      required List<Product> products}) {
     this._totalSize = totalSize;
     this._limit = limit;
     this._offset = offset;
@@ -35,89 +39,87 @@ class ProductModel {
     data['total_size'] = this._totalSize;
     data['limit'] = this._limit;
     data['offset'] = this._offset;
-    if (this._products != null) {
-      data['products'] = this._products.map((v) => v.toJson()).toList();
-    }
+    data['products'] = this._products.map((v) => v.toJson()).toList();
     return data;
   }
 }
 
 class Product {
-  int _id;
-  String _addedBy;
-  int _userId;
-  String _name;
-  String _slug;
-  String _productType;
-  List<CategoryIds> _categoryIds;
-  String _unit;
-  Map<String,dynamic> _imagesWithColor;
-  List<dynamic> _imagesWithOutColor;
-  String _thumbnail;
-  List<ProductColors> _colors;
-  List<String> _attributes;
-  List<ChoiceOptions> _choiceOptions;
-  List<Variation> _variation;
-  double _unitPrice;
-  double _purchasePrice;
-  double _tax;
-  int _minQty;
-  int _refundable;
-  String _digitalProductType;
-  String _digitalFileReady;
-  String _taxType;
-  double _discount;
-  String _discountType;
-  int _currentStock;
-  String _details;
-  String _createdAt;
-  String _updatedAt;
-  List<Rating> _rating;
-  double _shippingCost;
-  int _isMultiPly;
-  int _reviewCount;
-  String _videoUrl;
-  int _minimumOrderQty;
+  late int _id;
+  late String _addedBy;
+  late int _userId;
+  late String _name;
+  late String _slug;
+  late String _productType;
+  late List<CategoryIds> _categoryIds;
+  late String _unit;
+  late Map<String, dynamic> _imagesWithColor;
+  late List<dynamic> _imagesWithOutColor;
+  late String _thumbnail;
+  late List<ProductColors> _colors;
+  late List<String> _attributes;
+  late List<ChoiceOptions> _choiceOptions;
+  late List<Variation> _variation;
+  late double _unitPrice;
+  late double _purchasePrice;
+  late double _tax;
+  late int _minQty;
+  late int _refundable;
+  late String _digitalProductType;
+  late String _digitalFileReady;
+  late String _taxType;
+  late double _discount;
+  late String _discountType;
+  late int _currentStock;
+  late String _details;
+  late String _createdAt;
+  late String _updatedAt;
+  late List<Rating> _rating;
+  late double _shippingCost;
+  late int _isMultiPly;
+  late int _reviewCount;
+  late String _videoUrl;
+  late int _minimumOrderQty;
 
   Product({
-    int id,
-    String addedBy,
-    int userId,
-    String name,
-    String slug,
-    String productType,
-    List<CategoryIds> categoryIds,
-    String unit,
-    int minQty,
-    int refundable,
-    String digitalProductType,
-    String digitalFileReady,
-    Map<String,List<dynamic>> imagesWithColor,
-    List<dynamic> imagesWithOutColors,
-    String thumbnail,
-    List<ProductColors> colors,
-    String variantProduct,
-    List<String> attributes,
-    List<ChoiceOptions> choiceOptions,
-    List<Variation> variation,
-    double unitPrice,
-    double purchasePrice,
-    double tax,
-    String taxType,
-    double discount,
-    String discountType,
-    int currentStock,
-    String details,
-    String attachment,
-    String createdAt,
-    String updatedAt,
-    int featuredStatus,
-    List<Rating> rating,
-    double shippingCost,
-    int isMultiPly,
-    int reviewCount,
-    String videoUrl,
-    int minimumOrderQty,
+    required int id,
+    required String addedBy,
+    required int userId,
+    required String name,
+    required String slug,
+    required String productType,
+    required List<CategoryIds> categoryIds,
+    required String unit,
+    required int minQty,
+    required int refundable,
+    required String digitalProductType,
+    required String digitalFileReady,
+    required Map<String, List<dynamic>> imagesWithColor,
+    required List<dynamic> imagesWithOutColors,
+    required String thumbnail,
+    required List<ProductColors> colors,
+    required String variantProduct,
+    required List<String> attributes,
+    required List<ChoiceOptions> choiceOptions,
+    required List<Variation> variation,
+    required double unitPrice,
+    required double purchasePrice,
+    required double tax,
+    required String taxType,
+    required double discount,
+    required String discountType,
+    required int currentStock,
+    required String details,
+    required String attachment,
+    required String createdAt,
+    required String updatedAt,
+    required int featuredStatus,
+    required List<Rating> rating,
+    required double shippingCost,
+    required int isMultiPly,
+    required int reviewCount,
+    required String videoUrl,
+    required int minimumOrderQty,
   }) {
     this._id = id;
     this._addedBy = addedBy;
@@ -127,21 +129,18 @@ class Product {
     this._categoryIds = categoryIds;
     this._unit = unit;
     this._minQty = minQty;
-    if (refundable != null) {
-      this._refundable = refundable;
-    }
-    if (digitalProductType != null) {
-      this._digitalProductType = digitalProductType;
-    }
-    if (digitalFileReady != null) {
-      this._digitalFileReady = digitalFileReady;
-    }
-    if (imagesWithColor != null) {
-      this._imagesWithColor = imagesWithColor;
-    }
-    if (imagesWithOutColor != null) {
-      this._imagesWithOutColor = imagesWithOutColor;
-    }    this._thumbnail = thumbnail;
+
+    this._refundable = refundable;
+
+    this._digitalProductType = digitalProductType;
+
+    this._digitalFileReady = digitalFileReady;
+
+    this._imagesWithColor = imagesWithColor;
+
+    this._imagesWithOutColor = imagesWithOutColor;
+
+    this._thumbnail = thumbnail;
     this._colors = colors;
     this._attributes = attributes;
     this._choiceOptions = choiceOptions;
@@ -160,9 +159,9 @@ class Product {
     this._shippingCost = shippingCost;
     this._isMultiPly = isMultiPly;
     this._reviewCount = reviewCount;
-    if (videoUrl != null) {
-      this._videoUrl = videoUrl;
-    }
+
+    this._videoUrl = videoUrl;
+
     this._minimumOrderQty = minimumOrderQty;
   }
 
@@ -178,7 +177,7 @@ class Product {
   int get refundable => _refundable;
   String get digitalProductType => _digitalProductType;
   String get digitalFileReady => _digitalFileReady;
-  Map<String,dynamic> get imagesWithColor => _imagesWithColor;
+  Map<String, dynamic> get imagesWithColor => _imagesWithColor;
   List<dynamic> get imagesWithOutColor => _imagesWithOutColor;
   String get thumbnail => _thumbnail;
   List<ProductColors> get colors => _colors;
@@ -203,14 +202,14 @@ class Product {
   int get minimumOrderQuantity => _minimumOrderQty;
 
   Product.fromJson(Map<String, dynamic> json) {
-    _id = json['id'];
-    _addedBy = json['added_by'];
-    _userId = json['user_id'];
-    _name = json['name'];
-    _slug = json['slug'];
-    _productType = json['product_type'];
+    _id = json['id'] ?? -1;
+    _addedBy = json['added_by'] ?? "";
+    _userId = json['user_id'] ?? -1;
+    _name = json['name'] ?? "";
+    _slug = json['slug'] ?? "";
+    _productType = json['product_type'] ?? "";
+    _categoryIds = [];
     if (json['category_ids'] != null) {
-      _categoryIds = [];
       try {
         json['category_ids'].forEach((v) {
           _categoryIds.add(new CategoryIds.fromJson(v));
@@ -221,29 +220,24 @@ class Product {
         });
       }
     }
-    _unit = json['unit'];
-    _minQty = json['min_qty'];
+    _unit = json['unit'] ?? "";
+    _minQty = json['min_qty'] ?? 0;
 
-    if (json['refundable'] != null) {
-      _refundable = int.parse(json['refundable'].toString());
-    }
-    if (json['digital_product_type'] != null) {
-      _digitalProductType = json['digital_product_type'];
-    }
-    if (json['digital_file_ready'] != null) {
-      _digitalFileReady = json['digital_file_ready'];
-    }
+    _refundable = int.parse(json['refundable']?.toString() ?? "0");
 
-    try{
-      _imagesWithColor = json['images'];
+    _digitalProductType = json['digital_product_type'] ?? "";
 
-    }catch(_){
-      _imagesWithOutColor=json['images'];
+    _digitalFileReady = json['digital_file_ready'] ?? "";
+
+    try {
+      _imagesWithColor = json['images'] ?? {};
+    } catch (_) {
+      _imagesWithOutColor = json['images'] ?? [];
     }
 
-    _thumbnail = json['thumbnail'];
+    _thumbnail = json['thumbnail'] ?? "";
+    _colors = [];
     if (json['colors_formatted'] != null) {
-      _colors = [];
       try {
         json['colors_formatted'].forEach((v) {
           _colors.add(new ProductColors.fromJson(v));
@@ -254,15 +248,14 @@ class Product {
         });
       }
     }
-    if (json['attributes'] != null) {
-      try {
-        _attributes = json['attributes'].cast<String>();
-      } catch (e) {
-        _attributes = jsonDecode(json['attributes']).cast<String>();
-      }
+
+    try {
+      _attributes = json['attributes']?.cast<String>() ?? [];
+    } catch (e) {
+      _attributes = jsonDecode(json['attributes'] ?? []).cast<String>();
     }
+    _choiceOptions = [];
     if (json['choice_options'] != null) {
-      _choiceOptions = [];
       try {
         json['choice_options'].forEach((v) {
           _choiceOptions.add(new ChoiceOptions.fromJson(v));
@@ -273,8 +266,8 @@ class Product {
         });
       }
     }
+    _variation = [];
     if (json['variation'] != null) {
-      _variation = [];
       try {
         json['variation'].forEach((v) {
           _variation.add(new Variation.fromJson(v));
@@ -285,47 +278,41 @@ class Product {
         });
       }
     }
-    if (json['unit_price'] != null) {
-      _unitPrice = json['unit_price'].toDouble();
-    }
-    if (json['purchase_price'] != null) {
-      _purchasePrice = json['purchase_price'].toDouble();
-    }
 
-    if (json['tax'] != null) {
-      _tax = json['tax'].toDouble();
-    }
-    _taxType = json['tax_type'];
-    if (json['discount'] != null) {
-      _discount = json['discount'].toDouble();
-    }
-    _discountType = json['discount_type'];
-    _currentStock = json['current_stock'];
-    _details = json['details'];
-    _createdAt = json['created_at'];
-    _updatedAt = json['updated_at'];
+    _unitPrice = json['unit_price']?.toDouble() ?? 0.0;
+
+    _purchasePrice = json['purchase_price']?.toDouble() ?? 0.0;
+
+    _tax = json['tax']?.toDouble() ?? 0.0;
+
+    _taxType = json['tax_type'] ?? "";
+
+    _discount = json['discount']?.toDouble() ?? 0.0;
+
+    _discountType = json['discount_type'] ?? "";
+    _currentStock = json['current_stock'] ?? 0;
+    _details = json['details'] ?? "";
+    _createdAt = json['created_at'] ?? "";
+    _updatedAt = json['updated_at'] ?? "";
+    _rating = [];
     if (json['rating'] != null) {
-      _rating = [];
       json['rating'].forEach((v) {
         _rating.add(new Rating.fromJson(v));
       });
     } else {}
-    if (json['shipping_cost'] != null) {
-      _shippingCost = double.parse(json['shipping_cost'].toString());
-    }
-    if (json['multiply_qty'] != null) {
-      _isMultiPly = int.parse(json['multiply_qty'].toString());
-    }
-    if (json['reviews_count'] != null) {
-      _reviewCount = int.parse(json['reviews_count'].toString());
-    }
-    _videoUrl = json['video_url'];
-    if (json['minimum_order_qty'] != null) {
-      try {
-        _minimumOrderQty = json['minimum_order_qty'];
-      } catch (e) {
-        _minimumOrderQty = int.parse(json['minimum_order_qty'].toString());
-      }
+    _shippingCost = double.parse(json['shipping_cost']?.toString() ?? "0.0");
+
+    _isMultiPly = int.parse(json['multiply_qty']?.toString() ?? "0");
+
+    _reviewCount = int.parse(json['reviews_count']?.toString() ?? "0");
+
+    _videoUrl = json['video_url'] ?? "";
+
+    try {
+      _minimumOrderQty = json['minimum_order_qty'] ?? 0;
+    } catch (e) {
+      _minimumOrderQty =
+          int.parse(json['minimum_order_qty']?.toString() ?? "0");
     }
   }
 
@@ -337,28 +324,27 @@ class Product {
     data['name'] = this._name;
     data['slug'] = this._slug;
     data['product_type'] = this._productType;
-    if (this._categoryIds != null) {
-      data['category_ids'] = this._categoryIds.map((v) => v.toJson()).toList();
-    }
+
+    data['category_ids'] = this._categoryIds.map((v) => v.toJson()).toList();
+
     data['unit'] = this._unit;
     data['min_qty'] = this._minQty;
     // data['images'] = this._images;
-    try{
+    try {
       data['images'] = this._imagesWithColor;
-    }catch(_){
-      data['images']=this._imagesWithOutColor;
+    } catch (_) {
+      data['images'] = this._imagesWithOutColor;
     }
     data['thumbnail'] = this._thumbnail;
-    if (this._colors != null) {
-      data['colors_formatted'] = this._colors.map((v) => v.toJson()).toList();
-    }
+
+    data['colors_formatted'] = this._colors.map((v) => v.toJson()).toList();
+
     data['attributes'] = this._attributes;
-    if (this._choiceOptions != null) {
-      data['choice_options'] = this._choiceOptions.map((v) => v.toJson()).toList();
-    }
-    if (this._variation != null) {
-      data['variation'] = this._variation.map((v) => v.toJson()).toList();
-    }
+    data['choice_options'] =
+        this._choiceOptions.map((v) => v.toJson()).toList();
+
+    data['variation'] = this._variation.map((v) => v.toJson()).toList();
+
     data['unit_price'] = this._unitPrice;
     data['purchase_price'] = this._purchasePrice;
     data['tax'] = this._tax;
@@ -369,9 +355,9 @@ class Product {
     data['details'] = this._details;
     data['created_at'] = this._createdAt;
     data['updated_at'] = this._updatedAt;
-    if (this._rating != null) {
-      data['rating'] = this._rating.map((v) => v.toJson()).toList();
-    }
+
+    data['rating'] = this._rating.map((v) => v.toJson()).toList();
+
     data['shipping_cost'] = this._shippingCost;
     data['multiply_qty'] = this._isMultiPly;
     data['reviews_count'] = this._reviewCount;
@@ -382,16 +368,16 @@ class Product {
 }
 
 class CategoryIds {
-  int _position;
+  late int _position;
 
-  CategoryIds({int position}) {
+  CategoryIds({required int position}) {
     this._position = position;
   }
 
   int get position => _position;
 
   CategoryIds.fromJson(Map<String, dynamic> json) {
-    _position = json['position'];
+    _position = json['position'] ?? 0;
   }
 
   Map<String, dynamic> toJson() {
@@ -402,10 +388,10 @@ class CategoryIds {
 }
 
 class ProductColors {
-  String _name;
-  String _code;
+  late String _name;
+  late String _code;
 
-  ProductColors({String name, String code}) {
+  ProductColors({required String name, required String code}) {
     this._name = name;
     this._code = code;
   }
@@ -414,8 +400,8 @@ class ProductColors {
   String get code => _code;
 
   ProductColors.fromJson(Map<String, dynamic> json) {
-    _name = json['name'];
-    _code = json['code'];
+    _name = json['name'] ?? "";
+    _code = json['code'] ?? "";
   }
 
   Map<String, dynamic> toJson() {
@@ -427,11 +413,14 @@ class ProductColors {
 }
 
 class ChoiceOptions {
-  String _name;
-  String _title;
-  List<String> _options;
+  late String _name;
+  late String _title;
+  late List<String> _options;
 
-  ChoiceOptions({String name, String title, List<String> options}) {
+  ChoiceOptions(
+      {required String name,
+      required String title,
+      required List<String> options}) {
     this._name = name;
     this._title = title;
     this._options = options;
@@ -442,11 +431,9 @@ class ChoiceOptions {
   List<String> get options => _options;
 
   ChoiceOptions.fromJson(Map<String, dynamic> json) {
-    _name = json['name'];
-    _title = json['title'];
-    if (json['options'] != null) {
-      _options = json['options'].cast<String>();
-    }
+    _name = json['name'] ?? "";
+    _title = json['title'] ?? "";
+    _options = json['options']?.cast<String>() ?? [];
   }
 
   Map<String, dynamic> toJson() {
@@ -459,12 +446,16 @@ class ChoiceOptions {
 }
 
 class Variation {
-  String _type;
-  double _price;
-  String _sku;
-  int _qty;
+  late String _type;
+  late double _price;
+  late String _sku;
+  late int _qty;
 
-  Variation({String type, double price, String sku, int qty}) {
+  Variation(
+      {required String type,
+      required double price,
+      required String sku,
+      required int qty}) {
     this._type = type;
     this._price = price;
     this._sku = sku;
@@ -477,10 +468,10 @@ class Variation {
   int get qty => _qty;
 
   Variation.fromJson(Map<String, dynamic> json) {
-    _type = json['type'];
-    _price = json['price'].toDouble();
-    _sku = json['sku'];
-    _qty = json['qty'];
+    _type = json['type'] ?? "";
+    _price = json['price']?.toDouble() ?? 0.0;
+    _sku = json['sku'] ?? "";
+    _qty = json['qty'] ?? 0;
   }
 
   Map<String, dynamic> toJson() {
@@ -494,10 +485,10 @@ class Variation {
 }
 
 class Rating {
-  String _average;
-  int _productId;
+  late String _average;
+  late int _productId;
 
-  Rating({String average, int productId}) {
+  Rating({required String average, required int productId}) {
     this._average = average;
     this._productId = productId;
   }
@@ -506,8 +497,8 @@ class Rating {
   int get productId => _productId;
 
   Rating.fromJson(Map<String, dynamic> json) {
-    _average = json['average'].toString();
-    _productId = json['product_id'];
+    _average = json['average']?.toString() ?? "";
+    _productId = json['product_id'] ?? -1;
   }
 
   Map<String, dynamic> toJson() {
@@ -519,10 +510,10 @@ class Rating {
 }
 
 class ColorImages {
-  String _id;
-  List<String> _images;
+  late String _id;
+  late List<String> _images;
 
-  ColorImages({String id, List<String> imgs}) {
+  ColorImages({required String id, required List<String> imgs}) {
     this._id = id;
     this._images = imgs;
   }
@@ -531,10 +522,8 @@ class ColorImages {
   List<String> get images => _images;
 
   ColorImages.fromJson(Map<String, dynamic> json) {
-    _id = json['id'];
-    if (json['images'] != null) {
-      _images = json['images'].cast<String>();
-    }
+    _id = json['id'] ?? "-1";
+    _images = json['images']?.cast<String>() ?? [];
   }
 
   Map<String, dynamic> toJson() {

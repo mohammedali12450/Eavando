@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_axtro_soft_ecommerce/localization/language_constrants.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/auth_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/profile_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/theme/light_theme.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/custom_themes.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/dimensions.dart';
 import 'package:flutter_axtro_soft_ecommerce/view/basewidget/custom_app_bar.dart';
@@ -31,8 +32,9 @@ class AddressListScreen extends StatelessWidget {
                   builder: (BuildContext context) =>
                       AddNewAddressScreen(isBilling: false))),
               child: Icon(Icons.add, color: Colors.white),
-              // ignore: deprecated_member_use
-              backgroundColor: Theme.of(context).buttonColor,
+              backgroundColor:
+                  Theme.of(context).buttonTheme.colorScheme?.primary ??
+                      primaryColor,
             ),
       body: Column(
         children: [
@@ -42,7 +44,7 @@ class AddressListScreen extends StatelessWidget {
               : Consumer<ProfileProvider>(
                   builder: (context, profileProvider, child) {
                     return profileProvider.shippingAddressList != null
-                        ? profileProvider.shippingAddressList.length > 0
+                        ? (profileProvider.shippingAddressList?.length ?? 0) > 0
                             ? Expanded(
                                 child: RefreshIndicator(
                                   onRefresh: () async {
@@ -58,23 +60,24 @@ class AddressListScreen extends StatelessWidget {
                                   child: ListView.builder(
                                     padding: EdgeInsets.all(10),
                                     itemCount: profileProvider
-                                        .shippingAddressList.length,
+                                            .shippingAddressList?.length ??
+                                        0,
                                     itemBuilder: (context, index) => Card(
                                       child: Stack(
                                         children: [
                                           ListTile(
                                             title: Text(
-                                                'Address: ${profileProvider.shippingAddressList[index].address}' ??
-                                                    ""),
+                                              'Address: ${profileProvider.shippingAddressList![index].address}',
+                                            ),
                                             subtitle: Row(
                                               children: [
                                                 Text(
-                                                    '${getTranslated('city', context)} : ${profileProvider.shippingAddressList[index].city ?? ""}'),
+                                                    '${getTranslated('city', context)} : ${profileProvider.shippingAddressList![index].city}'),
                                                 SizedBox(
                                                     width: Dimensions
                                                         .PADDING_SIZE_DEFAULT),
                                                 Text(
-                                                    '${getTranslated('zip', context)} : ${profileProvider.shippingAddressList[index].zip ?? ""}'),
+                                                    '${getTranslated('zip', context)} : ${profileProvider.shippingAddressList![index].zip}'),
                                               ],
                                             ),
                                             trailing: IconButton(
@@ -87,7 +90,7 @@ class AddressListScreen extends StatelessWidget {
                                                       'REMOVE_ADDRESS',
                                                       context),
                                                   content: profileProvider
-                                                      .shippingAddressList[
+                                                      .shippingAddressList![
                                                           index]
                                                       .address,
                                                   cancelButtonText:
@@ -102,7 +105,7 @@ class AddressListScreen extends StatelessWidget {
                                                             listen: false)
                                                         .removeAddressById(
                                                             profileProvider
-                                                                .shippingAddressList[
+                                                                .shippingAddressList![
                                                                     index]
                                                                 .id,
                                                             index,
@@ -140,7 +143,7 @@ class AddressListScreen extends StatelessWidget {
                                                     const EdgeInsets.all(5.0),
                                                 child: Text(
                                                   profileProvider
-                                                              .shippingAddressList[
+                                                              .shippingAddressList![
                                                                   index]
                                                               .isBilling ==
                                                           0

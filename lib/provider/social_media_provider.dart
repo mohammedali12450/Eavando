@@ -7,21 +7,20 @@ import 'package:flutter_axtro_soft_ecommerce/helper/api_checker.dart';
 class SocialMediaProvider extends ChangeNotifier {
   final SocialMediaRepo socialMediaRepo;
 
-  SocialMediaProvider({@required this.socialMediaRepo});
+  SocialMediaProvider({required this.socialMediaRepo});
 
   List<SocialMedia> _socialMediaList = [];
-  int _socialMediaSelectedIndex;
-
   List<SocialMedia> get socialMediaList => _socialMediaList;
-  int get categorySelectedIndex => _socialMediaSelectedIndex;
+  int? _socialMediaSelectedIndex;
+  int? get categorySelectedIndex => _socialMediaSelectedIndex;
 
   Future<void> getSocialMediaList(BuildContext context, bool reload) async {
     if (_socialMediaList.length == 0 || reload) {
       ApiResponse apiResponse = await socialMediaRepo.getSocialMediaList();
       if (apiResponse.response != null &&
-          apiResponse.response.statusCode == 200) {
+          apiResponse.response!.statusCode == 200) {
         _socialMediaList = [];
-        apiResponse.response.data.forEach((social) {
+        apiResponse.response!.data.forEach((social) {
           _socialMediaList.add(SocialMedia.fromJson(social));
         });
         _socialMediaSelectedIndex = 0;

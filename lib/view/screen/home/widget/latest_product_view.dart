@@ -6,27 +6,34 @@ import 'package:flutter_axtro_soft_ecommerce/view/basewidget/product_widget.dart
 import 'package:provider/provider.dart';
 
 class LatestProductView extends StatelessWidget {
-  final ScrollController scrollController;
-  LatestProductView({ this.scrollController});
+  final ScrollController? scrollController;
+  LatestProductView({required this.scrollController});
 
   @override
   Widget build(BuildContext context) {
     int offset = 1;
     scrollController?.addListener(() {
-      if(scrollController.position.maxScrollExtent == scrollController.position.pixels
-          && Provider.of<ProductProvider>(context, listen: false).lProductList.length != 0
-          && !Provider.of<ProductProvider>(context, listen: false).isLoading) {
+      if (scrollController?.position.maxScrollExtent ==
+              scrollController?.position.pixels &&
+          Provider.of<ProductProvider>(context, listen: false)
+                  .lProductList
+                  .length !=
+              0 &&
+          !Provider.of<ProductProvider>(context, listen: false).isLoading) {
         int pageSize;
-        pageSize = Provider.of<ProductProvider>(context, listen: false).lPageSize;
+        pageSize =
+            Provider.of<ProductProvider>(context, listen: false).lPageSize ??
+                10;
 
-        if(offset < pageSize) {
+        if (offset < pageSize) {
           offset++;
           print('end of the page');
-          Provider.of<ProductProvider>(context, listen: false).showBottomLoader();
-          Provider.of<ProductProvider>(context, listen: false).getLatestProductList(offset, context);
+          Provider.of<ProductProvider>(context, listen: false)
+              .showBottomLoader();
+          Provider.of<ProductProvider>(context, listen: false)
+              .getLatestProductList(offset, context);
         }
       }
-
     });
 
     return Consumer<ProductProvider>(
@@ -35,27 +42,30 @@ class LatestProductView extends StatelessWidget {
         productList = prodProvider.lProductList;
 
         return Column(children: [
-
-          !prodProvider.firstLoading ? productList.length != 0 ?
-          Container(
-            height: MediaQuery.of(context).size.width/1.45,
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: productList.length,
-                itemBuilder: (ctx,index){
-                  return Container(width: (MediaQuery.of(context).size.width/2)-20,
-                      child: ProductWidget(productModel: productList[index]));
-
-                }),
-          ): SizedBox.shrink() : ProductShimmer(isHomePage: true ,isEnabled: prodProvider.firstLoading),
+          !prodProvider.firstLoading
+              ? productList.length != 0
+                  ? Container(
+                      height: MediaQuery.of(context).size.width / 1.45,
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: productList.length,
+                          itemBuilder: (ctx, index) {
+                            return Container(
+                                width: (MediaQuery.of(context).size.width / 2) -
+                                    20,
+                                child: ProductWidget(
+                                    productModel: productList[index]));
+                          }),
+                    )
+                  : SizedBox.shrink()
+              : ProductShimmer(
+                  isHomePage: true, isEnabled: prodProvider.firstLoading),
           // prodProvider.isLoading ? Center(child: Padding(
           //   padding: EdgeInsets.all(Dimensions.ICON_SIZE_EXTRA_SMALL),
           //   child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor)),
           // )) : SizedBox.shrink(),
-
         ]);
       },
     );
   }
 }
-

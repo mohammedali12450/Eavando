@@ -43,7 +43,8 @@ class LoggingInterceptor extends InterceptorsWrapper {
   @override
   Future onError(DioError err, ErrorInterceptorHandler handler) async {
     print(
-        "ERROR[${err?.response?.statusCode}] => PATH: ${err?.requestOptions?.path}");
+      "ERROR[${err.response?.statusCode}] => PATH: ${err.requestOptions.path}",
+    );
     return super.onError(err, handler);
   }
 }

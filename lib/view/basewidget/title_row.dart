@@ -8,27 +8,28 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class TitleRow extends StatelessWidget {
   final String title;
-  final Function icon;
-  final Function onTap;
-  final Duration eventDuration;
-  final bool isDetailsPage;
+  final Function()? icon;
+  final Function()? onTap;
+  final Duration? eventDuration;
+  final bool? isDetailsPage;
   final bool isFlash;
-  TitleRow(
-      {@required this.title,
-      this.icon,
-      this.onTap,
-      this.eventDuration,
-      this.isDetailsPage,
-      this.isFlash = false});
+  TitleRow({
+    required this.title,
+    this.icon,
+    this.onTap,
+    this.eventDuration,
+    this.isDetailsPage,
+    this.isFlash = false,
+  });
 
   @override
   Widget build(BuildContext context) {
-    int days, hours, minutes, seconds;
+    int days = 0, hours = 0, minutes = 0, seconds = 0;
     if (eventDuration != null) {
-      days = eventDuration.inDays;
-      hours = eventDuration.inHours - days * 24;
-      minutes = eventDuration.inMinutes - (24 * days * 60) - (hours * 60);
-      seconds = eventDuration.inSeconds -
+      days = eventDuration!.inDays;
+      hours = eventDuration!.inHours - days * 24;
+      minutes = eventDuration!.inMinutes - (24 * days * 60) - (hours * 60);
+      seconds = eventDuration!.inSeconds -
           (24 * days * 60 * 60) -
           (hours * 60 * 60) -
           (minutes * 60);
@@ -166,7 +167,7 @@ class TimerBox extends StatelessWidget {
   final bool isBorder;
   final String day;
 
-  TimerBox({@required this.time, this.isBorder = false, this.day});
+  TimerBox({required this.time, this.isBorder = false, required this.day});
 
   @override
   Widget build(BuildContext context) {

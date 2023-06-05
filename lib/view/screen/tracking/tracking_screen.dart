@@ -11,7 +11,7 @@ import 'package:flutter_axtro_soft_ecommerce/view/screen/tracking/tracking_resul
 
 class TrackingScreen extends StatelessWidget {
   final String orderID;
-  TrackingScreen({@required this.orderID});
+  TrackingScreen({required this.orderID});
 
   final TextEditingController _orderIdController = TextEditingController();
   final GlobalKey<ScaffoldMessengerState> _globalKey = GlobalKey();
@@ -26,35 +26,44 @@ class TrackingScreen extends StatelessWidget {
       body: Column(
         children: [
           CustomAppBar(title: getTranslated('TRACKING', context)),
-
           Expanded(
             child: ListView(
               physics: BouncingScrollPhysics(),
               children: [
-                Padding(padding: EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
-                  child: Column(mainAxisAlignment: MainAxisAlignment.center,
+                Padding(
+                  padding: EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [Image.asset('assets/images/onboarding_image_one.png',
-                      fit: BoxFit.cover,
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.35,),
+                    children: [
+                      Image.asset(
+                        'assets/images/onboarding_image_one.png',
+                        fit: BoxFit.cover,
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height * 0.35,
+                      ),
                       SizedBox(height: 50),
-
-                      Text(getTranslated('TRACK_ORDER', context), style: robotoBold),
+                      Text(getTranslated('TRACK_ORDER', context),
+                          style: robotoBold),
                       Stack(children: [
-                        Container(width: double.infinity, height: 1,
-                          margin: EdgeInsets.only(top: Dimensions.MARGIN_SIZE_SMALL),
-                          color: ColorResources.colorMap[50],),
-
-
-                        Container(width: 80, height: 1,
-                          margin: EdgeInsets.only(top: Dimensions.MARGIN_SIZE_SMALL),
-                          decoration: BoxDecoration(color: ColorResources.getPrimary(context),
-                              borderRadius: BorderRadius.circular(1)),),
+                        Container(
+                          width: double.infinity,
+                          height: 1,
+                          margin: EdgeInsets.only(
+                              top: Dimensions.MARGIN_SIZE_SMALL),
+                          color: ColorResources.colorMap[50],
+                        ),
+                        Container(
+                          width: 80,
+                          height: 1,
+                          margin: EdgeInsets.only(
+                              top: Dimensions.MARGIN_SIZE_SMALL),
+                          decoration: BoxDecoration(
+                              color: ColorResources.getPrimary(context),
+                              borderRadius: BorderRadius.circular(1)),
+                        ),
                       ]),
                       SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
-
-
                       CustomTextField(
                         hintText: getTranslated('TRACK_ID', context),
                         textInputType: TextInputType.number,
@@ -62,16 +71,17 @@ class TrackingScreen extends StatelessWidget {
                         textInputAction: TextInputAction.done,
                       ),
                       SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
-
                       CustomButton(
                         buttonText: getTranslated('TRACK', context),
                         onTap: () {
-                          if(_orderIdController.text.isNotEmpty){
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => TrackingResultScreen(
-                                orderID: _orderIdController.text)));
-                          }else {
-                            _globalKey.currentState.showSnackBar(SnackBar(
-                                content: Text('Insert track ID'), backgroundColor: Colors.red));
+                          if (_orderIdController.text.isNotEmpty) {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => TrackingResultScreen(
+                                    orderID: _orderIdController.text)));
+                          } else {
+                            _globalKey.currentState?.showSnackBar(SnackBar(
+                                content: Text('Insert track ID'),
+                                backgroundColor: Colors.red));
                           }
                         },
                       ),

@@ -6,7 +6,7 @@ publish_to: 'none'
 version: 1.0.1+2
 
 environment:
-  sdk: ">=2.19.6 <3.0.0"
+  sdk: ">=3.0.2 <4.0.0"
 
 dependencies:
   flutter:
@@ -16,7 +16,7 @@ dependencies:
 
 dependency_overrides:
   modal_bottom_sheet: ^3.0.0-pre
-  firebase_core_platform_interface: 4.5.1
+  firebase_core_platform_interface: ^4.5.1
 
   cupertino_icons: ^1.0.2
   get_it: ^7.6.0
@@ -38,7 +38,7 @@ dependency_overrides:
   share: ^2.0.4
   photo_view: ^0.14.0
   package_info: ^2.0.2
-  firebase_core: ^2.13.0
+  firebase_core: ^2.13.1
   firebase_messaging: ^14.6.1
   flutter_local_notifications: ^14.1.0
   path_provider: ^2.0.15

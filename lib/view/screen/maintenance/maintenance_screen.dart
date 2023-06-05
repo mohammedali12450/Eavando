@@ -13,11 +13,13 @@ class MaintenanceScreen extends StatelessWidget {
         child: Center(
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Image.asset(Images.maintenance, width: 200, height: 200),
-            Text(getTranslated('maintenance_mode', context),
-                style: titilliumBold.copyWith(
-                  fontSize: 30,
-                  color: Theme.of(context).textTheme.bodyLarge.color,
-                )),
+            Text(
+              getTranslated('maintenance_mode', context),
+              style: titilliumBold.copyWith(
+                fontSize: 30,
+                color: Theme.of(context).textTheme.bodyLarge?.color,
+              ),
+            ),
             SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
             Text(
               getTranslated('maintenance_text', context),

@@ -1,31 +1,26 @@
 class TransactionModel {
-  int _limit;
-  int _offset;
-  double _totalWalletBalance;
-  int _totalWalletTransactio;
-  List<WalletTransactioList> _walletTransactioList;
+  late int _limit;
+  late int _offset;
+  late double _totalWalletBalance;
+  late int _totalWalletTransactio;
+  late List<WalletTransactioList> _walletTransactioList;
 
-  TransactionModel(
-      {int limit,
-        int offset,
-        double totalWalletBalance,
-        int totalWalletTransactio,
-        List<WalletTransactioList> walletTransactioList}) {
-    if (limit != null) {
-      this._limit = limit;
-    }
-    if (offset != null) {
-      this._offset = offset;
-    }
-    if (totalWalletBalance != null) {
-      this._totalWalletBalance = totalWalletBalance;
-    }
-    if (totalWalletTransactio != null) {
-      this._totalWalletTransactio = totalWalletTransactio;
-    }
-    if (walletTransactioList != null) {
-      this._walletTransactioList = walletTransactioList;
-    }
+  TransactionModel({
+    required int limit,
+    required int offset,
+    required double totalWalletBalance,
+    required int totalWalletTransactio,
+    required List<WalletTransactioList> walletTransactioList,
+  }) {
+    this._limit = limit;
+
+    this._offset = offset;
+
+    this._totalWalletBalance = totalWalletBalance;
+
+    this._totalWalletTransactio = totalWalletTransactio;
+
+    this._walletTransactioList = walletTransactioList;
   }
 
   int get limit => _limit;
@@ -34,19 +29,13 @@ class TransactionModel {
   int get totalWalletTransactio => _totalWalletTransactio;
   List<WalletTransactioList> get walletTransactioList => _walletTransactioList;
 
-
   TransactionModel.fromJson(Map<String, dynamic> json) {
-    _limit = json['limit'];
-    _offset = json['offset'];
-    if(json['total_wallet_balance'] != null){
-      _totalWalletBalance = json['total_wallet_balance'].toDouble( );
-    }else{
-      _totalWalletBalance = 0.0;
-    }
-
-    _totalWalletTransactio = json['total_wallet_transactio'];
+    _limit = json['limit'] ?? 10;
+    _offset = json['offset'] ?? 0;
+    _totalWalletBalance = json['total_wallet_balance']?.toDouble() ?? 0.0;
+    _totalWalletTransactio = json['total_wallet_transactio'] ?? 0;
+    _walletTransactioList = <WalletTransactioList>[];
     if (json['wallet_transactio_list'] != null) {
-      _walletTransactioList = <WalletTransactioList>[];
       json['wallet_transactio_list'].forEach((v) {
         _walletTransactioList.add(new WalletTransactioList.fromJson(v));
       });
@@ -59,72 +48,61 @@ class TransactionModel {
     data['offset'] = this._offset;
     data['total_wallet_balance'] = this._totalWalletBalance;
     data['total_wallet_transactio'] = this._totalWalletTransactio;
-    if (this._walletTransactioList != null) {
-      data['wallet_transactio_list'] =
-          this._walletTransactioList.map((v) => v.toJson()).toList();
-    }
+
+    data['wallet_transactio_list'] =
+        this._walletTransactioList.map((v) => v.toJson()).toList();
+
     return data;
   }
 }
 
 class WalletTransactioList {
-  int _id;
-  int _userId;
-  String _transactionId;
-  double _credit;
-  double _debit;
-  double _adminBonus;
-  double _balance;
-  String _transactionType;
-  String _reference;
-  String _createdAt;
-  String _updatedAt;
+  late int _id;
+  late int _userId;
+  late String _transactionId;
+  late double _credit;
+  late double _debit;
+  late double _adminBonus;
+  late double _balance;
+  late String _transactionType;
+  late String _reference;
+  late String _createdAt;
+  late String _updatedAt;
 
-  WalletTransactioList(
-      {int id,
-        int userId,
-        String transactionId,
-        double credit,
-        double debit,
-        double adminBonus,
-        double balance,
-        String transactionType,
-        String reference,
-        String createdAt,
-        String updatedAt}) {
-    if (id != null) {
-      this._id = id;
-    }
-    if (userId != null) {
-      this._userId = userId;
-    }
-    if (transactionId != null) {
-      this._transactionId = transactionId;
-    }
-    if (credit != null) {
-      this._credit = credit;
-    }
-    if (debit != null) {
-      this._debit = debit;
-    }
-    if (adminBonus != null) {
-      this._adminBonus = adminBonus;
-    }
-    if (balance != null) {
-      this._balance = balance;
-    }
-    if (transactionType != null) {
-      this._transactionType = transactionType;
-    }
-    if (reference != null) {
-      this._reference = reference;
-    }
-    if (createdAt != null) {
-      this._createdAt = createdAt;
-    }
-    if (updatedAt != null) {
-      this._updatedAt = updatedAt;
-    }
+  WalletTransactioList({
+    required int id,
+    required int userId,
+    required String transactionId,
+    required double credit,
+    required double debit,
+    required double adminBonus,
+    required double balance,
+    required String transactionType,
+    required String reference,
+    required String createdAt,
+    required String updatedAt,
+  }) {
+    this._id = id;
+
+    this._userId = userId;
+
+    this._transactionId = transactionId;
+
+    this._credit = credit;
+
+    this._debit = debit;
+
+    this._adminBonus = adminBonus;
+
+    this._balance = balance;
+
+    this._transactionType = transactionType;
+
+    this._reference = reference;
+
+    this._createdAt = createdAt;
+
+    this._updatedAt = updatedAt;
   }
 
   int get id => _id;
@@ -140,17 +118,17 @@ class WalletTransactioList {
   String get updatedAt => _updatedAt;
 
   WalletTransactioList.fromJson(Map<String, dynamic> json) {
-    _id = json['id'];
-    _userId = json['user_id'];
-    _transactionId = json['transaction_id'];
-    _credit = json['credit'].toDouble();
-    _debit = json['debit'].toDouble();
-    _adminBonus = json['admin_bonus'].toDouble();
-    _balance = json['balance'].toDouble();
-    _transactionType = json['transaction_type'];
-    _reference = json['reference'];
-    _createdAt = json['created_at'];
-    _updatedAt = json['updated_at'];
+    _id = json['id'] ?? -1;
+    _userId = json['user_id'] ?? -1;
+    _transactionId = json['transaction_id'] ?? "-1";
+    _credit = json['credit']?.toDouble() ?? 0.0;
+    _debit = json['debit']?.toDouble() ?? 0.0;
+    _adminBonus = json['admin_bonus']?.toDouble() ?? 0.0;
+    _balance = json['balance']?.toDouble() ?? 0.0;
+    _transactionType = json['transaction_type'] ?? "";
+    _reference = json['reference'] ?? "";
+    _createdAt = json['created_at'] ?? "";
+    _updatedAt = json['updated_at'] ?? "";
   }
 
   Map<String, dynamic> toJson() {

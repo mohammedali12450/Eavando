@@ -6,19 +6,28 @@ import 'package:flutter_axtro_soft_ecommerce/view/screen/order/widget/order_deta
 class OrderProductList extends StatelessWidget {
   final OrderProvider order;
   final String orderType;
-  const OrderProductList({Key key, this.order, this.orderType}) : super(key: key);
+  const OrderProductList({
+    Key? key,
+    required this.order,
+    required this.orderType,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return  ListView.builder(
+    return ListView.builder(
       shrinkWrap: true,
       padding: EdgeInsets.all(0),
-      itemCount:
-      order.orderDetails.length,
+      itemCount: order.orderDetails?.length ?? 0,
       physics: NeverScrollableScrollPhysics(),
-      itemBuilder: (context, i) => OrderDetailsWidget(orderDetailsModel: order.orderDetails[i],
-          callback: () {showCustomSnackBar('Review submitted successfully', context, isError: false);},
-          orderType: orderType, paymentStatus: order.trackingModel.paymentStatus),
+      itemBuilder: (context, i) => OrderDetailsWidget(
+        orderDetailsModel: order.orderDetails?[i],
+        callback: () {
+          showCustomSnackBar('Review submitted successfully', context,
+              isError: false);
+        },
+        orderType: orderType,
+        paymentStatus: order.trackingModel?.paymentStatus ?? "",
+      ),
     );
   }
 }

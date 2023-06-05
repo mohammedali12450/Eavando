@@ -1,6 +1,7 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_axtro_soft_ecommerce/localization/language_constrants.dart';
+import 'package:flutter_axtro_soft_ecommerce/theme/light_theme.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/color_resources.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/custom_themes.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/dimensions.dart';
@@ -8,8 +9,8 @@ import 'package:flutter_axtro_soft_ecommerce/utill/images.dart';
 
 class NoInternetOrDataScreen extends StatelessWidget {
   final bool isNoInternet;
-  final Widget child;
-  NoInternetOrDataScreen({@required this.isNoInternet, this.child});
+  final Widget? child;
+  NoInternetOrDataScreen({required this.isNoInternet, this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class NoInternetOrDataScreen extends StatelessWidget {
                 style: titilliumBold.copyWith(
                   fontSize: 30,
                   color: isNoInternet
-                      ? Theme.of(context).textTheme.bodyLarge.color
+                      ? Theme.of(context).textTheme.bodyLarge?.color
                       : ColorResources.getColombiaBlue(context),
                 )),
             SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
@@ -46,15 +47,21 @@ class NoInternetOrDataScreen extends StatelessWidget {
                     margin: EdgeInsets.symmetric(horizontal: 40),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      // ignore: deprecated_member_use
-                      color: Theme.of(context).buttonColor,
+                      color:
+                          Theme.of(context).buttonTheme.colorScheme?.primary ??
+                              primaryColor,
                     ),
                     child: TextButton(
                       onPressed: () async {
+                        if (child == null) return;
                         if (await Connectivity().checkConnectivity() !=
                             ConnectivityResult.none) {
-                          Navigator.pushReplacement(context,
-                              MaterialPageRoute(builder: (_) => child));
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => child!,
+                            ),
+                          );
                         }
                       },
                       child: Container(

@@ -30,10 +30,12 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   @override
   void initState() {
     _countryDialCode = CountryCode.fromCountryCode(
-            Provider.of<SplashProvider>(context, listen: false)
-                .configModel
-                .countryCode)
-        .dialCode;
+                Provider.of<SplashProvider>(context, listen: false)
+                        .configModel
+                        ?.countryCode ??
+                    "1")
+            .dialCode ??
+        "1";
     super.initState();
   }
 
@@ -89,7 +91,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                           SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                           Provider.of<SplashProvider>(context, listen: false)
                                       .configModel
-                                      .forgetPasswordVerification ==
+                                      ?.forgetPasswordVerification ==
                                   "phone"
                               ? Text(
                                   getTranslated(
@@ -113,12 +115,12 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
                     Provider.of<SplashProvider>(context, listen: false)
                                 .configModel
-                                .forgetPasswordVerification ==
+                                ?.forgetPasswordVerification ==
                             "phone"
                         ? Row(children: [
                             CodePickerWidget(
                               onChanged: (CountryCode countryCode) {
-                                _countryDialCode = countryCode.dialCode;
+                                _countryDialCode = countryCode.dialCode ?? "1";
                               },
                               initialSelection: _countryDialCode,
                               favorite: [_countryDialCode],
@@ -126,10 +128,11 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                               padding: EdgeInsets.zero,
                               showFlagMain: true,
                               textStyle: TextStyle(
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .displayLarge
-                                      .color),
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .displayLarge
+                                    ?.color,
+                              ),
                             ),
                             Expanded(
                                 child: Container(
@@ -167,7 +170,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                                 buttonText: Provider.of<SplashProvider>(context,
                                                 listen: false)
                                             .configModel
-                                            .forgetPasswordVerification ==
+                                            ?.forgetPasswordVerification ==
                                         "phone"
                                     ? getTranslated('send_otp', context)
                                     : getTranslated('send_email', context),
@@ -175,7 +178,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                                   if (Provider.of<SplashProvider>(context,
                                               listen: false)
                                           .configModel
-                                          .forgetPasswordVerification ==
+                                          ?.forgetPasswordVerification ==
                                       "phone") {
                                     if (_numberController.text.isEmpty) {
                                       ScaffoldMessenger.of(context)

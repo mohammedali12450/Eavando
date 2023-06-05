@@ -41,7 +41,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
-  File file;
+  File? file;
   final picker = ImagePicker();
   final GlobalKey<ScaffoldMessengerState> _scaffoldKey =
       GlobalKey<ScaffoldMessengerState>();
@@ -71,15 +71,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     if (Provider.of<ProfileProvider>(context, listen: false)
                 .userInfoModel
-                .fName ==
+                ?.fName ==
             _firstNameController.text &&
         Provider.of<ProfileProvider>(context, listen: false)
                 .userInfoModel
-                .lName ==
+                ?.lName ==
             _lastNameController.text &&
         Provider.of<ProfileProvider>(context, listen: false)
                 .userInfoModel
-                .phone ==
+                ?.phone ==
             _phoneController.text &&
         file == null &&
         _passwordController.text.isEmpty &&
@@ -109,36 +109,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
           content: Text(getTranslated('PASSWORD_DID_NOT_MATCH', context)),
           backgroundColor: ColorResources.RED));
     } else {
-      UserInfoModel updateUserInfoModel =
+      UserInfoModel? updateUserInfoModel =
           Provider.of<ProfileProvider>(context, listen: false).userInfoModel;
-      updateUserInfoModel.method = 'put';
-      updateUserInfoModel.fName = _firstNameController.text ?? "";
-      updateUserInfoModel.lName = _lastNameController.text ?? "";
-      updateUserInfoModel.phone = _phoneController.text ?? '';
-      String pass = _passwordController.text ?? '';
+      updateUserInfoModel?.method = 'put';
+      updateUserInfoModel?.fName = _firstNameController.text;
+      updateUserInfoModel?.lName = _lastNameController.text;
+      updateUserInfoModel?.phone = _phoneController.text;
+      String pass = _passwordController.text;
 
-      await Provider.of<ProfileProvider>(context, listen: false)
-          .updateUserInfo(
-        updateUserInfoModel,
-        pass,
-        file,
-        Provider.of<AuthProvider>(context, listen: false).getUserToken(),
-      )
-          .then((response) {
-        if (response.isSuccess) {
-          Provider.of<ProfileProvider>(context, listen: false)
-              .getUserInfo(context);
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text('Updated Successfully'),
-              backgroundColor: Colors.green));
-          _passwordController.clear();
-          _confirmPasswordController.clear();
-          setState(() {});
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(response.message), backgroundColor: Colors.red));
-        }
-      });
+      if (updateUserInfoModel != null && file != null) {
+        await Provider.of<ProfileProvider>(context, listen: false)
+            .updateUserInfo(
+          updateUserInfoModel,
+          pass,
+          file!,
+          Provider.of<AuthProvider>(context, listen: false).getUserToken(),
+        )
+            .then((response) {
+          if (response.isSuccess) {
+            Provider.of<ProfileProvider>(context, listen: false)
+                .getUserInfo(context);
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text('Updated Successfully'),
+                backgroundColor: Colors.green));
+            _passwordController.clear();
+            _confirmPasswordController.clear();
+            setState(() {});
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(response.message), backgroundColor: Colors.red));
+          }
+        });
+      }
     }
   }
 
@@ -148,12 +150,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
       key: _scaffoldKey,
       body: Consumer<ProfileProvider>(
         builder: (context, profile, child) {
-          _firstNameController.text = profile.userInfoModel.fName;
-          _lastNameController.text = profile.userInfoModel.lName;
-          _emailController.text = profile.userInfoModel.email;
-          _phoneController.text = profile.userInfoModel.phone;
+          _firstNameController.text = profile.userInfoModel?.fName ?? "";
+          _lastNameController.text = profile.userInfoModel?.lName ?? "";
+          _emailController.text = profile.userInfoModel?.email ?? "";
+          _phoneController.text = profile.userInfoModel?.phone ?? "";
 
-          print('wallet amount===>${profile.userInfoModel.walletBalance}');
+          print(
+              'wallet amount===>${profile.userInfoModel?.walletBalance ?? ""}');
 
           return Stack(
             clipBehavior: Clip.none,
@@ -211,7 +214,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         height: Dimensions.profileImageSize,
                                         fit: BoxFit.cover,
                                         image:
-                                            '${Provider.of<SplashProvider>(context, listen: false).baseUrls.customerImageUrl}/${profile.userInfoModel.image}',
+                                            '${Provider.of<SplashProvider>(context, listen: false).baseUrls?.customerImageUrl}/${profile.userInfoModel?.image ?? ""}',
                                         imageErrorBuilder: (c, o, s) =>
                                             Image.asset(Images.placeholder,
                                                 width:
@@ -220,7 +223,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                     Dimensions.profileImageSize,
                                                 fit: BoxFit.cover),
                                       )
-                                    : Image.file(file,
+                                    : Image.file(file!,
                                         width: Dimensions.profileImageSize,
                                         height: Dimensions.profileImageSize,
                                         fit: BoxFit.fill),
@@ -245,7 +248,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         SizedBox(height: Dimensions.PADDING_SIZE_DEFAULT),
                         Text(
-                          '${profile.userInfoModel.fName} ${profile.userInfoModel.lName ?? ''}',
+                          '${profile.userInfoModel?.fName} ${profile.userInfoModel?.lName ?? ''}',
                           style: titilliumSemiBold.copyWith(
                               color: ColorResources.WHITE, fontSize: 20.0),
                         )
@@ -299,7 +302,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         focusNode: _fNameFocus,
                                         nextNode: _lNameFocus,
                                         hintText:
-                                            profile.userInfoModel.fName ?? '',
+                                            profile.userInfoModel?.fName ?? '',
                                         controller: _firstNameController,
                                       ),
                                     ],
@@ -333,7 +336,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         textInputType: TextInputType.name,
                                         focusNode: _lNameFocus,
                                         nextNode: _emailFocus,
-                                        hintText: profile.userInfoModel.lName,
+                                        hintText: profile.userInfoModel?.lName,
                                         controller: _lastNameController,
                                       ),
                                     ],
@@ -371,7 +374,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     textInputType: TextInputType.emailAddress,
                                     focusNode: _emailFocus,
                                     nextNode: _phoneFocus,
-                                    hintText: profile.userInfoModel.email ?? '',
+                                    hintText:
+                                        profile.userInfoModel?.email ?? '',
                                     controller: _emailController,
                                   ),
                                 ],
@@ -405,7 +409,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   CustomTextField(
                                     textInputType: TextInputType.number,
                                     focusNode: _phoneFocus,
-                                    hintText: profile.userInfoModel.phone ?? "",
+                                    hintText:
+                                        profile.userInfoModel?.phone ?? "",
                                     nextNode: _addressFocus,
                                     controller: _phoneController,
                                     isPhoneNumber: true,
@@ -478,6 +483,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     controller: _confirmPasswordController,
                                     focusNode: _confirmPasswordFocus,
                                     textInputAction: TextInputAction.done,
+                                    nextNode: FocusNode(),
                                   ),
                                   SizedBox(
                                       height: Dimensions.PADDING_SIZE_LARGE),
@@ -486,7 +492,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         context,
                                         SignOutConfirmationDialog(
                                           isDelete: true,
-                                          customerId: profile.userInfoModel.id,
+                                          customerId:
+                                              profile.userInfoModel?.id ?? -1,
                                         ),
                                         isFlip: true),
                                     child: Row(

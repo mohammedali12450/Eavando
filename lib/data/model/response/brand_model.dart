@@ -1,20 +1,21 @@
 class BrandModel {
-  int _id;
-  String _name;
-  String _image;
-  int _status;
-  String _createdAt;
-  String _updatedAt;
-  int _brandProductsCount;
+  late int _id;
+  late String _name;
+  late String _image;
+  late int _status;
+  late String _createdAt;
+  late String _updatedAt;
+  late int _brandProductsCount;
 
-  BrandModel(
-      {int id,
-        String name,
-        String image,
-        int status,
-        String createdAt,
-        String updatedAt,
-        int brandProductsCount}) {
+  BrandModel({
+    required int id,
+    required String name,
+    required String image,
+    required int status,
+    required String createdAt,
+    required String updatedAt,
+    required int brandProductsCount,
+  }) {
     this._id = id;
     this._name = name;
     this._image = image;
@@ -33,13 +34,13 @@ class BrandModel {
   int get brandProductsCount => _brandProductsCount;
 
   BrandModel.fromJson(Map<String, dynamic> json) {
-    _id = json['id'];
-    _name = json['name'];
-    _image = json['image'];
-    _status = json['status'];
-    _createdAt = json['created_at'];
-    _updatedAt = json['updated_at'];
-    _brandProductsCount = json['brand_products_count'];
+    _id = json['id'] ?? -1;
+    _name = json['name'] ?? "";
+    _image = json['image'] ?? "";
+    _status = json['status'] ?? 0;
+    _createdAt = json['created_at'] ?? "";
+    _updatedAt = json['updated_at'] ?? "";
+    _brandProductsCount = json['brand_products_count'] ?? 0;
   }
 
   Map<String, dynamic> toJson() {

@@ -6,18 +6,29 @@ class MessageModel {
   String offset;
   List<Message> message;
 
-  MessageModel({this.totalSize, this.limit, this.offset, this.message});
+  MessageModel({
+    required this.totalSize,
+    required this.limit,
+    required this.offset,
+    required this.message,
+  });
 
-  MessageModel.fromJson(Map<String, dynamic> json) {
-    totalSize = json['total_size'];
-    limit = json['limit'];
-    offset = json['offset'];
+  factory MessageModel.fromJson(Map<String, dynamic> json) {
+    final totalSize = json['total_size'] ?? 10;
+    final limit = json['limit'] ?? "10";
+    final offset = json['offset'] ?? "0";
+    final message = <Message>[];
     if (json['message'] != null) {
-      message = <Message>[];
       json['message'].forEach((v) {
         message.add(Message.fromJson(v));
       });
     }
+    return MessageModel(
+      totalSize: totalSize,
+      limit: limit,
+      offset: offset,
+      message: message,
+    );
   }
 
   Map<String, dynamic> toJson() {
@@ -25,9 +36,9 @@ class MessageModel {
     data['total_size'] = totalSize;
     data['limit'] = limit;
     data['offset'] = offset;
-    if (message != null) {
-      data['message'] = message.map((v) => v.toJson()).toList();
-    }
+
+    data['message'] = message.map((v) => v.toJson()).toList();
+
     return data;
   }
 }
@@ -43,31 +54,29 @@ class Message {
   DeliveryMan deliveryMan;
   SellerInfo sellerInfo;
 
-  Message(
-      {this.id,
-        this.message,
-        this.sentByCustomer,
-        this.sentBySeller,
-        this.sentByAdmin,
-        this.seenByDeliveryMan,
-        this.createdAt,
-        this.deliveryMan,
-        this.sellerInfo});
+  Message({
+    required this.id,
+    required this.message,
+    required this.sentByCustomer,
+    required this.sentBySeller,
+    required this.sentByAdmin,
+    required this.seenByDeliveryMan,
+    required this.createdAt,
+    required this.deliveryMan,
+    required this.sellerInfo,
+  });
 
-  Message.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    message = json['message'];
-    sentByCustomer = json['sent_by_customer'];
-    sentBySeller = json['sent_by_seller'];
-    sentByAdmin = json['sent_by_admin'];
-    if(json['seen_by_delivery_man'] != null){
-      seenByDeliveryMan = int.parse(json['seen_by_delivery_man'].toString());
-    }
-
-    createdAt = json['created_at'];
-    deliveryMan = json['delivery_man'] != null ? DeliveryMan.fromJson(json['delivery_man']) : null;
-    sellerInfo = json['seller_info'] != null ? SellerInfo.fromJson(json['seller_info']) : null;
-  }
+  Message.fromJson(Map<String, dynamic> json)
+      : id = json['id'] ?? -1,
+        message = json['message'] ?? "",
+        sentByCustomer = json['sent_by_customer'] ?? -1,
+        sentBySeller = json['sent_by_seller'] ?? -1,
+        sentByAdmin = json['sent_by_admin'] ?? -1,
+        seenByDeliveryMan =
+            int.parse(json['seen_by_delivery_man']?.toString() ?? "-1"),
+        createdAt = json['created_at'] ?? "",
+        deliveryMan = DeliveryMan.fromJson(json['delivery_man'] ?? {}),
+        sellerInfo = SellerInfo.fromJson(json['seller_info'] ?? {});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -78,16 +87,11 @@ class Message {
     data['sent_by_admin'] = sentByAdmin;
     data['seen_by_delivery_man'] = seenByDeliveryMan;
     data['created_at'] = createdAt;
-    if (deliveryMan != null) {
-      data['delivery_man'] = deliveryMan.toJson();
-    }
-    if (sellerInfo != null) {
-      data['seller_info'] = sellerInfo.toJson();
-    }
+
+    data['delivery_man'] = deliveryMan.toJson();
+
+    data['seller_info'] = sellerInfo.toJson();
+
     return data;
   }
 }
-
-
-
-

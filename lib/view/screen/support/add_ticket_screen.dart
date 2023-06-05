@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 
 class AddTicketScreen extends StatefulWidget {
   final String type;
-  AddTicketScreen({@required this.type});
+  AddTicketScreen({required this.type});
 
   @override
   _AddTicketScreenState createState() => _AddTicketScreenState();
@@ -92,9 +92,10 @@ class _AddTicketScreenState extends State<AddTicketScreen> {
                           } else {
                             SupportTicketBody supportTicketModel =
                                 SupportTicketBody(
-                                    widget.type,
-                                    _subjectController.text,
-                                    _descriptionController.text);
+                              type: widget.type,
+                              subject: _subjectController.text,
+                              description: _descriptionController.text,
+                            );
                             Provider.of<SupportTicketProvider>(context,
                                     listen: false)
                                 .sendSupportTicket(

@@ -7,8 +7,11 @@ import 'package:provider/provider.dart';
 class ChatTypeButton extends StatelessWidget {
   final String text;
   final int index;
-  const ChatTypeButton({Key key, @required this.text, @required this.index})
-      : super(key: key);
+  const ChatTypeButton({
+    Key? key,
+    required this.text,
+    required this.index,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,16 +38,20 @@ class ChatTypeButton extends StatelessWidget {
                 borderRadius:
                     BorderRadius.circular(Dimensions.PADDING_SIZE_OVER_LARGE),
               ),
-              child: Text(text,
-                  style: chat.userTypeIndex == index
-                      ? robotoRegular.copyWith(
-                          color: chat.userTypeIndex == index
-                              ? Colors.white
-                              : Theme.of(context).textTheme.bodyLarge)
-                      : robotoRegular.copyWith(
-                          color: chat.userTypeIndex == index
-                              ? Theme.of(context).cardColor
-                              : Theme.of(context).cardColor)),
+              child: Text(
+                text,
+                style: chat.userTypeIndex == index
+                    ? robotoRegular.copyWith(
+                        color: chat.userTypeIndex == index
+                            ? Color(0xFFFFFFFF)
+                            : Theme.of(context).textTheme.bodyLarge?.color,
+                      )
+                    : robotoRegular.copyWith(
+                        color: chat.userTypeIndex == index
+                            ? Theme.of(context).cardColor
+                            : Theme.of(context).cardColor,
+                      ),
+              ),
             ),
           );
         },

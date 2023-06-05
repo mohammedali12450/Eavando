@@ -3,12 +3,13 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class GoogleSignInProvider with ChangeNotifier {
   GoogleSignIn _googleSignIn = GoogleSignIn();
-  GoogleSignInAccount googleAccount;
-  GoogleSignInAuthentication auth;
+  GoogleSignInAccount? googleAccount;
+  GoogleSignInAuthentication? auth;
 
   Future<void> login() async {
     this.googleAccount = await _googleSignIn.signIn();
-    auth = await googleAccount.authentication;
+    if (this.googleAccount == null) return;
+    auth = await googleAccount!.authentication;
     notifyListeners();
   }
 

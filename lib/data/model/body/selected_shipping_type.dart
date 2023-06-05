@@ -1,22 +1,22 @@
 class SelectedShippingType {
-  int _sellerId;
-  String _selectedShippingType;
+  late int _sellerId;
+  late String _selectedShippingType;
 
-  SelectedShippingType({int sellerId, String selectedShippingType}) {
-    if (sellerId != null) {
-      this._sellerId = sellerId;
-    }
-    if (selectedShippingType != null) {
-      this._selectedShippingType = selectedShippingType;
-    }
+  SelectedShippingType({
+    required int sellerId,
+    required String selectedShippingType,
+  }) {
+    this._sellerId = sellerId;
+
+    this._selectedShippingType = selectedShippingType;
   }
 
   int get sellerId => _sellerId;
   String get selectedShippingType => _selectedShippingType;
 
   SelectedShippingType.fromJson(Map<String, dynamic> json) {
-    _sellerId = json['sellerId'];
-    _selectedShippingType = json['selectedShippingType'];
+    _sellerId = json['sellerId'] ?? -1;
+    _selectedShippingType = json['selectedShippingType'] ?? "";
   }
 
   Map<String, dynamic> toJson() {

@@ -12,18 +12,17 @@ import 'package:provider/provider.dart';
 
 class ProductWidget extends StatelessWidget {
   final Product productModel;
-  ProductWidget({@required this.productModel});
+
+  ProductWidget({required this.productModel});
 
   @override
   Widget build(BuildContext context) {
     String ratting =
-        productModel.rating != null && productModel.rating.length != 0
-            ? productModel.rating[0].average
-            : "0";
+        productModel.rating.length != 0 ? productModel.rating[0].average : "0";
 
     /// price
     double _startingPrice = 0;
-    if (productModel.variation != null && productModel.variation.length != 0) {
+    if (productModel.variation.length != 0) {
       List<double> _priceList = [];
       productModel.variation
           .forEach((variation) => _priceList.add(variation.price));
@@ -84,7 +83,7 @@ class ProductWidget extends StatelessWidget {
                   fit: BoxFit.cover,
                   height: MediaQuery.of(context).size.width / 2.45,
                   image:
-                      '${Provider.of<SplashProvider>(context, listen: false).baseUrls.productThumbnailUrl}/${productModel.thumbnail}',
+                      '${Provider.of<SplashProvider>(context, listen: false).baseUrls?.productThumbnailUrl}/${productModel.thumbnail}',
                   imageErrorBuilder: (c, o, s) => Image.asset(
                       Images.placeholder_1x1,
                       fit: BoxFit.cover,
@@ -106,7 +105,7 @@ class ProductWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(productModel.name ?? '',
+                      Text(productModel.name,
                           textAlign: TextAlign.center,
                           style: robotoRegular.copyWith(
                               fontSize: Dimensions.FONT_SIZE_SMALL,
@@ -121,14 +120,13 @@ class ProductWidget extends StatelessWidget {
                               rating: double.parse(ratting),
                               size: 18,
                             ),
-                            Text(
-                                '(${productModel.reviewCount.toString() ?? 0})',
+                            Text('(${productModel.reviewCount.toString()})',
                                 style: robotoRegular.copyWith(
                                   fontSize: Dimensions.FONT_SIZE_SMALL,
                                 )),
                           ]),
                       SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                      productModel.discount != null && productModel.discount > 0
+                      productModel.discount > 0
                           ? Text(
                               PriceConverter.convertPrice(
                                   context, productModel.unitPrice),

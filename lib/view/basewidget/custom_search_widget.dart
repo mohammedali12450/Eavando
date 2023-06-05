@@ -18,26 +18,26 @@ class AnimSearchBar extends StatefulWidget {
 
   final double width;
   final TextEditingController textController;
-  final Icon suffixIcon;
-  final Icon prefixIcon;
+  final Icon? suffixIcon;
+  final Icon? prefixIcon;
   final String helpText;
   final int animationDurationInMilli;
   final Function onSuffixTap;
   final bool rtl;
   final bool autoFocus;
-  final TextStyle style;
+  final TextStyle? style;
   final bool closeSearchOnSuffixTap;
   final Color color;
-  final List<TextInputFormatter> inputFormatters;
+  final List<TextInputFormatter>? inputFormatters;
 
   const AnimSearchBar({
-    Key key,
+    Key? key,
 
     /// The width cannot be null
-    @required this.width,
+    required this.width,
 
     /// The textController cannot be null
-    @required this.textController,
+    required this.textController,
     this.suffixIcon,
     this.prefixIcon,
     this.helpText = "Search...",
@@ -46,7 +46,7 @@ class AnimSearchBar extends StatefulWidget {
     this.color = Colors.white,
 
     /// The onSuffixTap cannot be null
-    @required this.onSuffixTap,
+    required this.onSuffixTap,
     this.animationDurationInMilli = 375,
 
     /// make the search bar to open from right to left
@@ -76,7 +76,7 @@ int toggle = 0;
 class _AnimSearchBarState extends State<AnimSearchBar>
     with SingleTickerProviderStateMixin {
   ///initializing the AnimationController
-   AnimationController _con;
+  late AnimationController _con;
   FocusNode focusNode = FocusNode();
 
   @override
@@ -105,7 +105,8 @@ class _AnimSearchBarState extends State<AnimSearchBar>
       height: 100.0,
 
       ///if the rtl is true, search bar will be from right to left
-      alignment: widget.rtl ? Alignment.centerRight : const Alignment(-1.0, 0.0),
+      alignment:
+          widget.rtl ? Alignment.centerRight : const Alignment(-1.0, 0.0),
 
       ///Using Animated container to expand and shrink the widget
       child: AnimatedContainer(
@@ -160,16 +161,16 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                           }
                         } catch (e) {
                           ///print the error if the try block fails
-
                         }
                       },
 
                       ///suffixIcon is of type Icon
-                      child: widget.suffixIcon ?? Icon(
-                        Icons.close,
-                        size: 20.0,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
+                      child: widget.suffixIcon ??
+                          Icon(
+                            Icons.close,
+                            size: 20.0,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
                     ),
                     builder: (context, widget) {
                       ///Using Transform.rotate to rotate the suffix icon when it gets expanded
@@ -248,17 +249,17 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                 ///if the toggle is 0, which means it's closed, so tapping on it will expand the widget.
                 ///prefixIcon is of type Icon
                 icon: widget.prefixIcon != null
-                    ? toggle == 1
-                    ? const Icon(Icons.arrow_back_ios)
-                    : widget.prefixIcon
+                    ? (toggle == 1
+                        ? const Icon(Icons.arrow_back_ios)
+                        : widget.prefixIcon!)
                     : Icon(
-                  toggle == 1 ? Icons.arrow_back_ios : Icons.search,
-                  size: 20.0,
-                  color: Theme.of(context).primaryColor,
-                ),
+                        toggle == 1 ? Icons.arrow_back_ios : Icons.search,
+                        size: 20.0,
+                        color: Theme.of(context).primaryColor,
+                      ),
                 onPressed: () {
                   setState(
-                        () {
+                    () {
                       ///if the search bar is closed
                       if (toggle == 0) {
                         toggle = 1;

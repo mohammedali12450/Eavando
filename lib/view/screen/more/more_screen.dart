@@ -8,6 +8,7 @@ import 'package:flutter_axtro_soft_ecommerce/provider/splash_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/theme_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/wallet_transaction_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/wishlist_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/theme/light_theme.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/app_constants.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/color_resources.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/custom_themes.dart';
@@ -43,8 +44,8 @@ class MoreScreen extends StatefulWidget {
 }
 
 class _MoreScreenState extends State<MoreScreen> {
-  bool isGuestMode;
-  String version;
+  late bool isGuestMode;
+  String version = "1.0.0";
   bool singleVendor = false;
   @override
   void initState() {
@@ -54,23 +55,24 @@ class _MoreScreenState extends State<MoreScreen> {
       Provider.of<ProfileProvider>(context, listen: false).getUserInfo(context);
       version = Provider.of<SplashProvider>(context, listen: false)
                   .configModel
-                  .version !=
+                  ?.version !=
               null
           ? Provider.of<SplashProvider>(context, listen: false)
-              .configModel
-              .version
+                  .configModel
+                  ?.version ??
+              "version"
           : 'version';
       Provider.of<ProfileProvider>(context, listen: false).getUserInfo(context);
       if (Provider.of<SplashProvider>(context, listen: false)
               .configModel
-              .walletStatus ==
+              ?.walletStatus ==
           1) {
         Provider.of<WalletTransactionProvider>(context, listen: false)
             .getTransactionList(context, 1);
       }
       if (Provider.of<SplashProvider>(context, listen: false)
               .configModel
-              .loyaltyPointStatus ==
+              ?.loyaltyPointStatus ==
           1) {
         Provider.of<WalletTransactionProvider>(context, listen: false)
             .getLoyaltyPointList(context, 1);
@@ -78,7 +80,7 @@ class _MoreScreenState extends State<MoreScreen> {
     }
     singleVendor = Provider.of<SplashProvider>(context, listen: false)
             .configModel
-            .businessMode ==
+            ?.businessMode ==
         "single";
     super.initState();
   }
@@ -143,7 +145,7 @@ class _MoreScreenState extends State<MoreScreen> {
                       Text(
                           !isGuestMode
                               ? profile.userInfoModel != null
-                                  ? '${profile.userInfoModel.fName} ${profile.userInfoModel.lName}'
+                                  ? '${profile.userInfoModel?.fName} ${profile.userInfoModel?.lName}'
                                   : 'Full Name'
                               : 'Guest',
                           style: titilliumRegular.copyWith(
@@ -151,8 +153,11 @@ class _MoreScreenState extends State<MoreScreen> {
                       SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
                       isGuestMode
                           ? CircleAvatar(
-                              // ignore: deprecated_member_use
-                              backgroundColor: Theme.of(context).buttonColor,
+                              backgroundColor: Theme.of(context)
+                                      .buttonTheme
+                                      .colorScheme
+                                      ?.primary ??
+                                  primaryColor,
                               child: Icon(
                                 Icons.person,
                                 size: 30,
@@ -161,9 +166,11 @@ class _MoreScreenState extends State<MoreScreen> {
                             )
                           : profile.userInfoModel == null
                               ? CircleAvatar(
-                                  backgroundColor:
-                                      // ignore: deprecated_member_use
-                                      Theme.of(context).buttonColor,
+                                  backgroundColor: Theme.of(context)
+                                          .buttonTheme
+                                          .colorScheme
+                                          ?.primary ??
+                                      primaryColor,
                                   child: Icon(
                                     Icons.person,
                                     size: 30,
@@ -178,18 +185,21 @@ class _MoreScreenState extends State<MoreScreen> {
                                     height: 35,
                                     fit: BoxFit.cover,
                                     image:
-                                        '${Provider.of<SplashProvider>(context, listen: false).baseUrls.customerImageUrl}/'
-                                        '${profile.userInfoModel.image}',
+                                        '${Provider.of<SplashProvider>(context, listen: false).baseUrls?.customerImageUrl ?? ""}/'
+                                        '${profile.userInfoModel?.image ?? ""}',
                                     imageErrorBuilder: (c, o, s) =>
                                         CircleAvatar(
-                                            backgroundColor:
-                                                // ignore: deprecated_member_use
-                                                Theme.of(context).buttonColor,
-                                            child: Icon(
-                                              Icons.person,
-                                              size: 30,
-                                              color: Colors.white,
-                                            )),
+                                      backgroundColor: Theme.of(context)
+                                              .buttonTheme
+                                              .colorScheme
+                                              ?.primary ??
+                                          primaryColor,
+                                      child: Icon(
+                                        Icons.person,
+                                        size: 30,
+                                        color: Colors.white,
+                                      ),
+                                    ),
                                   ),
                                 ),
                     ]),
@@ -231,7 +241,7 @@ class _MoreScreenState extends State<MoreScreen> {
                                   Provider.of<SplashProvider>(context,
                                                   listen: false)
                                               .configModel
-                                              .walletStatus ==
+                                              ?.walletStatus ==
                                           1
                                       ? SquareButton(
                                           image: Images.wallet,
@@ -244,7 +254,7 @@ class _MoreScreenState extends State<MoreScreen> {
                                   Provider.of<SplashProvider>(context,
                                                   listen: false)
                                               .configModel
-                                              .loyaltyPointStatus ==
+                                              ?.loyaltyPointStatus ==
                                           1
                                       ? SquareButton(
                                           image: Images.loyalty_point,
@@ -291,16 +301,19 @@ class _MoreScreenState extends State<MoreScreen> {
                                                         listen: false)
                                                     .wishList !=
                                                 null &&
-                                            Provider.of<WishListProvider>(
-                                                        context,
-                                                        listen: false)
-                                                    .wishList
-                                                    .length >
+                                            (Provider.of<WishListProvider>(
+                                                            context,
+                                                            listen: false)
+                                                        .wishList
+                                                        ?.length ??
+                                                    0) >
                                                 0
-                                        ? Provider.of<WishListProvider>(context,
-                                                listen: false)
-                                            .wishList
-                                            .length
+                                        ? (Provider.of<WishListProvider>(
+                                                    context,
+                                                    listen: false)
+                                                .wishList
+                                                ?.length ??
+                                            0)
                                         : 0,
                                     hasCount: false,
                                   ),
@@ -355,49 +368,58 @@ class _MoreScreenState extends State<MoreScreen> {
                       navigateTo: HtmlViewScreen(
                         title: getTranslated('terms_condition', context),
                         url: Provider.of<SplashProvider>(context, listen: false)
-                            .configModel
-                            .termsConditions,
+                                .configModel
+                                ?.termsConditions ??
+                            " ",
                       )),
 
                   TitleButton(
-                      image: Images.privacy_policy,
+                    image: Images.privacy_policy,
+                    title: getTranslated('privacy_policy', context),
+                    navigateTo: HtmlViewScreen(
                       title: getTranslated('privacy_policy', context),
-                      navigateTo: HtmlViewScreen(
-                        title: getTranslated('privacy_policy', context),
-                        url: Provider.of<SplashProvider>(context, listen: false)
-                            .configModel
-                            .privacyPolicy,
-                      )),
+                      url: Provider.of<SplashProvider>(context, listen: false)
+                              .configModel
+                              ?.privacyPolicy ??
+                          "",
+                    ),
+                  ),
 
                   TitleButton(
-                      image: Images.refund_policy,
+                    image: Images.refund_policy,
+                    title: getTranslated('refund_policy', context),
+                    navigateTo: HtmlViewScreen(
                       title: getTranslated('refund_policy', context),
-                      navigateTo: HtmlViewScreen(
-                        title: getTranslated('refund_policy', context),
-                        url: Provider.of<SplashProvider>(context, listen: false)
-                            .configModel
-                            .refundPolicy,
-                      )),
+                      url: Provider.of<SplashProvider>(context, listen: false)
+                              .configModel
+                              ?.refundPolicy ??
+                          "",
+                    ),
+                  ),
 
                   TitleButton(
-                      image: Images.return_policy,
+                    image: Images.return_policy,
+                    title: getTranslated('return_policy', context),
+                    navigateTo: HtmlViewScreen(
                       title: getTranslated('return_policy', context),
-                      navigateTo: HtmlViewScreen(
-                        title: getTranslated('return_policy', context),
-                        url: Provider.of<SplashProvider>(context, listen: false)
-                            .configModel
-                            .returnPolicy,
-                      )),
+                      url: Provider.of<SplashProvider>(context, listen: false)
+                              .configModel
+                              ?.returnPolicy ??
+                          "",
+                    ),
+                  ),
 
                   TitleButton(
-                      image: Images.c_policy,
+                    image: Images.c_policy,
+                    title: getTranslated('cancellation_policy', context),
+                    navigateTo: HtmlViewScreen(
                       title: getTranslated('cancellation_policy', context),
-                      navigateTo: HtmlViewScreen(
-                        title: getTranslated('cancellation_policy', context),
-                        url: Provider.of<SplashProvider>(context, listen: false)
-                            .configModel
-                            .cancellationPolicy,
-                      )),
+                      url: Provider.of<SplashProvider>(context, listen: false)
+                              .configModel
+                              ?.cancellationPolicy ??
+                          "",
+                    ),
+                  ),
 
                   TitleButton(
                       image: Images.help_center,
@@ -407,14 +429,16 @@ class _MoreScreenState extends State<MoreScreen> {
                       )),
 
                   TitleButton(
-                      image: Images.about_us,
+                    image: Images.about_us,
+                    title: getTranslated('about_us', context),
+                    navigateTo: HtmlViewScreen(
                       title: getTranslated('about_us', context),
-                      navigateTo: HtmlViewScreen(
-                        title: getTranslated('about_us', context),
-                        url: Provider.of<SplashProvider>(context, listen: false)
-                            .configModel
-                            .aboutUs,
-                      )),
+                      url: Provider.of<SplashProvider>(context, listen: false)
+                              .configModel
+                              ?.aboutUs ??
+                          "",
+                    ),
+                  ),
 
                   TitleButton(
                       image: Images.contact_us,
@@ -422,9 +446,10 @@ class _MoreScreenState extends State<MoreScreen> {
                       navigateTo: WebViewScreen(
                         title: getTranslated('contact_us', context),
                         url: Provider.of<SplashProvider>(context, listen: false)
-                            .configModel
-                            .staticUrls
-                            .contactUs,
+                                .configModel
+                                ?.staticUrls
+                                .contactUs ??
+                            "",
                       )),
 
                   ListTile(
@@ -536,12 +561,13 @@ class SquareButton extends StatelessWidget {
   final int count;
   final bool hasCount;
 
-  SquareButton(
-      {@required this.image,
-      @required this.title,
-      @required this.navigateTo,
-      @required this.count,
-      @required this.hasCount});
+  SquareButton({
+    required this.image,
+    required this.title,
+    required this.navigateTo,
+    required this.count,
+    required this.hasCount,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -604,8 +630,11 @@ class TitleButton extends StatelessWidget {
   final String image;
   final String title;
   final Widget navigateTo;
-  TitleButton(
-      {@required this.image, @required this.title, @required this.navigateTo});
+  TitleButton({
+    required this.image,
+    required this.title,
+    required this.navigateTo,
+  });
 
   @override
   Widget build(BuildContext context) {

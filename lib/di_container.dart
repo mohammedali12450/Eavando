@@ -67,7 +67,14 @@ final sl = GetIt.instance;
 Future<void> init() async {
   // Core
   sl.registerLazySingleton(() => NetworkInfo(sl()));
-  sl.registerLazySingleton(() => DioClient(AppConstants.BASE_URL, sl(), loggingInterceptor: sl(), sharedPreferences: sl()));
+  sl.registerLazySingleton(
+    () => DioClient(
+      dio: Dio(),
+      baseUrl: AppConstants.BASE_URL,
+      loggingInterceptor: sl(),
+      sharedPreferences: sl(),
+    ),
+  );
 
   // Repository
   sl.registerLazySingleton(() => CategoryRepo(dioClient: sl()));
@@ -79,26 +86,35 @@ Future<void> init() async {
   sl.registerLazySingleton(() => ProductRepo(dioClient: sl()));
   sl.registerLazySingleton(() => BannerRepo(dioClient: sl()));
   sl.registerLazySingleton(() => OnBoardingRepo(dioClient: sl()));
-  sl.registerLazySingleton(() => AuthRepo(dioClient: sl(), sharedPreferences: sl()));
+  sl.registerLazySingleton(
+      () => AuthRepo(dioClient: sl(), sharedPreferences: sl()));
   sl.registerLazySingleton(() => ProductDetailsRepo(dioClient: sl()));
-  sl.registerLazySingleton(() => SearchRepo(dioClient: sl(), sharedPreferences: sl()));
+  sl.registerLazySingleton(
+      () => SearchRepo(dioClient: sl(), sharedPreferences: sl()));
   sl.registerLazySingleton(() => OrderRepo(dioClient: sl()));
   sl.registerLazySingleton(() => SellerRepo(dioClient: sl()));
   sl.registerLazySingleton(() => CouponRepo(dioClient: sl()));
   sl.registerLazySingleton(() => ChatRepo(dioClient: sl()));
   sl.registerLazySingleton(() => NotificationRepo(dioClient: sl()));
-  sl.registerLazySingleton(() => ProfileRepo(dioClient: sl(), sharedPreferences: sl()));
+  sl.registerLazySingleton(
+      () => ProfileRepo(dioClient: sl(), sharedPreferences: sl()));
   sl.registerLazySingleton(() => WishListRepo(dioClient: sl()));
-  sl.registerLazySingleton(() => CartRepo(dioClient: sl(), sharedPreferences: sl()));
-  sl.registerLazySingleton(() => SplashRepo(sharedPreferences: sl(), dioClient: sl()));
+  sl.registerLazySingleton(
+      () => CartRepo(dioClient: sl(), sharedPreferences: sl()));
+  sl.registerLazySingleton(
+      () => SplashRepo(sharedPreferences: sl(), dioClient: sl()));
   sl.registerLazySingleton(() => SupportTicketRepo(dioClient: sl()));
-  sl.registerLazySingleton(() => LocationRepo(dioClient: sl()));
+  sl.registerLazySingleton(() => LocationRepo(
+        dioClient: sl(),
+        sharedPreferences: sl(),
+      ));
   sl.registerLazySingleton(() => WalletTransactionRepo(dioClient: sl()));
   sl.registerLazySingleton(() => SocialMediaRepo(dioClient: sl()));
 
   // Provider
   sl.registerFactory(() => CategoryProvider(categoryRepo: sl()));
-  sl.registerFactory(() => HomeCategoryProductProvider(homeCategoryProductRepo: sl()));
+  sl.registerFactory(
+      () => HomeCategoryProductProvider(homeCategoryProductRepo: sl()));
   sl.registerFactory(() => TopSellerProvider(topSellerRepo: sl()));
   sl.registerFactory(() => FlashDealProvider(megaDealRepo: sl()));
   sl.registerFactory(() => FeaturedDealProvider(featuredDealRepo: sl()));
@@ -115,15 +131,18 @@ Future<void> init() async {
   sl.registerFactory(() => ChatProvider(chatRepo: sl()));
   sl.registerFactory(() => NotificationProvider(notificationRepo: sl()));
   sl.registerFactory(() => ProfileProvider(profileRepo: sl()));
-  sl.registerFactory(() => WishListProvider(wishListRepo: sl(), productDetailsRepo: sl()));
+  sl.registerFactory(
+      () => WishListProvider(wishListRepo: sl(), productDetailsRepo: sl()));
   sl.registerFactory(() => SplashProvider(splashRepo: sl()));
   sl.registerFactory(() => CartProvider(cartRepo: sl()));
   sl.registerFactory(() => SupportTicketProvider(supportTicketRepo: sl()));
-  sl.registerFactory(() => LocalizationProvider(sharedPreferences: sl(), dioClient: sl()));
+  sl.registerFactory(
+      () => LocalizationProvider(sharedPreferences: sl(), dioClient: sl()));
   sl.registerFactory(() => ThemeProvider(sharedPreferences: sl()));
   sl.registerFactory(() => GoogleSignInProvider());
   sl.registerFactory(() => FacebookLoginProvider());
-  sl.registerFactory(() => LocationProvider(sharedPreferences: sl(), locationRepo: sl()));
+  sl.registerFactory(
+      () => LocationProvider(sharedPreferences: sl(), locationRepo: sl()));
   sl.registerFactory(() => WalletTransactionProvider(transactionRepo: sl()));
   sl.registerFactory(() => SocialMediaProvider(socialMediaRepo: sl()));
 

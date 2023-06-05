@@ -31,10 +31,11 @@ class ProductDetails extends StatefulWidget {
   final String slug;
   final bool isFromWishList;
 
-  ProductDetails(
-      {@required this.productId,
-      @required this.slug,
-      this.isFromWishList = false});
+  ProductDetails({
+    required this.productId,
+    required this.slug,
+    this.isFromWishList = false,
+  });
 
   @override
   State<ProductDetails> createState() => _ProductDetailsState();
@@ -107,7 +108,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         body: RefreshIndicator(
           onRefresh: () async {
             _loadData(context);
-            return true;
+            return;
           },
           child: Consumer<ProductDetailsProvider>(
             builder: (context, details, child) {
@@ -117,9 +118,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ? Column(
                         children: [
                           ProductImageView(
-                              productModel: details.productDetailsModel,
-                              indexColor: details.productDetailsModel.colors.length == 0 ? "" :
-                                  details.productDetailsModel.colors[index].name),
+                            productModel: details.productDetailsModel,
+                            indexColor:
+                                details.productDetailsModel?.colors.length == 0
+                                    ? ""
+                                    : details.productDetailsModel?.colors[index]
+                                            .name ??
+                                        "",
+                          ),
                           Container(
                             transform:
                                 Matrix4.translationValues(0.0, -25.0, 0.0),
@@ -138,41 +144,43 @@ class _ProductDetailsState extends State<ProductDetails> {
                               child: Column(
                                 children: [
                                   ProductTitleView(
-                                    callback: (val){
-                                      index=val;
-                                      setState(() {
-
-                                      });
-
-                                    },
+                                      callback: (val) {
+                                        index = val;
+                                        setState(() {});
+                                      },
                                       colorIndex: index,
                                       productModel: details.productDetailsModel,
-                                      averageRatting: details.productDetailsModel
+                                      averageRatting: details
+                                                  .productDetailsModel
                                                   ?.averageReview !=
                                               null
-                                          ? details
-                                              .productDetailsModel.averageReview
+                                          ? details.productDetailsModel!
+                                              .averageReview
                                           : "0"),
-                                  (details.productDetailsModel?.details != null &&
-                                          details.productDetailsModel.details
+                                  (details.productDetailsModel?.details !=
+                                              null &&
+                                          details.productDetailsModel!.details
                                               .isNotEmpty)
                                       ? Container(
                                           height: 250,
                                           margin: EdgeInsets.only(
-                                              top: Dimensions.PADDING_SIZE_SMALL),
+                                              top: Dimensions
+                                                  .PADDING_SIZE_SMALL),
                                           padding: EdgeInsets.all(
                                               Dimensions.PADDING_SIZE_SMALL),
                                           child: ProductSpecification(
                                               productSpecification: details
                                                       .productDetailsModel
-                                                      .details ??
+                                                      ?.details ??
                                                   ''),
                                         )
                                       : SizedBox(),
                                   details.productDetailsModel?.videoUrl != null
                                       ? YoutubeVideoWidget(
-                                          url: details
-                                              .productDetailsModel.videoUrl)
+                                          url: details.productDetailsModel
+                                                  ?.videoUrl ??
+                                              "",
+                                        )
                                       : SizedBox(),
                                   Container(
                                       padding: EdgeInsets.symmetric(
@@ -183,11 +191,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       decoration: BoxDecoration(
                                           color: Theme.of(context).cardColor),
                                       child: PromiseScreen()),
-                                  details.productDetailsModel?.addedBy == 'seller'
+                                  details.productDetailsModel?.addedBy ==
+                                          'seller'
                                       ? SellerView(
                                           sellerId: details
-                                              .productDetailsModel.userId
-                                              .toString())
+                                                  .productDetailsModel?.userId
+                                                  .toString() ??
+                                              "-1",
+                                        )
                                       : SizedBox.shrink(),
                                   Container(
                                     width: MediaQuery.of(context).size.width,
@@ -217,8 +228,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                             decoration: BoxDecoration(
                                               color: ColorResources.visitShop(
                                                   context),
-                                              borderRadius: BorderRadius.circular(
-                                                  Dimensions
+                                              borderRadius: BorderRadius
+                                                  .circular(Dimensions
                                                       .PADDING_SIZE_EXTRA_LARGE),
                                             ),
                                             child: Row(
@@ -229,14 +240,15 @@ class _ProductDetailsState extends State<ProductDetails> {
                                               children: [
                                                 RatingBar(
                                                   rating: double.parse(details
-                                                      .productDetailsModel
-                                                      .averageReview),
+                                                          .productDetailsModel
+                                                          ?.averageReview ??
+                                                      "0.0"),
                                                   size: 18,
                                                 ),
                                                 SizedBox(
                                                     width: Dimensions
                                                         .PADDING_SIZE_DEFAULT),
-                                                Text('${double.parse(details.productDetailsModel.averageReview).toStringAsFixed(1)}' +
+                                                Text('${double.parse(details.productDetailsModel?.averageReview ?? "0.0").toStringAsFixed(1)}' +
                                                     ' ' +
                                                     '${getTranslated('out_of_5', context)}'),
                                               ],
@@ -247,43 +259,51 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                   .PADDING_SIZE_DEFAULT),
                                           Text('${getTranslated('total', context)}' +
                                               ' ' +
-                                              '${details.reviewList != null ? details.reviewList.length : 0}' +
+                                              '${details.reviewList != null ? details.reviewList!.length : 0}' +
                                               ' ' +
                                               '${getTranslated('reviews', context)}'),
                                           details.reviewList != null
-                                              ? details.reviewList.length != 0
+                                              ? details.reviewList!.length != 0
                                                   ? ReviewWidget(
-                                                      reviewModel:
-                                                          details.reviewList[0])
+                                                      reviewModel: details
+                                                          .reviewList![0])
                                                   : SizedBox()
                                               : ReviewShimmer(),
                                           details.reviewList != null
-                                              ? details.reviewList.length > 1
+                                              ? details.reviewList!.length > 1
                                                   ? ReviewWidget(
-                                                      reviewModel:
-                                                          details.reviewList[1])
+                                                      reviewModel: details
+                                                          .reviewList![1])
                                                   : SizedBox()
                                               : ReviewShimmer(),
                                           details.reviewList != null
-                                              ? details.reviewList.length > 2
+                                              ? details.reviewList!.length > 2
                                                   ? ReviewWidget(
-                                                      reviewModel:
-                                                          details.reviewList[2])
+                                                      reviewModel: details
+                                                          .reviewList![2])
                                                   : SizedBox()
                                               : ReviewShimmer(),
                                           InkWell(
                                               onTap: () {
-                                                if (details.reviewList != null) {
+                                                if (details.reviewList !=
+                                                    null) {
                                                   Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (_) => ReviewScreen(
-                                                              reviewList: details
-                                                                  .reviewList)));
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (_) =>
+                                                          ReviewScreen(
+                                                        reviewList: details
+                                                                .reviewList ??
+                                                            [],
+                                                      ),
+                                                    ),
+                                                  );
                                                 }
                                               },
-                                              child: details.reviewList != null &&
-                                                      details.reviewList.length >
+                                              child: details.reviewList !=
+                                                          null &&
+                                                      details.reviewList!
+                                                              .length >
                                                           3
                                                   ? Text(
                                                       getTranslated(
@@ -297,17 +317,20 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                   : SizedBox())
                                         ]),
                                   ),
-                                  details.productDetailsModel.addedBy == 'seller'
+                                  details.productDetailsModel?.addedBy ==
+                                          'seller'
                                       ? Padding(
                                           padding: EdgeInsets.all(
                                               Dimensions.PADDING_SIZE_DEFAULT),
                                           child: TitleRow(
                                               title: getTranslated(
-                                                  'more_from_the_shop', context),
+                                                  'more_from_the_shop',
+                                                  context),
                                               isDetailsPage: true),
                                         )
                                       : SizedBox(),
-                                  details.productDetailsModel.addedBy == 'seller'
+                                  details.productDetailsModel?.addedBy ==
+                                          'seller'
                                       ? Padding(
                                           padding: EdgeInsets.all(Dimensions
                                               .PADDING_SIZE_EXTRA_SMALL),
@@ -315,10 +338,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                                               isHomePage: true,
                                               productType:
                                                   ProductType.SELLER_PRODUCT,
-                                              scrollController: _scrollController,
+                                              scrollController:
+                                                  _scrollController,
                                               sellerId: details
-                                                  .productDetailsModel.userId
-                                                  .toString()),
+                                                      .productDetailsModel
+                                                      ?.userId
+                                                      .toString() ??
+                                                  "-1"),
                                         )
                                       : SizedBox(),
                                   Container(

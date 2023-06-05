@@ -5,6 +5,7 @@ import 'package:flutter_axtro_soft_ecommerce/localization/language_constrants.da
 import 'package:flutter_axtro_soft_ecommerce/provider/auth_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/cart_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/splash_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/theme/light_theme.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/color_resources.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/custom_themes.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/dimensions.dart';
@@ -36,7 +37,7 @@ class _CartScreenState extends State<CartScreen> {
 
       if (Provider.of<SplashProvider>(context, listen: false)
               .configModel
-              .shippingMethod !=
+              ?.shippingMethod !=
           'sellerwise_shipping') {
         Provider.of<CartProvider>(context, listen: false)
             .getAdminShippingMethodList(context);
@@ -103,7 +104,7 @@ class _CartScreenState extends State<CartScreen> {
           Provider.of<AuthProvider>(context, listen: false).isLoggedIn() &&
           Provider.of<SplashProvider>(context, listen: false)
                   .configModel
-                  .shippingMethod ==
+                  ?.shippingMethod ==
               'sellerwise_shipping') {
         Provider.of<CartProvider>(context, listen: false)
             .getShippingMethod(context, cartProductList);
@@ -119,7 +120,7 @@ class _CartScreenState extends State<CartScreen> {
         shippingAmount += cart.chosenShippingList[i].shippingCost;
       }
       for (int j = 0; j < cartList.length; j++) {
-        shippingAmount += cart.cartList[j].shippingCost ?? 0;
+        shippingAmount += cart.cartList[j].shippingCost;
       }
 
       return Scaffold(
@@ -177,7 +178,7 @@ class _CartScreenState extends State<CartScreen> {
                                         Provider.of<SplashProvider>(context,
                                                     listen: false)
                                                 .configModel
-                                                .shippingMethod ==
+                                                ?.shippingMethod ==
                                             'sellerwise_shipping' &&
                                         !_onlyDigital) {
                                       ScaffoldMessenger.of(context)
@@ -191,12 +192,12 @@ class _CartScreenState extends State<CartScreen> {
                                         Provider.of<SplashProvider>(context,
                                                     listen: false)
                                                 .configModel
-                                                .shippingMethod !=
+                                                ?.shippingMethod !=
                                             'sellerwise_shipping' &&
                                         Provider.of<SplashProvider>(context,
                                                     listen: false)
                                                 .configModel
-                                                .inHouseSelectedShippingType ==
+                                                ?.inHouseSelectedShippingType ==
                                             'order_wise' &&
                                         !_onlyDigital) {
                                       ScaffoldMessenger.of(context)
@@ -207,16 +208,18 @@ class _CartScreenState extends State<CartScreen> {
                                               backgroundColor: Colors.red));
                                     } else {
                                       Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (_) => CheckoutScreen(
-                                                    cartList: cartList,
-                                                    totalOrderAmount: amount,
-                                                    shippingFee: shippingAmount,
-                                                    discount: discount,
-                                                    tax: tax,
-                                                    onlyDigital: _onlyDigital,
-                                                  )));
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) => CheckoutScreen(
+                                            cartList: cartList,
+                                            totalOrderAmount: amount,
+                                            shippingFee: shippingAmount,
+                                            discount: discount,
+                                            tax: tax,
+                                            onlyDigital: _onlyDigital,
+                                          ),
+                                        ),
+                                      );
                                     }
                                   } else {
                                     showAnimatedDialog(context, GuestDialog(),
@@ -227,8 +230,11 @@ class _CartScreenState extends State<CartScreen> {
                                   width:
                                       MediaQuery.of(context).size.width / 3.5,
                                   decoration: BoxDecoration(
-                                    // ignore: deprecated_member_use
-                                    color: Theme.of(context).buttonColor,
+                                    color: Theme.of(context)
+                                            .buttonTheme
+                                            .colorScheme
+                                            ?.primary ??
+                                        primaryColor,
                                     borderRadius: BorderRadius.circular(
                                         Dimensions.PADDING_SIZE_SMALL),
                                   ),
@@ -343,7 +349,7 @@ class _CartScreenState extends State<CartScreen> {
                                                                         listen:
                                                                             false)
                                                                     .configModel
-                                                                    .shippingMethod ==
+                                                                    ?.shippingMethod ==
                                                                 'sellerwise_shipping' &&
                                                             sellerGroupList[
                                                                         index]
@@ -418,9 +424,9 @@ class _CartScreenState extends State<CartScreen> {
                                                                         Flexible(
                                                                           child:
                                                                               Text(
-                                                                            (cart.shippingList == null || cart.shippingList[index].shippingMethodList == null || cart.chosenShippingList.length == 0 || cart.shippingList[index].shippingIndex == -1)
+                                                                            (cart.shippingList == null || cart.shippingList?[index].shippingMethodList == null || cart.chosenShippingList.length == 0 || cart.shippingList?[index].shippingIndex == -1)
                                                                                 ? ''
-                                                                                : '${cart.shippingList[index].shippingMethodList[cart.shippingList[index].shippingIndex].title.toString()}',
+                                                                                : '${cart.shippingList?[index].shippingMethodList?[cart.shippingList?[index].shippingIndex ?? 0].title.toString()}',
                                                                             style:
                                                                                 titilliumSemiBold.copyWith(color: ColorResources.getPrimary(context)),
                                                                             maxLines:
@@ -457,12 +463,12 @@ class _CartScreenState extends State<CartScreen> {
                             ),
                             Provider.of<SplashProvider>(context, listen: false)
                                             .configModel
-                                            .shippingMethod !=
+                                            ?.shippingMethod !=
                                         'sellerwise_shipping' &&
                                     Provider.of<SplashProvider>(context,
                                                 listen: false)
                                             .configModel
-                                            .inHouseSelectedShippingType ==
+                                            ?.inHouseSelectedShippingType ==
                                         'order_wise'
                                 ? InkWell(
                                     onTap: () {
@@ -511,18 +517,18 @@ class _CartScreenState extends State<CartScreen> {
                                                                       .length ==
                                                                   0 ||
                                                               cart.shippingList
-                                                                      .length ==
+                                                                      ?.length ==
                                                                   0 ||
                                                               cart
-                                                                      .shippingList[
+                                                                      .shippingList?[
                                                                           0]
                                                                       .shippingMethodList ==
                                                                   null ||
-                                                              cart.shippingList[0]
+                                                              cart.shippingList?[0]
                                                                       .shippingIndex ==
                                                                   -1)
                                                           ? ''
-                                                          : '${cart.shippingList[0].shippingMethodList[cart.shippingList[0].shippingIndex].title.toString()}',
+                                                          : '${cart.shippingList?[0].shippingMethodList?[cart.shippingList?[0].shippingIndex ?? 0].title.toString()}',
                                                       style: titilliumSemiBold
                                                           .copyWith(
                                                               color: ColorResources

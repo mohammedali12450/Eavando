@@ -18,11 +18,11 @@ import 'package:share/share.dart';
 
 // ignore: must_be_immutable
 class ProductImageView extends StatefulWidget {
-  final pd.ProductDetailsModel productModel;
+  final pd.ProductDetailsModel? productModel;
   String indexColor;
   ProductImageView({
-    @required this.productModel,
-    @required this.indexColor,
+    this.productModel,
+    required this.indexColor,
   });
 
   @override
@@ -32,20 +32,19 @@ class ProductImageView extends StatefulWidget {
 class _ProductImageViewState extends State<ProductImageView> {
   final PageController _controller = PageController();
 
-  List<dynamic> imagesForIndex;
+  List<dynamic> imagesForIndex = [];
   //int imagesIndex=0;
 
   @override
   void initState() {
     super.initState();
-    if (widget.productModel.imagesWithOutColor != null &&
-        widget.productModel.imagesWithOutColor.length != 0) {
-      imagesForIndex = widget.productModel.imagesWithOutColor;
+    if (widget.productModel?.imagesWithOutColor.length != 0) {
+      imagesForIndex = widget.productModel?.imagesWithOutColor ?? [];
     } else {
       // widget.productModel.imagesWithColor.map((key, value) {
       //   print(value.toString());
       // });
-      imagesForIndex = widget.productModel.imagesWithColor[widget.indexColor];
+      imagesForIndex = widget.productModel?.imagesWithColor[widget.indexColor];
     }
   }
 
@@ -70,10 +69,9 @@ class _ProductImageViewState extends State<ProductImageView> {
                   bottomRight: Radius.circular(20)),
               boxShadow: [
                 BoxShadow(
-                    color: Colors.grey[
-                        Provider.of<ThemeProvider>(context).darkTheme
-                            ? 700
-                            : 300],
+                    color: Provider.of<ThemeProvider>(context).darkTheme
+                        ? Color(0xFF616161)
+                        : Color(0xFFE0E0E0),
                     spreadRadius: 1,
                     blurRadius: 5)
               ],
@@ -88,38 +86,33 @@ class _ProductImageViewState extends State<ProductImageView> {
             child: Stack(children: [
               SizedBox(
                 height: MediaQuery.of(context).size.width,
-                child: imagesForIndex != null
-                    ? PageView.builder(
-                        controller: _controller,
-                        itemCount: imagesForIndex.length,
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                            child: FadeInImage.assetNetwork(
-                              fit: BoxFit.cover,
-                              placeholder: Images.placeholder,
-                              height: MediaQuery.of(context).size.width,
-                              width: MediaQuery.of(context).size.width,
-                              image: widget
-                                          .productModel.imagesListToEachColor ==
-                                      0
-                                  ? '${Provider.of<SplashProvider>(context, listen: true).baseUrls.productImageUrl}/${imagesForIndex[index]}'
-                                  : '${Provider.of<SplashProvider>(context, listen: true).baseUrls.productImageUrl}/${widget.indexColor}/${imagesForIndex[index]}',
-                              imageErrorBuilder: (c, o, s) => Image.asset(
-                                Images.placeholder,
-                                height: MediaQuery.of(context).size.width,
-                                width: MediaQuery.of(context).size.width,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          );
-                        },
-                        onPageChanged: (index) {
-                          Provider.of<ProductDetailsProvider>(context,
-                                  listen: false)
-                              .setImageSliderSelectedIndex(index);
-                        },
-                      )
-                    : SizedBox(),
+                child: PageView.builder(
+                  controller: _controller,
+                  itemCount: imagesForIndex.length,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      child: FadeInImage.assetNetwork(
+                        fit: BoxFit.cover,
+                        placeholder: Images.placeholder,
+                        height: MediaQuery.of(context).size.width,
+                        width: MediaQuery.of(context).size.width,
+                        image: widget.productModel?.imagesListToEachColor == 0
+                            ? '${Provider.of<SplashProvider>(context, listen: true).baseUrls?.productImageUrl ?? ""}/${imagesForIndex[index]}'
+                            : '${Provider.of<SplashProvider>(context, listen: true).baseUrls?.productImageUrl ?? ""}/${widget.indexColor}/${imagesForIndex[index]}',
+                        imageErrorBuilder: (c, o, s) => Image.asset(
+                          Images.placeholder,
+                          height: MediaQuery.of(context).size.width,
+                          width: MediaQuery.of(context).size.width,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    );
+                  },
+                  onPageChanged: (index) {
+                    Provider.of<ProductDetailsProvider>(context, listen: false)
+                        .setImageSliderSelectedIndex(index);
+                  },
+                ),
               ),
               Positioned(
                 left: 0,
@@ -144,7 +137,7 @@ class _ProductImageViewState extends State<ProductImageView> {
                                   .PADDING_SIZE_DEFAULT, /*bottom: Dimensions.PADDING_SIZE_DEFAULT*/
                             ),
                             child: Text(
-                                '${Provider.of<ProductDetailsProvider>(context).imageSliderIndex + 1}' +
+                                '${(Provider.of<ProductDetailsProvider>(context).imageSliderIndex ?? 0) + 1}' +
                                     '/' +
                                     '${imagesForIndex.length.toString()}'),
                           )
@@ -163,7 +156,7 @@ class _ProductImageViewState extends State<ProductImageView> {
                       isSelected:
                           Provider.of<WishListProvider>(context, listen: false)
                               .isWish,
-                      productId: widget.productModel.id,
+                      productId: widget.productModel?.id ?? -1,
                     ),
                     SizedBox(
                       height: Dimensions.PADDING_SIZE_SMALL,
@@ -174,10 +167,12 @@ class _ProductImageViewState extends State<ProductImageView> {
                                     listen: false)
                                 .sharableLink !=
                             null) {
-                          Share.share(Provider.of<ProductDetailsProvider>(
-                                  context,
-                                  listen: false)
-                              .sharableLink);
+                          Share.share(
+                            Provider.of<ProductDetailsProvider>(context,
+                                        listen: false)
+                                    .sharableLink ??
+                                "",
+                          );
                         }
                       },
                       child: Card(
@@ -200,8 +195,7 @@ class _ProductImageViewState extends State<ProductImageView> {
                   ],
                 ),
               ),
-              widget.productModel.unitPrice != null &&
-                      widget.productModel.discount != 0
+              widget.productModel?.discount != 0
                   ? Positioned(
                       left: 0,
                       top: 0,
@@ -217,7 +211,7 @@ class _ProductImageViewState extends State<ProductImageView> {
                                     bottomRight: Radius.circular(
                                         Dimensions.PADDING_SIZE_SMALL))),
                             child: Text(
-                              '${PriceConverter.percentageCalculation(context, widget.productModel.unitPrice, widget.productModel.discount, widget.productModel.discountType)}',
+                              '${PriceConverter.percentageCalculation(context, widget.productModel?.unitPrice ?? 0.0, widget.productModel?.discount ?? 0.0, widget.productModel?.discountType ?? "")}',
                               style: titilliumRegular.copyWith(
                                   color: Theme.of(context).cardColor,
                                   fontSize: Dimensions.FONT_SIZE_LARGE),
