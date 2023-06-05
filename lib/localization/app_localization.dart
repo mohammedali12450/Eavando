@@ -39,7 +39,7 @@ class _DemoLocalizationsDelegate
   bool isSupported(Locale locale) {
     List<String> _languageString = [];
     AppConstants.languages.forEach((language) {
-      _languageString.add(language.languageCode);
+      _languageString.add(language.languageCode ?? "49");
     });
     return _languageString.contains(locale.languageCode);
   }

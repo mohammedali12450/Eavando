@@ -82,8 +82,9 @@ class ProductProvider extends ChangeNotifier {
           context, offset.toString(), productType, title);
       if (apiResponse.response != null &&
           apiResponse.response!.statusCode == 200) {
-        _latestProductList
-            .addAll(ProductModel.fromJson(apiResponse.response!.data).products);
+        _latestProductList.addAll(
+          ProductModel.fromJson(apiResponse.response!.data).products ?? [],
+        );
         _latestPageSize =
             ProductModel.fromJson(apiResponse.response!.data).totalSize;
         _filterFirstLoading = false;
@@ -112,8 +113,9 @@ class ProductProvider extends ChangeNotifier {
       ApiResponse apiResponse = await productRepo.getLProductList(offset);
       if (apiResponse.response != null &&
           apiResponse.response!.statusCode == 200) {
-        _lProductList
-            .addAll(ProductModel.fromJson(apiResponse.response!.data).products);
+        _lProductList.addAll(
+          ProductModel.fromJson(apiResponse.response!.data).products ?? [],
+        );
         _lPageSize =
             ProductModel.fromJson(apiResponse.response!.data).totalSize;
         _firstLoading = false;
@@ -133,7 +135,7 @@ class ProductProvider extends ChangeNotifier {
   Future<int> getLatestOffset(BuildContext context) async {
     ApiResponse apiResponse = await productRepo.getLatestProductList(
         context, '1', productType, title);
-    return ProductModel.fromJson(apiResponse.response!.data).totalSize;
+    return ProductModel.fromJson(apiResponse.response!.data).totalSize ?? 0;
   }
 
   void changeTypeOfProduct(ProductType type, String title) {
@@ -172,10 +174,12 @@ class ProductProvider extends ChangeNotifier {
     if (apiResponse.response != null &&
         apiResponse.response!.statusCode == 200) {
       _sellerProductList = [];
-      _sellerProductList
-          .addAll(ProductModel.fromJson(apiResponse.response!.data).products);
-      _sellerAllProductList
-          .addAll(ProductModel.fromJson(apiResponse.response!.data).products);
+      _sellerProductList.addAll(
+        ProductModel.fromJson(apiResponse.response!.data).products ?? [],
+      );
+      _sellerAllProductList.addAll(
+        ProductModel.fromJson(apiResponse.response!.data).products ?? [],
+      );
       _sellerPageSize =
           ProductModel.fromJson(apiResponse.response!.data).totalSize;
       _firstLoading = false;
@@ -192,7 +196,9 @@ class ProductProvider extends ChangeNotifier {
     if (newText.isNotEmpty) {
       _sellerProductList = [];
       _sellerAllProductList.forEach((product) {
-        if (product.name.toLowerCase().contains(newText.toLowerCase())) {
+        if ((product.name ?? "")
+            .toLowerCase()
+            .contains(newText.toLowerCase())) {
           _sellerProductList.add(product);
         }
       });
@@ -268,8 +274,9 @@ class ProductProvider extends ChangeNotifier {
           await productRepo.getFeaturedProductList(offset);
       if (apiResponse.response != null &&
           apiResponse.response!.statusCode == 200) {
-        _featuredProductList
-            .addAll(ProductModel.fromJson(apiResponse.response!.data).products);
+        _featuredProductList.addAll(
+          ProductModel.fromJson(apiResponse.response!.data).products ?? [],
+        );
         _featuredPageSize =
             ProductModel.fromJson(apiResponse.response!.data).totalSize;
         _firstFeaturedLoading = false;

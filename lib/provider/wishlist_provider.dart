@@ -39,7 +39,9 @@ class WishListProvider extends ChangeNotifier {
 
     if (query.isNotEmpty) {
       List<Product> products = _allWishList?.where((product) {
-            return product.name.toLowerCase().contains(query.toLowerCase());
+            return (product.name ?? "")
+                .toLowerCase()
+                .contains(query.toLowerCase());
           }).toList() ??
           [];
       _wishList?.addAll(products);
@@ -102,9 +104,10 @@ class WishListProvider extends ChangeNotifier {
       for (int i = 0; i < apiResponse.response!.data.length; i++) {
         ApiResponse productResponse = await productDetailsRepo.getProduct(
           WishListModel.fromJson(apiResponse.response!.data[i])
-              .product
-              .slug
-              .toString(),
+                  .product
+                  ?.slug
+                  .toString() ??
+              "",
         );
         if (productResponse.response != null &&
             productResponse.response!.statusCode == 200) {

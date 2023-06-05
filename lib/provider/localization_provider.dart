@@ -14,7 +14,7 @@ class LocalizationProvider extends ChangeNotifier {
     _loadCurrentLanguage();
   }
 
-  Locale _locale = Locale(AppConstants.languages[0].languageCode,
+  Locale _locale = Locale(AppConstants.languages[0].languageCode ?? "de",
       AppConstants.languages[0].countryCode);
   Locale get locale => _locale;
 
@@ -41,7 +41,8 @@ class LocalizationProvider extends ChangeNotifier {
   _loadCurrentLanguage() async {
     _locale = Locale(
         sharedPreferences.getString(AppConstants.LANGUAGE_CODE) ??
-            AppConstants.languages[0].languageCode,
+            AppConstants.languages[0].languageCode ??
+            "de",
         sharedPreferences.getString(AppConstants.COUNTRY_CODE) ??
             AppConstants.languages[0].countryCode);
     _isLtr = _locale.languageCode != 'en';

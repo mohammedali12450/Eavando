@@ -45,7 +45,7 @@ class SplashProvider extends ChangeNotifier {
       for (CurrencyList currencyList in _configModel?.currencyList ?? []) {
         if (currencyList.id == (_configModel?.systemDefaultCurrency ?? -1)) {
           if (_currencyCode.isEmpty) {
-            _currencyCode = currencyList.code;
+            _currencyCode = currencyList.code ?? "de";
           }
           _defaultCurrency = currencyList;
         }
@@ -73,18 +73,18 @@ class SplashProvider extends ChangeNotifier {
   }
 
   void getCurrencyData(String currencyCode) {
-    _configModel?.currencyList.forEach((currency) {
+    _configModel?.currencyList?.forEach((currency) {
       if (currencyCode == currency.code) {
         _myCurrency = currency;
-        _currencyIndex = _configModel?.currencyList.indexOf(currency);
+        _currencyIndex = _configModel?.currencyList?.indexOf(currency);
         return;
       }
     });
   }
 
   void setCurrency(int index) {
-    splashRepo.setCurrency(_configModel?.currencyList[index].code ?? "");
-    getCurrencyData(_configModel?.currencyList[index].code ?? "");
+    splashRepo.setCurrency(_configModel?.currencyList?[index].code ?? "");
+    getCurrencyData(_configModel?.currencyList?[index].code ?? "");
     notifyListeners();
   }
 

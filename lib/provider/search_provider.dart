@@ -33,8 +33,8 @@ class SearchProvider with ChangeNotifier {
     if (startingPrice > 0 && endingPrice > startingPrice) {
       _searchProductList?.addAll(_filterProductList
               ?.where((product) =>
-                  (product.unitPrice) > startingPrice &&
-                  (product.unitPrice) < endingPrice)
+                  (product.unitPrice ?? 0) > startingPrice &&
+                  (product.unitPrice ?? 0) < endingPrice)
               .toList() ??
           []);
     } else {
@@ -43,17 +43,19 @@ class SearchProvider with ChangeNotifier {
 
     if (_filterIndex == 0) {
     } else if (_filterIndex == 1) {
-      _searchProductList?.sort(
-          (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+      _searchProductList?.sort((a, b) =>
+          (a.name ?? "").toLowerCase().compareTo(b.name?.toLowerCase() ?? ""));
     } else if (_filterIndex == 2) {
-      _searchProductList?.sort(
-          (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+      _searchProductList?.sort((a, b) =>
+          (a.name ?? "").toLowerCase().compareTo(b.name?.toLowerCase() ?? ""));
       Iterable<Product>? iterable = _searchProductList?.reversed;
       _searchProductList = iterable?.toList();
     } else if (_filterIndex == 3) {
-      _searchProductList?.sort((a, b) => a.unitPrice.compareTo(b.unitPrice));
+      _searchProductList
+          ?.sort((a, b) => (a.unitPrice ?? 0).compareTo(b.unitPrice ?? 0));
     } else if (_filterIndex == 4) {
-      _searchProductList?.sort((a, b) => a.unitPrice.compareTo(b.unitPrice));
+      _searchProductList
+          ?.sort((a, b) => (a.unitPrice ?? 0).compareTo(b.unitPrice ?? 0));
       Iterable<Product> iterable = _searchProductList?.reversed ?? [];
       _searchProductList = iterable.toList();
     }
@@ -90,10 +92,12 @@ class SearchProvider with ChangeNotifier {
       } else {
         _searchProductList = [];
         _searchProductList?.addAll(
-            ProductModel.fromJson(apiResponse.response!.data).products);
+          ProductModel.fromJson(apiResponse.response!.data).products ?? [],
+        );
         _filterProductList = [];
         _filterProductList?.addAll(
-            ProductModel.fromJson(apiResponse.response!.data).products);
+          ProductModel.fromJson(apiResponse.response!.data).products ?? [],
+        );
       }
     } else {
       ApiChecker.checkApi(context, apiResponse);

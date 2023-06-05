@@ -66,9 +66,9 @@ class ProductDetailsRepo {
       }
     }
     request.fields.addAll(<String, String>{
-      'product_id': reviewBody.productId,
-      'comment': reviewBody.comment,
-      'rating': reviewBody.rating
+      'product_id': reviewBody.productId ?? "",
+      'comment': reviewBody.comment ?? "",
+      'rating': reviewBody.rating ?? ""
     });
     http.StreamedResponse response = await request.send();
     print(response.reasonPhrase);

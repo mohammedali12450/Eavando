@@ -48,7 +48,9 @@ class BrandProvider extends ChangeNotifier {
       _brandList?.clear();
       _brandList?.addAll(_originalBrandList);
       _brandList?.sort(
-          (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+        (a, b) =>
+            (a.name ?? "").toLowerCase().compareTo(b.name?.toLowerCase() ?? ""),
+      );
       isTopBrand = false;
       isAZ = true;
       isZA = false;
@@ -56,7 +58,9 @@ class BrandProvider extends ChangeNotifier {
       _brandList?.clear();
       _brandList?.addAll(_originalBrandList);
       _brandList?.sort(
-          (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+        (a, b) =>
+            (a.name ?? "").toLowerCase().compareTo(b.name?.toLowerCase() ?? ""),
+      );
       Iterable<BrandModel> iterable = _brandList?.reversed ?? [];
       _brandList = iterable.toList();
       isTopBrand = false;

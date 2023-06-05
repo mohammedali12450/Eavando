@@ -206,8 +206,8 @@ class ProfileProvider extends ChangeNotifier {
         errorMessage = apiResponse.error.toString();
       } else {
         ErrorResponse errorResponse = apiResponse.error;
-        print(errorResponse.errors[0].message);
-        errorMessage = errorResponse.errors[0].message;
+        print(errorResponse.errors?[0].message ?? "");
+        errorMessage = errorResponse.errors?[0].message ?? "";
       }
       callback(false, errorMessage);
     }

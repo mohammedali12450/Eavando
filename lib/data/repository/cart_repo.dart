@@ -41,17 +41,17 @@ class CartRepo {
     Map<String, dynamic> _choice = Map();
     for (int index = 0; index < choiceOptions.length; index++) {
       _choice.addAll({
-        choiceOptions[index].name:
-            choiceOptions[index].options[variationIndexes[index]]
+        choiceOptions[index].name ?? "":
+            choiceOptions[index].options?[variationIndexes[index]]
       });
     }
     Map<String, dynamic> _data = {
       'id': cart.id,
-      'variant': cart.variation.type,
+      'variant': cart.variation?.type ?? "",
       'quantity': cart.quantity
     };
     _data.addAll(_choice);
-    if (cart.variant.isNotEmpty) {
+    if (cart.variant?.isNotEmpty ?? false) {
       _data.addAll({'color': cart.color});
     }
 

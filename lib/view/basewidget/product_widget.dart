@@ -17,8 +17,11 @@ class ProductWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String ratting =
-        productModel.rating.length != 0 ? productModel.rating[0].average : "0";
+    String ratting = (productModel.rating?.length ?? 0) != 0
+        ? productModel.rating != null
+            ? productModel.rating![0].average ?? "0"
+            : "0"
+        : "0";
 
     /// price
     double _startingPrice = 0;

@@ -69,7 +69,7 @@ class ChatProvider extends ChangeNotifier {
         messageBody, _userTypeIndex == 0 ? 'seller' : 'delivery-man');
     if (apiResponse.response != null &&
         apiResponse.response!.statusCode == 200) {
-      getMessageList(context, messageBody.id, 1);
+      getMessageList(context, messageBody.id ?? -1, 1);
     } else {
       ApiChecker.checkApi(context, apiResponse);
     }

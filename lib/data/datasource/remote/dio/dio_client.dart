@@ -22,7 +22,8 @@ class DioClient {
   }) {
     token = sharedPreferences.getString(AppConstants.TOKEN);
     countryCode = sharedPreferences.getString(AppConstants.COUNTRY_CODE) ??
-        AppConstants.languages[0].countryCode;
+        AppConstants.languages[0].countryCode ??
+        "49";
     print("NNNN $token");
     dio
       ..options.baseUrl = baseUrl

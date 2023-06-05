@@ -97,16 +97,16 @@ class ProfileRepo {
     if (pass.isEmpty) {
       _fields.addAll(<String, String>{
         '_method': 'put',
-        'f_name': userInfoModel.fName,
-        'l_name': userInfoModel.lName,
-        'phone': userInfoModel.phone
+        'f_name': userInfoModel.fName ?? "",
+        'l_name': userInfoModel.lName ?? "",
+        'phone': userInfoModel.phone ?? "",
       });
     } else {
       _fields.addAll(<String, String>{
         '_method': 'put',
-        'f_name': userInfoModel.fName,
-        'l_name': userInfoModel.lName,
-        'phone': userInfoModel.phone,
+        'f_name': userInfoModel.fName ?? "",
+        'l_name': userInfoModel.lName ?? "",
+        'phone': userInfoModel.phone ?? "",
         'password': pass
       });
     }

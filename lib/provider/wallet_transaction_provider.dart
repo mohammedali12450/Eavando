@@ -43,7 +43,8 @@ class WalletTransactionProvider extends ChangeNotifier {
       _walletBalance = TransactionModel.fromJson(apiResponse.response!.data);
       _transactionList.addAll(
           TransactionModel.fromJson(apiResponse.response!.data)
-              .walletTransactioList);
+                  .walletTransactioList ??
+              []);
       _transactionPageSize =
           TransactionModel.fromJson(apiResponse.response!.data)
               .totalWalletTransactio;
@@ -66,7 +67,8 @@ class WalletTransactionProvider extends ChangeNotifier {
         apiResponse.response!.statusCode == 200) {
       _loyaltyPointList?.addAll(
           LoyaltyPointModel.fromJson(apiResponse.response!.data)
-              .loyaltyPointList);
+                  .loyaltyPointList ??
+              []);
       _loyaltyPointPageSize =
           LoyaltyPointModel.fromJson(apiResponse.response!.data)
               .totalLoyaltyPoint;

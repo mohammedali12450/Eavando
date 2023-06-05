@@ -38,7 +38,7 @@ class HomeCategoryProductProvider extends ChangeNotifier {
               _homeCategoryProductList
                   .add(HomeCategoryProduct.fromJson(homeCategoryProduct)));
           _homeCategoryProductList.forEach((product) {
-            _productList.addAll(product.products);
+            _productList.addAll(product.products ?? []);
           });
         }
       } else {

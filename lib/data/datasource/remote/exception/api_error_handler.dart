@@ -32,7 +32,7 @@ class ApiErrorHandler {
                 default:
                   ErrorResponse errorResponse =
                       ErrorResponse.fromJson(error.response?.data ?? {});
-                  if (errorResponse.errors.length > 0)
+                  if ((errorResponse.errors?.length ?? 0) > 0)
                     errorDescription = errorResponse;
                   else
                     errorDescription =

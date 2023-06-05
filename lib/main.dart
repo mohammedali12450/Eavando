@@ -134,7 +134,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Locale> _locals = [];
     AppConstants.languages.forEach((language) {
-      _locals.add(Locale(language.languageCode, language.countryCode));
+      _locals.add(
+        Locale(
+          language.languageCode ?? "de",
+          language.countryCode,
+        ),
+      );
     });
     return MaterialApp(
       title: AppConstants.APP_NAME,

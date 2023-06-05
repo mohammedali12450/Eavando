@@ -58,7 +58,7 @@ class CartProvider extends ChangeNotifier {
     _cartList.addAll(cartRepo.getCartList());
     _cartList.forEach((cart) {
       _isSelectedList.add(true);
-      _amount = _amount + (cart.discountedPrice * cart.quantity);
+      _amount = _amount + ((cart.discountedPrice ?? 0) * (cart.quantity ?? 0));
     });
   }
 
@@ -66,14 +66,16 @@ class CartProvider extends ChangeNotifier {
     _cartList.add(cartModel);
     _isSelectedList.add(true);
     cartRepo.addToCartList(_cartList);
-    _amount = _amount + (cartModel.discountedPrice * cartModel.quantity);
+    _amount = _amount +
+        ((cartModel.discountedPrice ?? 0) * (cartModel.quantity ?? 0));
     notifyListeners();
   }
 
   void removeFromCart(int index) {
     if (_isSelectedList[index]) {
       _amount = _amount -
-          (_cartList[index].discountedPrice * _cartList[index].quantity);
+          ((_cartList[index].discountedPrice ?? 0) *
+              (_cartList[index].quantity ?? 0));
     }
     _cartList.removeAt(index);
     _isSelectedList.removeAt(index);
@@ -96,7 +98,7 @@ class CartProvider extends ChangeNotifier {
 
   void removeCheckoutProduct(List<CartModel> carts) {
     carts.forEach((cart) {
-      _amount = _amount - (cart.discountedPrice * cart.quantity);
+      _amount = _amount - ((cart.discountedPrice ?? 0) * (cart.quantity ?? 0));
       _cartList.removeWhere((cartModel) => cartModel.id == cart.id);
       _isSelectedList.removeWhere((selected) => selected);
     });
@@ -146,8 +148,8 @@ class CartProvider extends ChangeNotifier {
         errorMessage = apiResponse.error.toString();
       } else {
         ErrorResponse errorResponse = apiResponse.error;
-        print(errorResponse.errors[0].message);
-        errorMessage = errorResponse.errors[0].message;
+        print(errorResponse.errors?[0].message ?? "");
+        errorMessage = errorResponse.errors?[0].message ?? "";
       }
       _updateQuantityErrorText = errorMessage;
       responseModel = ResponseModel(errorMessage, false);
@@ -158,14 +160,14 @@ class CartProvider extends ChangeNotifier {
 
   void setQuantity(bool isIncrement, int index) {
     if (isIncrement) {
-      _cartList[index].quantity = _cartList[index].quantity + 1;
+      _cartList[index].quantity = (_cartList[index].quantity ?? 0) + 1;
       _isSelectedList[index]
-          ? _amount = _amount + _cartList[index].discount
+          ? _amount = _amount + (_cartList[index].discount ?? 0)
           : _amount = _amount;
     } else {
-      _cartList[index].quantity = _cartList[index].quantity - 1;
+      _cartList[index].quantity = (_cartList[index].quantity ?? 0) - 1;
       _isSelectedList[index]
-          ? _amount = _amount - _cartList[index].discount
+          ? _amount = _amount - (_cartList[index].discount ?? 0)
           : _amount = _amount;
     }
     cartRepo.addToCartList(_cartList);
@@ -177,7 +179,8 @@ class CartProvider extends ChangeNotifier {
     _amount = 0.0;
     for (int i = 0; i < _isSelectedList.length; i++) {
       if (_isSelectedList[i]) {
-        _amount = _amount + (_cartList[i].discount * _cartList[index].quantity);
+        _amount = _amount +
+            ((_cartList[i].discount ?? 0) * (_cartList[index].quantity ?? 0));
       }
     }
 
@@ -194,7 +197,8 @@ class CartProvider extends ChangeNotifier {
       _amount = 0.0;
       for (int i = 0; i < _isSelectedList.length; i++) {
         _isSelectedList[i] = true;
-        _amount = _amount + (_cartList[i].discount * _cartList[i].quantity);
+        _amount = _amount +
+            ((_cartList[i].discount ?? 0) * (_cartList[i].quantity ?? 0));
       }
     } else {
       _amount = 0.0;
@@ -232,8 +236,8 @@ class CartProvider extends ChangeNotifier {
         errorMessage = apiResponse.error.toString();
       } else {
         ErrorResponse errorResponse = apiResponse.error;
-        print(errorResponse.errors[0].message);
-        errorMessage = errorResponse.errors[0].message;
+        print(errorResponse.errors?[0].message ?? "");
+        errorMessage = errorResponse.errors?[0].message ?? "";
       }
       callback(false, errorMessage);
     }
@@ -263,8 +267,8 @@ class CartProvider extends ChangeNotifier {
         errorMessage = apiResponse.error.toString();
       } else {
         ErrorResponse errorResponse = apiResponse.error;
-        print(errorResponse.errors[0].message);
-        errorMessage = errorResponse.errors[0].message;
+        print(errorResponse.errors?[0].message ?? "");
+        errorMessage = errorResponse.errors?[0].message ?? "";
       }
       _updateQuantityErrorText = errorMessage;
       responseModel = ResponseModel(errorMessage, false);
@@ -282,13 +286,13 @@ class CartProvider extends ChangeNotifier {
     List<String> groupList = [];
     _shippingList = [];
     for (List<CartModel> element in cartProdList) {
-      sellerIdList.add(element[0].sellerId);
-      sellerTypeList.add(element[0].sellerIs);
-      groupList.add(element[0].cartGroupId);
+      sellerIdList.add(element[0].sellerId ?? -1);
+      sellerTypeList.add(element[0].sellerIs ?? "false");
+      groupList.add(element[0].cartGroupId ?? "-1");
       _shippingList?.add(ShippingModel(
         -1,
-        element[0].cartGroupId,
-        shippingMethodList: <ShippingMethodModel>[],
+        element[0].cartGroupId ?? "-1",
+        <ShippingMethodModel>[],
       ));
     }
 
@@ -304,20 +308,20 @@ class CartProvider extends ChangeNotifier {
             _shippingMethodList.add(ShippingMethodModel.fromJson(shipping)));
 
         _shippingList?[i].shippingMethodList = [];
-        _shippingList?[i].shippingMethodList?.addAll(_shippingMethodList);
+        _shippingList?[i].shippingMethodList.addAll(_shippingMethodList);
         int _index = -1;
         int _shipId = -1;
         for (ChosenShippingMethodModel cs in _chosenShippingList) {
           if (cs.cartGroupId == groupList[i]) {
-            _shipId = cs.shippingMethodId;
+            _shipId = cs.shippingMethodId ?? -1;
             break;
           }
         }
         if (_shipId != -1) {
           for (int j = 0;
-              j < (_shippingList?[i].shippingMethodList?.length ?? 0);
+              j < (_shippingList?[i].shippingMethodList.length ?? 0);
               j++) {
-            if (_shippingList?[i].shippingMethodList?[j].id == _shipId) {
+            if (_shippingList?[i].shippingMethodList[j].id == _shipId) {
               _index = j;
               break;
             }
@@ -340,21 +344,20 @@ class CartProvider extends ChangeNotifier {
     ApiResponse apiResponse = await cartRepo.getShippingMethod(1, 'admin');
     if (apiResponse.response != null &&
         apiResponse.response!.statusCode == 200) {
-      _shippingList?.add(
-          ShippingModel(-1, '', shippingMethodList: <ShippingMethodModel>[]));
+      _shippingList?.add(ShippingModel(-1, '', <ShippingMethodModel>[]));
       List<ShippingMethodModel> _shippingMethodList = [];
       apiResponse.response!.data.forEach((shipping) =>
           _shippingMethodList.add(ShippingMethodModel.fromJson(shipping)));
 
       _shippingList?[0].shippingMethodList = [];
-      _shippingList?[0].shippingMethodList?.addAll(_shippingMethodList);
+      _shippingList?[0].shippingMethodList.addAll(_shippingMethodList);
       int _index = -1;
 
       if (_chosenShippingList.length > 0) {
         for (int j = 0;
-            j < (_shippingList?[0].shippingMethodList?.length ?? 0);
+            j < (_shippingList?[0].shippingMethodList.length ?? 0);
             j++) {
-          if (_shippingList?[0].shippingMethodList?[j].id ==
+          if (_shippingList?[0].shippingMethodList[j].id ==
               _chosenShippingList[0].shippingMethodId) {
             _index = j;
             break;
@@ -395,7 +398,7 @@ class CartProvider extends ChangeNotifier {
       _shippingList?.add(ShippingModel(
         0,
         '',
-        shippingMethodList: <ShippingMethodModel>[],
+        <ShippingMethodModel>[],
       ));
     }
   }
@@ -422,8 +425,8 @@ class CartProvider extends ChangeNotifier {
         errorMessage = apiResponse.error.toString();
       } else {
         ErrorResponse errorResponse = apiResponse.error;
-        print(errorResponse.errors[0].message);
-        errorMessage = errorResponse.errors[0].message;
+        print(errorResponse.errors?[0].message ?? "");
+        errorMessage = errorResponse.errors?[0].message ?? "";
       }
       callback(false, errorMessage);
       notifyListeners();
@@ -437,8 +440,8 @@ class CartProvider extends ChangeNotifier {
           cartRepo.getCartList()[index],
           (success, message) {},
           context,
-          cartRepo.getCartList()[index].choiceOptions,
-          cartRepo.getCartList()[index].variationIndexes,
+          cartRepo.getCartList()[index].choiceOptions ?? [],
+          cartRepo.getCartList()[index].variationIndexes ?? [],
         );
         if (index == cartRepo.getCartList().length - 1) {
           _cartList = [];
