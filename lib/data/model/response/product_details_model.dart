@@ -129,7 +129,7 @@ class ProductDetailsModel {
     refundable = json['refundable'];
     digitalProductType = json['digital_product_type'];
     digitalFileReady = json['digital_file_ready'];
-    images = json['images'].cast<String>();
+    images = json['images']?.cast<String>();
     thumbnail = json['thumbnail'];
     featured = json['featured'];
     videoProvider = json['video_provider'];
@@ -162,11 +162,11 @@ class ProductDetailsModel {
       });
     }
     published = json['published'];
-    unitPrice = json['unit_price'].toDouble();
-    purchasePrice = json['purchase_price'].toDouble();
-    tax = json['tax'].toDouble();
+    unitPrice = json['unit_price']?.toDouble();
+    purchasePrice = json['purchase_price']?.toDouble();
+    tax = json['tax']?.toDouble();
     taxType = json['tax_type'];
-    discount = json['discount'].toDouble();
+    discount = json['discount']?.toDouble();
     discountType = json['discount_type'];
     currentStock = json['current_stock'];
     if (json['minimum_order_qty'] != null) {
@@ -186,7 +186,7 @@ class ProductDetailsModel {
     metaImage = json['meta_image'];
     requestStatus = int.parse(json['request_status'].toString());
     deniedNote = json['denied_note'];
-    shippingCost = json['shipping_cost'].toDouble();
+    shippingCost = json['shipping_cost']?.toDouble();
     multiplyQty = json['multiply_qty'];
     code = json['code'];
     reviewsCount = int.parse(json['reviews_count'].toString());

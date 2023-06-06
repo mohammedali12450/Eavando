@@ -54,9 +54,9 @@ class OrderDetailsModel {
       productDetails = Product.fromJson(json['product_details']);
     }
     qty = json['qty'];
-    price = json['price'].toDouble();
-    tax = json['tax'].toDouble();
-    discount = json['discount'].toDouble();
+    price = json['price']?.toDouble();
+    tax = json['tax']?.toDouble();
+    discount = json['discount']?.toDouble();
     deliveryStatus = json['delivery_status'];
     paymentStatus = json['payment_status'];
     createdAt = json['created_at'];

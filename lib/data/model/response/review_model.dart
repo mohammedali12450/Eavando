@@ -29,7 +29,7 @@ class ReviewModel {
     customerId = json['customer_id'];
     comment = json['comment'];
     if (json['attachment'] != null) {
-      attachment = json['attachment'].cast<String>();
+      attachment = json['attachment']?.cast<String>();
     }
 
     rating = json['rating'];

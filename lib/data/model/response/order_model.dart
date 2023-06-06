@@ -62,7 +62,7 @@ class OrderModel {
     orderStatus = json['order_status'];
     paymentMethod = json['payment_method'];
     transactionRef = json['transaction_ref'];
-    orderAmount = json['order_amount'].toDouble();
+    orderAmount = json['order_amount']?.toDouble();
     shippingAddress = json['shipping_address'];
     shippingAddressData = json['shipping_address_data'] != null
         ? new ShippingAddressData.fromJson(json['shipping_address_data'])
@@ -81,11 +81,11 @@ class OrderModel {
       createdAt = json['created_at'];
     }
     updatedAt = json['updated_at'];
-    discountAmount = json['discount_amount'].toDouble();
+    discountAmount = json['discount_amount']?.toDouble();
     discountType = json['discount_type'];
     orderNote = json['order_note'];
     orderType = json['order_type'];
-    extraDiscount = json['extra_discount'].toDouble();
+    extraDiscount = json['extra_discount']?.toDouble();
     extraDiscountType = json['extra_discount_type'];
     if (json['delivery_service_name'] != null &&
         json['delivery_service_name'] != "") {

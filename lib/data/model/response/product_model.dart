@@ -186,18 +186,18 @@ class Product {
       }
     }
     if (json['unit_price'] != null) {
-      unitPrice = json['unit_price'].toDouble();
+      unitPrice = json['unit_price']?.toDouble();
     }
     if (json['purchase_price'] != null) {
-      purchasePrice = json['purchase_price'].toDouble();
+      purchasePrice = json['purchase_price']?.toDouble();
     }
 
     if (json['tax'] != null) {
-      tax = json['tax'].toDouble();
+      tax = json['tax']?.toDouble();
     }
     taxType = json['tax_type'];
     if (json['discount'] != null) {
-      discount = json['discount'].toDouble();
+      discount = json['discount']?.toDouble();
     }
     discountType = json['discount_type'];
     currentStock = json['current_stock'];

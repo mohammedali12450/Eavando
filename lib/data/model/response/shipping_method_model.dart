@@ -26,7 +26,7 @@ class ShippingMethodModel {
     creatorId = json['creator_id'];
     creatorType = json['creator_type'];
     title = json['title'];
-    cost = json['cost'].toDouble();
+    cost = json['cost']?.toDouble();
     duration = json['duration'];
     status = json['status'];
     createdAt = json['created_at'];

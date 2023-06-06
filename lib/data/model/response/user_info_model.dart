@@ -42,10 +42,10 @@ class UserInfoModel {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     if (json['wallet_balance'] != null) {
-      walletBalance = json['wallet_balance'].toDouble();
+      walletBalance = json['wallet_balance']?.toDouble();
     }
     if (json['loyalty_point'] != null) {
-      loyaltyPoint = json['loyalty_point'].toDouble();
+      loyaltyPoint = json['loyalty_point']?.toDouble();
     } else {
       walletBalance = 0.0;
     }

@@ -15,6 +15,6 @@ class ReviewBody {
     productId = json['product_id'];
     comment = json['comment'];
     rating = json['rating'];
-    fileUpload = json['fileUpload'].cast<String>();
+    fileUpload = json['fileUpload']?.cast<String>();
   }
 }

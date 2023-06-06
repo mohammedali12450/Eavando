@@ -17,14 +17,14 @@ class TransactionModel {
     limit = json['limit'];
     offset = json['offset'];
     if (json['total_wallet_balance'] != null) {
-      totalWalletBalance = json['total_wallet_balance'].toDouble();
+      totalWalletBalance = json['total_wallet_balance']?.toDouble();
     } else {
       totalWalletBalance = 0.0;
     }
     totalWalletTransactio = json['total_wallet_transactio'];
     if (json['wallet_transactio_list'] != null) {
       walletTransactioList = <WalletTransactioList>[];
-      json['wallet_transactio_list'].forEach((v) {
+      json['wallet_transactio_list']?.forEach((v) {
         walletTransactioList?.add(new WalletTransactioList.fromJson(v));
       });
     }
@@ -61,10 +61,10 @@ class WalletTransactioList {
     id = json['id'];
     userId = json['user_id'];
     transactionId = json['transaction_id'];
-    credit = json['credit'].toDouble();
-    debit = json['debit'].toDouble();
-    adminBonus = json['admin_bonus'].toDouble();
-    balance = json['balance'].toDouble();
+    credit = json['credit']?.toDouble();
+    debit = json['debit']?.toDouble();
+    adminBonus = json['admin_bonus']?.toDouble();
+    balance = json['balance']?.toDouble();
     transactionType = json['transaction_type'];
     reference = json['reference'];
     createdAt = json['created_at'];
