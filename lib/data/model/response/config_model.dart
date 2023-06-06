@@ -339,7 +339,7 @@ class CurrencyList {
     name = json['name'];
     symbol = json['symbol'];
     code = json['code'];
-    exchangeRate = json['exchange_rate'].toDouble();
+    exchangeRate = json['exchange_rate']?.toDouble();
     status = json['status'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
