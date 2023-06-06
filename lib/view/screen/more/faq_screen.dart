@@ -26,7 +26,7 @@ class _FaqScreenState extends State<FaqScreen> {
                   (Provider.of<SplashProvider>(context)
                               .configModel
                               ?.faq
-                              .length ??
+                              ?.length ??
                           0) >
                       0
               ? Expanded(
@@ -34,7 +34,7 @@ class _FaqScreenState extends State<FaqScreen> {
                       itemCount: Provider.of<SplashProvider>(context)
                               .configModel
                               ?.faq
-                              .length ??
+                              ?.length ??
                           0,
                       itemBuilder: (ctx, index) {
                         return Consumer<SplashProvider>(
@@ -48,7 +48,7 @@ class _FaqScreenState extends State<FaqScreen> {
                                         child: ExpansionTile(
                                       iconColor: Theme.of(context).primaryColor,
                                       title: Text(
-                                          faq.configModel?.faq[index]
+                                          faq.configModel?.faq?[index]
                                                   .question ??
                                               "",
                                           style: robotoBold.copyWith(
@@ -63,7 +63,7 @@ class _FaqScreenState extends State<FaqScreen> {
                                         Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Text(
-                                            faq.configModel?.faq[index]
+                                            faq.configModel?.faq?[index]
                                                     .answer ??
                                                 "",
                                             style: robotoRegular,

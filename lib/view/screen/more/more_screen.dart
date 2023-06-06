@@ -448,7 +448,7 @@ class _MoreScreenState extends State<MoreScreen> {
                         url: Provider.of<SplashProvider>(context, listen: false)
                                 .configModel
                                 ?.staticUrls
-                                .contactUs ??
+                                ?.contactUs ??
                             "",
                       )),
 
@@ -501,7 +501,8 @@ class _MoreScreenState extends State<MoreScreen> {
                               return InkWell(
                                 onTap: () {
                                   _launchUrl(
-                                      social.socialMediaList[index].link);
+                                    social.socialMediaList[index].link ?? "",
+                                  );
                                 },
                                 child: Container(
                                   padding: EdgeInsets.all(
@@ -515,7 +516,8 @@ class _MoreScreenState extends State<MoreScreen> {
                                   child: Padding(
                                     padding: const EdgeInsets.all(3),
                                     child: SvgPicture.network(
-                                        social.socialMediaList[index].iconUrl,
+                                        social.socialMediaList[index].iconUrl ??
+                                            "",
                                         // ignore: deprecated_member_use
                                         color: Theme.of(context)
                                             .colorScheme

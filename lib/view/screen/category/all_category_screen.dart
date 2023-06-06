@@ -64,8 +64,8 @@ class AllCategoryScreen extends StatelessWidget {
                                       listen: false)
                                   .changeSelectedIndex(index),
                               child: CategoryItem(
-                                title: _category.name,
-                                icon: _category.icon,
+                                title: _category.name ?? "",
+                                icon: _category.icon ?? "",
                                 isSelected:
                                     categoryProvider.categorySelectedIndex ==
                                         index,
@@ -81,15 +81,15 @@ class AllCategoryScreen extends StatelessWidget {
                                 .categoryList![
                                     categoryProvider.categorySelectedIndex ?? 0]
                                 .subCategories
-                                .length +
-                            1,
+                                ?.length ??
+                            0 + 1,
                         itemBuilder: (context, index) {
-                          SubCategory _subCategory = SubCategory.init();
+                          SubCategory _subCategory = SubCategory();
                           if (index != 0) {
                             _subCategory = categoryProvider
                                 .categoryList![
                                     categoryProvider.categorySelectedIndex ?? 0]
-                                .subCategories[index - 1];
+                                .subCategories![index - 1];
                           }
                           if (index == 0) {
                             return Ink(
@@ -106,23 +106,26 @@ class AllCategoryScreen extends StatelessWidget {
                                 ),
                                 onTap: () {
                                   Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (_) =>
-                                              BrandAndCategoryProductScreen(
-                                                isBrand: false,
-                                                id: categoryProvider
-                                                    .categoryList![categoryProvider
-                                                            .categorySelectedIndex ??
-                                                        0]
-                                                    .id
-                                                    .toString(),
-                                                name: categoryProvider
-                                                    .categoryList![categoryProvider
-                                                            .categorySelectedIndex ??
-                                                        0]
-                                                    .name,
-                                              )));
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) =>
+                                          BrandAndCategoryProductScreen(
+                                        isBrand: false,
+                                        id: categoryProvider
+                                            .categoryList![categoryProvider
+                                                    .categorySelectedIndex ??
+                                                0]
+                                            .id
+                                            .toString(),
+                                        name: categoryProvider
+                                                .categoryList![categoryProvider
+                                                        .categorySelectedIndex ??
+                                                    0]
+                                                .name ??
+                                            "",
+                                      ),
+                                    ),
+                                  );
                                 },
                               ),
                             );
@@ -259,7 +262,7 @@ class AllCategoryScreen extends StatelessWidget {
               SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
               Flexible(
                   child: Text(
-                subCategory.subSubCategories![index].name,
+                subCategory.subSubCategories![index].name ?? "",
                 style: titilliumSemiBold.copyWith(
                   color: Theme.of(context).textTheme.bodyLarge?.color,
                 ),
@@ -275,7 +278,7 @@ class AllCategoryScreen extends StatelessWidget {
                 builder: (_) => BrandAndCategoryProductScreen(
                   isBrand: false,
                   id: subCategory.subSubCategories![index].id.toString(),
-                  name: subCategory.subSubCategories![index].name,
+                  name: subCategory.subSubCategories![index].name ?? "",
                 ),
               ),
             );

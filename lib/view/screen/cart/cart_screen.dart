@@ -76,7 +76,7 @@ class _CartScreenState extends State<CartScreen> {
       List<List<int>> cartProductIndexList = [];
       for (CartModel cart in cartList) {
         if (!sellerList.contains(cart.cartGroupId)) {
-          sellerList.add(cart.cartGroupId);
+          sellerList.add(cart.cartGroupId ?? "-1");
           sellerGroupList.add(cart);
         }
       }
@@ -96,7 +96,7 @@ class _CartScreenState extends State<CartScreen> {
 
       sellerGroupList.forEach((seller) {
         if (seller.shippingType == 'order_wise') {
-          orderTypeShipping.add(seller.shippingType);
+          orderTypeShipping.add(seller.shippingType ?? "");
         }
       });
 
@@ -111,16 +111,18 @@ class _CartScreenState extends State<CartScreen> {
       }
 
       for (int i = 0; i < cart.cartList.length; i++) {
-        amount += (cart.cartList[i].price - cart.cartList[i].discount) *
-            cart.cartList[i].quantity;
-        discount += cart.cartList[i].discount * cart.cartList[i].quantity;
-        tax += cart.cartList[i].tax * cart.cartList[i].quantity;
+        amount +=
+            ((cart.cartList[i].price ?? 0) - (cart.cartList[i].discount ?? 0)) *
+                (cart.cartList[i].quantity ?? 0);
+        discount +=
+            (cart.cartList[i].discount ?? 0) * (cart.cartList[i].quantity ?? 0);
+        tax += (cart.cartList[i].tax ?? 0) * (cart.cartList[i].quantity ?? 0);
       }
       for (int i = 0; i < cart.chosenShippingList.length; i++) {
-        shippingAmount += cart.chosenShippingList[i].shippingCost;
+        shippingAmount += cart.chosenShippingList[i].shippingCost ?? 0;
       }
       for (int j = 0; j < cartList.length; j++) {
-        shippingAmount += cart.cartList[j].shippingCost;
+        shippingAmount += cart.cartList[j].shippingCost ?? 0;
       }
 
       return Scaffold(
@@ -378,14 +380,18 @@ class _CartScreenState extends State<CartScreen> {
                                                                     backgroundColor:
                                                                         Colors
                                                                             .transparent,
-                                                                    builder: (context) => ShippingMethodBottomSheet(
-                                                                        groupId:
-                                                                            sellerGroupList[index]
-                                                                                .cartGroupId,
-                                                                        sellerIndex:
-                                                                            index,
-                                                                        sellerId:
-                                                                            sellerGroupList[index].id),
+                                                                    builder:
+                                                                        (context) =>
+                                                                            ShippingMethodBottomSheet(
+                                                                      groupId:
+                                                                          sellerGroupList[index].cartGroupId ??
+                                                                              "-1",
+                                                                      sellerIndex:
+                                                                          index,
+                                                                      sellerId:
+                                                                          sellerGroupList[index].id ??
+                                                                              -1,
+                                                                    ),
                                                                   );
                                                                 } else {
                                                                   showCustomSnackBar(
@@ -426,7 +432,7 @@ class _CartScreenState extends State<CartScreen> {
                                                                               Text(
                                                                             (cart.shippingList == null || cart.shippingList?[index].shippingMethodList == null || cart.chosenShippingList.length == 0 || cart.shippingList?[index].shippingIndex == -1)
                                                                                 ? ''
-                                                                                : '${cart.shippingList?[index].shippingMethodList?[cart.shippingList?[index].shippingIndex ?? 0].title.toString()}',
+                                                                                : '${cart.shippingList?[index].shippingMethodList[cart.shippingList?[index].shippingIndex ?? 0].title.toString()}',
                                                                             style:
                                                                                 titilliumSemiBold.copyWith(color: ColorResources.getPrimary(context)),
                                                                             maxLines:
@@ -528,7 +534,7 @@ class _CartScreenState extends State<CartScreen> {
                                                                       .shippingIndex ==
                                                                   -1)
                                                           ? ''
-                                                          : '${cart.shippingList?[0].shippingMethodList?[cart.shippingList?[0].shippingIndex ?? 0].title.toString()}',
+                                                          : '${cart.shippingList?[0].shippingMethodList[cart.shippingList?[0].shippingIndex ?? 0].title.toString()}',
                                                       style: titilliumSemiBold
                                                           .copyWith(
                                                               color: ColorResources

@@ -17,7 +17,7 @@ class MessageBubble extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isMe = message.sentByCustomer == 1;
     String dateTime = DateConverter.localDateToIsoStringAMPM(
-        DateTime.parse(message.createdAt));
+        DateTime.parse(message.createdAt ?? DateTime.now().toString()));
     String baseUrl =
         Provider.of<ChatProvider>(context, listen: false).userTypeIndex == 0
             ? Provider.of<SplashProvider>(context, listen: false)
@@ -30,10 +30,10 @@ class MessageBubble extends StatelessWidget {
                 "";
     String image =
         Provider.of<ChatProvider>(context, listen: false).userTypeIndex == 0
-            ? message.sellerInfo.shops.isNotEmpty
-                ? message.sellerInfo.shops[0].image
+            ? (message.sellerInfo?.shops?.isNotEmpty ?? false)
+                ? (message.sellerInfo?.shops?[0].image ?? "")
                 : ''
-            : message.deliveryMan.image;
+            : (message.deliveryMan?.image ?? "");
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,11 +83,14 @@ class MessageBubble extends StatelessWidget {
                         color: ColorResources.getHint(context),
                       ))
                   : SizedBox.shrink(),
-              message.message.isNotEmpty
-                  ? Text(message.message,
+              message.message?.isNotEmpty ?? false
+                  ? Text(
+                      message.message ?? "",
                       textAlign: TextAlign.justify,
                       style: titilliumRegular.copyWith(
-                          fontSize: Dimensions.FONT_SIZE_SMALL))
+                        fontSize: Dimensions.FONT_SIZE_SMALL,
+                      ),
+                    )
                   : SizedBox.shrink(),
               //chat.image != null ? Image.file(chat.image) : SizedBox.shrink(),
             ]),

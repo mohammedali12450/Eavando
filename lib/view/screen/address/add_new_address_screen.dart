@@ -25,11 +25,11 @@ import 'package:provider/provider.dart';
 class AddNewAddressScreen extends StatefulWidget {
   final bool isEnableUpdate;
   final bool fromCheckout;
-  final AddressModel address;
+  final AddressModel? address;
   final bool? isBilling;
   AddNewAddressScreen({
     this.isEnableUpdate = false,
-    this.address = const AddressModel.init(),
+    this.address,
     this.fromCheckout = false,
     this.isBilling,
   });
@@ -92,21 +92,20 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
       Provider.of<LocationProvider>(context, listen: false).updatePosition(
           CameraPosition(
             target: LatLng(
-              double.parse(widget.address.latitude),
-              double.parse(
-                widget.address.longitude,
-              ),
+              double.parse(widget.address?.latitude ?? "0.0"),
+              double.parse(widget.address?.longitude ?? "0.0"),
             ),
           ),
           true,
-          widget.address.address,
+          widget.address?.address ?? "",
           context);
-      _contactPersonNameController.text = '${widget.address.contactPersonName}';
-      _contactPersonNumberController.text = '${widget.address.phone}';
-      if (widget.address.addressType == 'Home') {
+      _contactPersonNameController.text =
+          '${widget.address?.contactPersonName ?? ""}';
+      _contactPersonNumberController.text = '${widget.address?.phone ?? ""}';
+      if (widget.address?.addressType == 'Home') {
         Provider.of<LocationProvider>(context, listen: false)
             .updateAddressIndex(0, false);
-      } else if (widget.address.addressType == 'Workplace') {
+      } else if (widget.address?.addressType == 'Workplace') {
         Provider.of<LocationProvider>(context, listen: false)
             .updateAddressIndex(1, false);
       } else {
@@ -169,10 +168,12 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                           initialCameraPosition: CameraPosition(
                                             target: widget.isEnableUpdate
                                                 ? LatLng(
-                                                    double.parse(widget
-                                                        .address.latitude),
-                                                    double.parse(widget
-                                                        .address.longitude))
+                                                    double.parse(widget.address
+                                                            ?.latitude ??
+                                                        "0.0"),
+                                                    double.parse(widget.address
+                                                            ?.longitude ??
+                                                        "0.0"))
                                                 : LatLng(
                                                     locationProvider
                                                         .position.latitude,
@@ -552,7 +553,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                                 .restrictedZipList,
                                             itemAsString:
                                                 (RestrictedZipModel u) =>
-                                                    u.zipcode,
+                                                    u.zipcode ?? "",
                                             onChanged: (value) {
                                               _zipCodeController.text =
                                                   value?.zipcode ?? "";
@@ -704,7 +705,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                               ? null
                                               : () {
                                                   AddressModel addressModel =
-                                                      AddressModel.core(
+                                                      AddressModel(
                                                     addressType: locationProvider
                                                             .getAllAddressType[
                                                         locationProvider
@@ -750,18 +751,20 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                                                 .toString(),
                                                   );
                                                   if (widget.isEnableUpdate) {
-                                                    addressModel =
-                                                        addressModel.copyWith(
-                                                            id: widget
-                                                                .address.id);
+                                                    addressModel.id =
+                                                        widget.address?.id ??
+                                                            -1;
 
                                                     // addressModel.method = 'put';
                                                     locationProvider
-                                                        .updateAddress(context,
-                                                            addressModel:
-                                                                addressModel,
-                                                            addressId:
-                                                                addressModel.id)
+                                                        .updateAddress(
+                                                          context,
+                                                          addressModel:
+                                                              addressModel,
+                                                          addressId:
+                                                              addressModel.id ??
+                                                                  -1,
+                                                        )
                                                         .then((value) {});
                                                   } else {
                                                     locationProvider

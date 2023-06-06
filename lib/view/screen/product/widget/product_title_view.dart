@@ -34,10 +34,10 @@ class _ProductTitleViewState extends State<ProductTitleView> {
     double _startingPrice = 0;
     double _endingPrice = 0;
     if (widget.productModel?.variation != null &&
-        widget.productModel!.variation.length != 0) {
+        widget.productModel!.variation?.length != 0) {
       List<double> _priceList = [];
       widget.productModel!.variation
-          .forEach((variation) => _priceList.add(variation.price));
+          ?.forEach((variation) => _priceList.add(variation.price ?? 0.0));
       _priceList.sort((a, b) => a.compareTo(b));
       _startingPrice = _priceList[0];
       if (_priceList[0] < _priceList[_priceList.length - 1]) {
@@ -84,7 +84,7 @@ class _ProductTitleViewState extends State<ProductTitleView> {
                           ),
                           SizedBox(width: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                           widget.productModel?.discount != null &&
-                                  widget.productModel!.discount > 0
+                                  (widget.productModel!.discount ?? 0.0) > 0
                               ? Text(
                                   _startingPrice != 0
                                       ? "€" + startTotalPrice
@@ -135,12 +135,12 @@ class _ProductTitleViewState extends State<ProductTitleView> {
                               color: Colors.orange,
                             ),
                             Text(
-                                '${widget.productModel?.reviews != null ? (widget.productModel?.reviews.length ?? 0) > 0 ? double.parse(widget.averageRatting) : 0.0 : 0.0}')
+                                '${widget.productModel?.reviews != null ? (widget.productModel?.reviews?.length ?? 0) > 0 ? double.parse(widget.averageRatting) : 0.0 : 0.0}')
                           ],
                         ),
                       ]),
                       SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
-                      (widget.productModel?.colors.length ?? 0) > 0
+                      (widget.productModel?.colors?.length ?? 0) > 0
                           ? Row(children: [
                               Text(
                                   '${getTranslated('select_variant', context)} : ',
@@ -151,13 +151,15 @@ class _ProductTitleViewState extends State<ProductTitleView> {
                                   height: 40,
                                   child: ListView.builder(
                                     itemCount:
-                                        widget.productModel?.colors.length ?? 0,
+                                        widget.productModel?.colors?.length ??
+                                            0,
                                     shrinkWrap: true,
                                     scrollDirection: Axis.horizontal,
                                     itemBuilder: (context, index) {
                                       String colorString = '0xff' +
-                                          widget
-                                              .productModel!.colors[index].code
+                                          (widget.productModel!.colors?[index]
+                                                      .code ??
+                                                  "")
                                               .substring(1, 7);
                                       return InkWell(
                                         onTap: () {
@@ -205,15 +207,18 @@ class _ProductTitleViewState extends State<ProductTitleView> {
                               ),
                             ])
                           : SizedBox(),
-                      (widget.productModel?.colors.length ?? 0) > 0
+                      (widget.productModel?.colors?.length ?? 0) > 0
                           ? SizedBox(height: Dimensions.PADDING_SIZE_SMALL)
                           : SizedBox(),
                       widget.productModel?.choiceOptions != null &&
-                              widget.productModel!.choiceOptions.length > 0
+                              (widget.productModel!.choiceOptions?.length ??
+                                      0) >
+                                  0
                           ? ListView.builder(
                               shrinkWrap: true,
                               itemCount:
-                                  widget.productModel!.choiceOptions.length,
+                                  widget.productModel!.choiceOptions?.length ??
+                                      0,
                               physics: NeverScrollableScrollPhysics(),
                               itemBuilder: (context, index) {
                                 return Column(
@@ -224,7 +229,7 @@ class _ProductTitleViewState extends State<ProductTitleView> {
                                       Text(
                                           '${getTranslated('available', context)}' +
                                               ' ' +
-                                              '${widget.productModel!.choiceOptions[index].title} :',
+                                              '${widget.productModel!.choiceOptions?[index].title ?? ""} :',
                                           style: titilliumRegular.copyWith(
                                               fontSize:
                                                   Dimensions.FONT_SIZE_LARGE)),
@@ -289,18 +294,21 @@ class _ProductTitleViewState extends State<ProductTitleView> {
                                         crossAxisAlignment:
                                             WrapCrossAlignment.center,
                                         children: widget.productModel!
-                                            .choiceOptions[index].options
-                                            .map((e) => SizedBox(
-                                                  child: Text(e + "  ",
-                                                      style: titilliumRegular
-                                                          .copyWith(
-                                                        color: Theme.of(context)
-                                                            .primaryColor,
-                                                        fontSize: Dimensions
-                                                            .FONT_SIZE_DEFAULT,
-                                                      )),
-                                                ))
-                                            .toList(),
+                                                .choiceOptions?[index].options
+                                                ?.map((e) => SizedBox(
+                                                      child: Text(e + "  ",
+                                                          style:
+                                                              titilliumRegular
+                                                                  .copyWith(
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .primaryColor,
+                                                            fontSize: Dimensions
+                                                                .FONT_SIZE_DEFAULT,
+                                                          )),
+                                                    ))
+                                                .toList() ??
+                                            [],
                                       )
                                     ]);
                               },

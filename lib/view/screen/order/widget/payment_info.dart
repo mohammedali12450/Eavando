@@ -29,8 +29,8 @@ class PaymentInfo extends StatelessWidget {
                     fontSize: Dimensions.FONT_SIZE_SMALL)),
             Text(
               (order.trackingModel?.paymentStatus != null &&
-                      order.trackingModel!.paymentStatus.isNotEmpty)
-                  ? order.trackingModel!.paymentStatus
+                      (order.trackingModel!.paymentStatus?.isNotEmpty ?? false))
+                  ? order.trackingModel!.paymentStatus ?? ""
                   : 'Digital Payment',
               style: titilliumRegular.copyWith(
                   fontSize: Dimensions.FONT_SIZE_SMALL),
@@ -83,7 +83,8 @@ class PaymentInfo extends StatelessWidget {
                 )
               : Text(
                   order.trackingModel?.paymentMethod != null
-                      ? order.trackingModel!.paymentMethod.replaceAll('_', ' ')
+                      ? (order.trackingModel!.paymentMethod ?? "")
+                          .replaceAll('_', ' ')
                       : 'Digital Payment',
                   style: titilliumBold.copyWith(
                     color: Theme.of(context).primaryColor,

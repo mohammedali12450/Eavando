@@ -20,6 +20,9 @@ class ProductDetailsModel {
   String? videoProvider;
   String? videoUrl;
   List<Colors>? colors;
+  Map<String, dynamic>? imagesWithColor;
+  List<dynamic>? imagesWithOutColor;
+
   int? variantProduct;
   List<int>? attributes;
   List<ChoiceOptions>? choiceOptions;
@@ -50,6 +53,7 @@ class ProductDetailsModel {
   int? reviewsCount;
   String? averageReview;
   List<Reviews>? reviews;
+  int? imagesListToEachColor;
 
   ProductDetailsModel({
     this.id,
@@ -93,6 +97,8 @@ class ProductDetailsModel {
     this.metaTitle,
     this.metaDescription,
     this.metaImage,
+    this.imagesWithColor,
+    this.imagesWithOutColor,
     this.requestStatus,
     this.deniedNote,
     this.shippingCost,
@@ -101,6 +107,7 @@ class ProductDetailsModel {
     this.reviewsCount,
     this.averageReview,
     this.reviews,
+    this.imagesListToEachColor,
   });
 
   ProductDetailsModel.fromJson(Map<String, dynamic> json) {
@@ -141,6 +148,13 @@ class ProductDetailsModel {
         choiceOptions?.add(new ChoiceOptions.fromJson(v));
       });
     }
+
+    try {
+      imagesWithColor = json['images'];
+    } catch (_) {
+      imagesWithOutColor = json['images'];
+    }
+
     if (json['variation'] != null) {
       variation = <Variation>[];
       json['variation'].forEach((v) {
@@ -160,7 +174,7 @@ class ProductDetailsModel {
     } else {
       minimumOrderQty = 1;
     }
-
+    imagesListToEachColor = json["images_list_to_each_color"];
     details = json['details'];
     freeShipping = json['free_shipping'];
     createdAt = json['created_at'];

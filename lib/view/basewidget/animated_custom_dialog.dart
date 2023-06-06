@@ -12,6 +12,7 @@ void showAnimatedDialog(BuildContext context, Widget dialog,
     transitionDuration: Duration(milliseconds: 500),
     transitionBuilder: (context, a1, a2, widget) {
       if (isFlip) {
+        return widget;
         return Rotation3DTransition(
           alignment: Alignment.center,
           turns: Tween<double>(begin: math.pi, end: 2.0 * math.pi).animate(
@@ -19,9 +20,15 @@ void showAnimatedDialog(BuildContext context, Widget dialog,
                   parent: a1, curve: Interval(0.0, 1.0, curve: Curves.linear))),
           child: FadeTransition(
             opacity: Tween<double>(begin: 0.0, end: 1.0).animate(
-                CurvedAnimation(
-                    parent: a1,
-                    curve: Interval(0.5, 1.0, curve: Curves.elasticOut))),
+              CurvedAnimation(
+                parent: a1,
+                curve: Interval(
+                  0.5,
+                  1.0,
+                  curve: Curves.elasticOut,
+                ),
+              ),
+            ),
             child: widget,
           ),
         );

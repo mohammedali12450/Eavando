@@ -12,7 +12,7 @@ class LoyaltyPointWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String type = loyaltyPointModel.transactionType;
+    String type = loyaltyPointModel.transactionType ?? "";
     String reformatType = "";
     if (type.contains('_')) {
       reformatType = type.replaceAll('_', ' ');
@@ -33,7 +33,7 @@ class LoyaltyPointWidget extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        '${loyaltyPointModel.credit > 0 ? loyaltyPointModel.credit : loyaltyPointModel.debit}',
+                        '${(loyaltyPointModel.credit ?? 0) > 0 ? loyaltyPointModel.credit : loyaltyPointModel.debit}',
                         style: robotoRegular.copyWith(
                             color: ColorResources.getTextTitle(context),
                             fontSize: Dimensions.FONT_SIZE_LARGE),
@@ -60,7 +60,11 @@ class LoyaltyPointWidget extends StatelessWidget {
                 children: [
                   Text(
                     DateConverter.localDateToIsoStringAMPM(
-                        DateTime.parse(loyaltyPointModel.createdAt)),
+                      DateTime.parse(
+                        loyaltyPointModel.createdAt ??
+                            DateTime.now().toString(),
+                      ),
+                    ),
                     style: robotoRegular.copyWith(
                         color: ColorResources.getHint(context),
                         fontSize: Dimensions.FONT_SIZE_SMALL),
@@ -69,9 +73,9 @@ class LoyaltyPointWidget extends StatelessWidget {
                     height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                   ),
                   Text(
-                    '${loyaltyPointModel.credit > 0 ? 'Credit' : 'Debit'}',
+                    '${(loyaltyPointModel.credit ?? 0) > 0 ? 'Credit' : 'Debit'}',
                     style: robotoRegular.copyWith(
-                        color: loyaltyPointModel.credit > 0
+                        color: (loyaltyPointModel.credit ?? 0) > 0
                             ? Colors.green
                             : Colors.red),
                   ),

@@ -16,7 +16,7 @@ class FooterBannersView extends StatelessWidget {
   const FooterBannersView({Key? key, required this.index}) : super(key: key);
 
   _clickBannerRedirect(
-      BuildContext context, int id, Product product, String type) {
+      BuildContext context, int id, Product? product, String type) {
     final cIndex = Provider.of<CategoryProvider>(context, listen: false)
             .categoryList
             ?.indexWhere((element) => element.id == id) ??
@@ -49,8 +49,8 @@ class FooterBannersView extends StatelessWidget {
           context,
           MaterialPageRoute(
               builder: (_) => ProductDetails(
-                    productId: product.id,
-                    slug: product.slug,
+                    productId: product?.id ?? -1,
+                    slug: product?.slug ?? "",
                   )));
     } else if (type == 'brand') {
       Navigator.push(
@@ -94,10 +94,13 @@ class FooterBannersView extends StatelessWidget {
             return InkWell(
               onTap: () {
                 _clickBannerRedirect(
-                    context,
-                    footerBannerProvider.footerBannerList![index].resourceId,
-                    footerBannerProvider.footerBannerList![index].product,
-                    footerBannerProvider.footerBannerList![index].resourceType);
+                  context,
+                  footerBannerProvider.footerBannerList![index].resourceId ??
+                      -1,
+                  footerBannerProvider.footerBannerList![index].product,
+                  footerBannerProvider.footerBannerList![index].resourceType ??
+                      "",
+                );
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 2.0),

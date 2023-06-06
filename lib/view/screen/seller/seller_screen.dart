@@ -34,7 +34,7 @@ class _SellerScreenState extends State<SellerScreen> {
     Provider.of<ProductProvider>(context, listen: false).removeFirstLoading();
     Provider.of<ProductProvider>(context, listen: false).clearSellerData();
     Provider.of<ProductProvider>(context, listen: false).initSellerProductList(
-        widget.seller?.seller.id.toString() ?? "-1", 1, context);
+        widget.seller?.seller?.id.toString() ?? "-1", 1, context);
   }
 
   @override
@@ -52,8 +52,8 @@ class _SellerScreenState extends State<SellerScreen> {
       body: Column(
         children: [
           CustomAppBar(
-              title: '${widget.seller?.seller.fName ?? ""}' +
-                  ' ' '${widget.seller?.seller.lName ?? ""}'),
+              title: '${widget.seller?.seller?.fName ?? ""}' +
+                  ' ' '${widget.seller?.seller?.lName ?? ""}'),
           Expanded(
             child: ListView(
               controller: _scrollController,
@@ -70,7 +70,7 @@ class _SellerScreenState extends State<SellerScreen> {
                       height: 120,
                       fit: BoxFit.cover,
                       image:
-                          '${Provider.of<SplashProvider>(context, listen: false).baseUrls?.shopImageUrl ?? ""}/banner/${widget.seller?.seller.shop.banner ?? ""}',
+                          '${Provider.of<SplashProvider>(context, listen: false).baseUrls?.shopImageUrl ?? ""}/banner/${widget.seller?.seller?.shop?.banner ?? ""}',
                       imageErrorBuilder: (c, o, s) => Image.asset(
                           Images.placeholder,
                           height: 120,
@@ -93,7 +93,7 @@ class _SellerScreenState extends State<SellerScreen> {
                           width: 80,
                           fit: BoxFit.cover,
                           image:
-                              '${Provider.of<SplashProvider>(context, listen: false).baseUrls?.shopImageUrl ?? ""}/${widget.seller?.seller.shop.image ?? ""}',
+                              '${Provider.of<SplashProvider>(context, listen: false).baseUrls?.shopImageUrl ?? ""}/${widget.seller?.seller?.shop?.image ?? ""}',
                           imageErrorBuilder: (c, o, s) => Image.asset(
                               Images.placeholder,
                               height: 80,
@@ -108,7 +108,7 @@ class _SellerScreenState extends State<SellerScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              widget.seller?.seller.shop.name ?? "",
+                              widget.seller?.seller?.shop?.name ?? "",
                               style: titilliumSemiBold.copyWith(
                                   fontSize: Dimensions.FONT_SIZE_LARGE),
                               maxLines: 1,
@@ -175,10 +175,10 @@ class _SellerScreenState extends State<SellerScreen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (_) => ChatScreen(
-                                          id: widget.seller?.seller.id ?? -1,
-                                          name:
-                                              widget.seller?.seller.shop.name ??
-                                                  "",
+                                          id: widget.seller?.seller?.id ?? -1,
+                                          name: widget
+                                                  .seller?.seller?.shop?.name ??
+                                              "",
                                         )));
                         },
                         icon: Image.asset(Images.chat_image,
@@ -209,7 +209,7 @@ class _SellerScreenState extends State<SellerScreen> {
                     isHomePage: false,
                     productType: ProductType.SELLER_PRODUCT,
                     scrollController: _scrollController,
-                    sellerId: widget.seller?.seller.id.toString() ?? "-1",
+                    sellerId: widget.seller?.seller?.id.toString() ?? "-1",
                   ),
                 ),
               ],

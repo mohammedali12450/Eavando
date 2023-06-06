@@ -50,7 +50,7 @@ class _SignInWidgetState extends State<SignInWidget> {
 
   FocusNode _emailNode = FocusNode();
   FocusNode _passNode = FocusNode();
-  LoginModel loginBody = LoginModel.init();
+  LoginModel loginBody = LoginModel();
 
   void loginUser() async {
     if (_formKeyLogin.currentState?.validate() ?? false) {

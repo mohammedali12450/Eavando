@@ -40,7 +40,8 @@ class BrandView extends StatelessWidget {
                                                 .brandList![index].id
                                                 .toString(),
                                             name: brandProvider
-                                                .brandList![index].name,
+                                                    .brandList![index].name ??
+                                                "",
                                             image: brandProvider
                                                 .brandList![index].image,
                                           )));
@@ -84,8 +85,10 @@ class BrandView extends StatelessWidget {
                                                   ?.brandImageUrl ??
                                               "" +
                                                   '/' +
-                                                  brandProvider
-                                                      .brandList![index].image,
+                                                  (brandProvider
+                                                          .brandList![index]
+                                                          .image ??
+                                                      ""),
                                           imageErrorBuilder: (c, o, s) =>
                                               Image.asset(
                                             Images.placeholder,
@@ -103,7 +106,8 @@ class BrandView extends StatelessWidget {
                                           4.2,
                                       child: Center(
                                           child: Text(
-                                        brandProvider.brandList![index].name,
+                                        brandProvider.brandList![index].name ??
+                                            "",
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                         textAlign: TextAlign.center,
@@ -148,7 +152,8 @@ class BrandView extends StatelessWidget {
                                         id: brandProvider.brandList![index].id
                                             .toString(),
                                         name: brandProvider
-                                            .brandList![index].name,
+                                                .brandList![index].name ??
+                                            "",
                                         image: brandProvider
                                             .brandList![index].image,
                                       )));
@@ -179,8 +184,9 @@ class BrandView extends StatelessWidget {
                                             ?.brandImageUrl ??
                                         "" +
                                             '/' +
-                                            brandProvider
-                                                .brandList![index].image,
+                                            (brandProvider
+                                                    .brandList![index].image ??
+                                                ""),
                                     imageErrorBuilder: (c, o, s) => Image.asset(
                                       Images.placeholder,
                                       fit: BoxFit.cover,
@@ -194,7 +200,7 @@ class BrandView extends StatelessWidget {
                                   (MediaQuery.of(context).size.width / 4) * 0.3,
                               child: Center(
                                   child: Text(
-                                brandProvider.brandList![index].name,
+                                brandProvider.brandList![index].name ?? "",
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.center,

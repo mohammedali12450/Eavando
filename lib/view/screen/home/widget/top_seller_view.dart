@@ -74,8 +74,10 @@ class TopSellerView extends StatelessWidget {
                                             ?.shopImageUrl ??
                                         "" +
                                             '/' +
-                                            topSellerProvider
-                                                .topSellerList![index].image,
+                                            (topSellerProvider
+                                                    .topSellerList![index]
+                                                    .image ??
+                                                ""),
                                     imageErrorBuilder: (c, o, s) => Image.asset(
                                       Images.placeholder_1x1,
                                       fit: BoxFit.cover,

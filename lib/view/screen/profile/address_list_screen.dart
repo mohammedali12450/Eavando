@@ -90,9 +90,10 @@ class AddressListScreen extends StatelessWidget {
                                                       'REMOVE_ADDRESS',
                                                       context),
                                                   content: profileProvider
-                                                      .shippingAddressList![
-                                                          index]
-                                                      .address,
+                                                          .shippingAddressList![
+                                                              index]
+                                                          .address ??
+                                                      "",
                                                   cancelButtonText:
                                                       getTranslated(
                                                           'CANCEL', context),
@@ -104,12 +105,14 @@ class AddressListScreen extends StatelessWidget {
                                                             context,
                                                             listen: false)
                                                         .removeAddressById(
-                                                            profileProvider
-                                                                .shippingAddressList![
-                                                                    index]
-                                                                .id,
-                                                            index,
-                                                            context);
+                                                      profileProvider
+                                                              .shippingAddressList![
+                                                                  index]
+                                                              .id ??
+                                                          -1,
+                                                      index,
+                                                      context,
+                                                    );
                                                     Provider.of<ProfileProvider>(
                                                             context,
                                                             listen: false)

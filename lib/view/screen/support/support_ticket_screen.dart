@@ -108,11 +108,11 @@ class SupportTicketScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Place date: ${DateConverter.localDateToIsoStringAMPM(DateTime.parse(supportTicketList[index].createdAt))}',
+                                      'Place date: ${DateConverter.localDateToIsoStringAMPM(DateTime.parse(supportTicketList[index].createdAt ?? (DateTime.now().toString())))}',
                                       style: titilliumRegular.copyWith(
                                           fontSize: Dimensions.FONT_SIZE_SMALL),
                                     ),
-                                    Text(supportTicketList[index].subject,
+                                    Text(supportTicketList[index].subject ?? "",
                                         style: titilliumSemiBold),
                                     Row(children: [
                                       Icon(Icons.notifications,
@@ -123,9 +123,11 @@ class SupportTicketScreen extends StatelessWidget {
                                       SizedBox(
                                           width: Dimensions.PADDING_SIZE_SMALL),
                                       Expanded(
-                                          child: Text(
-                                              supportTicketList[index].type,
-                                              style: titilliumSemiBold)),
+                                        child: Text(
+                                          supportTicketList[index].type ?? "",
+                                          style: titilliumSemiBold,
+                                        ),
+                                      ),
                                       TextButton(
                                         onPressed: null,
                                         style: TextButton.styleFrom(

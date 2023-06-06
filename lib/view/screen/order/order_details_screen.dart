@@ -108,16 +108,18 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
                   if (order.orderDetails != null) {
                     order.orderDetails?.forEach((orderDetails) {
-                      if (orderDetails.productDetails.productType !=
+                      if (orderDetails.productDetails?.productType !=
                           "physical") {
                         order.digitalOnly(false, isUpdate: false);
                       }
                     });
 
                     order.orderDetails?.forEach((orderDetails) {
-                      _order = _order + (orderDetails.price * orderDetails.qty);
-                      _discount = _discount + orderDetails.discount;
-                      _tax = _tax + orderDetails.tax;
+                      _order = _order +
+                          ((orderDetails.price ?? 0.0) *
+                              (orderDetails.qty ?? 1));
+                      _discount = _discount + (orderDetails.discount ?? 0.0);
+                      _tax = _tax + (orderDetails.tax ?? 0.0);
                     });
 
                     if (widget.orderType == 'POS') {
@@ -217,7 +219,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                                               .symmetric(
                                                           vertical: 1),
                                                       child: Text(
-                                                          ' ${order.orderModel != null && order.orderModel?.shippingAddressData != null ? order.orderModel?.shippingAddressData.address : ''}',
+                                                          ' ${order.orderModel != null && order.orderModel?.shippingAddressData != null ? order.orderModel?.shippingAddressData?.address ?? "" : ''}',
                                                           maxLines: 3,
                                                           overflow: TextOverflow
                                                               .ellipsis,
@@ -254,7 +256,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                                   const EdgeInsets.symmetric(
                                                       vertical: 1),
                                               child: Text(
-                                                  ' ${order.orderModel?.billingAddressData != null ? order.orderModel?.billingAddressData.address : ''}',
+                                                  ' ${order.orderModel?.billingAddressData != null ? order.orderModel?.billingAddressData?.address ?? "" : ''}',
                                                   maxLines: 3,
                                                   overflow:
                                                       TextOverflow.ellipsis,
@@ -444,7 +446,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                                   (order.trackingModel
                                                               ?.deliveryMan !=
                                                           null)
-                                                      ? '${order.trackingModel?.deliveryMan.fName ?? ""} ${order.trackingModel?.deliveryMan.lName ?? ""}'
+                                                      ? '${order.trackingModel?.deliveryMan?.fName ?? ""} ${order.trackingModel?.deliveryMan?.lName ?? ""}'
                                                       : '',
                                                   style:
                                                       titilliumRegular.copyWith(

@@ -13,7 +13,7 @@ class TransactionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String type = transactionModel.transactionType;
+    String type = transactionModel.transactionType ?? "";
     String reformatType = "";
     if (type.contains('_')) {
       reformatType = type.replaceAll('_', ' ');
@@ -33,10 +33,11 @@ class TransactionWidget extends StatelessWidget {
                 children: [
                   Text(
                     PriceConverter.convertPrice(
-                        context,
-                        transactionModel.credit > 0
-                            ? transactionModel.credit
-                            : transactionModel.debit),
+                      context,
+                      (transactionModel.credit ?? 0) > 0
+                          ? transactionModel.credit ?? 0.0
+                          : transactionModel.debit ?? 0.0,
+                    ),
                     style: robotoRegular.copyWith(
                         color: ColorResources.getYellow(context),
                         fontSize: Dimensions.FONT_SIZE_LARGE),
@@ -56,7 +57,10 @@ class TransactionWidget extends StatelessWidget {
                 children: [
                   Text(
                     DateConverter.localDateToIsoStringAMPM(
-                        DateTime.parse(transactionModel.createdAt)),
+                      DateTime.parse(
+                        transactionModel.createdAt ?? DateTime.now().toString(),
+                      ),
+                    ),
                     style: robotoRegular.copyWith(
                         color: ColorResources.getHint(context)),
                   ),
@@ -64,9 +68,9 @@ class TransactionWidget extends StatelessWidget {
                     height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                   ),
                   Text(
-                    '${transactionModel.credit > 0 ? 'Credit' : 'Debit'}',
+                    '${(transactionModel.credit ?? 0.0) > 0 ? 'Credit' : 'Debit'}',
                     style: robotoRegular.copyWith(
-                        color: transactionModel.credit > 0
+                        color: (transactionModel.credit ?? 0) > 0
                             ? Colors.green
                             : Colors.red),
                   ),

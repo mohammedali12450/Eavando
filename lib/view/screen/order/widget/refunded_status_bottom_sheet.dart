@@ -62,8 +62,8 @@ class _RefundResultBottomSheetState extends State<RefundResultBottomSheet> {
                                       null
                               ? Text(
                                   '${getTranslated('refund_id', context)}' +
-                                      refundReq.refundResultModel!.refundRequest
-                                          .first.id
+                                      refundReq.refundResultModel!
+                                          .refundRequest!.first.id
                                           .toString(),
                                   style: titilliumSemiBold.copyWith(
                                       fontSize: Dimensions.FONT_SIZE_LARGE,
@@ -102,7 +102,7 @@ class _RefundResultBottomSheetState extends State<RefundResultBottomSheet> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Text(
-                                      widget.product.name,
+                                      widget.product.name ?? "",
                                       style: titilliumSemiBold.copyWith(
                                           fontSize: Dimensions.FONT_SIZE_SMALL,
                                           color: Theme.of(context).hintColor),
@@ -114,8 +114,11 @@ class _RefundResultBottomSheetState extends State<RefundResultBottomSheet> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          PriceConverter.convertPrice(context,
-                                              widget.orderDetailsModel.price),
+                                          PriceConverter.convertPrice(
+                                            context,
+                                            widget.orderDetailsModel.price ??
+                                                0.0,
+                                          ),
                                           style: titilliumSemiBold.copyWith(
                                               color: ColorResources.getPrimary(
                                                   context)),
@@ -125,7 +128,9 @@ class _RefundResultBottomSheetState extends State<RefundResultBottomSheet> {
                                                 color:
                                                     ColorResources.getPrimary(
                                                         context))),
-                                        widget.orderDetailsModel.discount > 0
+                                        (widget.orderDetailsModel.discount ??
+                                                    0.0) >
+                                                0
                                             ? Container(
                                                 height: 20,
                                                 alignment: Alignment.center,
@@ -143,13 +148,15 @@ class _RefundResultBottomSheetState extends State<RefundResultBottomSheet> {
                                                 child: Text(
                                                   PriceConverter.percentageCalculation(
                                                       context,
+                                                      ((widget.orderDetailsModel
+                                                                  .price ??
+                                                              0.0) *
+                                                          (widget.orderDetailsModel
+                                                                  .qty ??
+                                                              1)),
                                                       (widget.orderDetailsModel
-                                                              .price *
-                                                          widget
-                                                              .orderDetailsModel
-                                                              .qty),
-                                                      widget.orderDetailsModel
-                                                          .discount,
+                                                              .discount ??
+                                                          0.0),
                                                       'amount'),
                                                   style: titilliumRegular.copyWith(
                                                       fontSize: Dimensions
@@ -161,7 +168,9 @@ class _RefundResultBottomSheetState extends State<RefundResultBottomSheet> {
                                             : SizedBox(),
                                       ],
                                     ),
-                                    widget.orderDetailsModel.variant.isNotEmpty
+                                    (widget.orderDetailsModel.variant
+                                                ?.isNotEmpty ??
+                                            false)
                                         ? Padding(
                                             padding: EdgeInsets.only(
                                                 top: Dimensions
@@ -184,7 +193,8 @@ class _RefundResultBottomSheetState extends State<RefundResultBottomSheet> {
                                                   Flexible(
                                                     child: Text(
                                                         widget.orderDetailsModel
-                                                            .variant,
+                                                                .variant ??
+                                                            "",
                                                         style: robotoRegular
                                                             .copyWith(
                                                           fontSize: Dimensions
@@ -236,13 +246,13 @@ class _RefundResultBottomSheetState extends State<RefundResultBottomSheet> {
                                                     (refund
                                                                 .refundInfoModel
                                                                 ?.refund
-                                                                .productPrice ??
-                                                            0) *
+                                                                ?.productPrice ??
+                                                            0.0) *
                                                         (refund
                                                                 .refundInfoModel
                                                                 ?.refund
-                                                                .quntity ??
-                                                            1),
+                                                                ?.quntity ??
+                                                            0),
                                                   ),
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.w200,
@@ -273,7 +283,7 @@ class _RefundResultBottomSheetState extends State<RefundResultBottomSheet> {
                                                       refund
                                                               .refundInfoModel
                                                               ?.refund
-                                                              .productTotalDiscount ??
+                                                              ?.productTotalDiscount ??
                                                           0,
                                                     ),
                                                     style: TextStyle(
@@ -302,7 +312,7 @@ class _RefundResultBottomSheetState extends State<RefundResultBottomSheet> {
                                                       refund
                                                               .refundInfoModel
                                                               ?.refund
-                                                              .productTotalTax ??
+                                                              ?.productTotalTax ??
                                                           0,
                                                     ),
                                                     style: TextStyle(
@@ -332,7 +342,7 @@ class _RefundResultBottomSheetState extends State<RefundResultBottomSheet> {
                                                       refund
                                                               .refundInfoModel
                                                               ?.refund
-                                                              .subtotal ??
+                                                              ?.subtotal ??
                                                           0,
                                                     ),
                                                     style: TextStyle(
@@ -361,7 +371,7 @@ class _RefundResultBottomSheetState extends State<RefundResultBottomSheet> {
                                                         refund
                                                                 .refundInfoModel
                                                                 ?.refund
-                                                                .couponDiscount ??
+                                                                ?.couponDiscount ??
                                                             0),
                                                     style: TextStyle(
                                                         fontWeight:
@@ -389,7 +399,7 @@ class _RefundResultBottomSheetState extends State<RefundResultBottomSheet> {
                                                         refund
                                                                 .refundInfoModel
                                                                 ?.refund
-                                                                .refundAmount ??
+                                                                ?.refundAmount ??
                                                             0),
                                                     style: TextStyle(
                                                         fontWeight:
@@ -415,7 +425,7 @@ class _RefundResultBottomSheetState extends State<RefundResultBottomSheet> {
                                                 TextSpan(
                                                     text: refund
                                                             .refundResultModel
-                                                            ?.refundRequest[0]
+                                                            ?.refundRequest?[0]
                                                             .status ??
                                                         "",
                                                     style: TextStyle(
@@ -426,7 +436,7 @@ class _RefundResultBottomSheetState extends State<RefundResultBottomSheet> {
                                           ),
                                           refund
                                                       .refundResultModel
-                                                      ?.refundRequest[0]
+                                                      ?.refundRequest?[0]
                                                       .approvedNote !=
                                                   null
                                               ? RichText(
@@ -453,7 +463,7 @@ class _RefundResultBottomSheetState extends State<RefundResultBottomSheet> {
                                                       TextSpan(
                                                           text: refund
                                                                   .refundResultModel
-                                                                  ?.refundRequest[
+                                                                  ?.refundRequest?[
                                                                       0]
                                                                   .approvedNote ??
                                                               "",
@@ -467,7 +477,7 @@ class _RefundResultBottomSheetState extends State<RefundResultBottomSheet> {
                                               : SizedBox(),
                                           refund
                                                       .refundResultModel
-                                                      ?.refundRequest[0]
+                                                      ?.refundRequest?[0]
                                                       .rejectedNote !=
                                                   null
                                               ? RichText(
@@ -494,7 +504,7 @@ class _RefundResultBottomSheetState extends State<RefundResultBottomSheet> {
                                                       TextSpan(
                                                           text: refund
                                                                   .refundResultModel
-                                                                  ?.refundRequest[
+                                                                  ?.refundRequest?[
                                                                       0]
                                                                   .rejectedNote ??
                                                               "",
@@ -508,12 +518,12 @@ class _RefundResultBottomSheetState extends State<RefundResultBottomSheet> {
                                               : SizedBox(),
                                           refund
                                                       .refundResultModel
-                                                      ?.refundRequest[0]
+                                                      ?.refundRequest?[0]
                                                       .paymentInfo !=
                                                   null
                                               ? Text(
                                                   '${getTranslated('payment_info', context)} : '
-                                                  '${refund.refundResultModel?.refundRequest[0].paymentInfo}',
+                                                  '${refund.refundResultModel?.refundRequest?[0].paymentInfo ?? ""}',
                                                   style: titilliumSemiBold
                                                       .copyWith(
                                                           color: ColorResources
@@ -538,7 +548,7 @@ class _RefundResultBottomSheetState extends State<RefundResultBottomSheet> {
                                                 TextSpan(
                                                     text: refund
                                                         .refundResultModel
-                                                        ?.refundRequest[0]
+                                                        ?.refundRequest?[0]
                                                         .refundReason,
                                                     style: TextStyle(
                                                         fontWeight:
@@ -548,14 +558,15 @@ class _RefundResultBottomSheetState extends State<RefundResultBottomSheet> {
                                           ),
                                           (refund
                                                           .refundResultModel
-                                                          ?.refundRequest[0]
+                                                          ?.refundRequest?[0]
                                                           .images !=
                                                       null &&
                                                   (refund
                                                               .refundResultModel
-                                                              ?.refundRequest[0]
+                                                              ?.refundRequest?[
+                                                                  0]
                                                               .images
-                                                              .length ??
+                                                              ?.length ??
                                                           0) >
                                                       0)
                                               ? Text(
@@ -568,14 +579,15 @@ class _RefundResultBottomSheetState extends State<RefundResultBottomSheet> {
                                               : SizedBox(),
                                           (refund
                                                           .refundResultModel
-                                                          ?.refundRequest[0]
+                                                          ?.refundRequest?[0]
                                                           .images !=
                                                       null &&
                                                   (refund
                                                               .refundResultModel
-                                                              ?.refundRequest[0]
+                                                              ?.refundRequest?[
+                                                                  0]
                                                               .images
-                                                              .length ??
+                                                              ?.length ??
                                                           0) >
                                                       0)
                                               ? Container(
@@ -586,19 +598,19 @@ class _RefundResultBottomSheetState extends State<RefundResultBottomSheet> {
                                                     shrinkWrap: true,
                                                     itemCount: refund
                                                             .refundResultModel
-                                                            ?.refundRequest[0]
+                                                            ?.refundRequest?[0]
                                                             .images
-                                                            .length ??
+                                                            ?.length ??
                                                         0,
                                                     itemBuilder:
                                                         (BuildContext context,
                                                             index) {
                                                       return (refund
                                                                       .refundResultModel
-                                                                      ?.refundRequest[
+                                                                      ?.refundRequest?[
                                                                           0]
                                                                       .images
-                                                                      .length ??
+                                                                      ?.length ??
                                                                   0) >
                                                               0
                                                           ? Padding(
@@ -614,7 +626,7 @@ class _RefundResultBottomSheetState extends State<RefundResultBottomSheet> {
                                                                           context,
                                                                       builder: (ctx) => ImageDialog(
                                                                           imageUrl: '${AppConstants.BASE_URL}/storage/app/public/refund/'
-                                                                              '${refund.refundResultModel?.refundRequest[0].images[index]}'),
+                                                                              '${refund.refundResultModel?.refundRequest?[0].images?[index]}'),
                                                                     ),
                                                                     child:
                                                                         Container(
@@ -632,7 +644,7 @@ class _RefundResultBottomSheetState extends State<RefundResultBottomSheet> {
                                                                               Images.placeholder,
                                                                           image:
                                                                               '${AppConstants.BASE_URL}/storage/app/public/refund/'
-                                                                              '${refund.refundResultModel?.refundRequest[0].images[index] ?? ""}',
+                                                                              '${refund.refundResultModel?.refundRequest?[0].images?[index] ?? ""}',
                                                                           width:
                                                                               100,
                                                                           height:

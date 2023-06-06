@@ -86,7 +86,7 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                   width: 60,
                   height: 60,
                   image:
-                      '${Provider.of<SplashProvider>(context, listen: false).baseUrls?.productThumbnailUrl ?? ""}/${widget.orderDetailsModel?.productDetails.thumbnail ?? ""}',
+                      '${Provider.of<SplashProvider>(context, listen: false).baseUrls?.productThumbnailUrl ?? ""}/${widget.orderDetailsModel?.productDetails?.thumbnail ?? ""}',
                   imageErrorBuilder: (c, o, s) => Image.asset(
                       Images.placeholder,
                       fit: BoxFit.scaleDown,
@@ -104,7 +104,8 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                       children: [
                         Expanded(
                           child: Text(
-                            widget.orderDetailsModel?.productDetails.name ?? '',
+                            widget.orderDetailsModel?.productDetails?.name ??
+                                '',
                             style: titilliumSemiBold.copyWith(
                                 fontSize: Dimensions.FONT_SIZE_SMALL,
                                 color: Theme.of(context).hintColor),
@@ -130,7 +131,7 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                                       backgroundColor: Colors.transparent,
                                       builder: (context) => ReviewBottomSheet(
                                         productID: widget.orderDetailsModel
-                                                ?.productDetails.id
+                                                ?.productDetails?.id
                                                 .toString() ??
                                             "-1",
                                         callback: widget.callback ?? () {},
@@ -350,7 +351,7 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
           ),
 
           (widget.orderDetailsModel?.variant != null &&
-                  widget.orderDetailsModel!.variant.isNotEmpty)
+                  (widget.orderDetailsModel!.variant?.isNotEmpty ?? false))
               ? Padding(
                   padding: EdgeInsets.only(
                       left: Dimensions.PADDING_SIZE_SMALL,
@@ -361,7 +362,7 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                         style: titilliumSemiBold.copyWith(
                             fontSize: Dimensions.FONT_SIZE_SMALL)),
                     Flexible(
-                        child: Text(widget.orderDetailsModel!.variant,
+                        child: Text(widget.orderDetailsModel?.variant ?? "",
                             style: robotoRegular.copyWith(
                               fontSize: Dimensions.FONT_SIZE_SMALL,
                               color: Theme.of(context).disabledColor,
@@ -372,21 +373,24 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
 
           SizedBox(
             height: (widget.orderDetailsModel?.productDetails != null &&
-                    widget.orderDetailsModel!.productDetails.productType ==
+                    (widget.orderDetailsModel!.productDetails?.productType ??
+                            "") ==
                         'digital' &&
                     widget.paymentStatus == 'paid')
                 ? Dimensions.PADDING_SIZE_EXTRA_LARGE
                 : 0,
           ),
           widget.orderDetailsModel?.productDetails != null &&
-                  widget.orderDetailsModel!.productDetails.productType ==
+                  (widget.orderDetailsModel!.productDetails?.productType ??
+                          "") ==
                       'digital' &&
                   widget.paymentStatus == 'paid'
               ? Consumer<OrderProvider>(builder: (context, orderProvider, _) {
                   return InkWell(
                     onTap: () async {
-                      if (widget.orderDetailsModel!.productDetails
-                                  .digitalProductType ==
+                      if ((widget.orderDetailsModel!.productDetails
+                                      ?.digitalProductType ??
+                                  "") ==
                               'ready_after_sell' &&
                           widget.orderDetailsModel?.digitalFileAfterSell ==
                               null) {
@@ -411,11 +415,12 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                                 ? await getExternalStorageDirectory()
                                 : await getApplicationSupportDirectory();
                           orderProvider.downloadFile(
-                            widget.orderDetailsModel?.productDetails
-                                        .digitalProductType ==
+                            (widget.orderDetailsModel?.productDetails
+                                            ?.digitalProductType ??
+                                        "") ==
                                     'ready_after_sell'
                                 ? '${Provider.of<SplashProvider>(context, listen: false).baseUrls?.digitalProductUrl ?? ""}/${widget.orderDetailsModel?.digitalFileAfterSell ?? ""}'
-                                : '${Provider.of<SplashProvider>(context, listen: false).baseUrls?.digitalProductUrl ?? ""}/${widget.orderDetailsModel?.productDetails.digitalFileReady ?? ""}',
+                                : '${Provider.of<SplashProvider>(context, listen: false).baseUrls?.digitalProductUrl ?? ""}/${widget.orderDetailsModel?.productDetails?.digitalFileReady ?? ""}',
                             directory?.path ?? '/storage/emulated/0/Download',
                           );
                         } else {

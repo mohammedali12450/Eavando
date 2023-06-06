@@ -34,7 +34,8 @@ class HomeCategoryProductView extends StatelessWidget {
                                   Dimensions.PADDING_SIZE_SMALL),
                               child: TitleRow(
                                 title: homeCategoryProductProvider
-                                    .homeCategoryProductList[index].name,
+                                        .homeCategoryProductList[index].name ??
+                                    "",
                                 onTap: () {
                                   Navigator.push(
                                     context,
@@ -47,14 +48,17 @@ class HomeCategoryProductView extends StatelessWidget {
                                                       index]
                                                   .id
                                                   .toString(),
-                                              name: homeCategoryProductProvider
-                                                  .homeCategoryProductList[
-                                                      index]
-                                                  .name,
-                                              image: homeCategoryProductProvider
-                                                  .homeCategoryProductList[
-                                                      index]
-                                                  .icon),
+                                              name:
+                                                  homeCategoryProductProvider
+                                                          .homeCategoryProductList[
+                                                              index]
+                                                          .name ??
+                                                      "",
+                                              image:
+                                                  homeCategoryProductProvider
+                                                      .homeCategoryProductList[
+                                                          index]
+                                                      .icon),
                                     ),
                                   );
                                 },
@@ -62,10 +66,11 @@ class HomeCategoryProductView extends StatelessWidget {
                             )
                           : SizedBox(),
                       ConstrainedBox(
-                        constraints: homeCategoryProductProvider
-                                    .homeCategoryProductList[index]
-                                    .products
-                                    .length >
+                        constraints: (homeCategoryProductProvider
+                                        .homeCategoryProductList[index]
+                                        .products
+                                        ?.length ??
+                                    0) >
                                 0
                             ? BoxConstraints(
                                 maxHeight:
@@ -74,7 +79,10 @@ class HomeCategoryProductView extends StatelessWidget {
                             : BoxConstraints(maxHeight: 0),
                         child: ListView.builder(
                             itemCount: homeCategoryProductProvider
-                                .homeCategoryProductList[index].products.length,
+                                    .homeCategoryProductList[index]
+                                    .products
+                                    ?.length ??
+                                0,
                             padding: EdgeInsets.all(0),
                             scrollDirection: Axis.horizontal,
                             shrinkWrap: true,
@@ -89,21 +97,24 @@ class HomeCategoryProductView extends StatelessWidget {
                                         pageBuilder: (context, anim1, anim2) =>
                                             ProductDetails(
                                           productId: homeCategoryProductProvider
-                                              .productList[i].id,
+                                                  .productList[i].id ??
+                                              -1,
                                           slug: homeCategoryProductProvider
-                                              .productList[i].slug,
+                                                  .productList[i].slug ??
+                                              "",
                                         ),
                                       ));
                                 },
                                 child: Container(
-                                    width: (MediaQuery.of(context).size.width /
-                                            2) -
-                                        20,
-                                    child: ProductWidget(
-                                        productModel:
-                                            homeCategoryProductProvider
-                                                .homeCategoryProductList[index]
-                                                .products[i])),
+                                  width:
+                                      (MediaQuery.of(context).size.width / 2) -
+                                          20,
+                                  child: ProductWidget(
+                                    productModel: homeCategoryProductProvider
+                                        .homeCategoryProductList[index]
+                                        .products?[i],
+                                  ),
+                                ),
                               );
                             }),
                       )

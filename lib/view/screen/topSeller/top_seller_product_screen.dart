@@ -53,7 +53,7 @@ class _TopSellerProductScreenState extends State<TopSellerProductScreen> {
       backgroundColor: ColorResources.getIconBg(context),
       body: Column(
         children: [
-          CustomAppBar(title: widget.topSeller.name),
+          CustomAppBar(title: widget.topSeller.name ?? ""),
           Expanded(
             child: ListView(
               controller: _scrollController,
@@ -134,7 +134,7 @@ class _TopSellerProductScreenState extends State<TopSellerProductScreen> {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          widget.topSeller.name,
+                                          widget.topSeller.name ?? "",
                                           style: titilliumSemiBold.copyWith(
                                               fontSize:
                                                   Dimensions.FONT_SIZE_LARGE),
@@ -156,8 +156,11 @@ class _TopSellerProductScreenState extends State<TopSellerProductScreen> {
                                               context,
                                               MaterialPageRoute(
                                                 builder: (_) => ChatScreen(
-                                                  id: widget.topSeller.sellerId,
-                                                  name: widget.topSeller.name,
+                                                  id: widget
+                                                          .topSeller.sellerId ??
+                                                      -1,
+                                                  name: widget.topSeller.name ??
+                                                      "",
                                                 ),
                                               ),
                                             );

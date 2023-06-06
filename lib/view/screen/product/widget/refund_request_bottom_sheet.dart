@@ -82,12 +82,12 @@ class _RefundBottomSheetState extends State<RefundBottomSheet> {
                                                   (refund
                                                               .refundInfoModel
                                                               ?.refund
-                                                              .productPrice ??
+                                                              ?.productPrice ??
                                                           0) *
                                                       (refund
                                                               .refundInfoModel
                                                               ?.refund
-                                                              .quntity ??
+                                                              ?.quntity ??
                                                           0),
                                                 ),
                                                 style: TextStyle(
@@ -113,7 +113,7 @@ class _RefundBottomSheetState extends State<RefundBottomSheet> {
                                               text: PriceConverter.convertPrice(
                                                 context,
                                                 refund.refundInfoModel?.refund
-                                                        .productTotalDiscount ??
+                                                        ?.productTotalDiscount ??
                                                     0,
                                               ),
                                               style: TextStyle(
@@ -141,7 +141,7 @@ class _RefundBottomSheetState extends State<RefundBottomSheet> {
                                                     refund
                                                             .refundInfoModel
                                                             ?.refund
-                                                            .productTotalTax ??
+                                                            ?.productTotalTax ??
                                                         0),
                                                 style: TextStyle(
                                                     fontWeight:
@@ -169,7 +169,7 @@ class _RefundBottomSheetState extends State<RefundBottomSheet> {
                                                         refund
                                                                 .refundInfoModel
                                                                 ?.refund
-                                                                .subtotal ??
+                                                                ?.subtotal ??
                                                             0),
                                                 style: TextStyle(
                                                     fontWeight:
@@ -195,7 +195,7 @@ class _RefundBottomSheetState extends State<RefundBottomSheet> {
                                                     refund
                                                             .refundInfoModel
                                                             ?.refund
-                                                            .couponDiscount ??
+                                                            ?.couponDiscount ??
                                                         0),
                                                 style: TextStyle(
                                                     fontWeight:
@@ -224,7 +224,7 @@ class _RefundBottomSheetState extends State<RefundBottomSheet> {
                                                         refund
                                                                 .refundInfoModel
                                                                 ?.refund
-                                                                .refundAmount ??
+                                                                ?.refundAmount ??
                                                             0),
                                                 style: TextStyle(
                                                     fontWeight:
@@ -380,7 +380,7 @@ class _RefundBottomSheetState extends State<RefundBottomSheet> {
                                             context,
                                             widget.orderDetailsId,
                                             refundReq.refundInfoModel?.refund
-                                                    .refundAmount ??
+                                                    ?.refundAmount ??
                                                 0,
                                             reason,
                                             Provider.of<AuthProvider>(context,

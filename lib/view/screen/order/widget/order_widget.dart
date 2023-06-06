@@ -16,12 +16,16 @@ class OrderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
+        Navigator.of(context).push(
+          MaterialPageRoute(
             builder: (context) => OrderDetailsScreen(
-                orderId: orderModel.id,
-                orderType: orderModel.orderType,
-                extraDiscount: orderModel.extraDiscount,
-                extraDiscountType: orderModel.extraDiscountType)));
+              orderId: orderModel.id,
+              orderType: orderModel.orderType ?? "",
+              extraDiscount: orderModel.extraDiscount,
+              extraDiscountType: orderModel.extraDiscountType,
+            ),
+          ),
+        );
       },
       child: Container(
         margin: EdgeInsets.only(
@@ -47,7 +51,10 @@ class OrderWidget extends StatelessWidget {
               Row(children: [
                 Text(
                     DateConverter.localDateToIsoStringAMPM(
-                        DateTime.parse(orderModel.createdAt)),
+                      DateTime.parse(
+                        orderModel.createdAt ?? DateTime.now().toString(),
+                      ),
+                    ),
                     style: titilliumRegular.copyWith(
                       fontSize: Dimensions.FONT_SIZE_SMALL,
                       color: Theme.of(context).hintColor,
@@ -65,7 +72,9 @@ class OrderWidget extends StatelessWidget {
                     SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
                     Text(
                         PriceConverter.convertPrice(
-                            context, orderModel.orderAmount),
+                          context,
+                          orderModel.orderAmount ?? 0.0,
+                        ),
                         style: titilliumSemiBold),
                   ]),
             ),

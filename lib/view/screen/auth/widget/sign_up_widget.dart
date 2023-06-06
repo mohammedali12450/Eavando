@@ -40,7 +40,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   FocusNode _passwordFocus = FocusNode();
   FocusNode _confirmPasswordFocus = FocusNode();
 
-  RegisterModel register = RegisterModel.init();
+  RegisterModel register = RegisterModel();
   bool isEmailVerified = false;
 
   addUser() async {

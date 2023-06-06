@@ -32,7 +32,7 @@ class CartModel {
   String? productType;
   String? slug;
 
-  CartModel(
+  CartModel({
     this.id,
     this.productId,
     this.thumbnail,
@@ -60,8 +60,10 @@ class CartModel {
     this.shippingCost,
     this.minimumOrderQuantity,
     this.productType,
+    this.productInfo,
+    this.shippingType,
     this.slug,
-  );
+  });
 
   CartModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];

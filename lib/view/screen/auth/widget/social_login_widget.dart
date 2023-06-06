@@ -19,7 +19,7 @@ class SocialLoginWidget extends StatefulWidget {
 }
 
 class _SocialLoginWidgetState extends State<SocialLoginWidget> {
-  SocialLoginModel socialLogin = SocialLoginModel.init();
+  SocialLoginModel socialLogin = SocialLoginModel();
   route(bool isRoute, String? token, String? temporaryToken,
       String errorMessage) async {
     if (isRoute) {
@@ -69,14 +69,18 @@ class _SocialLoginWidgetState extends State<SocialLoginWidget> {
       children: [
         Provider.of<SplashProvider>(context, listen: false)
                     .configModel
-                    ?.socialLogin[0]
+                    ?.socialLogin?[0]
                     .status ??
                 false
-            ? Provider.of<SplashProvider>(context, listen: false)
-                        .configModel
-                        ?.socialLogin[1]
-                        .status ??
-                    false
+            ? (Provider.of<SplashProvider>(context, listen: false)
+                            .configModel
+                            ?.socialLogin !=
+                        null &&
+                    (Provider.of<SplashProvider>(context, listen: false)
+                            .configModel
+                            ?.socialLogin![1]
+                            .status ??
+                        false))
                 ? Center(child: Text(getTranslated('social_login', context)))
                 : Center(child: Text(getTranslated('social_login', context)))
             : SizedBox(),
@@ -89,7 +93,7 @@ class _SocialLoginWidgetState extends State<SocialLoginWidget> {
             children: [
               Provider.of<SplashProvider>(context, listen: false)
                           .configModel
-                          ?.socialLogin[0]
+                          ?.socialLogin?[0]
                           .status ??
                       false
                   ? InkWell(
@@ -157,7 +161,7 @@ class _SocialLoginWidgetState extends State<SocialLoginWidget> {
                   : SizedBox(),
               Provider.of<SplashProvider>(context, listen: false)
                           .configModel
-                          ?.socialLogin[1]
+                          ?.socialLogin?[1]
                           .status ??
                       false
                   ? InkWell(

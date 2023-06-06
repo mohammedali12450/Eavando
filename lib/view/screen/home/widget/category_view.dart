@@ -40,7 +40,8 @@ class CategoryView extends StatelessWidget {
                             isBrand: false,
                             id: categoryProvider.categoryList![index].id
                                 .toString(),
-                            name: categoryProvider.categoryList![index].name,
+                            name: categoryProvider.categoryList![index].name ??
+                                "",
                             image: categoryProvider.categoryList![index].icon,
                           ),
                         ),

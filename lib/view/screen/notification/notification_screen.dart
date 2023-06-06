@@ -76,8 +76,9 @@ class NotificationScreen extends StatelessWidget {
                                       ),
                                     ),
                                     title: Text(
-                                        notification
-                                            .notificationList![index].title,
+                                        notification.notificationList![index]
+                                                .title ??
+                                            "",
                                         style: titilliumRegular.copyWith(
                                           fontSize: Dimensions.FONT_SIZE_SMALL,
                                         )),
@@ -85,7 +86,8 @@ class NotificationScreen extends StatelessWidget {
                                       DateConverter.localDateToIsoStringAMPM(
                                         DateTime.parse(
                                           notification.notificationList![index]
-                                              .createdAt,
+                                                  .createdAt ??
+                                              DateTime.now().toString(),
                                         ),
                                       ),
                                       style: titilliumRegular.copyWith(

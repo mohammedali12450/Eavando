@@ -24,21 +24,22 @@ class WishListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double _startingPrice = 0;
-    if (product.variation.length != 0) {
+    if (product.variation?.length != 0) {
       List<double> _priceList = [];
-      product.variation.forEach((variation) => _priceList.add(variation.price));
+      product.variation
+          ?.forEach((variation) => _priceList.add(variation.price ?? 0.0));
       _priceList.sort((a, b) => a.compareTo(b));
       _startingPrice = _priceList[0];
       if (_priceList[0] < _priceList[_priceList.length - 1]) {}
     } else {
-      _startingPrice = product.unitPrice;
+      _startingPrice = product.unitPrice ?? 0.0;
     }
     var startTotalPrice = ((double.parse(PriceConverter.convertPrice(
                     context, _startingPrice,
                     discount: product.discount,
                     discountType: product.discountType)
                 .replaceAll(RegExp(r'€'), ""))) *
-            (1 + (product.tax) / 100))
+            (1 + (product.tax ?? 0.0) / 100))
         .toStringAsFixed(2);
     print(startTotalPrice);
     return Container(
@@ -87,7 +88,7 @@ class WishListWidget extends StatelessWidget {
                           ),
                         ),
                       ),
-                      product.discount > 0
+                      (product.discount ?? 0.0) > 0
                           ? Positioned(
                               top: 0,
                               left: 0,
@@ -106,10 +107,11 @@ class WishListWidget extends StatelessWidget {
                                     color: Theme.of(context).primaryColor),
                                 child: Text(
                                   PriceConverter.percentageCalculation(
-                                      context,
-                                      product.unitPrice,
-                                      product.discount,
-                                      product.discountType),
+                                    context,
+                                    product.unitPrice ?? 0.0,
+                                    product.discount ?? 0.0,
+                                    product.discountType ?? "",
+                                  ),
                                   style: titilliumRegular.copyWith(
                                       fontSize:
                                           Dimensions.FONT_SIZE_EXTRA_SMALL,
@@ -129,7 +131,7 @@ class WishListWidget extends StatelessWidget {
                           children: [
                             Expanded(
                               child: Text(
-                                product.name,
+                                product.name ?? "",
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: titilliumSemiBold.copyWith(
@@ -157,8 +159,9 @@ class WishListWidget extends StatelessWidget {
                                                           context,
                                                           listen: false)
                                                       .removeWishList(
-                                                          product.id,
-                                                          index: index);
+                                                    product.id ?? -1,
+                                                    index: index,
+                                                  );
                                                   Navigator.of(context).pop();
                                                 },
                                               ),
@@ -182,7 +185,7 @@ class WishListWidget extends StatelessWidget {
                         SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
                         Row(
                           children: [
-                            product.discount > 0
+                            (product.discount ?? 0) > 0
                                 ? Text(
                                     "€" + startTotalPrice
                                     // PriceConverter.convertPrice(context, product.unitPrice)
@@ -192,7 +195,7 @@ class WishListWidget extends StatelessWidget {
                                         decoration: TextDecoration.lineThrough),
                                   )
                                 : SizedBox(),
-                            product.discount > 0
+                            (product.discount ?? 0) > 0
                                 ? SizedBox(
                                     width: Dimensions.PADDING_SIZE_DEFAULT)
                                 : SizedBox(),
@@ -229,9 +232,10 @@ class WishListWidget extends StatelessWidget {
                                           Duration(milliseconds: 1000),
                                       pageBuilder: (context, anim1, anim2) =>
                                           ProductDetails(
-                                              productId: product.id,
-                                              slug: product.slug,
-                                              isFromWishList: true),
+                                        productId: product.id ?? -1,
+                                        slug: product.slug ?? "",
+                                        isFromWishList: true,
+                                      ),
                                     ));
                               },
                               child: Container(

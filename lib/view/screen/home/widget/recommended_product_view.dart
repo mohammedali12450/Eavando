@@ -20,8 +20,8 @@ class RecommendedProductView extends StatelessWidget {
           builder: (context, recommended, child) {
             String ratting = recommended.recommendedProduct != null &&
                     recommended.recommendedProduct?.rating != null &&
-                    recommended.recommendedProduct?.rating.length != 0
-                ? recommended.recommendedProduct?.rating[0].average ?? "0"
+                    recommended.recommendedProduct?.rating!.length != 0
+                ? recommended.recommendedProduct?.rating![0].average ?? "0"
                 : "0";
 
             return recommended.recommendedProduct != null
@@ -210,9 +210,9 @@ class RecommendedProductView extends StatelessWidget {
                                                   recommended.recommendedProduct
                                                           ?.discount !=
                                                       null &&
-                                                  recommended
-                                                          .recommendedProduct!
-                                                          .discount >
+                                                  (recommended.recommendedProduct!
+                                                              .discount ??
+                                                          0) >
                                                       0
                                               ? Text(
                                                   PriceConverter.convertPrice(

@@ -22,14 +22,16 @@ class CallAndChatWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String phone = isSeller
-        ? (orderProvider.orderDetails?[0].seller.phone ?? "")
-        : orderModel.deliveryMan.phone;
+        ? (orderProvider.orderDetails?[0].seller?.phone ?? "")
+        : (orderModel.deliveryMan?.phone ?? "");
     String name = isSeller
-        ? (orderProvider.orderDetails?[0].seller.shop.name ?? "")
-        : orderModel.deliveryMan.fName + ' ' + orderModel.deliveryMan.lName;
+        ? (orderProvider.orderDetails?[0].seller?.shop?.name ?? "")
+        : (orderModel.deliveryMan?.fName ?? "") +
+            ' ' +
+            (orderModel.deliveryMan?.lName ?? "");
     int id = isSeller
-        ? (orderProvider.orderDetails?[0].seller.id ?? -1)
-        : orderModel.deliveryMan.id;
+        ? (orderProvider.orderDetails?[0].seller?.id ?? -1)
+        : (orderModel.deliveryMan?.id ?? -1);
     return Row(
       children: [
         InkWell(

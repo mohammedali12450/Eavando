@@ -28,8 +28,8 @@ class SellerSection extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (_) => ChatScreen(
-                    id: order.orderDetails?[0].seller.id ?? -1,
-                    name: order.orderDetails?[0].seller.shop.name ?? "",
+                    id: order.orderDetails?[0].seller?.id ?? -1,
+                    name: order.orderDetails?[0].seller?.shop?.name ?? "",
                   ),
                 ),
               );
@@ -49,7 +49,7 @@ class SellerSection extends StatelessWidget {
               Text(
                 order.orderDetails?[0].seller == null
                     ? 'Admin'
-                    : '${order.orderDetails?[0].seller.shop.name ?? '${getTranslated('seller_not_available', context)}'} ',
+                    : '${order.orderDetails?[0].seller?.shop?.name ?? '${getTranslated('seller_not_available', context)}'} ',
                 style: titilliumRegular.copyWith(
                     color: ColorResources.HINT_TEXT_COLOR),
               ),

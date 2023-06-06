@@ -135,9 +135,9 @@ class Product {
       try {
         images = json['images'] != null ? json['images'].cast<String>() : [];
       } catch (e) {
-        images = json['images'] != null
-            ? jsonDecode(json['images']).cast<String>()
-            : [];
+        images = ((json['images']?['AliceBlue'] ?? []) as List)
+            .map((e) => "$e")
+            .toList();
       }
     }
 
@@ -278,7 +278,7 @@ class Variation {
 
   Variation.fromJson(Map<String, dynamic> json) {
     type = json['type'];
-    price = json['price'].toDouble();
+    price = json['price']?.toDouble();
     sku = json['sku'];
     qty = json['qty'];
   }

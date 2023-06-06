@@ -84,19 +84,19 @@ class _ShippingMethodBottomSheetState extends State<ShippingMethodBottomSheet> {
           builder: (context, order, child) {
             return order.shippingList?[widget.sellerIndex].shippingMethodList !=
                     null
-                ? order.shippingList![widget.sellerIndex].shippingMethodList!
+                ? order.shippingList![widget.sellerIndex].shippingMethodList
                             .length !=
                         0
                     ? SizedBox(
                         height: 300,
                         child: ListView.builder(
                           itemCount: order.shippingList![widget.sellerIndex]
-                              .shippingMethodList!.length,
+                              .shippingMethodList.length,
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
                             return RadioListTile(
                               title: Text(
-                                  '${order.shippingList![widget.sellerIndex].shippingMethodList![index].title} (Duration: ${order.shippingList![widget.sellerIndex].shippingMethodList![index].duration}, Cost: ${PriceConverter.convertPrice(context, order.shippingList![widget.sellerIndex].shippingMethodList![index].cost)})'),
+                                  '${order.shippingList![widget.sellerIndex].shippingMethodList[index].title} (Duration: ${order.shippingList![widget.sellerIndex].shippingMethodList[index].duration}, Cost: ${PriceConverter.convertPrice(context, order.shippingList![widget.sellerIndex].shippingMethodList[index].cost ?? 0.0)})'),
                               value: index,
                               groupValue: order
                                   .shippingList![widget.sellerIndex]
@@ -111,10 +111,10 @@ class _ShippingMethodBottomSheetState extends State<ShippingMethodBottomSheet> {
                                   widget.sellerIndex,
                                 );
                                 ShippingMethodModel shipping =
-                                    ShippingMethodModel.init();
+                                    ShippingMethodModel();
                                 shipping.id = order
                                         .shippingList?[widget.sellerIndex]
-                                        .shippingMethodList![index]
+                                        .shippingMethodList[index]
                                         .id ??
                                     -1;
                                 shipping.duration = widget.groupId;
@@ -127,8 +127,12 @@ class _ShippingMethodBottomSheetState extends State<ShippingMethodBottomSheet> {
                                           ),
                                         ),
                                       )
-                                    : order.addShippingMethod(context,
-                                        shipping.id, shipping.duration, route);
+                                    : order.addShippingMethod(
+                                        context,
+                                        shipping.id ?? -1,
+                                        shipping.duration ?? "0.0",
+                                        route,
+                                      );
                                 // Navigator.pop(context);
                               },
                             );

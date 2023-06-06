@@ -120,10 +120,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                           ProductImageView(
                             productModel: details.productDetailsModel,
                             indexColor:
-                                details.productDetailsModel?.colors.length == 0
+                                details.productDetailsModel?.colors?.length == 0
                                     ? ""
-                                    : details.productDetailsModel?.colors[index]
-                                            .name ??
+                                    : details.productDetailsModel
+                                            ?.colors?[index].name ??
                                         "",
                           ),
                           Container(
@@ -155,11 +155,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                   ?.averageReview !=
                                               null
                                           ? details.productDetailsModel!
-                                              .averageReview
+                                                  .averageReview ??
+                                              "0"
                                           : "0"),
                                   (details.productDetailsModel?.details !=
                                               null &&
-                                          details.productDetailsModel!.details
+                                          details.productDetailsModel!.details!
                                               .isNotEmpty)
                                       ? Container(
                                           height: 250,

@@ -33,11 +33,7 @@ class _ProductImageScreenState extends State<ProductImageScreen> {
     colorIndex = Provider.of<ProductDetailsProvider>(context, listen: false)
             .colorIndex ??
         0;
-    imagesToEachColor =
-        Provider.of<ProductDetailsProvider>(context, listen: false)
-                .productDetailsModel
-                ?.imagesListToEachColor ??
-            0;
+    imagesToEachColor = 0;
   }
 
   @override
@@ -79,7 +75,7 @@ class _ProductImageScreenState extends State<ProductImageScreen> {
                           ? '${Provider.of<SplashProvider>(context, listen: false).baseUrls?.productImageUrl ?? ""}'
                               '/${widget.imageList[pageIndex]}'
                           : '${Provider.of<SplashProvider>(context, listen: false).baseUrls?.productImageUrl ?? ""}/'
-                              '${Provider.of<ProductDetailsProvider>(context, listen: false).productDetailsModel?.colors[colorIndex].name}'
+                              '${Provider.of<ProductDetailsProvider>(context, listen: false).productDetailsModel?.colors?[colorIndex].name ?? ""}'
                               '/${widget.imageList[pageIndex]}'),
                       initialScale: PhotoViewComputedScale.covered,
                       heroAttributes:

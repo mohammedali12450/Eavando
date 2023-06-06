@@ -33,8 +33,8 @@ class CartWidget extends StatelessWidget {
             PageRouteBuilder(
               transitionDuration: Duration(milliseconds: 1000),
               pageBuilder: (context, anim1, anim2) => ProductDetails(
-                productId: cartModel.productId,
-                slug: cartModel.slug,
+                productId: cartModel.productId ?? -1,
+                slug: cartModel.slug ?? "",
               ),
             ));
       },
@@ -83,7 +83,7 @@ class CartWidget extends StatelessWidget {
                       Row(
                         children: [
                           Expanded(
-                            child: Text(cartModel.name,
+                            child: Text(cartModel.name ?? "",
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: titilliumBold.copyWith(
@@ -104,7 +104,9 @@ class CartWidget extends StatelessWidget {
                                       Provider.of<CartProvider>(context,
                                               listen: false)
                                           .removeFromCartAPI(
-                                              context, cartModel.id);
+                                        context,
+                                        cartModel.id ?? -1,
+                                      );
                                     } else {
                                       Provider.of<CartProvider>(context,
                                               listen: false)
@@ -127,10 +129,12 @@ class CartWidget extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          cartModel.discount > 0
+                          (cartModel.discount ?? 0) > 0
                               ? Text(
                                   PriceConverter.convertPrice(
-                                      context, cartModel.price),
+                                    context,
+                                    cartModel.price ?? 0,
+                                  ),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: titilliumSemiBold.copyWith(
@@ -140,12 +144,12 @@ class CartWidget extends StatelessWidget {
                                 )
                               : SizedBox(),
                           SizedBox(
-                              width: cartModel.discount > 0
+                              width: (cartModel.discount ?? 0) > 0
                                   ? Dimensions.FONT_SIZE_DEFAULT
                                   : 0),
                           Text(
                             PriceConverter.convertPrice(
-                                context, cartModel.price,
+                                context, cartModel.price ?? 0,
                                 discount: cartModel.discount,
                                 discountType: 'amount'),
                             maxLines: 1,
@@ -158,13 +162,13 @@ class CartWidget extends StatelessWidget {
                       ),
 
                       //variation
-                      (cartModel.variant.isNotEmpty)
+                      (cartModel.variant?.isNotEmpty ?? false)
                           ? Padding(
                               padding: EdgeInsets.only(
                                   top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                               child: Row(children: [
                                 Flexible(
-                                    child: Text(cartModel.variant,
+                                    child: Text(cartModel.variant ?? "",
                                         style: robotoRegular.copyWith(
                                           fontSize:
                                               Dimensions.FONT_SIZE_DEFAULT,
@@ -197,7 +201,7 @@ class CartWidget extends StatelessWidget {
                                                 .getReviewRattingColor(
                                                     context))),
                                     Text(
-                                        '${PriceConverter.convertPrice(context, cartModel.shippingCost)}',
+                                        '${PriceConverter.convertPrice(context, cartModel.shippingCost ?? 0)}',
                                         style: robotoRegular.copyWith(
                                           fontSize: Dimensions.FONT_SIZE_SMALL,
                                           color:
@@ -216,12 +220,14 @@ class CartWidget extends StatelessWidget {
                                       child: QuantityButton(
                                         isIncrement: false,
                                         index: index,
-                                        quantity: cartModel.quantity,
-                                        maxQty: cartModel
-                                            .productInfo.totalCurrentStock,
+                                        quantity: cartModel.quantity ?? 0,
+                                        maxQty: cartModel.productInfo
+                                                ?.totalCurrentStock ??
+                                            0,
                                         cartModel: cartModel,
                                         minimumOrderQuantity: cartModel
-                                            .productInfo.minimumOrderQty,
+                                                .productInfo?.minimumOrderQty ??
+                                            1,
                                         digitalProduct:
                                             cartModel.productType == "digital"
                                                 ? true
@@ -236,12 +242,14 @@ class CartWidget extends StatelessWidget {
                                       child: QuantityButton(
                                         index: index,
                                         isIncrement: true,
-                                        quantity: cartModel.quantity,
-                                        maxQty: cartModel
-                                            .productInfo.totalCurrentStock,
+                                        quantity: cartModel.quantity ?? 0,
+                                        maxQty: cartModel.productInfo
+                                                ?.totalCurrentStock ??
+                                            0,
                                         cartModel: cartModel,
                                         minimumOrderQuantity: cartModel
-                                            .productInfo.minimumOrderQty,
+                                                .productInfo?.minimumOrderQty ??
+                                            1,
                                         digitalProduct:
                                             cartModel.productType == "digital"
                                                 ? true
@@ -289,7 +297,7 @@ class QuantityButton extends StatelessWidget {
         if (!isIncrement && quantity > minimumOrderQuantity) {
           Provider.of<CartProvider>(context, listen: false)
               .updateCartProductQuantity(
-                  cartModel.id, cartModel.quantity - 1, context)
+                  cartModel.id ?? -1, (cartModel.quantity ?? 0) - 1, context)
               .then((value) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text(value.message),
@@ -301,7 +309,7 @@ class QuantityButton extends StatelessWidget {
           print('--qqq-->$quantity/$minimumOrderQuantity==bangla--------===>');
           Provider.of<CartProvider>(context, listen: false)
               .updateCartProductQuantity(
-                  cartModel.id, cartModel.quantity + 1, context)
+                  cartModel.id ?? -1, (cartModel.quantity ?? 0) + 1, context)
               .then((value) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text(value.message),

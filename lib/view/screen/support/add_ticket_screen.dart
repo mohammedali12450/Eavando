@@ -92,9 +92,9 @@ class _AddTicketScreenState extends State<AddTicketScreen> {
                           } else {
                             SupportTicketBody supportTicketModel =
                                 SupportTicketBody(
-                              type: widget.type,
-                              subject: _subjectController.text,
-                              description: _descriptionController.text,
+                              widget.type,
+                              _subjectController.text,
+                              _descriptionController.text,
                             );
                             Provider.of<SupportTicketProvider>(context,
                                     listen: false)

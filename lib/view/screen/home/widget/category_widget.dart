@@ -45,7 +45,7 @@ class CategoryWidget extends StatelessWidget {
       Container(
         child: Center(
           child: Text(
-            category.name,
+            category.name ?? "",
             textAlign: TextAlign.center,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,

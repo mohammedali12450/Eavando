@@ -42,7 +42,8 @@ class ZipSearchDialog extends StatelessWidget {
                           print(
                               'you are clicked in ====>${locationProvider.restrictedZipList[index].zipcode}');
                           locationProvider.setZip(locationProvider
-                              .restrictedZipList[index].zipcode);
+                                  .restrictedZipList[index].zipcode ??
+                              "");
                           locationProvider.getDeliveryRestrictedZipBySearch(
                               context,
                               'xfbdhfdbgdfsbgsdfbgsgbsgfbsgbsfdgbsdgbsdgbsdf');
@@ -56,7 +57,8 @@ class ZipSearchDialog extends StatelessWidget {
                               children: [
                                 Text(
                                     locationProvider
-                                        .restrictedZipList[index].zipcode,
+                                            .restrictedZipList[index].zipcode ??
+                                        "",
                                     style: robotoRegular.copyWith(
                                         fontSize:
                                             Dimensions.FONT_SIZE_DEFAULT)),

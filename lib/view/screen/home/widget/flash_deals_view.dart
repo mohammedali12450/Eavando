@@ -77,13 +77,15 @@ class FlashDealsView extends StatelessWidget {
                                                               anim1, anim2) =>
                                                           ProductDetails(
                                                         productId: megaProvider
-                                                            .flashDealList![
-                                                                index]
-                                                            .id,
+                                                                .flashDealList![
+                                                                    index]
+                                                                .id ??
+                                                            -1,
                                                         slug: megaProvider
-                                                            .flashDealList![
-                                                                index]
-                                                            .slug,
+                                                                .flashDealList![
+                                                                    index]
+                                                                .slug ??
+                                                            "",
                                                       ),
                                                     ));
                                               },
@@ -179,9 +181,10 @@ class FlashDealsView extends StatelessWidget {
                                                             children: [
                                                               Text(
                                                                 megaProvider
-                                                                    .flashDealList![
-                                                                        index]
-                                                                    .name,
+                                                                        .flashDealList![
+                                                                            index]
+                                                                        .name ??
+                                                                    "",
                                                                 style:
                                                                     robotoRegular,
                                                                 maxLines: 2,
@@ -201,13 +204,14 @@ class FlashDealsView extends StatelessWidget {
                                                                               .flashDealList![
                                                                                   index]
                                                                               .rating
-                                                                              .length !=
+                                                                              ?.length !=
                                                                           0
-                                                                      ? double.parse(megaProvider
-                                                                              .flashDealList![index]
-                                                                              .rating[0]
-                                                                              .average)
-                                                                          .toStringAsFixed(1)
+                                                                      ? double
+                                                                          .parse(
+                                                                          megaProvider.flashDealList![index].rating?[0].average ??
+                                                                              "0.0",
+                                                                        ).toStringAsFixed(
+                                                                          1)
                                                                       : '0.0',
                                                                   style: robotoRegular.copyWith(
                                                                       color: Provider.of<ThemeProvider>(context).darkTheme
@@ -238,13 +242,15 @@ class FlashDealsView extends StatelessWidget {
                                                                     )),
                                                                 Spacer(),
                                                                 Text(
-                                                                  megaProvider.flashDealList![index].discount >
+                                                                  (megaProvider.flashDealList![index].discount ??
+                                                                              0.0) >
                                                                           0
-                                                                      ? PriceConverter.convertPrice(
+                                                                      ? PriceConverter
+                                                                          .convertPrice(
                                                                           context,
-                                                                          megaProvider
-                                                                              .flashDealList![index]
-                                                                              .unitPrice)
+                                                                          megaProvider.flashDealList![index].unitPrice ??
+                                                                              0.0,
+                                                                        )
                                                                       : '',
                                                                   style: robotoBold
                                                                       .copyWith(
@@ -265,9 +271,10 @@ class FlashDealsView extends StatelessWidget {
                                                                   PriceConverter.convertPrice(
                                                                       context,
                                                                       megaProvider
-                                                                          .flashDealList![
-                                                                              index]
-                                                                          .unitPrice,
+                                                                              .flashDealList![
+                                                                                  index]
+                                                                              .unitPrice ??
+                                                                          0.0,
                                                                       discountType: megaProvider
                                                                           .flashDealList![
                                                                               index]
@@ -286,10 +293,11 @@ class FlashDealsView extends StatelessWidget {
                                                           ),
                                                         ),
                                                       ]),
-                                                  megaProvider
-                                                              .flashDealList![
-                                                                  index]
-                                                              .discount >=
+                                                  (megaProvider
+                                                                  .flashDealList![
+                                                                      index]
+                                                                  .discount ??
+                                                              0.0) >=
                                                           1
                                                       ? Positioned(
                                                           top: 0,
@@ -321,17 +329,20 @@ class FlashDealsView extends StatelessWidget {
                                                                   .percentageCalculation(
                                                                 context,
                                                                 megaProvider
-                                                                    .flashDealList![
-                                                                        index]
-                                                                    .unitPrice,
+                                                                        .flashDealList![
+                                                                            index]
+                                                                        .unitPrice ??
+                                                                    0.0,
                                                                 megaProvider
-                                                                    .flashDealList![
-                                                                        index]
-                                                                    .discount,
+                                                                        .flashDealList![
+                                                                            index]
+                                                                        .discount ??
+                                                                    0.0,
                                                                 megaProvider
-                                                                    .flashDealList![
-                                                                        index]
-                                                                    .discountType,
+                                                                        .flashDealList![
+                                                                            index]
+                                                                        .discountType ??
+                                                                    "",
                                                               ),
                                                               style: robotoRegular.copyWith(
                                                                   color: Theme.of(
@@ -394,9 +405,11 @@ class FlashDealsView extends StatelessWidget {
                                   pageBuilder: (context, anim1, anim2) =>
                                       ProductDetails(
                                     productId:
-                                        megaProvider.flashDealList![index].id,
-                                    slug:
-                                        megaProvider.flashDealList![index].slug,
+                                        megaProvider.flashDealList![index].id ??
+                                            -1,
+                                    slug: megaProvider
+                                            .flashDealList![index].slug ??
+                                        "",
                                   ),
                                 ));
                           },
@@ -454,8 +467,9 @@ class FlashDealsView extends StatelessWidget {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              megaProvider
-                                                  .flashDealList![index].name,
+                                              megaProvider.flashDealList![index]
+                                                      .name ??
+                                                  "",
                                               style: robotoRegular,
                                               maxLines: 2,
                                               overflow: TextOverflow.ellipsis,
@@ -470,13 +484,14 @@ class FlashDealsView extends StatelessWidget {
                                                             .flashDealList![
                                                                 index]
                                                             .rating
-                                                            .length !=
+                                                            ?.length !=
                                                         0
                                                     ? double.parse(megaProvider
-                                                            .flashDealList![
-                                                                index]
-                                                            .rating[0]
-                                                            .average)
+                                                                .flashDealList![
+                                                                    index]
+                                                                .rating?[0]
+                                                                .average ??
+                                                            "0.0")
                                                         .toStringAsFixed(1)
                                                     : '0.0',
                                                 style: robotoRegular.copyWith(
@@ -505,18 +520,19 @@ class FlashDealsView extends StatelessWidget {
                                             Row(
                                               children: [
                                                 Text(
-                                                  megaProvider
-                                                              .flashDealList![
-                                                                  index]
-                                                              .discount >
-                                                          0
-                                                      ? PriceConverter
-                                                          .convertPrice(
-                                                              context,
-                                                              megaProvider
+                                                  (megaProvider
                                                                   .flashDealList![
                                                                       index]
-                                                                  .unitPrice)
+                                                                  .discount ??
+                                                              0.0) >
+                                                          0
+                                                      ? PriceConverter.convertPrice(
+                                                          context,
+                                                          megaProvider
+                                                                  .flashDealList![
+                                                                      index]
+                                                                  .unitPrice ??
+                                                              0.0)
                                                       : '',
                                                   style: robotoRegular.copyWith(
                                                     color:
@@ -536,8 +552,10 @@ class FlashDealsView extends StatelessWidget {
                                                   PriceConverter.convertPrice(
                                                       context,
                                                       megaProvider
-                                                          .flashDealList![index]
-                                                          .unitPrice,
+                                                              .flashDealList![
+                                                                  index]
+                                                              .unitPrice ??
+                                                          0.0,
                                                       discountType: megaProvider
                                                           .flashDealList![index]
                                                           .discountType,
@@ -562,7 +580,9 @@ class FlashDealsView extends StatelessWidget {
                                   ]),
 
                               // Off
-                              megaProvider.flashDealList![index].discount >= 1
+                              (megaProvider.flashDealList![index].discount ??
+                                          0.0) >=
+                                      1
                                   ? Positioned(
                                       top: 0,
                                       left: 0,
@@ -585,11 +605,14 @@ class FlashDealsView extends StatelessWidget {
                                                 .percentageCalculation(
                                               context,
                                               megaProvider.flashDealList![index]
-                                                  .unitPrice,
+                                                      .unitPrice ??
+                                                  0.0,
                                               megaProvider.flashDealList![index]
-                                                  .discount,
+                                                      .discount ??
+                                                  0.0,
                                               megaProvider.flashDealList![index]
-                                                  .discountType,
+                                                      .discountType ??
+                                                  "",
                                             ),
                                             style: robotoRegular.copyWith(
                                                 color: Theme.of(context)

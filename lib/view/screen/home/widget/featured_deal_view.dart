@@ -41,9 +41,11 @@ class FeaturedDealsView extends StatelessWidget {
                             pageBuilder: (context, anim1, anim2) =>
                                 ProductDetails(
                               productId: featuredDealProvider
-                                  .featuredDealProductList[index].id,
+                                      .featuredDealProductList[index].id ??
+                                  -1,
                               slug: featuredDealProvider
-                                  .featuredDealProductList[index].slug,
+                                      .featuredDealProductList[index].slug ??
+                                  "",
                             ),
                           ));
                     },
@@ -105,8 +107,9 @@ class FeaturedDealsView extends StatelessWidget {
                                     children: [
                                       Text(
                                         featuredDealProvider
-                                            .featuredDealProductList[index]
-                                            .name,
+                                                .featuredDealProductList[index]
+                                                .name ??
+                                            "",
                                         style: robotoRegular.copyWith(
                                             height: 1.3,
                                             fontSize:
@@ -119,17 +122,20 @@ class FeaturedDealsView extends StatelessWidget {
                                               Dimensions.PADDING_SIZE_SMALL),
                                       Row(children: [
                                         Text(
-                                          featuredDealProvider
-                                                  .featuredDealProductList[
-                                                      index]
-                                                  .rating
-                                                  .isNotEmpty
-                                              ? double.parse(featuredDealProvider
+                                          (featuredDealProvider
                                                       .featuredDealProductList[
                                                           index]
-                                                      .rating[0]
-                                                      .average)
-                                                  .toStringAsFixed(1)
+                                                      .rating
+                                                      ?.isNotEmpty ??
+                                                  false)
+                                              ? double.parse(
+                                                  featuredDealProvider
+                                                          .featuredDealProductList[
+                                                              index]
+                                                          .rating?[0]
+                                                          .average ??
+                                                      "0.0",
+                                                ).toStringAsFixed(1)
                                               : '0.0',
                                           style: robotoRegular.copyWith(
                                               color: Provider.of<ThemeProvider>(
@@ -167,18 +173,21 @@ class FeaturedDealsView extends StatelessWidget {
                                               CrossAxisAlignment.end,
                                           children: [
                                             Text(
-                                              featuredDealProvider
-                                                          .featuredDealProductList[
-                                                              index]
-                                                          .discount >
+                                              (featuredDealProvider
+                                                              .featuredDealProductList[
+                                                                  index]
+                                                              .discount ??
+                                                          0.0) >
                                                       0
                                                   ? PriceConverter.convertPrice(
                                                       context,
                                                       featuredDealProvider
-                                                          .featuredDealProductList[
-                                                              index]
-                                                          .unitPrice
-                                                          .toDouble())
+                                                              .featuredDealProductList[
+                                                                  index]
+                                                              .unitPrice
+                                                              ?.toDouble() ??
+                                                          0.0,
+                                                    )
                                                   : '',
                                               style: robotoRegular.copyWith(
                                                 color: ColorResources.getRed(
@@ -189,34 +198,36 @@ class FeaturedDealsView extends StatelessWidget {
                                                     Dimensions.FONT_SIZE_SMALL,
                                               ),
                                             ),
-                                            featuredDealProvider
-                                                        .featuredDealProductList[
-                                                            index]
-                                                        .discount >
+                                            (featuredDealProvider
+                                                            .featuredDealProductList[
+                                                                index]
+                                                            .discount ??
+                                                        0.0) >
                                                     0
                                                 ? SizedBox(
                                                     width: Dimensions
                                                         .PADDING_SIZE_DEFAULT)
                                                 : SizedBox(),
                                             Text(
-                                              PriceConverter
-                                                  .convertPrice(
-                                                      context,
-                                                      featuredDealProvider
+                                              PriceConverter.convertPrice(
+                                                  context,
+                                                  featuredDealProvider
                                                           .featuredDealProductList[
                                                               index]
                                                           .unitPrice
-                                                          .toDouble(),
-                                                      discountType:
-                                                          featuredDealProvider
-                                                              .featuredDealProductList[
-                                                                  index]
-                                                              .discountType,
-                                                      discount: featuredDealProvider
+                                                          ?.toDouble() ??
+                                                      0.0,
+                                                  discountType:
+                                                      featuredDealProvider
+                                                          .featuredDealProductList[
+                                                              index]
+                                                          .discountType,
+                                                  discount: featuredDealProvider
                                                           .featuredDealProductList[
                                                               index]
                                                           .discount
-                                                          .toDouble()),
+                                                          ?.toDouble() ??
+                                                      0.0),
                                               style: robotoBold.copyWith(
                                                   color:
                                                       ColorResources.getPrimary(
@@ -232,8 +243,9 @@ class FeaturedDealsView extends StatelessWidget {
                             ]),
 
                         // Off
-                        featuredDealProvider
-                                    .featuredDealProductList[index].discount >
+                        (featuredDealProvider.featuredDealProductList[index]
+                                        .discount ??
+                                    0.0) >
                                 0
                             ? Positioned(
                                 top: 0,
@@ -254,16 +266,19 @@ class FeaturedDealsView extends StatelessWidget {
                                     PriceConverter.percentageCalculation(
                                       context,
                                       featuredDealProvider
-                                          .featuredDealProductList[index]
-                                          .unitPrice
-                                          .toDouble(),
+                                              .featuredDealProductList[index]
+                                              .unitPrice
+                                              ?.toDouble() ??
+                                          0.0,
                                       featuredDealProvider
-                                          .featuredDealProductList[index]
-                                          .discount
-                                          .toDouble(),
+                                              .featuredDealProductList[index]
+                                              .discount
+                                              ?.toDouble() ??
+                                          0.0,
                                       featuredDealProvider
-                                          .featuredDealProductList[index]
-                                          .discountType,
+                                              .featuredDealProductList[index]
+                                              .discountType ??
+                                          "",
                                     ),
                                     style: robotoRegular.copyWith(
                                         color: Theme.of(context).highlightColor,

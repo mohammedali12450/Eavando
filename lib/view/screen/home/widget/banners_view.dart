@@ -52,8 +52,8 @@ class BannersView extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (_) => ProductDetails(
-                      productId: product.id,
-                      slug: product.slug,
+                      productId: product.id ?? -1,
+                      slug: product.slug ?? "",
                     )));
       }
     } else if (type == 'brand') {
@@ -84,7 +84,7 @@ class BannersView extends StatelessWidget {
                       topSeller:
                           Provider.of<TopSellerProvider>(context, listen: false)
                                   .topSellerList?[tIndex] ??
-                              TopSellerModel.init(),
+                              TopSellerModel.fromJson({}),
                     )));
       }
     }
@@ -125,17 +125,20 @@ class BannersView extends StatelessWidget {
                                 return InkWell(
                                   onTap: () {
                                     _clickBannerRedirect(
-                                        context,
-                                        bannerProvider
-                                            .mainBannerList![index].resourceId,
-                                        bannerProvider.mainBannerList![index]
-                                                    .resourceType ==
-                                                'product'
-                                            ? bannerProvider
-                                                .mainBannerList![index].product
-                                            : null,
-                                        bannerProvider.mainBannerList![index]
-                                            .resourceType);
+                                      context,
+                                      bannerProvider.mainBannerList![index]
+                                              .resourceId ??
+                                          -1,
+                                      bannerProvider.mainBannerList![index]
+                                                  .resourceType ==
+                                              'product'
+                                          ? bannerProvider
+                                              .mainBannerList![index].product
+                                          : null,
+                                      bannerProvider.mainBannerList![index]
+                                              .resourceType ??
+                                          "",
+                                    );
                                   },
                                   child: Container(
                                     decoration: BoxDecoration(

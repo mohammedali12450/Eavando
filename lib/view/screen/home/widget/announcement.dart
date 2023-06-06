@@ -7,13 +7,13 @@ import 'package:provider/provider.dart';
 import 'marque_text.dart';
 
 class AnnouncementScreen extends StatelessWidget {
-  final Announcement announcement;
+  final Announcement? announcement;
   AnnouncementScreen({Key? key, required this.announcement}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    String color = announcement.color.replaceAll('#', '0xff');
-    String textColor = announcement.textColor.replaceAll('#', '0xff');
+    String color = announcement?.color?.replaceAll('#', '0xff') ?? "";
+    String textColor = announcement?.textColor?.replaceAll('#', '0xff') ?? "";
     return Container(
         decoration: BoxDecoration(
           color: Color(int.parse(color)),
@@ -26,7 +26,7 @@ class AnnouncementScreen extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(
                       left: Dimensions.PADDING_SIZE_DEFAULT),
-                  child: Text(announcement.announcement,
+                  child: Text(announcement?.announcement ?? "0",
                       style: TextStyle(color: Color(int.parse(textColor)))),
                 ),
               ),

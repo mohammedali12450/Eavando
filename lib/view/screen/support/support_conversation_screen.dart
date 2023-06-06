@@ -21,7 +21,7 @@ class SupportConversationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     if (Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
       Provider.of<SupportTicketProvider>(context, listen: false)
-          .getSupportTicketReplyList(context, supportTicketModel.id);
+          .getSupportTicketReplyList(context, supportTicketModel.id ?? -1);
     }
 
     return CustomExpandedAppBar(
@@ -42,8 +42,11 @@ class SupportConversationScreen extends StatelessWidget {
                         ? support.supportReplyList![index].customerMessage
                         : support.supportReplyList![index].adminMessage;
                     String dateTime = DateConverter.localDateToIsoStringAMPM(
-                        DateTime.parse(
-                            support.supportReplyList![index].createdAt));
+                      DateTime.parse(
+                        support.supportReplyList![index].createdAt ??
+                            (DateTime.now().toString()),
+                      ),
+                    );
 
                     return Container(
                       margin: _isMe
@@ -120,7 +123,10 @@ class SupportConversationScreen extends StatelessWidget {
                     if (_controller.text.isNotEmpty) {
                       Provider.of<SupportTicketProvider>(context, listen: false)
                           .sendReply(
-                              context, supportTicketModel.id, _controller.text);
+                        context,
+                        supportTicketModel.id ?? -1,
+                        _controller.text,
+                      );
                       _controller.text = '';
                     }
                   },

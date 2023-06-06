@@ -53,11 +53,11 @@ class CurrencyDialog extends StatelessWidget {
                   builder: (context, splash, child) {
                     List<String> _valueList = [];
                     if (isCurrency) {
-                      splash.configModel?.currencyList
-                          .forEach((currency) => _valueList.add(currency.name));
+                      splash.configModel?.currencyList?.forEach(
+                          (currency) => _valueList.add(currency.name ?? ""));
                     } else {
-                      AppConstants.languages.forEach(
-                          (language) => _valueList.add(language.languageName));
+                      AppConstants.languages.forEach((language) =>
+                          _valueList.add(language.languageName ?? ""));
                     }
                     return CupertinoPicker(
                       itemExtent: 40,
@@ -110,7 +110,7 @@ class CurrencyDialog extends StatelessWidget {
                   } else {
                     Provider.of<LocalizationProvider>(context, listen: false)
                         .setLanguage(Locale(
-                      AppConstants.languages[index].languageCode,
+                      AppConstants.languages[index].languageCode ?? "de",
                       AppConstants.languages[index].countryCode,
                     ));
                     Provider.of<CategoryProvider>(context, listen: false)

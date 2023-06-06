@@ -20,7 +20,7 @@ class AddressListPage extends StatelessWidget {
         height: 30,
         width: 30,
       ),
-      title: Text(address.address, style: titilliumRegular),
+      title: Text(address.address ?? "", style: titilliumRegular),
     );
   }
 }

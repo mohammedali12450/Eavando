@@ -147,14 +147,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                         .chosenShippingList[i]
                                         .cartGroupId ==
                                     widget.cartList[index].cartGroupId) {
-                                      _cartList[index] = _cartList[index].copyWith(
-                                        shippingMethodId:    Provider.of<CartProvider>(context,
-                                              listen: false)
-                                          .chosenShippingList[i]
-                                          .id
-                                      )
-                           
-                                   ;
+                                  _cartList[index].shippingMethodId =
+                                      Provider.of<CartProvider>(context,
+                                                  listen: false)
+                                              .chosenShippingList[i]
+                                              .id ??
+                                          -1;
+
                                   break;
                                 }
                               }
@@ -203,36 +202,86 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                   .placeOrder(
                                       OrderPlaceModel(
                                         CustomerInfo(
-                                            widget.onlyDigital
-                                                ? ''
-                                                : Provider.of<ProfileProvider>(context, listen: false)
-                                                    .addressList?[
-                                                        Provider.of<OrderProvider>(context, listen: false).addressIndex ??
-                                                            0]
-                                                    .id
-                                                    .toString()??"-1",
-                                            widget.onlyDigital
-                                                ? ''
-                                                : Provider.of<ProfileProvider>(context, listen: false)
-                                                    .addressList?[
-                                                        Provider.of<OrderProvider>(context, listen: false)
-                                                                .addressIndex ??
-                                                            0]
-                                                    .address??"",
-                                            _billingAddress
-                                                ? Provider.of<ProfileProvider>(context, listen: false)
-                                                    .billingAddressList != null?Provider.of<ProfileProvider>(context, listen: false).billingAddressList![
-                                                        Provider.of<OrderProvider>(context, listen: false)
-                                                                .billingAddressIndex ??
-                                                            0]
-                                                    .id
-                                                    .toString():"-1"
-                                                : Provider.of<ProfileProvider>(context, listen: false)
-                                                    .addressList?[Provider.of<OrderProvider>(context, listen: false).addressIndex ?? 0]
-                                                    .id
-                                                    .toString()??"-1",
-                                            _billingAddress ? Provider.of<ProfileProvider>(context, listen: false).billingAddressList!=null?Provider.of<ProfileProvider>(context, listen: false).billingAddressList![Provider.of<OrderProvider>(context, listen: false).billingAddressIndex ?? 0].address :"-1": Provider.of<ProfileProvider>(context, listen: false).addressList?[Provider.of<OrderProvider>(context, listen: false).addressIndex ?? 0].address??"",
-                                            orderNote,),
+                                          widget.onlyDigital
+                                              ? ''
+                                              : Provider.of<ProfileProvider>(
+                                                          context,
+                                                          listen: false)
+                                                      .addressList?[Provider.of<
+                                                                      OrderProvider>(
+                                                                  context,
+                                                                  listen: false)
+                                                              .addressIndex ??
+                                                          0]
+                                                      .id
+                                                      .toString() ??
+                                                  "-1",
+                                          widget.onlyDigital
+                                              ? ''
+                                              : Provider.of<ProfileProvider>(
+                                                          context,
+                                                          listen: false)
+                                                      .addressList?[Provider.of<
+                                                                      OrderProvider>(
+                                                                  context,
+                                                                  listen: false)
+                                                              .addressIndex ??
+                                                          0]
+                                                      .address ??
+                                                  "",
+                                          _billingAddress
+                                              ? Provider.of<ProfileProvider>(
+                                                              context,
+                                                              listen: false)
+                                                          .billingAddressList !=
+                                                      null
+                                                  ? Provider.of<ProfileProvider>(
+                                                          context,
+                                                          listen: false)
+                                                      .billingAddressList![
+                                                          Provider.of<OrderProvider>(
+                                                                      context,
+                                                                      listen:
+                                                                          false)
+                                                                  .billingAddressIndex ??
+                                                              0]
+                                                      .id
+                                                      .toString()
+                                                  : "-1"
+                                              : Provider.of<ProfileProvider>(
+                                                          context,
+                                                          listen: false)
+                                                      .addressList?[Provider.of<OrderProvider>(context, listen: false).addressIndex ?? 0]
+                                                      .id
+                                                      .toString() ??
+                                                  "-1",
+                                          _billingAddress
+                                              ? Provider.of<ProfileProvider>(
+                                                              context,
+                                                              listen: false)
+                                                          .billingAddressList !=
+                                                      null
+                                                  ? (Provider.of<ProfileProvider>(
+                                                              context,
+                                                              listen: false)
+                                                          .billingAddressList![
+                                                              Provider.of<OrderProvider>(
+                                                                          context,
+                                                                          listen:
+                                                                              false)
+                                                                      .billingAddressIndex ??
+                                                                  0]
+                                                          .address ??
+                                                      "")
+                                                  : "-1"
+                                              : (Provider.of<ProfileProvider>(
+                                                          context,
+                                                          listen: false)
+                                                      .addressList?[Provider.of<OrderProvider>(context, listen: false).addressIndex ?? 0]
+                                                      .address ??
+                                                  ""),
+                                          orderNote,
+                                        ),
                                         _cartList,
                                         order.paymentMethodIndex == 0 &&
                                                 !widget.onlyDigital
@@ -245,33 +294,31 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                       widget.onlyDigital
                                           ? ''
                                           : Provider.of<ProfileProvider>(context, listen: false)
-                                              .addressList?[
-                                                  Provider.of<OrderProvider>(context, listen: false)
-                                                          .addressIndex ??
-                                                      0]
-                                              .id
-                                              .toString()??"-1",
+                                                  .addressList?[
+                                                      Provider.of<OrderProvider>(
+                                                                  context,
+                                                                  listen: false)
+                                                              .addressIndex ??
+                                                          0]
+                                                  .id
+                                                  .toString() ??
+                                              "-1",
                                       couponCode,
                                       couponCodeAmount,
                                       _billingAddress
-                                          ? Provider.of<ProfileProvider>(context, listen: false)
-                                              .billingAddressList != null?Provider.of<ProfileProvider>(context, listen: false)
-                                              .billingAddressList![
-                                                  Provider.of<OrderProvider>(
-                                                              context,
-                                                              listen: false)
-                                                          .billingAddressIndex ??
-                                                      0]
-                                              .id
-                                              .toString():"-1"
+                                          ? Provider.of<ProfileProvider>(context,
+                                                          listen: false)
+                                                      .billingAddressList !=
+                                                  null
+                                              ? Provider.of<ProfileProvider>(context,
+                                                      listen: false)
+                                                  .billingAddressList![Provider.of<OrderProvider>(context, listen: false).billingAddressIndex ?? 0]
+                                                  .id
+                                                  .toString()
+                                              : "-1"
                                           : widget.onlyDigital
                                               ? ''
-                                              : Provider.of<ProfileProvider>(
-                                                      context,
-                                                      listen: false)
-                                                  .addressList?[Provider.of<OrderProvider>(context, listen: false).addressIndex ?? 0]
-                                                  .id
-                                                  .toString()??"",
+                                              : Provider.of<ProfileProvider>(context, listen: false).addressList?[Provider.of<OrderProvider>(context, listen: false).addressIndex ?? 0].id.toString() ?? "",
                                       orderNote);
                             } else {
                               String userID =
@@ -286,48 +333,48 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                             addressID: widget.onlyDigital
                                                 ? ''
                                                 : Provider.of<ProfileProvider>(
-                                                        context,
-                                                        listen: false)
-                                                    .addressList?[
-                                                        Provider.of<OrderProvider>(
-                                                                    context,
-                                                                    listen:
-                                                                        false)
-                                                                .addressIndex ??
-                                                            0]
-                                                    .id
-                                                    .toString()??"-1",
-                                            couponCode: couponCode,
-                                            couponCodeAmount: couponCodeAmount,
-                                            billingId: _billingAddress
-                                                ? Provider.of<ProfileProvider>(
-                                                        context,
-                                                        listen: false)
-                                                    .billingAddressList != null?Provider.of<ProfileProvider>(
-                                                        context,
-                                                        listen: false)
-                                                    .billingAddressList![
-                                                        Provider.of<OrderProvider>(
-                                                                    context,
-                                                                    listen:
-                                                                        false)
-                                                                .billingAddressIndex ??
-                                                            0]
-                                                    .id
-                                                    .toString():"-1"
-                                                : widget.onlyDigital
-                                                    ? ''
-                                                    : Provider.of<ProfileProvider>(
                                                             context,
                                                             listen: false)
                                                         .addressList?[Provider.of<
                                                                         OrderProvider>(
                                                                     context,
-                                                                    listen: false)
+                                                                    listen:
+                                                                        false)
                                                                 .addressIndex ??
                                                             0]
                                                         .id
-                                                        .toString()??"-1",
+                                                        .toString() ??
+                                                    "-1",
+                                            couponCode: couponCode,
+                                            couponCodeAmount: couponCodeAmount,
+                                            billingId: _billingAddress
+                                                ? Provider.of<ProfileProvider>(
+                                                                context,
+                                                                listen: false)
+                                                            .billingAddressList !=
+                                                        null
+                                                    ? Provider.of<ProfileProvider>(
+                                                            context,
+                                                            listen: false)
+                                                        .billingAddressList![
+                                                            Provider.of<OrderProvider>(
+                                                                        context,
+                                                                        listen:
+                                                                            false)
+                                                                    .billingAddressIndex ??
+                                                                0]
+                                                        .id
+                                                        .toString()
+                                                    : "-1"
+                                                : widget.onlyDigital
+                                                    ? ''
+                                                    : Provider.of<ProfileProvider>(
+                                                                context,
+                                                                listen: false)
+                                                            .addressList?[Provider.of<OrderProvider>(context, listen: false).addressIndex ?? 0]
+                                                            .id
+                                                            .toString() ??
+                                                        "-1",
                                             orderNote: orderNote,
                                           )));
                             }
@@ -435,18 +482,18 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                                               .addressIndex ==
                                                           null
                                                       ? '${getTranslated('address_type', context)}'
-                                                      : Provider.of<
-                                                                  ProfileProvider>(
-                                                              context,
-                                                              listen: false)
-                                                          .addressList?[Provider.of<
-                                                                          OrderProvider>(
-                                                                      context,
-                                                                      listen:
-                                                                          false)
-                                                                  .addressIndex ??
-                                                              0]
-                                                          .addressType??"",
+                                                      : Provider.of<ProfileProvider>(
+                                                                  context,
+                                                                  listen: false)
+                                                              .addressList?[Provider.of<
+                                                                              OrderProvider>(
+                                                                          context,
+                                                                          listen:
+                                                                              false)
+                                                                      .addressIndex ??
+                                                                  0]
+                                                              .addressType ??
+                                                          "",
                                                   style: titilliumBold.copyWith(
                                                       fontSize: Dimensions
                                                           .FONT_SIZE_LARGE),
@@ -465,14 +512,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                                       ? getTranslated(
                                                           'add_your_address',
                                                           context)
-                                                      : Provider.of<
-                                                                  ProfileProvider>(
-                                                              context,
-                                                              listen: false)
-                                                          .addressList?[shipping
-                                                                  .addressIndex ??
-                                                              0]
-                                                          .address??"",
+                                                      : Provider.of<ProfileProvider>(
+                                                                  context,
+                                                                  listen: false)
+                                                              .addressList?[
+                                                                  shipping.addressIndex ??
+                                                                      0]
+                                                              .address ??
+                                                          "",
                                                   style:
                                                       titilliumRegular.copyWith(
                                                           fontSize: Dimensions
@@ -554,18 +601,18 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                                               .billingAddressIndex ==
                                                           null
                                                       ? '${getTranslated('address_type', context)}'
-                                                      : Provider.of<
-                                                                  ProfileProvider>(
-                                                              context,
-                                                              listen: false)
-                                                          .billingAddressList?[Provider.of<
-                                                                          OrderProvider>(
-                                                                      context,
-                                                                      listen:
-                                                                          false)
-                                                                  .billingAddressIndex ??
-                                                              0]
-                                                          .addressType??"",
+                                                      : Provider.of<ProfileProvider>(
+                                                                  context,
+                                                                  listen: false)
+                                                              .billingAddressList?[Provider.of<
+                                                                              OrderProvider>(
+                                                                          context,
+                                                                          listen:
+                                                                              false)
+                                                                      .billingAddressIndex ??
+                                                                  0]
+                                                              .addressType ??
+                                                          "",
                                                   style: titilliumBold.copyWith(
                                                       fontSize: Dimensions
                                                           .FONT_SIZE_LARGE),
@@ -583,14 +630,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                                       ? getTranslated(
                                                           'add_your_address',
                                                           context)
-                                                      : Provider.of<
-                                                                  ProfileProvider>(
-                                                              context,
-                                                              listen: false)
-                                                          .billingAddressList?[
-                                                              shipping.billingAddressIndex ??
-                                                                  0]
-                                                          .address??"",
+                                                      : Provider.of<ProfileProvider>(
+                                                                  context,
+                                                                  listen: false)
+                                                              .billingAddressList?[
+                                                                  shipping.billingAddressIndex ??
+                                                                      0]
+                                                              .address ??
+                                                          "",
                                                   style:
                                                       titilliumRegular.copyWith(
                                                           fontSize: Dimensions
@@ -675,9 +722,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                           Expanded(
                                             child: Text(
                                               Provider.of<CartProvider>(context,
-                                                      listen: false)
-                                                  .cartList[index]
-                                                  .name,
+                                                          listen: false)
+                                                      .cartList[index]
+                                                      .name ??
+                                                  "",
                                               style: titilliumRegular.copyWith(
                                                   fontSize: Dimensions
                                                       .FONT_SIZE_DEFAULT,
@@ -694,12 +742,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                           ),
                                           Text(
                                             PriceConverter.convertPrice(
-                                                context,
-                                                Provider.of<CartProvider>(
-                                                        context,
-                                                        listen: false)
-                                                    .cartList[index]
-                                                    .price),
+                                              context,
+                                              Provider.of<CartProvider>(context,
+                                                          listen: false)
+                                                      .cartList[index]
+                                                      .price ??
+                                                  0.0,
+                                            ),
                                             style: titilliumSemiBold.copyWith(
                                                 fontSize:
                                                     Dimensions.FONT_SIZE_LARGE,

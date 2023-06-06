@@ -52,32 +52,34 @@ class _HomePageState extends State<HomePage> {
   final ScrollController _scrollController = ScrollController();
 
   Future<void> _loadData(BuildContext context, bool reload) async {
-    await Provider.of<BannerProvider>(context, listen: false)
-        .getBannerList(reload, context);
-    await Provider.of<BannerProvider>(context, listen: false)
-        .getFooterBannerList(context);
-    await Provider.of<BannerProvider>(context, listen: false)
-        .getMainSectionBanner(context);
-    await Provider.of<CategoryProvider>(context, listen: false)
-        .getCategoryList(reload, context);
-    await Provider.of<HomeCategoryProductProvider>(context, listen: false)
-        .getHomeCategoryProductList(reload, context);
-    await Provider.of<TopSellerProvider>(context, listen: false)
-        .getTopSellerList(reload, context);
-    await Provider.of<BrandProvider>(context, listen: false)
-        .getBrandList(reload, context);
-    await Provider.of<ProductProvider>(context, listen: false)
-        .getLatestProductList(1, context, reload: reload);
-    await Provider.of<ProductProvider>(context, listen: false)
-        .getFeaturedProductList('1', context, reload: reload);
-    await Provider.of<FeaturedDealProvider>(context, listen: false)
-        .getFeaturedDealList(reload, context);
-    await Provider.of<ProductProvider>(context, listen: false)
-        .getLProductList('1', context, reload: reload);
-    await Provider.of<ProductProvider>(context, listen: false)
-        .getRecommendedProduct(context);
-    await Provider.of<SocialMediaProvider>(context, listen: false)
-        .getSocialMediaList(context, reload);
+    Future.delayed(Duration.zero).then((_) async {
+      await Provider.of<BannerProvider>(context, listen: false)
+          .getBannerList(reload, context);
+      await Provider.of<BannerProvider>(context, listen: false)
+          .getFooterBannerList(context);
+      await Provider.of<BannerProvider>(context, listen: false)
+          .getMainSectionBanner(context);
+      await Provider.of<CategoryProvider>(context, listen: false)
+          .getCategoryList(reload, context);
+      await Provider.of<HomeCategoryProductProvider>(context, listen: false)
+          .getHomeCategoryProductList(reload, context);
+      await Provider.of<TopSellerProvider>(context, listen: false)
+          .getTopSellerList(reload, context);
+      await Provider.of<BrandProvider>(context, listen: false)
+          .getBrandList(reload, context);
+      await Provider.of<ProductProvider>(context, listen: false)
+          .getLatestProductList(1, context, reload: reload);
+      await Provider.of<ProductProvider>(context, listen: false)
+          .getFeaturedProductList('1', context, reload: reload);
+      await Provider.of<FeaturedDealProvider>(context, listen: false)
+          .getFeaturedDealList(reload, context);
+      await Provider.of<ProductProvider>(context, listen: false)
+          .getLProductList('1', context, reload: reload);
+      await Provider.of<ProductProvider>(context, listen: false)
+          .getRecommendedProduct(context);
+      await Provider.of<SocialMediaProvider>(context, listen: false)
+          .getSocialMediaList(context, reload);
+    });
   }
 
   void passData(int index, String title) {
@@ -673,7 +675,7 @@ class _HomePageState extends State<HomePage> {
               Provider.of<SplashProvider>(context, listen: false)
                           .configModel
                           ?.announcement
-                          .status ==
+                          ?.status ==
                       '1'
                   ? Positioned(
                       top: MediaQuery.of(context).size.height - 128,
@@ -682,7 +684,7 @@ class _HomePageState extends State<HomePage> {
                       child: Consumer<SplashProvider>(
                         builder: (context, announcement, _) {
                           return (announcement.configModel?.announcement
-                                          .announcement !=
+                                          ?.announcement !=
                                       null &&
                                   announcement.onOff)
                               ? AnnouncementScreen(

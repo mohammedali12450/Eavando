@@ -58,7 +58,7 @@ class NotificationDialog extends StatelessWidget {
             padding:
                 EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_LARGE),
             child: Text(
-              notificationModel.title,
+              notificationModel.title ?? "",
               textAlign: TextAlign.center,
               style: titilliumSemiBold.copyWith(
                 color: Theme.of(context).primaryColor,
@@ -69,7 +69,7 @@ class NotificationDialog extends StatelessWidget {
           Padding(
             padding: EdgeInsets.fromLTRB(20, 10, 20, 20),
             child: Text(
-              notificationModel.description,
+              notificationModel.description ?? "",
               textAlign: TextAlign.center,
               style: titilliumRegular,
             ),

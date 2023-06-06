@@ -28,24 +28,26 @@ class ChatItemWidget extends StatelessWidget {
                 "";
     String image =
         Provider.of<ChatProvider>(context, listen: false).userTypeIndex == 0
-            ? chat.sellerInfo.shops.isNotEmpty
-                ? chat.sellerInfo.shops[0].image
+            ? (chat.sellerInfo?.shops?.isNotEmpty ?? false)
+                ? (chat.sellerInfo?.shops?[0].image ?? "")
                 : ''
-            : chat.deliveryMan.image;
+            : (chat.deliveryMan?.image ?? "");
 
     int id =
         Provider.of<ChatProvider>(context, listen: false).userTypeIndex == 0
-            ? chat.sellerId
-            : chat.deliveryManId;
+            ? chat.sellerId ?? -1
+            : chat.deliveryManId ?? -1;
 
     print('here is image==>$baseUrl/$image');
 
     String name =
         Provider.of<ChatProvider>(context, listen: false).userTypeIndex == 0
-            ? chat.sellerInfo.shops.isNotEmpty
-                ? chat.sellerInfo.shops[0].name
+            ? (chat.sellerInfo?.shops?.isNotEmpty ?? false)
+                ? (chat.sellerInfo?.shops?[0].name ?? "")
                 : 'Shop not found'
-            : chat.deliveryMan.fName + " " + chat.deliveryMan.lName;
+            : (chat.deliveryMan?.fName ?? "") +
+                " " +
+                (chat.deliveryMan?.lName ?? "");
 
     return Column(
       children: [
@@ -56,7 +58,7 @@ class ChatItemWidget extends StatelessWidget {
                   child: CustomImage(image: '$baseUrl/$image'))),
           title: Text(name, style: titilliumSemiBold),
           subtitle: Container(
-              child: Text(chat.message,
+              child: Text(chat.message ?? "",
                   maxLines: 4,
                   overflow: TextOverflow.ellipsis,
                   style: titilliumRegular.copyWith(
@@ -64,8 +66,8 @@ class ChatItemWidget extends StatelessWidget {
           trailing:
               Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Text(
-                DateConverter.localDateToIsoStringAMPM(
-                    DateTime.parse(chat.createdAt)),
+                DateConverter.localDateToIsoStringAMPM(DateTime.parse(
+                    chat.createdAt ?? DateTime.now().toString())),
                 style: titilliumRegular.copyWith(
                     fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL)),
           ]),

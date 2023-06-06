@@ -22,8 +22,9 @@ class ShippingInfo extends StatelessWidget {
                   fontSize: Dimensions.FONT_SIZE_SMALL)),
           Text(
             (order.trackingModel?.thirdPartyServiceName != null &&
-                    order.trackingModel!.thirdPartyServiceName.isNotEmpty)
-                ? order.trackingModel!.thirdPartyServiceName
+                    (order.trackingModel!.thirdPartyServiceName?.isNotEmpty ??
+                        false))
+                ? order.trackingModel!.thirdPartyServiceName ?? ""
                 : '',
             style:
                 titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL),
@@ -36,7 +37,7 @@ class ShippingInfo extends StatelessWidget {
                   fontSize: Dimensions.FONT_SIZE_SMALL)),
           Text(
               order.trackingModel?.thirdPartyTrackingId != null
-                  ? order.trackingModel!.thirdPartyTrackingId
+                  ? order.trackingModel!.thirdPartyTrackingId ?? ""
                   : '',
               style: titilliumRegular.copyWith(
                 fontSize: Dimensions.FONT_SIZE_SMALL,

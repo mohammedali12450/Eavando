@@ -30,7 +30,7 @@ class ReviewWidget extends StatelessWidget {
               width: Dimensions.chooseReviewImageSize,
               fit: BoxFit.cover,
               image:
-                  '${Provider.of<SplashProvider>(context, listen: false).baseUrls?.customerImageUrl ?? ""}/${reviewModel.customer.image}',
+                  '${Provider.of<SplashProvider>(context, listen: false).baseUrls?.customerImageUrl ?? ""}/${reviewModel.customer?.image ?? ""}',
               imageErrorBuilder: (c, o, s) => Image.asset(Images.placeholder,
                   height: Dimensions.chooseReviewImageSize,
                   width: Dimensions.chooseReviewImageSize,
@@ -41,7 +41,7 @@ class ReviewWidget extends StatelessWidget {
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Row(children: [
               Text(
-                '${reviewModel.customer.fName} ${reviewModel.customer.lName}',
+                '${reviewModel.customer?.fName ?? ""} ${reviewModel.customer?.lName ?? ""}',
                 style: titilliumRegular.copyWith(
                     fontSize: Dimensions.FONT_SIZE_DEFAULT),
                 maxLines: 1,
@@ -56,7 +56,7 @@ class ReviewWidget extends StatelessWidget {
                 size: 18,
               ),
               Text(
-                '${reviewModel.rating.toDouble()}' + ' ' + '/5',
+                '${reviewModel.rating?.toDouble() ?? 0.0}' + ' ' + '/5',
                 style: titilliumRegular.copyWith(
                     fontSize: Dimensions.FONT_SIZE_DEFAULT),
                 maxLines: 1,
@@ -70,7 +70,7 @@ class ReviewWidget extends StatelessWidget {
           padding: const EdgeInsets.symmetric(
               horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL),
           child: Text(
-            reviewModel.comment,
+            reviewModel.comment ?? "",
             textAlign: TextAlign.left,
             style: titilliumRegular.copyWith(
                 color: Theme.of(context).hintColor,
@@ -80,13 +80,13 @@ class ReviewWidget extends StatelessWidget {
           ),
         ),
         SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-        (reviewModel.attachment.length > 0)
+        ((reviewModel.attachment?.length ?? 0) > 0)
             ? SizedBox(
                 height: 40,
                 child: ListView.builder(
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
-                  itemCount: reviewModel.attachment.length,
+                  itemCount: reviewModel.attachment?.length ?? 0,
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
@@ -94,7 +94,7 @@ class ReviewWidget extends StatelessWidget {
                             context: context,
                             builder: (_) => ImageDialog(
                                 imageUrl:
-                                    '${Provider.of<SplashProvider>(context, listen: false).baseUrls?.reviewImageUrl ?? ""}/review/${reviewModel.attachment[index]}'));
+                                    '${Provider.of<SplashProvider>(context, listen: false).baseUrls?.reviewImageUrl ?? ""}/review/${reviewModel.attachment?[index] ?? ""}'));
                       },
                       child: Container(
                         margin: EdgeInsets.only(
@@ -107,7 +107,7 @@ class ReviewWidget extends StatelessWidget {
                             width: Dimensions.chooseReviewImageSize,
                             fit: BoxFit.cover,
                             image:
-                                '${Provider.of<SplashProvider>(context, listen: false).baseUrls?.reviewImageUrl ?? ""}/review/${reviewModel.attachment[index]}',
+                                '${Provider.of<SplashProvider>(context, listen: false).baseUrls?.reviewImageUrl ?? ""}/review/${reviewModel.attachment?[index] ?? ""}',
                             imageErrorBuilder: (c, o, s) => Image.asset(
                                 Images.placeholder,
                                 height: Dimensions.chooseReviewImageSize,

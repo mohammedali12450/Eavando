@@ -38,8 +38,11 @@ class OffersScreen extends StatelessWidget {
                               .length,
                           itemBuilder: (context, index) {
                             return InkWell(
-                              onTap: () => _launchUrl(Uri.parse(
-                                  banner.footerBannerList![index].url)),
+                              onTap: () => _launchUrl(
+                                Uri.parse(
+                                  banner.footerBannerList![index].url ?? "",
+                                ),
+                              ),
                               child: Container(
                                 margin: EdgeInsets.only(
                                     bottom: Dimensions.PADDING_SIZE_SMALL),

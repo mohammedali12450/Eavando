@@ -63,16 +63,16 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
           child: Consumer<ProductDetailsProvider>(
             builder: (ctx, details, child) {
               Variation _variation = Variation.fromJson(const {});
-              String? _variantName = widget.product?.colors.length != 0 &&
+              String? _variantName = widget.product?.colors?.length != 0 &&
                       details.variantIndex != null
-                  ? widget.product?.colors[details.variantIndex!].name
+                  ? (widget.product?.colors?[details.variantIndex!].name ?? "")
                   : null;
               List<String> _variationList = [];
               for (int index = 0;
-                  index < (widget.product?.choiceOptions.length ?? 0);
+                  index < (widget.product?.choiceOptions?.length ?? 0);
                   index++) {
-                _variationList.add(widget.product?.choiceOptions[index]
-                        .options[details.variationIndex[index]]
+                _variationList.add(widget.product?.choiceOptions?[index]
+                        .options?[details.variationIndex[index]]
                         .trim() ??
                     "");
               }
@@ -94,10 +94,10 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
               }
               double _startingPrice = 0;
               if (widget.product?.variation != null &&
-                  widget.product?.variation.length != 0) {
+                  widget.product?.variation?.length != 0) {
                 List<double> _priceList = [];
-                widget.product?.variation
-                    .forEach((variation) => _priceList.add(variation.price));
+                widget.product?.variation?.forEach(
+                    (variation) => _priceList.add(variation.price ?? 0.0));
                 _priceList.sort((a, b) => a.compareTo(b));
                 _startingPrice = _priceList[0];
                 if (_priceList[0] < _priceList[_priceList.length - 1]) {}
@@ -121,9 +121,9 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
               for (Variation variation in widget.product?.variation ?? []) {
                 if (variation.type == variationType) {
                   // print(price);
-                  price = variation.price;
+                  price = variation.price ?? 0.0;
                   _variation = variation;
-                  _stock = variation.qty;
+                  _stock = variation.qty ?? 0;
                   break;
                 }
               }
@@ -137,14 +137,14 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
               double priceWithQuantity = priceWithDiscount * details.quantity;
 
               double total = 0, avg = 0;
-              widget.product?.reviews.forEach((review) {
-                total += review.rating;
+              widget.product?.reviews?.forEach((review) {
+                total += review.rating ?? 0;
               });
-              avg = total / (widget.product?.reviews.length ?? 1);
+              avg = total / (widget.product?.reviews?.length ?? 1);
               print('avarage=>$avg');
 
               String ratting = widget.product?.reviews != null &&
-                      widget.product?.reviews.length != 0
+                      widget.product?.reviews?.length != 0
                   ? avg.toString()
                   : "0";
 
@@ -323,7 +323,7 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
 
                     SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
                     // Variant
-                    (widget.product?.colors.length ?? 0) > 0
+                    (widget.product?.colors?.length ?? 0) > 0
                         ? Row(children: [
                             Text(
                                 '${getTranslated('select_variant', context)} : ',
@@ -334,13 +334,15 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                               child: SizedBox(
                                 height: 40,
                                 child: ListView.builder(
-                                  itemCount: widget.product?.colors.length ?? 0,
+                                  itemCount:
+                                      widget.product?.colors?.length ?? 0,
                                   shrinkWrap: true,
                                   scrollDirection: Axis.horizontal,
                                   itemBuilder: (ctx, index) {
                                     String colorString = '0xff' +
-                                        widget.product!.colors[index].code
-                                            .substring(1, 7);
+                                        (widget.product!.colors?[index].code
+                                                ?.substring(1, 7) ??
+                                            "");
                                     return InkWell(
                                       onTap: () {
                                         Provider.of<ProductDetailsProvider>(
@@ -391,14 +393,14 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                             ),
                           ])
                         : SizedBox(),
-                    (widget.product?.colors.length ?? 0) > 0
+                    (widget.product?.colors?.length ?? 0) > 0
                         ? SizedBox(height: Dimensions.PADDING_SIZE_SMALL)
                         : SizedBox(),
 
                     // Variation
                     ListView.builder(
                       shrinkWrap: true,
-                      itemCount: widget.product?.choiceOptions.length ?? 0,
+                      itemCount: widget.product?.choiceOptions?.length ?? 0,
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (ctx, index) {
                         return Row(
@@ -407,7 +409,7 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                               Text(
                                   '${getTranslated('available', context)} ' +
                                       ' ' +
-                                      '${widget.product?.choiceOptions[index].title ?? ""} : ',
+                                      '${widget.product?.choiceOptions?[index].title ?? ""} : ',
                                   style: titilliumRegular.copyWith(
                                       fontSize: Dimensions.FONT_SIZE_DEFAULT)),
                               SizedBox(
@@ -429,9 +431,9 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                                       // physics: NeverScrollableScrollPhysics(),
                                       itemCount: widget
                                               .product
-                                              ?.choiceOptions[index]
+                                              ?.choiceOptions?[index]
                                               .options
-                                              .length ??
+                                              ?.length ??
                                           0,
                                       itemBuilder: (ctx, i) {
                                         return InkWell(
@@ -469,8 +471,9 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                                               child: Text(
                                                   widget
                                                           .product
-                                                          ?.choiceOptions[index]
-                                                          .options[i] ??
+                                                          ?.choiceOptions?[
+                                                              index]
+                                                          .options?[i] ??
                                                       "" + "  ",
                                                   // .trim(), maxLines: 1,
                                                   // overflow: TextOverflow.ellipsis,
@@ -600,8 +603,8 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                                                 seller: widget
                                                             .product?.addedBy ==
                                                         'seller'
-                                                    ? '${Provider.of<SellerProvider>(context, listen: false).sellerModel?.seller.fName ?? ""} '
-                                                        '${Provider.of<SellerProvider>(context, listen: false).sellerModel?.seller.lName ?? ""}'
+                                                    ? '${Provider.of<SellerProvider>(context, listen: false).sellerModel?.seller?.fName ?? ""} '
+                                                        '${Provider.of<SellerProvider>(context, listen: false).sellerModel?.seller?.lName ?? ""}'
                                                     : 'admin',
                                                 price: double.parse(
                                                     startTotalPrice),
@@ -610,30 +613,30 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                                                 quantity: details.quantity,
                                                 maxQuantity: _stock,
                                                 color: (widget.product?.colors
-                                                                    .length ??
+                                                                    ?.length ??
                                                                 0) >
                                                             0 &&
                                                         details.variantIndex !=
                                                             null
-                                                    ? widget
+                                                    ? (widget
                                                             .product
-                                                            ?.colors[details
+                                                            ?.colors?[details
                                                                 .variantIndex!]
                                                             .name ??
-                                                        ""
+                                                        "")
                                                     : '',
                                                 variant: (widget.product?.colors
-                                                                    .length ??
+                                                                    ?.length ??
                                                                 0) >
                                                             0 &&
                                                         details.variantIndex !=
                                                             null
-                                                    ? widget
+                                                    ? (widget
                                                             .product
-                                                            ?.colors[details
+                                                            ?.colors?[details
                                                                 .variantIndex!]
                                                             .name ??
-                                                        ""
+                                                        "")
                                                     : '',
                                                 variation: _variation,
                                                 discount:
@@ -767,8 +770,8 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                                                 seller: widget
                                                             .product?.addedBy ==
                                                         'seller'
-                                                    ? '${Provider.of<SellerProvider>(context, listen: false).sellerModel?.seller.fName ?? ""} '
-                                                        '${Provider.of<SellerProvider>(context, listen: false).sellerModel?.seller.lName ?? ""}'
+                                                    ? '${Provider.of<SellerProvider>(context, listen: false).sellerModel?.seller?.fName ?? ""} '
+                                                        '${Provider.of<SellerProvider>(context, listen: false).sellerModel?.seller?.lName ?? ""}'
                                                     : 'admin',
                                                 price: double.parse(
                                                     startTotalPrice),
@@ -777,30 +780,30 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                                                 quantity: details.quantity,
                                                 maxQuantity: _stock,
                                                 variant: (widget.product?.colors
-                                                                    .length ??
+                                                                    ?.length ??
                                                                 0) >
                                                             0 &&
                                                         details.variantIndex !=
                                                             null
-                                                    ? widget
+                                                    ? (widget
                                                             .product
-                                                            ?.colors[details
+                                                            ?.colors?[details
                                                                 .variantIndex!]
                                                             .name ??
-                                                        ""
+                                                        "")
                                                     : '',
                                                 color: (widget.product?.colors
-                                                                    .length ??
+                                                                    ?.length ??
                                                                 0) >
                                                             0 &&
                                                         details.variantIndex !=
                                                             null
-                                                    ? widget
+                                                    ? (widget
                                                             .product
-                                                            ?.colors[details
+                                                            ?.colors?[details
                                                                 .variantIndex!]
                                                             .code ??
-                                                        ""
+                                                        "")
                                                     : '',
                                                 variation: _variation,
                                                 discount:

@@ -85,7 +85,7 @@ class MainSectionBannersView extends StatelessWidget {
                       topSeller:
                           Provider.of<TopSellerProvider>(context, listen: false)
                                   .topSellerList?[tIndex] ??
-                              TopSellerModel.init(),
+                              TopSellerModel(),
                     )));
       }
     }
@@ -102,7 +102,8 @@ class MainSectionBannersView extends StatelessWidget {
                 _clickBannerRedirect(
                     context,
                     footerBannerProvider
-                        .mainSectionBannerList[index].resourceId,
+                            .mainSectionBannerList[index].resourceId ??
+                        -1,
                     footerBannerProvider
                                 .mainSectionBannerList[index].resourceType ==
                             'product'
@@ -110,7 +111,8 @@ class MainSectionBannersView extends StatelessWidget {
                             .mainSectionBannerList[index].product
                         : null,
                     footerBannerProvider
-                        .mainSectionBannerList[index].resourceType);
+                            .mainSectionBannerList[index].resourceType ??
+                        "");
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 2.0),

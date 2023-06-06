@@ -48,7 +48,7 @@ class SellerView extends StatelessWidget {
                           height: MediaQuery.of(context).size.width,
                           width: MediaQuery.of(context).size.width,
                           image:
-                              '${Provider.of<SplashProvider>(context, listen: false).baseUrls?.shopImageUrl ?? ""}/${seller.sellerModel?.seller.shop.image ?? ""}',
+                              '${Provider.of<SplashProvider>(context, listen: false).baseUrls?.shopImageUrl ?? ""}/${seller.sellerModel?.seller?.shop?.image ?? ""}',
                           imageErrorBuilder: (c, o, s) => Image.asset(
                             Images.placeholder,
                             height: MediaQuery.of(context).size.width,
@@ -80,16 +80,16 @@ class SellerView extends StatelessWidget {
                                 children: [
                                   Text(
                                     seller.sellerModel != null
-                                        ? '${seller.sellerModel?.seller.shop.name ?? ''}'
+                                        ? '${seller.sellerModel?.seller?.shop?.name ?? ''}'
                                         : '',
                                     style: titilliumSemiBold.copyWith(
                                         fontSize: Dimensions.FONT_SIZE_LARGE),
                                   ),
                                   Text(
                                     seller.sellerModel != null
-                                        ? '${seller.sellerModel?.seller.fName ?? ''}' +
+                                        ? '${seller.sellerModel?.seller?.fName ?? ''}' +
                                             ' ' +
-                                            '${seller.sellerModel?.seller.lName ?? ''}'
+                                            '${seller.sellerModel?.seller?.lName ?? ''}'
                                         : '',
                                     style: titleRegular.copyWith(
                                         fontSize: Dimensions.FONT_SIZE_SMALL,
@@ -111,9 +111,9 @@ class SellerView extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                     builder: (_) => ChatScreen(
-                                      id: seller.sellerModel?.seller.id ?? -1,
-                                      name: seller
-                                              .sellerModel?.seller.shop.name ??
+                                      id: seller.sellerModel?.seller?.id ?? -1,
+                                      name: seller.sellerModel?.seller?.shop
+                                              ?.name ??
                                           "",
                                     ),
                                   ),
