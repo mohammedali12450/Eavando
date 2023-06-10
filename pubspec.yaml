@@ -42,7 +42,7 @@ dependency_overrides:
   firebase_messaging: ^14.6.1
   flutter_local_notifications: ^14.1.0
   path_provider: ^2.0.15
-  google_sign_in: ^6.1.2
+  google_sign_in: ^6.1.2 #note
   flutter_facebook_auth: ^5.0.11
   flutter_svg: ^1.1.6
   phone_number: ^1.0.0

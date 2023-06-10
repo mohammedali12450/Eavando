@@ -23,7 +23,7 @@ class ApiErrorHandler {
                   "Receive timeout in connection with API server";
               break;
             case DioErrorType.unknown:
-              switch (error.response!.statusCode) {
+              switch (error.response?.statusCode??-1) {
                 case 404:
                 case 500:
                 case 503:
@@ -36,7 +36,7 @@ class ApiErrorHandler {
                     errorDescription = errorResponse;
                   else
                     errorDescription =
-                        "Failed to load data - status code: ${error.response!.statusCode}";
+                        "Failed to load data - status code: ${error.response?.statusCode??-1}";
               }
               break;
             case DioErrorType.sendTimeout:
