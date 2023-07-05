@@ -12,6 +12,9 @@ import FBSDKLoginKit
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
+      if #available(iOS 10.0, *) {
+        UNUserNotificationCenter.current().delegate = self as? UNUserNotificationCenterDelegate
+      }
     FirebaseApp.configure()
     GMSServices.provideAPIKey("AIzaSyCcr56ZxhkvdYntPYfiUmPruGo8kt4eqWk")
     GeneratedPluginRegistrant.register(with: self)

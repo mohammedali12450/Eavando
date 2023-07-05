@@ -4,20 +4,25 @@ import 'package:flutter_axtro_soft_ecommerce/data/model/response/product_details
 import 'package:flutter_axtro_soft_ecommerce/helper/price_converter.dart';
 import 'package:flutter_axtro_soft_ecommerce/localization/language_constrants.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/product_details_provider.dart';
+import 'package:flutter_axtro_soft_ecommerce/theme/light_theme.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/color_resources.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/custom_themes.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/dimensions.dart';
 import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class ProductTitleView extends StatefulWidget {
-   pd.ProductDetailsModel productModel;
+  pd.ProductDetailsModel? productModel;
   final String averageRatting;
   ValueChanged callback;
   int colorIndex;
 
-
-  ProductTitleView(
-      {@required this.productModel, this.averageRatting, this.colorIndex,this.callback});
+  ProductTitleView({
+    required this.productModel,
+    required this.averageRatting,
+    required this.colorIndex,
+    required this.callback,
+  });
 
   @override
   State<ProductTitleView> createState() => _ProductTitleViewState();
@@ -27,21 +32,28 @@ class _ProductTitleViewState extends State<ProductTitleView> {
   @override
   Widget build(BuildContext context) {
     double _startingPrice = 0;
-    double _endingPrice;
-    if (widget.productModel.variation != null &&
-        widget.productModel.variation.length != 0) {
+    double _endingPrice = 0;
+    if (widget.productModel?.variation != null &&
+        widget.productModel!.variation?.length != 0) {
       List<double> _priceList = [];
-      widget.productModel.variation
-          .forEach((variation) => _priceList.add(variation.price));
+      widget.productModel!.variation
+          ?.forEach((variation) => _priceList.add(variation.price ?? 0.0));
       _priceList.sort((a, b) => a.compareTo(b));
       _startingPrice = _priceList[0];
       if (_priceList[0] < _priceList[_priceList.length - 1]) {
         _endingPrice = _priceList[_priceList.length - 1];
       }
     } else {
-      _startingPrice = widget.productModel.unitPrice;
+      _startingPrice = widget.productModel?.unitPrice ?? 0.0;
     }
-    var startTotalPrice = ((double.parse(PriceConverter.convertPrice(context, _startingPrice, discount: widget.productModel.discount, discountType: widget.productModel.discountType).replaceAll(RegExp(r'€'), ""))) * (1+(widget.productModel.tax)/100)).toStringAsFixed(2);
+    var startTotalPrice = ((double.parse(PriceConverter.convertPrice(
+              context,
+              _startingPrice,
+              discount: widget.productModel?.discount,
+              discountType: widget.productModel?.discountType,
+            ).replaceAll(RegExp(r'€'), ""))) *
+            (1 + (widget.productModel?.tax ?? 1) / 100))
+        .toStringAsFixed(2);
     // print(startTotalPrice);
     return widget.productModel != null
         ? Container(
@@ -53,7 +65,7 @@ class _ProductTitleViewState extends State<ProductTitleView> {
                     children: [
                       Row(children: [
                         Expanded(
-                            child: Text(widget.productModel.name ?? '',
+                            child: Text(widget.productModel?.name ?? '',
                                 style: titleRegular.copyWith(
                                     fontSize: Dimensions.FONT_SIZE_LARGE),
                                 maxLines: 2)),
@@ -63,38 +75,43 @@ class _ProductTitleViewState extends State<ProductTitleView> {
                         children: [
                           Text(
                             // '${_startingPrice != null ? PriceConverter.convertPrice(context, _startingPrice, discount: widget.productModel.discount, discountType: widget.productModel.discountType) : ''}'
-                            _startingPrice != null ? "€" + startTotalPrice :
-                            '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice, discount: widget.productModel.discount, discountType: widget.productModel.discountType)}' : ''}',
+                            _startingPrice != 0
+                                ? "€" + startTotalPrice
+                                : '${_endingPrice != 0.0 ? ' - ${PriceConverter.convertPrice(context, _endingPrice, discount: widget.productModel?.discount ?? 0.0, discountType: widget.productModel?.discountType ?? "")}' : ''}',
                             style: titilliumBold.copyWith(
                                 color: ColorResources.getPrimary(context),
                                 fontSize: Dimensions.FONT_SIZE_LARGE),
                           ),
-                          SizedBox(
-                              width:
-                              Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                          widget.productModel.discount != null &&
-                              widget.productModel.discount > 0
+                          SizedBox(width: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                          widget.productModel?.discount != null &&
+                                  (widget.productModel!.discount ?? 0.0) > 0
                               ? Text(
-                            _startingPrice != null ? "€" + startTotalPrice :
-                            // '${PriceConverter.convertPrice(context, _startingPrice)}'
-                                '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice)}' : ''}',
-                            style: titilliumRegular.copyWith(
-                                color: Theme.of(context).hintColor,
-                                decoration: TextDecoration.lineThrough),
-                          )
+                                  _startingPrice != 0
+                                      ? "€" + startTotalPrice
+                                      :
+                                      // '${PriceConverter.convertPrice(context, _startingPrice)}'
+                                      '${_endingPrice != 0 ? ' - ${PriceConverter.convertPrice(context, _endingPrice)}' : ''}',
+                                  style: titilliumRegular.copyWith(
+                                      color: Theme.of(context).hintColor,
+                                      decoration: TextDecoration.lineThrough),
+                                )
                               : SizedBox(),
                         ],
                       ),
                       SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                       Text('${getTranslated('included_vat', context)}',
                           style: titilliumRegular.copyWith(
-                            color: Theme.of(context).buttonColor,
+                            color: Theme.of(context)
+                                    .buttonTheme
+                                    .colorScheme
+                                    ?.primary ??
+                                primaryColor,
                             fontSize: Dimensions.FONT_SIZE_SMALL,
                           )),
                       SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                       Row(children: [
                         Text(
-                            '${details.reviewList != null ? details.reviewList.length : 0} reviews | ',
+                            '${details.reviewList != null ? details.reviewList!.length : 0} reviews | ',
                             style: titilliumRegular.copyWith(
                               color: Theme.of(context).hintColor,
                               fontSize: Dimensions.FONT_SIZE_DEFAULT,
@@ -118,12 +135,12 @@ class _ProductTitleViewState extends State<ProductTitleView> {
                               color: Colors.orange,
                             ),
                             Text(
-                                '${widget.productModel.reviews != null ? widget.productModel.reviews.length > 0 ? double.parse(widget.averageRatting) : 0.0 : 0.0}')
+                                '${widget.productModel?.reviews != null ? (widget.productModel?.reviews?.length ?? 0) > 0 ? double.parse(widget.averageRatting) : 0.0 : 0.0}')
                           ],
                         ),
                       ]),
                       SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
-                      widget.productModel.colors.length > 0
+                      (widget.productModel?.colors?.length ?? 0) > 0
                           ? Row(children: [
                               Text(
                                   '${getTranslated('select_variant', context)} : ',
@@ -134,20 +151,21 @@ class _ProductTitleViewState extends State<ProductTitleView> {
                                   height: 40,
                                   child: ListView.builder(
                                     itemCount:
-                                        widget.productModel.colors.length,
+                                        widget.productModel?.colors?.length ??
+                                            0,
                                     shrinkWrap: true,
                                     scrollDirection: Axis.horizontal,
                                     itemBuilder: (context, index) {
                                       String colorString = '0xff' +
-                                          widget.productModel.colors[index].code
+                                          (widget.productModel!.colors?[index]
+                                                      .code ??
+                                                  "")
                                               .substring(1, 7);
                                       return InkWell(
                                         onTap: () {
-
-                                           // Provider.of<ProductDetailsProvider>(context, listen: false).changeIndex(index);
-                                            widget.callback(index);
-                                       //   widget.productModel=  Provider.of<ProductDetailsProvider>(context,listen: true).productDetailsModel;
-
+                                          // Provider.of<ProductDetailsProvider>(context, listen: false).changeIndex(index);
+                                          widget.callback(index);
+                                          //   widget.productModel=  Provider.of<ProductDetailsProvider>(context,listen: true).productDetailsModel;
 
                                           //widget.colorIndex = index;
                                         },
@@ -189,25 +207,29 @@ class _ProductTitleViewState extends State<ProductTitleView> {
                               ),
                             ])
                           : SizedBox(),
-                      widget.productModel.colors.length > 0
+                      (widget.productModel?.colors?.length ?? 0) > 0
                           ? SizedBox(height: Dimensions.PADDING_SIZE_SMALL)
                           : SizedBox(),
-                      widget.productModel.choiceOptions != null &&
-                              widget.productModel.choiceOptions.length > 0
+                      widget.productModel?.choiceOptions != null &&
+                              (widget.productModel!.choiceOptions?.length ??
+                                      0) >
+                                  0
                           ? ListView.builder(
                               shrinkWrap: true,
                               itemCount:
-                                  widget.productModel.choiceOptions.length,
+                                  widget.productModel!.choiceOptions?.length ??
+                                      0,
                               physics: NeverScrollableScrollPhysics(),
                               itemBuilder: (context, index) {
                                 return Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
                                           '${getTranslated('available', context)}' +
                                               ' ' +
-                                              '${widget.productModel.choiceOptions[index].title} :',
+                                              '${widget.productModel!.choiceOptions?[index].title ?? ""} :',
                                           style: titilliumRegular.copyWith(
                                               fontSize:
                                                   Dimensions.FONT_SIZE_LARGE)),
@@ -269,19 +291,24 @@ class _ProductTitleViewState extends State<ProductTitleView> {
                                       Wrap(
                                         runSpacing: 5,
                                         alignment: WrapAlignment.spaceBetween,
-                                        crossAxisAlignment: WrapCrossAlignment.center,
-                                        children: widget.productModel.choiceOptions[index].options.map((e) =>
-                                            SizedBox(
-                                              child: Text(
-                                                  e + "  ",
-                                                  style: titilliumRegular
-                                                      .copyWith(
-                                                    color: Theme.of(context).primaryColor,
-                                                    fontSize: Dimensions
-                                                        .FONT_SIZE_DEFAULT,
-                                                  )),
-                                            )
-                                        ).toList(),
+                                        crossAxisAlignment:
+                                            WrapCrossAlignment.center,
+                                        children: widget.productModel!
+                                                .choiceOptions?[index].options
+                                                ?.map((e) => SizedBox(
+                                                      child: Text(e + "  ",
+                                                          style:
+                                                              titilliumRegular
+                                                                  .copyWith(
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .primaryColor,
+                                                            fontSize: Dimensions
+                                                                .FONT_SIZE_DEFAULT,
+                                                          )),
+                                                    ))
+                                                .toList() ??
+                                            [],
                                       )
                                     ]);
                               },

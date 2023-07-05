@@ -1,9 +1,8 @@
-
 class SocialMedia {
-  int id;
-  String name;
-  String link;
-  String iconUrl;
+  int? id;
+  String? name;
+  String? link;
+  String? iconUrl;
 
   SocialMedia({
     this.id,
@@ -17,14 +16,5 @@ class SocialMedia {
     name = json["name"];
     link = json["link"];
     iconUrl = json["icon_url"];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data["id"] = this.id;
-    data["name"] = this.name;
-    data["link"] = this.link;
-    data["icon_url"] = this.iconUrl;
-    return data;
   }
 }

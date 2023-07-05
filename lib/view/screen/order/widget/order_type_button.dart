@@ -10,24 +10,37 @@ class OrderTypeButton extends StatelessWidget {
   final int index;
   final List<OrderModel> orderList;
 
-  OrderTypeButton({@required this.text, @required this.index, @required this.orderList});
+  OrderTypeButton({
+    required this.text,
+    required this.index,
+    required this.orderList,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: TextButton(
-        onPressed: () => Provider.of<OrderProvider>(context, listen: false).setIndex(index),
+        onPressed: () =>
+            Provider.of<OrderProvider>(context, listen: false).setIndex(index),
         style: TextButton.styleFrom(padding: EdgeInsets.all(0)),
         child: Container(
           height: 40,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: Provider.of<OrderProvider>(context, listen: false).orderTypeIndex == index ? Theme.of(context).colorScheme.primary : Theme.of(context).highlightColor,
+            color: Provider.of<OrderProvider>(context, listen: false)
+                        .orderTypeIndex ==
+                    index
+                ? Theme.of(context).colorScheme.primary
+                : Theme.of(context).highlightColor,
             borderRadius: BorderRadius.circular(6),
           ),
           child: Text(text + '(${orderList.length})',
-              style: titilliumBold.copyWith(color: Provider.of<OrderProvider>(context, listen: false).orderTypeIndex == index
-                  ? Theme.of(context).highlightColor : ColorResources.getPrimary(context))),
+              style: titilliumBold.copyWith(
+                  color: Provider.of<OrderProvider>(context, listen: false)
+                              .orderTypeIndex ==
+                          index
+                      ? Theme.of(context).highlightColor
+                      : ColorResources.getPrimary(context))),
         ),
       ),
     );

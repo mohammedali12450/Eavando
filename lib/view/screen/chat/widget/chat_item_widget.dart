@@ -12,47 +12,70 @@ import 'package:provider/provider.dart';
 
 class ChatItemWidget extends StatelessWidget {
   final Chat chat;
-  const ChatItemWidget({Key key, this.chat}) : super(key: key);
+  const ChatItemWidget({Key? key, required this.chat}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    String baseUrl =
+        Provider.of<ChatProvider>(context, listen: false).userTypeIndex == 0
+            ? Provider.of<SplashProvider>(context, listen: false)
+                    .baseUrls
+                    ?.shopImageUrl ??
+                ""
+            : Provider.of<SplashProvider>(context, listen: false)
+                    .baseUrls
+                    ?.deliveryManImage ??
+                "";
+    String image =
+        Provider.of<ChatProvider>(context, listen: false).userTypeIndex == 0
+            ? (chat.sellerInfo?.shops?.isNotEmpty ?? false)
+                ? (chat.sellerInfo?.shops?[0].image ?? "")
+                : ''
+            : (chat.deliveryMan?.image ?? "");
 
-    String baseUrl = Provider.of<ChatProvider>(context, listen: false).userTypeIndex == 0 ?
-    Provider.of<SplashProvider>(context, listen: false).baseUrls.shopImageUrl:
-    Provider.of<SplashProvider>(context, listen: false).baseUrls.deliveryManImage;
-    String image = Provider.of<ChatProvider>(context, listen: false).userTypeIndex == 0 ?
-    chat.sellerInfo != null? chat.sellerInfo?.shops[0]?.image :'' : chat.deliveryMan.image;
-
-    int id = Provider.of<ChatProvider>(context, listen: false).userTypeIndex == 0 ?
-    chat.sellerId : chat.deliveryManId;
+    int id =
+        Provider.of<ChatProvider>(context, listen: false).userTypeIndex == 0
+            ? chat.sellerId ?? -1
+            : chat.deliveryManId ?? -1;
 
     print('here is image==>$baseUrl/$image');
 
+    String name =
+        Provider.of<ChatProvider>(context, listen: false).userTypeIndex == 0
+            ? (chat.sellerInfo?.shops?.isNotEmpty ?? false)
+                ? (chat.sellerInfo?.shops?[0].name ?? "")
+                : 'Shop not found'
+            : (chat.deliveryMan?.fName ?? "") +
+                " " +
+                (chat.deliveryMan?.lName ?? "");
 
-    String name = Provider.of<ChatProvider>(context, listen: false).userTypeIndex == 0 ?
-    chat.sellerInfo != null ? chat.sellerInfo.shops[0].name : 'Shop not found': chat.deliveryMan.fName+" "+chat.deliveryMan.lName;
-
-    
     return Column(
       children: [
         ListTile(
           leading: ClipOval(
-            child: Container(
-              color: Theme.of(context).highlightColor,
-              child: CustomImage(image: '$baseUrl/$image'))),
-
+              child: Container(
+                  color: Theme.of(context).highlightColor,
+                  child: CustomImage(image: '$baseUrl/$image'))),
           title: Text(name, style: titilliumSemiBold),
-
-          subtitle: Container(child: Text(chat.message, maxLines: 4,overflow: TextOverflow.ellipsis,
-              style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL))),
-
-          trailing: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Text(DateConverter.localDateToIsoStringAMPM(DateTime.parse(chat.createdAt)),
-                style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL)),
-
+          subtitle: Container(
+              child: Text(chat.message ?? "",
+                  maxLines: 4,
+                  overflow: TextOverflow.ellipsis,
+                  style: titilliumRegular.copyWith(
+                      fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL))),
+          trailing:
+              Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Text(
+                DateConverter.localDateToIsoStringAMPM(DateTime.parse(
+                    chat.createdAt ?? DateTime.now().toString())),
+                style: titilliumRegular.copyWith(
+                    fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL)),
           ]),
           onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) {
-            return ChatScreen(id: id,name: name,);
+            return ChatScreen(
+              id: id,
+              name: name,
+            );
           })),
         ),
         Divider(height: 2, color: ColorResources.CHAT_ICON_COLOR),

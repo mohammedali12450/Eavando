@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_axtro_soft_ecommerce/data/model/body/support_ticket_body.dart';
 import 'package:flutter_axtro_soft_ecommerce/localization/language_constrants.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/support_ticket_provider.dart';
-import 'package:flutter_axtro_soft_ecommerce/utill/color_resources.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/custom_themes.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/dimensions.dart';
 import 'package:flutter_axtro_soft_ecommerce/view/basewidget/button/custom_button.dart';
@@ -13,7 +12,7 @@ import 'package:provider/provider.dart';
 
 class AddTicketScreen extends StatefulWidget {
   final String type;
-  AddTicketScreen({@required this.type});
+  AddTicketScreen({required this.type});
 
   @override
   _AddTicketScreenState createState() => _AddTicketScreenState();
@@ -24,12 +23,12 @@ class _AddTicketScreenState extends State<AddTicketScreen> {
   final TextEditingController _descriptionController = TextEditingController();
   final FocusNode _subjectNode = FocusNode();
   final FocusNode _descriptionNode = FocusNode();
-  final GlobalKey<ScaffoldMessengerState> _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
+  final GlobalKey<ScaffoldMessengerState> _scaffoldKey =
+      GlobalKey<ScaffoldMessengerState>();
 
   @override
   void initState() {
     super.initState();
-
   }
 
   @override
@@ -39,61 +38,76 @@ class _AddTicketScreenState extends State<AddTicketScreen> {
       isGuestCheck: true,
       child: ListView(
           physics: BouncingScrollPhysics(),
-          padding: EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE), children: [
-
-        Text(getTranslated('add_new_ticket', context), style: titilliumSemiBold.copyWith(fontSize: 20,color: Theme.of(context).primaryColor)),
-        SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_LARGE),
-
-
-        Container(
-          color: Theme.of(context).primaryColor.withOpacity(0.1),
-          margin: EdgeInsets.only(bottom: Dimensions.PADDING_SIZE_LARGE),
-          child: ListTile(
-            leading: Icon(Icons.query_builder, color: Theme.of(context).colorScheme.secondary),
-            title: Text(widget.type, style: robotoBold.copyWith(color: Theme.of(context).primaryColor)), onTap: () {},
-        ),
-      ),
-
-        CustomTextField(
-          focusNode: _subjectNode,
-          nextNode: _descriptionNode,
-          textInputAction: TextInputAction.next,
-          hintText: getTranslated('write_your_subject', context),
-          controller: _subjectController,),
-        SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
-
-        CustomTextField(
-          focusNode: _descriptionNode,
-          textInputAction: TextInputAction.newline,
-          hintText: getTranslated('issue_description', context),
-          textInputType: TextInputType.multiline,
-          controller: _descriptionController,
-          maxLine: 5,
-        ),
-        SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_LARGE),
-
-        Provider.of<SupportTicketProvider>(context).isLoading ?
-        Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor)))
-          : Builder(key: _scaffoldKey,
-          builder: (context) => CustomButton(
-            buttonText: getTranslated('submit', context),
-            onTap: () {
-              if (_subjectController.text.isEmpty) {
-                showCustomSnackBar('Subject box should not be empty', context);
-              } else if (_descriptionController.text.isEmpty) {
-                showCustomSnackBar('Description box should not be empty', context);
-              } else {
-                SupportTicketBody supportTicketModel = SupportTicketBody(widget.type,
-                    _subjectController.text, _descriptionController.text);
-                Provider.of<SupportTicketProvider>(context, listen: false).sendSupportTicket(supportTicketModel, callback, context);
-              }
-            }),
-        ),
-      ]),
+          padding: EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
+          children: [
+            Text(getTranslated('add_new_ticket', context),
+                style: titilliumSemiBold.copyWith(
+                    fontSize: 20, color: Theme.of(context).primaryColor)),
+            SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_LARGE),
+            Container(
+              color: Theme.of(context).primaryColor.withOpacity(0.1),
+              margin: EdgeInsets.only(bottom: Dimensions.PADDING_SIZE_LARGE),
+              child: ListTile(
+                leading: Icon(Icons.query_builder,
+                    color: Theme.of(context).colorScheme.secondary),
+                title: Text(widget.type,
+                    style: robotoBold.copyWith(
+                        color: Theme.of(context).primaryColor)),
+                onTap: () {},
+              ),
+            ),
+            CustomTextField(
+              focusNode: _subjectNode,
+              nextNode: _descriptionNode,
+              textInputAction: TextInputAction.next,
+              hintText: getTranslated('write_your_subject', context),
+              controller: _subjectController,
+            ),
+            SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
+            CustomTextField(
+              focusNode: _descriptionNode,
+              textInputAction: TextInputAction.newline,
+              hintText: getTranslated('issue_description', context),
+              textInputType: TextInputType.multiline,
+              controller: _descriptionController,
+              maxLine: 5,
+            ),
+            SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_LARGE),
+            Provider.of<SupportTicketProvider>(context).isLoading
+                ? Center(
+                    child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                            Theme.of(context).primaryColor)))
+                : Builder(
+                    key: _scaffoldKey,
+                    builder: (context) => CustomButton(
+                        buttonText: getTranslated('submit', context),
+                        onTap: () {
+                          if (_subjectController.text.isEmpty) {
+                            showCustomSnackBar(
+                                'Subject box should not be empty', context);
+                          } else if (_descriptionController.text.isEmpty) {
+                            showCustomSnackBar(
+                                'Description box should not be empty', context);
+                          } else {
+                            SupportTicketBody supportTicketModel =
+                                SupportTicketBody(
+                              widget.type,
+                              _subjectController.text,
+                              _descriptionController.text,
+                            );
+                            Provider.of<SupportTicketProvider>(context,
+                                    listen: false)
+                                .sendSupportTicket(
+                                    supportTicketModel, callback, context);
+                          }
+                        }),
+                  ),
+          ]),
     );
   }
 
-  void callback (bool isSuccess, String message) {
+  void callback(bool isSuccess, String message) {
     print(message);
     if (isSuccess) {
       _subjectController.text = '';

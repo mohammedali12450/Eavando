@@ -1,36 +1,36 @@
 class AddressModel {
-  int id;
-  int customerId;
-  String contactPersonName;
-  String addressType;
-  String address;
-  String city;
-  String zip;
-  String phone;
-  String createdAt;
-  String updatedAt;
-  String state;
-  String country;
-  String latitude;
-  String longitude;
-  int isBilling;
+  int? id;
+  int? customerId;
+  String? contactPersonName;
+  String? addressType;
+  String? address;
+  String? city;
+  String? zip;
+  String? phone;
+  String? createdAt;
+  String? updatedAt;
+  String? state;
+  String? country;
+  String? latitude;
+  String? longitude;
+  int? isBilling;
 
   AddressModel(
       {this.id,
-        this.customerId,
-        this.contactPersonName,
-        this.addressType,
-        this.address,
-        this.city,
-        this.zip,
-        this.phone,
-        this.createdAt,
-        this.updatedAt,
-        this.state,
-        this.country,
-        this.latitude,
-        this.longitude,
-        this.isBilling});
+      this.customerId,
+      this.contactPersonName,
+      this.addressType,
+      this.address,
+      this.city,
+      this.zip,
+      this.phone,
+      this.createdAt,
+      this.updatedAt,
+      this.state,
+      this.country,
+      this.latitude,
+      this.longitude,
+      this.isBilling});
 
   AddressModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];

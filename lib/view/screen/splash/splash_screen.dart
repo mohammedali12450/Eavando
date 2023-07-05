@@ -5,16 +5,13 @@ import 'package:flutter_axtro_soft_ecommerce/localization/language_constrants.da
 import 'package:flutter_axtro_soft_ecommerce/provider/auth_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/profile_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/provider/splash_provider.dart';
-import 'package:flutter_axtro_soft_ecommerce/provider/theme_provider.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/color_resources.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/custom_themes.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/images.dart';
 import 'package:flutter_axtro_soft_ecommerce/view/basewidget/no_internet_screen.dart';
-import 'package:flutter_axtro_soft_ecommerce/view/screen/auth/auth_screen.dart';
 import 'package:flutter_axtro_soft_ecommerce/view/screen/dashboard/dashboard_screen.dart';
 import 'package:flutter_axtro_soft_ecommerce/view/screen/maintenance/maintenance_screen.dart';
 import 'package:flutter_axtro_soft_ecommerce/view/screen/onboarding/onboarding_screen.dart';
-import 'package:flutter_axtro_soft_ecommerce/view/screen/splash/widget/splash_painter.dart';
 import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -24,26 +21,33 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   GlobalKey<ScaffoldMessengerState> _globalKey = GlobalKey();
-  StreamSubscription<ConnectivityResult> _onConnectivityChanged;
+  late StreamSubscription<ConnectivityResult> _onConnectivityChanged;
 
   @override
   void initState() {
     super.initState();
 
     bool _firstTime = true;
-    _onConnectivityChanged = Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
-      if(!_firstTime) {
-        bool isNotConnected = result != ConnectivityResult.wifi && result != ConnectivityResult.mobile;
-        isNotConnected ? SizedBox() : ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    _onConnectivityChanged = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) {
+      if (!_firstTime) {
+        bool isNotConnected = result != ConnectivityResult.wifi &&
+            result != ConnectivityResult.mobile;
+        isNotConnected
+            ? SizedBox()
+            : ScaffoldMessenger.of(context).hideCurrentSnackBar();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: isNotConnected ? Colors.red : Colors.green,
           duration: Duration(seconds: isNotConnected ? 6000 : 3),
           content: Text(
-            isNotConnected ? getTranslated('no_connection', context) : getTranslated('connected', context),
+            isNotConnected
+                ? getTranslated('no_connection', context)
+                : getTranslated('connected', context),
             textAlign: TextAlign.center,
           ),
         ));
-        if(!isNotConnected) {
+        if (!isNotConnected) {
           _route();
         }
       }
@@ -61,26 +65,41 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _route() {
-    Provider.of<SplashProvider>(context, listen: false).initConfig(context).then((bool isSuccess) {
-      if(isSuccess) {
-        Provider.of<SplashProvider>(context, listen: false).initSharedPrefData();
+    Provider.of<SplashProvider>(context, listen: false)
+        .initConfig(context)
+        .then((bool isSuccess) {
+      if (isSuccess) {
+        Provider.of<SplashProvider>(context, listen: false)
+            .initSharedPrefData();
         Timer(Duration(seconds: 1), () {
-          if(Provider.of<SplashProvider>(context, listen: false).configModel.maintenanceMode) {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => MaintenanceScreen()));
-          }else {
-            if (Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
-              Provider.of<AuthProvider>(context, listen: false).updateToken(context);
-              Provider.of<ProfileProvider>(context, listen: false).getUserInfo(context);
-              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => DashBoardScreen()));
+          if (Provider.of<SplashProvider>(context, listen: false)
+                  .configModel
+                  ?.maintenanceMode ??
+              false) {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (BuildContext context) => MaintenanceScreen()));
+          } else {
+            if (Provider.of<AuthProvider>(context, listen: false)
+                .isLoggedIn()) {
+              Provider.of<AuthProvider>(context, listen: false)
+                  .updateToken(context);
+              Provider.of<ProfileProvider>(context, listen: false)
+                  .getUserInfo(context);
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (BuildContext context) => DashBoardScreen()));
             } else {
-              if(Provider.of<SplashProvider>(context, listen: false).showIntro()) {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => OnBoardingScreen(
-                  indicatorColor: ColorResources.GREY, selectedIndicatorColor: Theme.of(context).primaryColor,
-                )));
-              }else {
+              if (Provider.of<SplashProvider>(context, listen: false)
+                  .showIntro()) {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (BuildContext context) => OnBoardingScreen(
+                          indicatorColor: ColorResources.GREY,
+                          selectedIndicatorColor:
+                              Theme.of(context).primaryColor,
+                        )));
+              } else {
                 // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => AuthScreen()));
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => DashBoardScreen()));
-
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (BuildContext context) => DashBoardScreen()));
               }
             }
           }
@@ -93,45 +112,53 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _globalKey,
-      body: Provider.of<SplashProvider>(context).hasConnection ? Stack(
-        clipBehavior: Clip.none, children: [
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            color: Colors.white,
-            // color: Provider.of<ThemeProvider>(context).darkTheme ? Colors.black : ColorResources.getPrimary(context),
-            // child: CustomPaint(
-            //   painter: SplashPainter(),
-            // ),
-          ),
-          Positioned(
-            bottom: 0,
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text("From", style: titilliumBold.copyWith(color: ColorResources.axtroSoftLogo(context))),
-                  SizedBox(height: 8),
-                  Image.asset(Images.axtro_soft_logo,width: 110),
-                  SizedBox(height: 15)
-                ],
-              ),
-            ),
-          ),
-          Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
+      body: Provider.of<SplashProvider>(context).hasConnection
+          ? Stack(
+              clipBehavior: Clip.none,
               children: [
-                Image.asset(Images.eavando_logo, height: 300.0, fit: BoxFit.scaleDown,
-                  width: 300.0,),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  color: Colors.white,
+                  // color: Provider.of<ThemeProvider>(context).darkTheme ? Colors.black : ColorResources.getPrimary(context),
+                  // child: CustomPaint(
+                  //   painter: SplashPainter(),
+                  // ),
+                ),
+                Positioned(
+                  bottom: 0,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text("From",
+                            style: titilliumBold.copyWith(
+                                color: ColorResources.axtroSoftLogo(context))),
+                        SizedBox(height: 8),
+                        Image.asset(Images.axtro_soft_logo, width: 110),
+                        SizedBox(height: 15)
+                      ],
+                    ),
+                  ),
+                ),
+                Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset(
+                        Images.eavando_logo,
+                        height: 300.0,
+                        fit: BoxFit.scaleDown,
+                        width: 300.0,
+                      ),
+                    ],
+                  ),
+                ),
               ],
-            ),
-          ),
-        ],
-      ) : NoInternetOrDataScreen(isNoInternet: true, child: SplashScreen()),
+            )
+          : NoInternetOrDataScreen(isNoInternet: true, child: SplashScreen()),
     );
   }
-
 }

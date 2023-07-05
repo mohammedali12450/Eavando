@@ -31,7 +31,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _confirmPasswordController = TextEditingController();
-  GlobalKey<FormState> _formKey;
+  GlobalKey<FormState> _formKey = GlobalKey();
 
   FocusNode _fNameFocus = FocusNode();
   FocusNode _lNameFocus = FocusNode();
@@ -43,17 +43,16 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   RegisterModel register = RegisterModel();
   bool isEmailVerified = false;
 
-
   addUser() async {
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
+    if (_formKey.currentState?.validate() ?? false) {
+      _formKey.currentState?.save();
       isEmailVerified = true;
 
       String _firstName = _firstNameController.text.trim();
       String _lastName = _lastNameController.text.trim();
       String _email = _emailController.text.trim();
       String _phone = _phoneController.text.trim();
-      String _phoneNumber = _countryDialCode+_phoneController.text.trim();
+      String _phoneNumber = _countryDialCode + _phoneController.text.trim();
       String _password = _passwordController.text.trim();
       String _confirmPassword = _confirmPasswordController.text.trim();
 
@@ -62,7 +61,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
           content: Text(getTranslated('first_name_field_is_required', context)),
           backgroundColor: Colors.red,
         ));
-      }else if (_lastName.isEmpty) {
+      } else if (_lastName.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(getTranslated('last_name_field_is_required', context)),
           backgroundColor: Colors.red,
@@ -72,7 +71,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
           content: Text(getTranslated('EMAIL_MUST_BE_REQUIRED', context)),
           backgroundColor: Colors.red,
         ));
-      }else if (EmailChecker.isNotValid(_email)) {
+      } else if (EmailChecker.isNotValid(_email)) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(getTranslated('enter_valid_email_address', context)),
           backgroundColor: Colors.red,
@@ -89,7 +88,8 @@ class _SignUpWidgetState extends State<SignUpWidget> {
         ));
       } else if (_confirmPassword.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(getTranslated('CONFIRM_PASSWORD_MUST_BE_REQUIRED', context)),
+          content:
+              Text(getTranslated('CONFIRM_PASSWORD_MUST_BE_REQUIRED', context)),
           backgroundColor: Colors.red,
         ));
       } else if (_password != _confirmPassword) {
@@ -99,39 +99,64 @@ class _SignUpWidgetState extends State<SignUpWidget> {
         ));
       } else {
         register.fName = '${_firstNameController.text}';
-        register.lName = _lastNameController.text ?? " ";
+        register.lName = _lastNameController.text;
         register.email = _emailController.text;
         register.phone = _phoneNumber;
         register.password = _passwordController.text;
-        await Provider.of<AuthProvider>(context, listen: false).registration(register, route);
+        await Provider.of<AuthProvider>(context, listen: false)
+            .registration(register, route);
       }
     } else {
       isEmailVerified = false;
     }
   }
 
-  route(bool isRoute, String token, String tempToken, String errorMessage) async {
-    String _phone = _countryDialCode+_phoneController.text.trim();
+  route(
+      bool isRoute, String token, String tempToken, String errorMessage) async {
+    String _phone = _countryDialCode + _phoneController.text.trim();
     if (isRoute) {
-      if(Provider.of<SplashProvider>(context,listen: false).configModel.emailVerification){
-        Provider.of<AuthProvider>(context, listen: false).checkEmail(_emailController.text.toString(), tempToken).then((value) async {
+      if (Provider.of<SplashProvider>(context, listen: false)
+              .configModel
+              ?.emailVerification ??
+          false) {
+        Provider.of<AuthProvider>(context, listen: false)
+            .checkEmail(_emailController.text.toString(), tempToken)
+            .then((value) async {
           if (value.isSuccess) {
-            Provider.of<AuthProvider>(context, listen: false).updateEmail(_emailController.text.toString());
-            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => VerificationScreen(tempToken,'',_emailController.text.toString())), (route) => false);
-
+            Provider.of<AuthProvider>(context, listen: false)
+                .updateEmail(_emailController.text.toString());
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => VerificationScreen(
+                        tempToken, '', _emailController.text.toString())),
+                (route) => false);
           }
         });
-      }else if(Provider.of<SplashProvider>(context,listen: false).configModel.phoneVerification){
-        Provider.of<AuthProvider>(context, listen: false).checkPhone(_phone,tempToken).then((value) async {
+      } else if (Provider.of<SplashProvider>(context, listen: false)
+              .configModel
+              ?.phoneVerification ??
+          false) {
+        Provider.of<AuthProvider>(context, listen: false)
+            .checkPhone(_phone, tempToken)
+            .then((value) async {
           if (value.isSuccess) {
-            Provider.of<AuthProvider>(context, listen: false).updatePhone(_phone);
-            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => VerificationScreen(tempToken,_phone,'')), (route) => false);
-
+            Provider.of<AuthProvider>(context, listen: false)
+                .updatePhone(_phone);
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => VerificationScreen(tempToken, _phone, '')),
+                (route) => false);
           }
         });
-      }else{
-        await Provider.of<ProfileProvider>(context, listen: false).getUserInfo(context);
-        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => DashBoardScreen()), (route) => false);
+      } else {
+        await Provider.of<ProfileProvider>(context, listen: false)
+            .getUserInfo(context);
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (_) => DashBoardScreen()),
+            (route) => false);
         _emailController.clear();
         _passwordController.clear();
         _firstNameController.clear();
@@ -139,11 +164,9 @@ class _SignUpWidgetState extends State<SignUpWidget> {
         _phoneController.clear();
         _confirmPasswordController.clear();
       }
-
-
-    }
-    else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(errorMessage), backgroundColor: Colors.red));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(errorMessage), backgroundColor: Colors.red));
     }
   }
 
@@ -151,16 +174,20 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   @override
   void initState() {
     super.initState();
-    Provider.of<SplashProvider>(context,listen: false).configModel;
-    _countryDialCode = CountryCode.fromCountryCode(Provider.of<SplashProvider>(context, listen: false).configModel.countryCode).dialCode;
-
+    Provider.of<SplashProvider>(context, listen: false).configModel;
+    _countryDialCode = CountryCode.fromCountryCode(
+                Provider.of<SplashProvider>(context, listen: false)
+                        .configModel
+                        ?.countryCode ??
+                    "1")
+            .dialCode ??
+        "1";
 
     _formKey = GlobalKey<FormState>();
   }
 
   @override
   Widget build(BuildContext context) {
-
     return ListView(
       padding: EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_SMALL),
       children: [
@@ -170,34 +197,38 @@ class _SignUpWidgetState extends State<SignUpWidget> {
             children: [
               // for first and last name
               Container(
-                margin: EdgeInsets.only(left: Dimensions.MARGIN_SIZE_LARGE, right: Dimensions.MARGIN_SIZE_LARGE),
+                margin: EdgeInsets.only(
+                    left: Dimensions.MARGIN_SIZE_LARGE,
+                    right: Dimensions.MARGIN_SIZE_LARGE),
                 child: Row(
                   children: [
-                    Expanded(child: CustomTextField(
+                    Expanded(
+                        child: CustomTextField(
                       hintText: getTranslated('FIRST_NAME', context),
                       textInputType: TextInputType.name,
                       focusNode: _fNameFocus,
                       nextNode: _lNameFocus,
                       isPhoneNumber: false,
                       capitalization: TextCapitalization.words,
-                      controller: _firstNameController,)),
+                      controller: _firstNameController,
+                    )),
                     SizedBox(width: Dimensions.PADDING_SIZE_DEFAULT),
-
-
-                    Expanded(child: CustomTextField(
+                    Expanded(
+                        child: CustomTextField(
                       hintText: getTranslated('LAST_NAME', context),
                       focusNode: _lNameFocus,
                       nextNode: _emailFocus,
                       capitalization: TextCapitalization.words,
-                      controller: _lastNameController,)),
+                      controller: _lastNameController,
+                    )),
                   ],
                 ),
               ),
 
-
-
               Container(
-                margin: EdgeInsets.only(left: Dimensions.MARGIN_SIZE_LARGE, right: Dimensions.MARGIN_SIZE_LARGE,
+                margin: EdgeInsets.only(
+                    left: Dimensions.MARGIN_SIZE_LARGE,
+                    right: Dimensions.MARGIN_SIZE_LARGE,
                     top: Dimensions.MARGIN_SIZE_SMALL),
                 child: CustomTextField(
                   hintText: getTranslated('ENTER_YOUR_EMAIL', context),
@@ -208,28 +239,27 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                 ),
               ),
 
-
-
               Container(
-                margin: EdgeInsets.only(left: Dimensions.MARGIN_SIZE_LARGE,
-                    right: Dimensions.MARGIN_SIZE_LARGE, top: Dimensions.MARGIN_SIZE_SMALL),
+                margin: EdgeInsets.only(
+                    left: Dimensions.MARGIN_SIZE_LARGE,
+                    right: Dimensions.MARGIN_SIZE_LARGE,
+                    top: Dimensions.MARGIN_SIZE_SMALL),
                 child: Row(children: [
                   CodePickerWidget(
                     onChanged: (CountryCode countryCode) {
-                      _countryDialCode = countryCode.dialCode;
+                      _countryDialCode = countryCode.dialCode ?? "1";
                     },
                     initialSelection: _countryDialCode,
                     favorite: [_countryDialCode],
                     showDropDownButton: true,
                     padding: EdgeInsets.zero,
                     showFlagMain: true,
-                    textStyle: TextStyle(color: Theme.of(context).textTheme.headline1.color),
-
+                    textStyle: TextStyle(
+                      color: Theme.of(context).textTheme.displayLarge?.color,
+                    ),
                   ),
-
-
-
-                  Expanded(child: CustomTextField(
+                  Expanded(
+                      child: CustomTextField(
                     hintText: getTranslated('ENTER_MOBILE_NUMBER', context),
                     controller: _phoneController,
                     focusNode: _phoneFocus,
@@ -237,17 +267,15 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                     isPhoneNumber: true,
                     textInputAction: TextInputAction.next,
                     textInputType: TextInputType.phone,
-
                   )),
                 ]),
               ),
 
-
-
-
               Container(
-                margin: EdgeInsets.only(left: Dimensions.MARGIN_SIZE_LARGE,
-                    right: Dimensions.MARGIN_SIZE_LARGE, top: Dimensions.MARGIN_SIZE_SMALL),
+                margin: EdgeInsets.only(
+                    left: Dimensions.MARGIN_SIZE_LARGE,
+                    right: Dimensions.MARGIN_SIZE_LARGE,
+                    top: Dimensions.MARGIN_SIZE_SMALL),
                 child: CustomPasswordTextField(
                   hintTxt: getTranslated('PASSWORD', context),
                   controller: _passwordController,
@@ -257,11 +285,11 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                 ),
               ),
 
-
-
               Container(
-                margin: EdgeInsets.only(left: Dimensions.MARGIN_SIZE_LARGE,
-                    right: Dimensions.MARGIN_SIZE_LARGE, top: Dimensions.MARGIN_SIZE_SMALL),
+                margin: EdgeInsets.only(
+                    left: Dimensions.MARGIN_SIZE_LARGE,
+                    right: Dimensions.MARGIN_SIZE_LARGE,
+                    top: Dimensions.MARGIN_SIZE_SMALL),
                 child: CustomPasswordTextField(
                   hintTxt: getTranslated('RE_ENTER_PASSWORD', context),
                   controller: _confirmPasswordController,
@@ -273,38 +301,49 @@ class _SignUpWidgetState extends State<SignUpWidget> {
           ),
         ),
 
-
-
         Container(
-          margin: EdgeInsets.only(left: Dimensions.MARGIN_SIZE_LARGE, right: Dimensions.MARGIN_SIZE_LARGE,
-              bottom: Dimensions.MARGIN_SIZE_LARGE, top: Dimensions.MARGIN_SIZE_LARGE),
+          margin: EdgeInsets.only(
+              left: Dimensions.MARGIN_SIZE_LARGE,
+              right: Dimensions.MARGIN_SIZE_LARGE,
+              bottom: Dimensions.MARGIN_SIZE_LARGE,
+              top: Dimensions.MARGIN_SIZE_LARGE),
           child: Provider.of<AuthProvider>(context).isLoading
               ? Center(
-            child: CircularProgressIndicator(
-              valueColor: new AlwaysStoppedAnimation<Color>(
-                Theme.of(context).primaryColor,
-              ),
-            ),
-          )
-              : CustomButton(onTap: addUser, buttonText: getTranslated('SIGN_UP', context)),
+                  child: CircularProgressIndicator(
+                    valueColor: new AlwaysStoppedAnimation<Color>(
+                      Theme.of(context).primaryColor,
+                    ),
+                  ),
+                )
+              : CustomButton(
+                  onTap: addUser,
+                  buttonText: getTranslated('SIGN_UP', context)),
         ),
 
         SocialLoginWidget(),
 
         // for skip for now
-        Provider.of<AuthProvider>(context).isLoading ? SizedBox() :
-        Center(
-            child: Row(mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [TextButton(
-                  onPressed: () =>
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => DashBoardScreen())),
-                  child: Text(getTranslated('SKIP_FOR_NOW', context),
-                      style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_DEFAULT,
-                          color: ColorResources.getPrimary(context)))),
-                Icon(Icons.arrow_forward, size: 15,color: Theme.of(context).primaryColor,)
-              ],
-            )),
+        Provider.of<AuthProvider>(context).isLoading
+            ? SizedBox()
+            : Center(
+                child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  TextButton(
+                      onPressed: () => Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (_) => DashBoardScreen())),
+                      child: Text(getTranslated('SKIP_FOR_NOW', context),
+                          style: titilliumRegular.copyWith(
+                              fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                              color: ColorResources.getPrimary(context)))),
+                  Icon(
+                    Icons.arrow_forward,
+                    size: 15,
+                    color: Theme.of(context).primaryColor,
+                  )
+                ],
+              )),
       ],
     );
   }

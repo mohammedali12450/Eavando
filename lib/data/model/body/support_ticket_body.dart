@@ -1,29 +1,21 @@
 class SupportTicketBody {
-  String _type;
-  String _subject;
-  String _description;
+  String? type;
+  String? subject;
+  String? description;
 
-  SupportTicketBody(String type, String subject, String description) {
-    this._type = type;
-    this._subject = subject;
-    this._description = description;
-  }
-
-  String get type => _type;
-  String get subject => _subject;
-  String get description => _description;
+  SupportTicketBody(this.type, this.subject, this.description);
 
   SupportTicketBody.fromJson(Map<String, dynamic> json) {
-    _type = json['type'];
-    _subject = json['subject'];
-    _description = json['description'];
+    type = json['type'];
+    subject = json['subject'];
+    description = json['description'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['type'] = this._type;
-    data['subject'] = this._subject;
-    data['description'] = this._description;
+    data['type'] = this.type;
+    data['subject'] = this.subject;
+    data['description'] = this.description;
     return data;
   }
 }

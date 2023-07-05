@@ -14,32 +14,40 @@ class WalletTransactionProvider extends ChangeNotifier {
   bool get isConvert => _isConvert;
   bool get isLoading => _isLoading;
   bool get firstLoading => _firstLoading;
-  int _transactionPageSize;
-  int get transactionPageSize=> _transactionPageSize;
-  TransactionModel _walletBalance;
-  TransactionModel get walletBalance => _walletBalance;
+  int? _transactionPageSize;
+  int? get transactionPageSize => _transactionPageSize;
+  TransactionModel? _walletBalance;
+  TransactionModel? get walletBalance => _walletBalance;
 
-  int _loyaltyPointPageSize;
-  int get loyaltyPointPageSize=> _loyaltyPointPageSize;
+  int? _loyaltyPointPageSize;
+  int? get loyaltyPointPageSize => _loyaltyPointPageSize;
 
-  WalletTransactionProvider({@required this.transactionRepo});
+  WalletTransactionProvider({required this.transactionRepo});
 
   List<WalletTransactioList> _transactionList = [];
   List<WalletTransactioList> get transactionList => _transactionList;
 
-  List<LoyaltyPointList> _loyaltyPointList = [];
-  List<LoyaltyPointList> get loyaltyPointList => _loyaltyPointList;
+  List<LoyaltyPointList>? _loyaltyPointList;
+  List<LoyaltyPointList>? get loyaltyPointList => _loyaltyPointList;
 
-  Future<void> getTransactionList(BuildContext context, int offset, {bool reload = true}) async {
-    if(reload){
+  Future<void> getTransactionList(BuildContext context, int offset,
+      {bool reload = true}) async {
+    if (reload) {
       _transactionList = [];
     }
     _isLoading = true;
-    ApiResponse apiResponse = await transactionRepo.getWalletTransactionList(offset);
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
-      _walletBalance = TransactionModel.fromJson(apiResponse.response.data);
-      _transactionList.addAll(TransactionModel.fromJson(apiResponse.response.data).walletTransactioList);
-      _transactionPageSize = TransactionModel.fromJson(apiResponse.response.data).totalWalletTransactio;
+    ApiResponse apiResponse =
+        await transactionRepo.getWalletTransactionList(offset);
+    if (apiResponse.response != null &&
+        apiResponse.response!.statusCode == 200) {
+      _walletBalance = TransactionModel.fromJson(apiResponse.response!.data);
+      _transactionList.addAll(
+          TransactionModel.fromJson(apiResponse.response!.data)
+                  .walletTransactioList ??
+              []);
+      _transactionPageSize =
+          TransactionModel.fromJson(apiResponse.response!.data)
+              .totalWalletTransactio;
       _isLoading = false;
     } else {
       _isLoading = false;
@@ -48,16 +56,22 @@ class WalletTransactionProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
-  Future<void> getLoyaltyPointList(BuildContext context, int offset, {bool reload = false}) async {
-    if(reload){
+  Future<void> getLoyaltyPointList(BuildContext context, int offset,
+      {bool reload = false}) async {
+    if (reload) {
       _loyaltyPointList = [];
     }
     _isLoading = true;
     ApiResponse apiResponse = await transactionRepo.getLoyaltyPointList(offset);
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
-      _loyaltyPointList.addAll(LoyaltyPointModel.fromJson(apiResponse.response.data).loyaltyPointList);
-      _loyaltyPointPageSize = LoyaltyPointModel.fromJson(apiResponse.response.data).totalLoyaltyPoint;
+    if (apiResponse.response != null &&
+        apiResponse.response!.statusCode == 200) {
+      _loyaltyPointList?.addAll(
+          LoyaltyPointModel.fromJson(apiResponse.response!.data)
+                  .loyaltyPointList ??
+              []);
+      _loyaltyPointPageSize =
+          LoyaltyPointModel.fromJson(apiResponse.response!.data)
+              .totalLoyaltyPoint;
       _isLoading = false;
     } else {
       _isLoading = false;
@@ -66,21 +80,23 @@ class WalletTransactionProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   Future convertPointToCurrency(BuildContext context, int point) async {
     _isConvert = true;
     notifyListeners();
-    ApiResponse apiResponse = await transactionRepo.convertPointToCurrency(point);
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+    ApiResponse apiResponse =
+        await transactionRepo.convertPointToCurrency(point);
+    if (apiResponse.response != null &&
+        apiResponse.response!.statusCode == 200) {
       _isConvert = false;
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        backgroundColor:Colors.green,
-        content: Text('${getTranslated('point_converted_successfully', context)}'),
+        backgroundColor: Colors.green,
+        content:
+            Text('${getTranslated('point_converted_successfully', context)}'),
       ));
-    }else{
+    } else {
       _isConvert = false;
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        backgroundColor:Colors.green,
+        backgroundColor: Colors.green,
         content: Text('${getTranslated('point_converted_failed', context)}'),
       ));
     }

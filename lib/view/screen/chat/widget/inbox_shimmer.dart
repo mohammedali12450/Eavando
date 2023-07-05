@@ -3,8 +3,6 @@ import 'package:flutter_axtro_soft_ecommerce/utill/color_resources.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/dimensions.dart';
 import 'package:shimmer/shimmer.dart';
 
-
-
 class InboxShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -13,8 +11,8 @@ class InboxShimmer extends StatelessWidget {
       padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
       itemBuilder: (context, index) {
         return Shimmer.fromColors(
-          baseColor: Colors.grey[300],
-          highlightColor: Colors.grey[100],
+          baseColor: Color(0xFFE0E0E0),
+          highlightColor: Color(0xFFF5F5F5),
           enabled: true,
           child: Padding(
             padding: EdgeInsets.only(bottom: Dimensions.PADDING_SIZE_SMALL),
@@ -22,7 +20,8 @@ class InboxShimmer extends StatelessWidget {
               CircleAvatar(child: Icon(Icons.person), radius: 30),
               Expanded(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_SMALL),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: Dimensions.PADDING_SIZE_SMALL),
                   child: Column(children: [
                     Container(height: 15, color: ColorResources.WHITE),
                     SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
@@ -36,7 +35,9 @@ class InboxShimmer extends StatelessWidget {
                 Container(
                   height: 15,
                   width: 15,
-                  decoration: BoxDecoration(shape: BoxShape.circle, color: Theme.of(context).primaryColor),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Theme.of(context).primaryColor),
                 ),
               ])
             ]),

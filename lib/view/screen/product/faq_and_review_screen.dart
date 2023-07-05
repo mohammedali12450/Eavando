@@ -9,23 +9,21 @@ import 'package:flutter_axtro_soft_ecommerce/view/screen/product/widget/review_w
 
 class ReviewScreen extends StatelessWidget {
   final List<ReviewModel> reviewList;
-  ReviewScreen({this.reviewList});
+  ReviewScreen({required this.reviewList});
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-
         CustomAppBar(title: getTranslated('reviews', context)),
-
         Padding(
           padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-          child: Text(getTranslated('reviews', context)+'(${reviewList.length})', style: robotoBold),
+          child: Text(
+              getTranslated('reviews', context) + '(${reviewList.length})',
+              style: robotoBold),
         ),
-
-        Expanded(child: ListView.builder(
+        Expanded(
+            child: ListView.builder(
           physics: BouncingScrollPhysics(),
           padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
           itemCount: reviewList.length,
@@ -38,7 +36,6 @@ class ReviewScreen extends StatelessWidget {
             );
           },
         )),
-
       ]),
     );
   }

@@ -1,207 +1,87 @@
 class SellerModel {
-  Seller _seller;
-  int _avgRating;
-  int _totalReview;
-  int _totalOrder;
-  int _totalProduct;
+  Seller? seller;
+  int? avgRating;
+  int? totalReview;
+  int? totalOrder;
+  int? totalProduct;
 
-  SellerModel(
-      {Seller seller, int avgRating, int totalReview, int totalOrder, int totalProduct}) {
-    if (seller != null) {
-      this._seller = seller;
-    }
-    if (avgRating != null) {
-      this._avgRating = avgRating;
-    }
-    if (totalReview != null) {
-      this._totalReview = totalReview;
-    }
-    if (totalOrder != null) {
-      this._totalOrder = totalOrder;
-    }
-    if (totalProduct != null) {
-      this._totalProduct = totalProduct;
-    }
-  }
-
-  Seller get seller => _seller;
-  int get avgRating => _avgRating;
-  int get totalReview => _totalReview;
-  int get totalOrder => _totalOrder;
-  int get totalProduct => _totalProduct;
-
+  SellerModel({
+    this.seller,
+    this.avgRating,
+    this.totalReview,
+    this.totalOrder,
+    this.totalProduct,
+  });
 
   SellerModel.fromJson(Map<String, dynamic> json) {
-    _seller =
-    json['seller'] != null ? new Seller.fromJson(json['seller']) : null;
-    _avgRating = json['avg_rating'];
-    _totalReview = json['total_review'];
-    _totalOrder = json['total_order'];
-    _totalProduct = json['total_product'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this._seller != null) {
-      data['seller'] = this._seller.toJson();
-    }
-    data['avg_rating'] = this._avgRating;
-    data['total_review'] = this._totalReview;
-    data['total_order'] = this._totalOrder;
-    data['total_product'] = this._totalProduct;
-    return data;
+    seller =
+        json['seller'] != null ? new Seller.fromJson(json['seller']) : null;
+    avgRating = json['avg_rating'];
+    totalReview = json['total_review'];
+    totalOrder = json['total_order'];
+    totalProduct = json['total_product'];
   }
 }
 
 class Seller {
-  int _id;
-  String _fName;
-  String _lName;
-  String _phone;
-  String _image;
-  Shop _shop;
+  int? id;
+  String? fName;
+  String? lName;
+  String? phone;
+  String? image;
+  Shop? shop;
 
-  Seller(
-      {int id,
-        String fName,
-        String lName,
-        String phone,
-        String image,
-        Shop shop}) {
-    if (id != null) {
-      this._id = id;
-    }
-    if (fName != null) {
-      this._fName = fName;
-    }
-    if (lName != null) {
-      this._lName = lName;
-    }
-    if (phone != null) {
-      this._phone = phone;
-    }
-    if (image != null) {
-      this._image = image;
-    }
-    if (shop != null) {
-      this._shop = shop;
-    }
-  }
-
-  int get id => _id;
-  String get fName => _fName;
-  String get lName => _lName;
-  String get phone => _phone;
-  String get image => _image;
-  Shop get shop => _shop;
+  Seller({
+    this.id,
+    this.fName,
+    this.lName,
+    this.phone,
+    this.image,
+    this.shop,
+  });
 
   Seller.fromJson(Map<String, dynamic> json) {
-    _id = json['id'];
-    _fName = json['f_name'];
-    _lName = json['l_name'];
-    _phone = json['phone'];
-    _image = json['image'];
-    _shop = json['shop'] != null ? new Shop.fromJson(json['shop']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this._id;
-    data['f_name'] = this._fName;
-    data['l_name'] = this._lName;
-    data['phone'] = this._phone;
-    data['image'] = this._image;
-    if (this._shop != null) {
-      data['shop'] = this._shop.toJson();
-    }
-    return data;
+    id = json['id'];
+    fName = json['f_name'];
+    lName = json['l_name'];
+    phone = json['phone'];
+    image = json['image'];
+    shop = json['shop'] != null ? new Shop.fromJson(json['shop']) : null;
   }
 }
 
 class Shop {
-  int _id;
-  int _sellerId;
-  String _name;
-  String _address;
-  String _contact;
-  String _image;
-  String _createdAt;
-  String _updatedAt;
-  String _banner;
+  int? id;
+  int? sellerId;
+  String? name;
+  String? address;
+  String? contact;
+  String? image;
+  String? createdAt;
+  String? updatedAt;
+  String? banner;
 
-  Shop(
-      {int id,
-        int sellerId,
-        String name,
-        String address,
-        String contact,
-        String image,
-        String createdAt,
-        String updatedAt,
-        String banner}) {
-    if (id != null) {
-      this._id = id;
-    }
-    if (sellerId != null) {
-      this._sellerId = sellerId;
-    }
-    if (name != null) {
-      this._name = name;
-    }
-    if (address != null) {
-      this._address = address;
-    }
-    if (contact != null) {
-      this._contact = contact;
-    }
-    if (image != null) {
-      this._image = image;
-    }
-    if (createdAt != null) {
-      this._createdAt = createdAt;
-    }
-    if (updatedAt != null) {
-      this._updatedAt = updatedAt;
-    }
-    if (banner != null) {
-      this._banner = banner;
-    }
-  }
-
-  int get id => _id;
-  int get sellerId => _sellerId;
-  String get name => _name;
-  String get address => _address;
-  String get contact => _contact;
-  String get image => _image;
-  String get createdAt => _createdAt;
-  String get updatedAt => _updatedAt;
-  String get banner => _banner;
-
+  Shop({
+    int? id,
+    int? sellerId,
+    String? name,
+    String? address,
+    String? contact,
+    String? image,
+    String? createdAt,
+    String? updatedAt,
+    String? banner,
+  });
 
   Shop.fromJson(Map<String, dynamic> json) {
-    _id = json['id'];
-    _sellerId = int.parse(json['seller_id'].toString());
-    _name = json['name'];
-    _address = json['address'];
-    _contact = json['contact'];
-    _image = json['image'];
-    _createdAt = json['created_at'];
-    _updatedAt = json['updated_at'];
-    _banner = json['banner'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this._id;
-    data['seller_id'] = this._sellerId;
-    data['name'] = this._name;
-    data['address'] = this._address;
-    data['contact'] = this._contact;
-    data['image'] = this._image;
-    data['created_at'] = this._createdAt;
-    data['updated_at'] = this._updatedAt;
-    data['banner'] = this._banner;
-    return data;
+    id = json['id'];
+    sellerId = int.parse(json['seller_id'].toString());
+    name = json['name'];
+    address = json['address'];
+    contact = json['contact'];
+    image = json['image'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    banner = json['banner'];
   }
 }

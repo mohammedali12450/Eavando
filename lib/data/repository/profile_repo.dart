@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_axtro_soft_ecommerce/data/datasource/remote/dio/dio_client.dart';
 import 'package:flutter_axtro_soft_ecommerce/data/datasource/remote/exception/api_error_handler.dart';
 import 'package:flutter_axtro_soft_ecommerce/data/model/response/address_model.dart';
@@ -14,7 +13,7 @@ import 'package:http/http.dart' as http;
 class ProfileRepo {
   final DioClient dioClient;
   final SharedPreferences sharedPreferences;
-  ProfileRepo({@required this.dioClient, @required this.sharedPreferences});
+  ProfileRepo({required this.dioClient, required this.sharedPreferences});
 
   Future<ApiResponse> getAddressTypeList() async {
     try {
@@ -24,7 +23,10 @@ class ProfileRepo {
         'Home',
         'Office',
       ];
-      Response response = Response(requestOptions: RequestOptions(path: ''), data: addressTypeList, statusCode: 200);
+      Response response = Response(
+          requestOptions: RequestOptions(path: ''),
+          data: addressTypeList,
+          statusCode: 200);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -40,9 +42,10 @@ class ProfileRepo {
     }
   }
 
-  Future<ApiResponse> deleteUserAccount(int customerId) async {
+  Future<ApiResponse> deleteUserAccount(int? customerId) async {
     try {
-      final response = await dioClient.get('${AppConstants.DELETE_CUSTOMER_ACCOUNT}/$customerId');
+      final response = await dioClient
+          .get('${AppConstants.DELETE_CUSTOMER_ACCOUNT}/${customerId ?? -1}');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -60,7 +63,8 @@ class ProfileRepo {
 
   Future<ApiResponse> removeAddressByID(int id) async {
     try {
-      final response = await dioClient.delete('${AppConstants.REMOVE_ADDRESS_URI}$id');
+      final response =
+          await dioClient.delete('${AppConstants.REMOVE_ADDRESS_URI}$id');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -79,20 +83,31 @@ class ProfileRepo {
     }
   }
 
-  Future<http.StreamedResponse> updateProfile(UserInfoModel userInfoModel, String pass, File file, String token) async {
-    http.MultipartRequest request = http.MultipartRequest('POST', Uri.parse('${AppConstants.BASE_URL}${AppConstants.UPDATE_PROFILE_URI}'));
-    request.headers.addAll(<String,String>{'Authorization': 'Bearer $token'});
-    if(file != null){
-      request.files.add(http.MultipartFile('image', file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split('/').last));
-    }
-     Map<String, String> _fields = Map();
-    if(pass.isEmpty) {
+  Future<http.StreamedResponse> updateProfile(
+      UserInfoModel userInfoModel, String pass, File file, String token) async {
+    http.MultipartRequest request = http.MultipartRequest(
+        'POST',
+        Uri.parse(
+            '${AppConstants.BASE_URL}${AppConstants.UPDATE_PROFILE_URI}'));
+    request.headers.addAll(<String, String>{'Authorization': 'Bearer $token'});
+    request.files.add(http.MultipartFile(
+        'image', file.readAsBytes().asStream(), file.lengthSync(),
+        filename: file.path.split('/').last));
+    Map<String, String> _fields = Map();
+    if (pass.isEmpty) {
       _fields.addAll(<String, String>{
-        '_method': 'put', 'f_name': userInfoModel.fName, 'l_name': userInfoModel.lName, 'phone': userInfoModel.phone
+        '_method': 'put',
+        'f_name': userInfoModel.fName ?? "",
+        'l_name': userInfoModel.lName ?? "",
+        'phone': userInfoModel.phone ?? "",
       });
-    }else {
+    } else {
       _fields.addAll(<String, String>{
-        '_method': 'put', 'f_name': userInfoModel.fName, 'l_name': userInfoModel.lName, 'phone': userInfoModel.phone, 'password': pass
+        '_method': 'put',
+        'f_name': userInfoModel.fName ?? "",
+        'l_name': userInfoModel.lName ?? "",
+        'phone': userInfoModel.phone ?? "",
+        'password': pass
       });
     }
     request.fields.addAll(_fields);
@@ -121,7 +136,8 @@ class ProfileRepo {
   // for save office address
   Future<void> saveOfficeAddress(String officeAddress) async {
     try {
-      await sharedPreferences.setString(AppConstants.OFFICE_ADDRESS, officeAddress);
+      await sharedPreferences.setString(
+          AppConstants.OFFICE_ADDRESS, officeAddress);
     } catch (e) {
       throw e;
     }

@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 class CustomCheckBox extends StatelessWidget {
   final String title;
   final int index;
-  CustomCheckBox({@required this.title, @required this.index});
+  CustomCheckBox({required this.title, required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +20,15 @@ class CustomCheckBox extends StatelessWidget {
               shape: CircleBorder(),
               value: order.paymentMethodIndex == index,
               activeColor: Theme.of(context).colorScheme.primary,
-              onChanged: (bool isChecked) => order.setPaymentMethod(index),
+              onChanged: (bool? isChecked) => order.setPaymentMethod(index),
             ),
             Expanded(
-              child: Text(title, style: titilliumRegular.copyWith(
-                color: order.paymentMethodIndex == index ? Theme.of(context).textTheme.bodyText1.color : ColorResources.getGainsBoro(context),
-              )),
+              child: Text(title,
+                  style: titilliumRegular.copyWith(
+                    color: order.paymentMethodIndex == index
+                        ? Theme.of(context).textTheme.bodyLarge?.color
+                        : ColorResources.getGainsBoro(context),
+                  )),
             ),
           ]),
         );

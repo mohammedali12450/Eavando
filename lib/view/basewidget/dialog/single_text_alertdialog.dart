@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/custom_themes.dart';
 
 class SingleTextAlertDialog extends StatelessWidget {
-  final String message;
+  final String? message;
 
   SingleTextAlertDialog({this.message});
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)), //this right here
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0)), //this right here
       child: Container(
         height: 50,
         alignment: Alignment.center,

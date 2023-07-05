@@ -6,8 +6,7 @@ class LoadingPage extends StatefulWidget {
   _LoadingPageState createState() => _LoadingPageState();
 }
 
-class _LoadingPageState extends State<LoadingPage>
-{
+class _LoadingPageState extends State<LoadingPage> {
   bool _enabled = true;
   @override
   Widget build(BuildContext context) {
@@ -18,8 +17,8 @@ class _LoadingPageState extends State<LoadingPage>
         children: <Widget>[
           Expanded(
             child: Shimmer.fromColors(
-              baseColor: Colors.grey[300],
-              highlightColor: Colors.grey[100],
+              baseColor: Colors.grey.withOpacity(0.5),
+              highlightColor: Colors.grey.withOpacity(0.2),
               enabled: _enabled,
               child: ListView.builder(
                 itemBuilder: (_, __) => Padding(

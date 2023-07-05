@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_axtro_soft_ecommerce/data/datasource/remote/dio/dio_client.dart';
 import 'package:flutter_axtro_soft_ecommerce/data/datasource/remote/exception/api_error_handler.dart';
 import 'package:flutter_axtro_soft_ecommerce/data/model/response/base/api_response.dart';
@@ -6,7 +5,7 @@ import 'package:flutter_axtro_soft_ecommerce/utill/app_constants.dart';
 
 class BannerRepo {
   final DioClient dioClient;
-  BannerRepo({@required this.dioClient});
+  BannerRepo({required this.dioClient});
 
   Future<ApiResponse> getBannerList() async {
     try {
@@ -16,6 +15,7 @@ class BannerRepo {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }
+
   Future<ApiResponse> getFooterBannerList() async {
     try {
       final response = await dioClient.get(AppConstants.FOOTER_BANNER_URI);
@@ -24,9 +24,11 @@ class BannerRepo {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }
+
   Future<ApiResponse> getMainSectionBannerList() async {
     try {
-      final response = await dioClient.get(AppConstants.MAIN_SECTION_BANNER_URI);
+      final response =
+          await dioClient.get(AppConstants.MAIN_SECTION_BANNER_URI);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
