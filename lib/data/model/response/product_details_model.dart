@@ -14,14 +14,16 @@ class ProductDetailsModel {
   int? refundable;
   String? digitalProductType;
   String? digitalFileReady;
-  List<String>? images;
+  ImagesData? images;
   String? thumbnail;
   int? featured;
   String? videoProvider;
   String? videoUrl;
   List<Colors>? colors;
+  //ImagesData? imagesWithColor;
   Map<String, dynamic>? imagesWithColor;
-  List<dynamic>? imagesWithOutColor;
+  ImagesData? imagesWithOutColor;
+  //List<dynamic>? imagesWithOutColor;
 
   int? variantProduct;
   List<int>? attributes;
@@ -129,7 +131,11 @@ class ProductDetailsModel {
     refundable = json['refundable'];
     digitalProductType = json['digital_product_type'];
     digitalFileReady = json['digital_file_ready'];
-    images = json['images']?.cast<String>();
+    images =
+    json['images'] != null && json['images'] is String ? null :
+    json['images'] != null ? new ImagesData.fromJson(json['images']) : null;
+
+    print("=================IMAGES: $images");
     thumbnail = json['thumbnail'];
     featured = json['featured'];
     videoProvider = json['video_provider'];
@@ -150,9 +156,14 @@ class ProductDetailsModel {
     }
 
     try {
+  /*    imagesWithColor =  json['images'] != null && json['images'] is String ? null :
+      json['images'] != null ? new ImagesData.fromJson(json['images']) : null;
+*/
       imagesWithColor = json['images'];
     } catch (_) {
-      imagesWithOutColor = json['images'];
+      // imagesWithOutColor = json['images'] != null && json['images'] is String ? null :
+      // json['images'] != null ? new ImagesData.fromJson(json['images']) : null;
+      //imagesWithOutColor = json['images'];
     }
 
     if (json['variation'] != null) {

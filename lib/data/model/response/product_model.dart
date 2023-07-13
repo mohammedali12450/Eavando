@@ -35,7 +35,8 @@ class Product {
   String? productType;
   List<CategoryIds>? categoryIds;
   String? unit;
-  List<String>? images;
+  ImagesData? images;
+  //List<String>? images;
   String? thumbnail;
   List<ProductColors>? colors;
   List<String>? attributes;
@@ -131,15 +132,21 @@ class Product {
       digitalFileReady = json['digital_file_ready'];
     }
 
-    if (json['images'] != null) {
+    /*if (json['images'] != null) {
       try {
-        images = json['images'] != null ? json['images'].cast<String>() : [];
+        images = json['images'];
+        print("Images = $images");// != null ? json['images'].cast<String>() : [];
       } catch (e) {
+        print("Catchhhh in Images : $e");
         images = ((json['images']?['AliceBlue'] ?? []) as List)
             .map((e) => "$e")
             .toList();
       }
-    }
+    }*/
+    images =
+    json['images'] != null && json['images'] is String ? null :
+    json['images'] != null ? new ImagesData.fromJson(json['images']) : null;
+
 
     thumbnail = json['thumbnail'];
     if (json['colors_formatted'] != null) {
@@ -229,7 +236,86 @@ class Product {
     }
   }
 }
+class ImagesData {
+  List<String>? yellow;
+  List<String>? red;
+  List<String>? orange;
+  List<String>? lightSeaGreen;
+  List<String>? deepSkyBlue;
+  List<String>? blue;
+  List<String>? darkGray;
+  List<String>? moccasin;
+  List<String>? lightSlateGray;
+  List<String>? green;
+  List<String>? darkSeaGreen;
+  List<String>? chocolate;
+  List<String>? gray;
+  List<String>? darkOliveGreen;
+  List<String>? beige;
+  List<String>? forestGreen;
+  List<String>? coral;
 
+  ImagesData(
+      {this.yellow,
+        this.red,
+        this.orange,
+        this.lightSeaGreen,
+        this.deepSkyBlue,
+        this.blue,
+        this.darkGray,
+        this.moccasin,
+        this.lightSlateGray,
+        this.green,
+        this.darkSeaGreen,
+        this.chocolate,
+        this.gray,
+        this.darkOliveGreen,
+        this.beige,
+        this.forestGreen,
+        this.coral});
+
+  ImagesData.fromJson(Map<String, dynamic> json) {
+    yellow = json['Yellow']!=null? json['Yellow'].cast<String>():[];
+    red = json['Red']!=null?json['Red'].cast<String>():[];
+    orange = json['Orange']!=null?json['Orange'].cast<String>():[];
+    lightSeaGreen = json['LightSeaGreen']!=null?json['LightSeaGreen'].cast<String>():[];
+    deepSkyBlue = json['DeepSkyBlue']!=null?json['DeepSkyBlue'].cast<String>():[];
+    blue = json['Blue']!=null?json['Blue'].cast<String>():[];
+    darkGray = json['DarkGray']!=null?json['DarkGray'].cast<String>():[];
+    moccasin = json['Moccasin']!=null?json['Moccasin'].cast<String>():[];
+    lightSlateGray = json['LightSlateGray']!=null?json['LightSlateGray'].cast<String>():[];
+    green = json['Green']!=null?json['Green'].cast<String>():[];
+    darkSeaGreen = json['DarkSeaGreen']!=null?json['DarkSeaGreen'].cast<String>():[];
+    chocolate = json['Chocolate']!=null?json['Chocolate'].cast<String>():[];
+    gray = json['Gray']!=null?json['Gray'].cast<String>():[];
+    darkOliveGreen = json['DarkOliveGreen']!=null?json['DarkOliveGreen'].cast<String>():[];
+    beige = json['Beige']!=null?json['Beige'].cast<String>():[];
+    forestGreen = json['ForestGreen']!=null?json['ForestGreen'].cast<String>():[];
+    coral = json['Coral']!=null?json['Coral'].cast<String>():[];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['Yellow'] = this.yellow;
+    data['Red'] = this.red;
+    data['Orange'] = this.orange;
+    data['LightSeaGreen'] = this.lightSeaGreen;
+    data['DeepSkyBlue'] = this.deepSkyBlue;
+    data['Blue'] = this.blue;
+    data['DarkGray'] = this.darkGray;
+    data['Moccasin'] = this.moccasin;
+    data['LightSlateGray'] = this.lightSlateGray;
+    data['Green'] = this.green;
+    data['DarkSeaGreen'] = this.darkSeaGreen;
+    data['Chocolate'] = this.chocolate;
+    data['Gray'] = this.gray;
+    data['DarkOliveGreen'] = this.darkOliveGreen;
+    data['Beige'] = this.beige;
+    data['ForestGreen'] = this.forestGreen;
+    data['Coral'] = this.coral;
+    return data;
+  }
+}
 class CategoryIds {
   int? position;
 
