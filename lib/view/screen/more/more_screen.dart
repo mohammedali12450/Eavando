@@ -533,21 +533,7 @@ class _MoreScreenState extends State<MoreScreen> {
                   SizedBox(height: Dimensions.PADDING_SIZE_DEFAULT),
                   SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
 
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text("From",
-                            style: titleHeader.copyWith(
-                                color: ColorResources.axtroSoftLogo(context))),
-                        SizedBox(height: 8),
-                        Image.asset(Images.axtro_soft_logo, width: 120),
-                        SizedBox(height: 15)
-                      ],
-                    ),
-                  ),
+
                 ]),
           ),
         ),
