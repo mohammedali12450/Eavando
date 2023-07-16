@@ -38,9 +38,9 @@ class _ProductImageViewState extends State<ProductImageView> {
   @override
   void initState() {
     super.initState();
-    if (widget.productModel?.imagesWithOutColor?.length != 0) {
+   /* if (widget.productModel?.imagesWithOutColor?.length != 0) {
       imagesForIndex = widget.productModel?.imagesWithOutColor ?? [];
-    } else {
+    } else*/ {
       // widget.productModel.imagesWithColor.map((key, value) {
       //   print(value.toString());
       // });
