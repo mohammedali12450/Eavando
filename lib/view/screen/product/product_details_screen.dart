@@ -112,6 +112,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           },
           child: Consumer<ProductDetailsProvider>(
             builder: (context, details, child) {
+              print("Colorsssssssssssssssssssss = ${details.productDetailsModel?.colors?.length}");
               return SingleChildScrollView(
                 physics: BouncingScrollPhysics(),
                 child: !details.isDetails

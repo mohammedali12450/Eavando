@@ -33,7 +33,8 @@ class _ProductImageScreenState extends State<ProductImageScreen> {
     colorIndex = Provider.of<ProductDetailsProvider>(context, listen: false)
             .colorIndex ??
         0;
-    imagesToEachColor = 0;
+    imagesToEachColor =
+        Provider.of<ProductDetailsProvider>(context, listen: false).productDetailsModel?.colors!.length ?? 0;
   }
 
   @override
@@ -70,6 +71,7 @@ class _ProductImageScreenState extends State<ProductImageScreen> {
                 child: PhotoViewGallery.builder(
                   scrollPhysics: const BouncingScrollPhysics(),
                   builder: (BuildContext context, int index) {
+                    print("COLORRRRRRRRRRRIIIIIIIIIINNNNNNNGGGGGGG : ${Provider.of<ProductDetailsProvider>(context, listen: false).productDetailsModel?.colors?.length}");
                     return PhotoViewGalleryPageOptions(
                       imageProvider: NetworkImage(imagesToEachColor == 0
                           ? '${Provider.of<SplashProvider>(context, listen: false).baseUrls?.productImageUrl ?? ""}'
