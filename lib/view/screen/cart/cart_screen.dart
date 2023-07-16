@@ -151,7 +151,14 @@ class _CartScreenState extends State<CartScreen> {
                                   style: titilliumSemiBold.copyWith(
                                       fontSize: Dimensions.FONT_SIZE_DEFAULT),
                                 ),
-                                
+                                Text(
+                                  PriceConverter.convertPrice(
+                                      context, amount + shippingAmount),
+                                  style: titilliumSemiBold.copyWith(
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                      fontSize: Dimensions.FONT_SIZE_LARGE),
+                                ),
                               ],
                             ))),
                             Builder(
