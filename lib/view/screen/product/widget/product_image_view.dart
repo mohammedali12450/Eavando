@@ -45,7 +45,6 @@ class _ProductImageViewState extends State<ProductImageView> {
       //   print(value.toString());
       // });
       imagesForIndex = widget.productModel?.imagesWithColor?[widget.indexColor];
-      print("IMAGES FOR INDEX =========== ${widget.productModel?.imagesWithColor}");
     }
   }
 
