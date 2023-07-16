@@ -129,7 +129,7 @@ class CartWidget extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          (cartModel.discount ?? 0) > 0
+                          cartModel.discount! > 0
                               ? Text(
                                   PriceConverter.convertPrice(
                                     context,
@@ -149,7 +149,7 @@ class CartWidget extends StatelessWidget {
                                   : 0),
                           Text(
                             PriceConverter.convertPrice(
-                                context, cartModel.price ?? 0,
+                                context, cartModel.price!,
                                 discount: cartModel.discount,
                                 discountType: 'amount'),
                             maxLines: 1,

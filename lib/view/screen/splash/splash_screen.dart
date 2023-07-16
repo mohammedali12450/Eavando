@@ -125,24 +125,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   //   painter: SplashPainter(),
                   // ),
                 ),
-                Positioned(
-                  bottom: 0,
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text("From",
-                            style: titilliumBold.copyWith(
-                                color: ColorResources.axtroSoftLogo(context))),
-                        SizedBox(height: 8),
-                        Image.asset(Images.axtro_soft_logo, width: 110),
-                        SizedBox(height: 15)
-                      ],
-                    ),
-                  ),
-                ),
+
                 Center(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
