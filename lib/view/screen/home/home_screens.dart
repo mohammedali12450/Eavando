@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
   Future<void> _loadData(BuildContext context, bool reload) async {
     Future.delayed(Duration.zero).then((_) async {
       await Provider.of<BannerProvider>(context, listen: false)
-          .getBannerList(reload, context);
+          .getBannerList(context);
       await Provider.of<BannerProvider>(context, listen: false)
           .getFooterBannerList(context);
       await Provider.of<BannerProvider>(context, listen: false)

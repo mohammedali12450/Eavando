@@ -99,8 +99,8 @@ class BannersView extends StatelessWidget {
             return Container(
               width: _width,
               height: _width * 0.4,
-              child: bannerProvider.mainSectionBannerList != null
-                  ? bannerProvider.mainSectionBannerList!.length != 0
+              child: bannerProvider.mainBannerList != null
+                  ? bannerProvider.mainBannerList!.length != 0
                       ? Stack(
                           fit: StackFit.expand,
                           children: [
@@ -117,24 +117,24 @@ class BannersView extends StatelessWidget {
                                 },
                               ),
                               itemCount:
-                                  bannerProvider.mainSectionBannerList!.length == 0
+                                  bannerProvider.mainBannerList!.length == 0
                                       ? 1
-                                      : bannerProvider.mainSectionBannerList!.length,
+                                      : bannerProvider.mainBannerList!.length,
                               itemBuilder: (context, index, _) {
                                 return InkWell(
                                   onTap: () {
                                     _clickBannerRedirect(
                                       context,
-                                      bannerProvider.mainSectionBannerList![index]
+                                      bannerProvider.mainBannerList![index]
                                               .resourceId ??
                                           -1,
-                                      bannerProvider.mainSectionBannerList![index]
+                                      bannerProvider.mainBannerList![index]
                                                   .resourceType ==
                                               'product'
                                           ? bannerProvider
-                                              .mainSectionBannerList![index].product
+                                              .mainBannerList![index].product
                                           : null,
-                                      bannerProvider.mainSectionBannerList![index]
+                                      bannerProvider.mainBannerList![index]
                                               .resourceType ??
                                           "",
                                     );
@@ -150,7 +150,7 @@ class BannersView extends StatelessWidget {
                                         fit: BoxFit.cover,
                                         image:
                                             '${Provider.of<SplashProvider>(context, listen: false).baseUrls?.bannerImageUrl ?? ""}'
-                                            '/${bannerProvider.mainSectionBannerList![index].photo}',
+                                            '/${bannerProvider.mainBannerList![index].photo}',
                                         imageErrorBuilder: (c, o, s) =>
                                             Image.asset(Images.placeholder_3x1,
                                                 fit: BoxFit.cover),
@@ -166,9 +166,9 @@ class BannersView extends StatelessWidget {
                               right: 0,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: bannerProvider.mainSectionBannerList!
+                                children: bannerProvider.mainBannerList!
                                     .map((banner) {
-                                  int index = bannerProvider.mainSectionBannerList!
+                                  int index = bannerProvider.mainBannerList!
                                       .indexOf(banner);
                                   return TabPageSelectorIndicator(
                                     backgroundColor:
@@ -190,7 +190,7 @@ class BannersView extends StatelessWidget {
                   : Shimmer.fromColors(
                       baseColor: Color(0xFFE0E0E0),
                       highlightColor: Color(0xFFF5F5F5),
-                      enabled: bannerProvider.mainSectionBannerList == null,
+                      enabled: bannerProvider.mainBannerList == null,
                       child: Container(
                           margin: EdgeInsets.symmetric(horizontal: 10),
                           decoration: BoxDecoration(

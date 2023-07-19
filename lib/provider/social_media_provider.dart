@@ -16,13 +16,17 @@ class SocialMediaProvider extends ChangeNotifier {
 
   Future<void> getSocialMediaList(BuildContext context, bool reload) async {
     if (_socialMediaList.length == 0 || reload) {
+      print("before request data from api");
       ApiResponse apiResponse = await socialMediaRepo.getSocialMediaList();
       if (apiResponse.response != null &&
           apiResponse.response!.statusCode == 200) {
         _socialMediaList = [];
+        print("social media response");
+        print(apiResponse.response!.data);
         apiResponse.response!.data.forEach((social) {
           _socialMediaList.add(SocialMedia.fromJson(social));
         });
+        print("number of items is ${_socialMediaList.length}");
         _socialMediaSelectedIndex = 0;
         notifyListeners();
       } else {
