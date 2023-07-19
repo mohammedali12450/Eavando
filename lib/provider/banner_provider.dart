@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_axtro_soft_ecommerce/data/model/response/banner_model.dart';
 import 'package:flutter_axtro_soft_ecommerce/data/model/response/base/api_response.dart';
@@ -28,9 +30,7 @@ class BannerProvider extends ChangeNotifier {
       if (apiResponse.response != null &&
           apiResponse.response!.statusCode == 200) {
         _mainBannerList = [];
-        apiResponse.response!.data.forEach((bannerModel) =>
-            _mainBannerList?.add(BannerModel.fromJson(bannerModel)));
-
+        apiResponse.response!.data.map((bannerModel)=> _mainBannerList?.add(BannerModel.fromJson(bannerModel)));
         _currentIndex = 0;
         notifyListeners();
       } else {

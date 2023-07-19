@@ -89,7 +89,6 @@ class BannersView extends StatelessWidget {
       }
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -100,8 +99,8 @@ class BannersView extends StatelessWidget {
             return Container(
               width: _width,
               height: _width * 0.4,
-              child: bannerProvider.mainBannerList != null
-                  ? bannerProvider.mainBannerList!.length != 0
+              child: bannerProvider.mainSectionBannerList != null
+                  ? bannerProvider.mainSectionBannerList!.length != 0
                       ? Stack(
                           fit: StackFit.expand,
                           children: [
@@ -118,24 +117,24 @@ class BannersView extends StatelessWidget {
                                 },
                               ),
                               itemCount:
-                                  bannerProvider.mainBannerList!.length == 0
+                                  bannerProvider.mainSectionBannerList!.length == 0
                                       ? 1
-                                      : bannerProvider.mainBannerList!.length,
+                                      : bannerProvider.mainSectionBannerList!.length,
                               itemBuilder: (context, index, _) {
                                 return InkWell(
                                   onTap: () {
                                     _clickBannerRedirect(
                                       context,
-                                      bannerProvider.mainBannerList![index]
+                                      bannerProvider.mainSectionBannerList![index]
                                               .resourceId ??
                                           -1,
-                                      bannerProvider.mainBannerList![index]
+                                      bannerProvider.mainSectionBannerList![index]
                                                   .resourceType ==
                                               'product'
                                           ? bannerProvider
-                                              .mainBannerList![index].product
+                                              .mainSectionBannerList![index].product
                                           : null,
-                                      bannerProvider.mainBannerList![index]
+                                      bannerProvider.mainSectionBannerList![index]
                                               .resourceType ??
                                           "",
                                     );
@@ -151,7 +150,7 @@ class BannersView extends StatelessWidget {
                                         fit: BoxFit.cover,
                                         image:
                                             '${Provider.of<SplashProvider>(context, listen: false).baseUrls?.bannerImageUrl ?? ""}'
-                                            '/${bannerProvider.mainBannerList![index].photo}',
+                                            '/${bannerProvider.mainSectionBannerList![index].photo}',
                                         imageErrorBuilder: (c, o, s) =>
                                             Image.asset(Images.placeholder_3x1,
                                                 fit: BoxFit.cover),
@@ -167,9 +166,9 @@ class BannersView extends StatelessWidget {
                               right: 0,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: bannerProvider.mainBannerList!
+                                children: bannerProvider.mainSectionBannerList!
                                     .map((banner) {
-                                  int index = bannerProvider.mainBannerList!
+                                  int index = bannerProvider.mainSectionBannerList!
                                       .indexOf(banner);
                                   return TabPageSelectorIndicator(
                                     backgroundColor:
@@ -191,7 +190,7 @@ class BannersView extends StatelessWidget {
                   : Shimmer.fromColors(
                       baseColor: Color(0xFFE0E0E0),
                       highlightColor: Color(0xFFF5F5F5),
-                      enabled: bannerProvider.mainBannerList == null,
+                      enabled: bannerProvider.mainSectionBannerList == null,
                       child: Container(
                           margin: EdgeInsets.symmetric(horizontal: 10),
                           decoration: BoxDecoration(
