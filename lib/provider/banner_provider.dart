@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_axtro_soft_ecommerce/data/model/response/banner_model.dart';
 import 'package:flutter_axtro_soft_ecommerce/data/model/response/base/api_response.dart';
@@ -22,20 +24,18 @@ class BannerProvider extends ChangeNotifier {
   Product? get product => _product;
   int get currentIndex => _currentIndex;
 
-  Future<void> getBannerList(bool reload, BuildContext context) async {
-    if (reload) {
-      ApiResponse apiResponse = await bannerRepo.getBannerList();
-      if (apiResponse.response != null &&
-          apiResponse.response!.statusCode == 200) {
-        _mainBannerList = [];
-        apiResponse.response!.data.forEach((bannerModel) =>
-            _mainBannerList?.add(BannerModel.fromJson(bannerModel)));
-
-        _currentIndex = 0;
-        notifyListeners();
-      } else {
-        ApiChecker.checkApi(context, apiResponse);
-      }
+  Future<void> getBannerList(BuildContext context) async {
+    ApiResponse apiResponse = await bannerRepo.getBannerList();
+    print(apiResponse.response);
+    if (apiResponse.response != null &&
+        apiResponse.response!.statusCode == 200) {
+      _mainBannerList = [];
+      apiResponse.response!.data.forEach((bannerModel) =>
+          _mainBannerList!.add(BannerModel.fromJson(bannerModel)));
+      _currentIndex = 0;
+      notifyListeners();
+    } else {
+      ApiChecker.checkApi(context, apiResponse);
     }
   }
 
