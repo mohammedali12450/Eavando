@@ -20,7 +20,6 @@ class SocialMediaProvider extends ChangeNotifier {
       if (apiResponse.response != null &&
           apiResponse.response!.statusCode == 200) {
         _socialMediaList = [];
-        print(apiResponse.response!.data);
         apiResponse.response!.data.forEach((social) {
           _socialMediaList.add(SocialMedia.fromJson(social));
         });
