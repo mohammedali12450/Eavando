@@ -34,7 +34,7 @@ class BannerModel {
     url = json['url'];
     resourceType = json['resource_type'];
     resourceId = json['resource_id'];
-    /*product =
-        json['product'] != null ? new Product.fromJson(json['product']) : null;*/
+    product =
+        json['product'] != null ? new Product.fromJson(json['product']) : null;
   }
 }
