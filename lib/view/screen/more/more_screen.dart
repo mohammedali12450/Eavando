@@ -392,7 +392,7 @@ class _MoreScreenState extends State<MoreScreen> {
                       title: getTranslated('refund_policy', context),
                       url: Provider.of<SplashProvider>(context, listen: false)
                               .configModel
-                              ?.refundPolicy.toString() ??
+                              !.refundPolicy!.content ??
                           "",
                     ),
                   ),
@@ -404,7 +404,7 @@ class _MoreScreenState extends State<MoreScreen> {
                       title: getTranslated('return_policy', context),
                       url: Provider.of<SplashProvider>(context, listen: false)
                               .configModel
-                              ?.returnPolicy.toString() ??
+                              !.returnPolicy!.content ??
                           "",
                     ),
                   ),
