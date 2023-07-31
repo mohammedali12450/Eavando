@@ -130,11 +130,10 @@ class CartWidget extends StatelessWidget {
                       Row(
                         children: [
                           cartModel.discount! > 0
-                              ? Text(
-                                  PriceConverter.convertPrice(
-                                    context,
-                                    cartModel.price ?? 0,
-                                  ),
+                              ? Text("${(double.parse(PriceConverter.convertPrice(
+                            context,
+                            cartModel.price ?? 0,
+                          ).replaceAll(RegExp(r'€'), "")) + (cartModel.tax ?? 1)).toStringAsFixed(2)}",
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: titilliumSemiBold.copyWith(
@@ -148,10 +147,10 @@ class CartWidget extends StatelessWidget {
                                   ? Dimensions.FONT_SIZE_DEFAULT
                                   : 0),
                           Text(
-                            PriceConverter.convertPrice(
+                            "€${(double.parse(PriceConverter.convertPrice(
                                 context, cartModel.price!,
                                 discount: cartModel.discount,
-                                discountType: 'amount'),
+                                discountType: 'amount').replaceAll(RegExp(r'€'), "")) + (cartModel?.tax ?? 1)).toStringAsFixed(2)}",
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: titilliumRegular.copyWith(

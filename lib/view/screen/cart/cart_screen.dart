@@ -152,8 +152,8 @@ class _CartScreenState extends State<CartScreen> {
                                       fontSize: Dimensions.FONT_SIZE_DEFAULT),
                                 ),
                                 Text(
-                                  PriceConverter.convertPrice(
-                                      context, amount + shippingAmount),
+                                  "€${(double.parse(PriceConverter.convertPrice(
+                                      context, amount + shippingAmount).replaceAll(RegExp(r'€'), ""))+ tax).toStringAsFixed(2) }",
                                   style: titilliumSemiBold.copyWith(
                                       color:
                                           Theme.of(context).colorScheme.primary,

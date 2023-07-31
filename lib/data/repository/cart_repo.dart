@@ -30,6 +30,7 @@ class CartRepo {
   Future<ApiResponse> getCartListData() async {
     try {
       final response = await dioClient.get(AppConstants.GET_CART_DATA_URI);
+      print("cart response$response");
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
