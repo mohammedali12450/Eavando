@@ -416,7 +416,7 @@ class _MoreScreenState extends State<MoreScreen> {
                       title: getTranslated('cancellation_policy', context),
                       url: Provider.of<SplashProvider>(context, listen: false)
                               .configModel
-                              ?.cancellationPolicy.toString() ??
+                              ?.cancellationPolicy!.content ??
                           "",
                     ),
                   ),
