@@ -111,11 +111,22 @@ class _CartScreenState extends State<CartScreen> {
       }
 
       for (int i = 0; i < cart.cartList.length; i++) {
-        amount +=
+        if ((cart.cartList[i].discountType ?? 0)  == 'amount' || (cart.cartList[i].discountType ?? 0) == 'flat')
+        {amount +=
             ((cart.cartList[i].price ?? 0) - (cart.cartList[i].discount ?? 0)) *
-                (cart.cartList[i].quantity ?? 0);
-        discount +=
-            (cart.cartList[i].discount ?? 0) * (cart.cartList[i].quantity ?? 0);
+                (cart.cartList[i].quantity ?? 0);}
+        else
+          if ((cart.cartList[i].discountType ?? 0)  == 'percent' || (cart.cartList[i].discountType ?? 0) == 'percentage')
+          {
+            amount += ((cart.cartList[i].price ?? 0) - ((cart.cartList[i].price ?? 0) / 100) * (cart.cartList[i].price ?? 0))* (cart.cartList[i].quantity ?? 0);
+          }
+
+        else {
+          amount += (cart.cartList[i].price ?? 0) * (cart.cartList[i].quantity ?? 0);
+        }
+
+        /*discount +=
+            (cart.cartList[i].discount ?? 0) * (cart.cartList[i].quantity ?? 0);*/
         tax += (cart.cartList[i].tax ?? 0) * (cart.cartList[i].quantity ?? 0);
       }
       for (int i = 0; i < cart.chosenShippingList.length; i++) {
@@ -152,8 +163,9 @@ class _CartScreenState extends State<CartScreen> {
                                       fontSize: Dimensions.FONT_SIZE_DEFAULT),
                                 ),
                                 Text(
-                                  "€${(double.parse(PriceConverter.convertPrice(
-                                      context, amount + shippingAmount).replaceAll(RegExp(r'€'), ""))+ tax).toStringAsFixed(2) }",
+                                  "${Provider.of<SplashProvider>(context,listen: false).myCurrency!.symbol}${(double.parse(PriceConverter.convertPrice(
+                                      context, amount + shippingAmount).replaceAll(RegExp(r'\s*[₹\€\$\¥\£৳]\s*'), "").replaceAll(',', ''))+ double.parse(PriceConverter.convertPrice(
+                                      context, tax).replaceAll(RegExp(r'\s*[₹\€\$\¥\£৳]\s*'), "").replaceAll(',', ''))).toStringAsFixed(2) }",
                                   style: titilliumSemiBold.copyWith(
                                       color:
                                           Theme.of(context).colorScheme.primary,

@@ -10,6 +10,8 @@ import 'package:flutter_axtro_soft_ecommerce/utill/custom_themes.dart';
 import 'package:flutter_axtro_soft_ecommerce/utill/dimensions.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../provider/splash_provider.dart';
+
 // ignore: must_be_immutable
 class ProductTitleView extends StatefulWidget {
   pd.ProductDetailsModel? productModel;
@@ -49,10 +51,10 @@ class _ProductTitleViewState extends State<ProductTitleView> {
     var startTotalPrice = ((double.parse(PriceConverter.convertPrice(
               context,
               _startingPrice,
-              discount: widget.productModel?.discount,
-              discountType: widget.productModel?.discountType,
-            ).replaceAll(RegExp(r'€'), ""))) *
-            (1 + (widget.productModel?.tax ?? 1) / 100))
+              discount: widget.productModel?.discount ?? 0.0,
+              discountType: widget.productModel?.discountType ?? "",
+            ).replaceAll(RegExp(r'\s*[₹\€\$\¥\£৳]\s*'), "").replaceAll(',', ''))) +
+             double.parse(PriceConverter.convertPrice(context, (widget.productModel?.tax ?? 1)).replaceAll(RegExp(r'\s*[₹\€\$\¥\£৳]\s*'), "").replaceAll(',', '')) )
         .toStringAsFixed(2);
     // print(startTotalPrice);
     return widget.productModel != null
@@ -76,7 +78,7 @@ class _ProductTitleViewState extends State<ProductTitleView> {
                           Text(
                             // '${_startingPrice != null ? PriceConverter.convertPrice(context, _startingPrice, discount: widget.productModel.discount, discountType: widget.productModel.discountType) : ''}'
                             _startingPrice != 0
-                                ? "€" + startTotalPrice
+                                ? "${Provider.of<SplashProvider>(context,listen: false).myCurrency!.symbol}" + startTotalPrice
                                 : '${_endingPrice != 0.0 ? ' - ${PriceConverter.convertPrice(context, _endingPrice, discount: widget.productModel?.discount ?? 0.0, discountType: widget.productModel?.discountType ?? "")}' : ''}',
                             style: titilliumBold.copyWith(
                                 color: ColorResources.getPrimary(context),
@@ -87,10 +89,11 @@ class _ProductTitleViewState extends State<ProductTitleView> {
                                   (widget.productModel!.discount ?? 0.0) > 0
                               ? Text(
                                   _startingPrice != 0
-                                      ? "€" + startTotalPrice
-                                      :
+                                      ? "${Provider.of<SplashProvider>(context,listen: false).myCurrency!.symbol}" + 
+                                      '${double.parse(PriceConverter.convertPrice(context, _startingPrice).replaceAll(RegExp(r'\s*[₹\€\$\¥\£৳]\s*'), "").replaceAll(',', '')) + double.parse(PriceConverter.convertPrice(context, (widget.productModel!.tax ?? 1)).replaceAll(RegExp(r'\s*[₹\€\$\¥\£৳]\s*'), "").replaceAll(',', ''))}'
+                                      :'',
                                       // '${PriceConverter.convertPrice(context, _startingPrice)}'
-                                      '${_endingPrice != 0 ? ' - ${PriceConverter.convertPrice(context, _endingPrice)}' : ''}',
+                                      //_endingPrice != 0 ? '${_endingPrice}' : '',
                                   style: titilliumRegular.copyWith(
                                       color: Theme.of(context).hintColor,
                                       decoration: TextDecoration.lineThrough),

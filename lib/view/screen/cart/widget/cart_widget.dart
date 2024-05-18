@@ -130,10 +130,11 @@ class CartWidget extends StatelessWidget {
                       Row(
                         children: [
                           cartModel.discount! > 0
-                              ? Text("${(double.parse(PriceConverter.convertPrice(
+                              ? Text("${Provider.of<SplashProvider>(context,listen: false).myCurrency!.symbol}${(double.parse(PriceConverter.convertPrice(
                             context,
                             cartModel.price ?? 0,
-                          ).replaceAll(RegExp(r'€'), "")) + (cartModel.tax ?? 1)).toStringAsFixed(2)}",
+                          ).replaceAll(RegExp(r'\s*[₹\€\$\¥\£৳]\s*'), "").replaceAll(',', '')) + double.parse(PriceConverter.convertPrice(
+                            context, (cartModel?.tax ?? 1),).replaceAll(RegExp(r'\s*[₹\€\$\¥\£৳]\s*'), "").replaceAll(',', ''))).toStringAsFixed(2)}",
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: titilliumSemiBold.copyWith(
@@ -147,10 +148,12 @@ class CartWidget extends StatelessWidget {
                                   ? Dimensions.FONT_SIZE_DEFAULT
                                   : 0),
                           Text(
-                            "€${(double.parse(PriceConverter.convertPrice(
+                            "${Provider.of<SplashProvider>(context,listen: false).myCurrency!.symbol}"
+                                "${(double.parse(PriceConverter.convertPrice(
                                 context, cartModel.price!,
                                 discount: cartModel.discount,
-                                discountType: 'amount').replaceAll(RegExp(r'€'), "")) + (cartModel?.tax ?? 1)).toStringAsFixed(2)}",
+                                discountType: cartModel.discountType).replaceAll(RegExp(r'\s*[₹\€\$\¥\£৳]\s*'), "").replaceAll(',', '')) + double.parse(PriceConverter.convertPrice(
+                                context, (cartModel?.tax ?? 1),).replaceAll(RegExp(r'\s*[₹\€\$\¥\£৳]\s*'), "").replaceAll(',', ''))).toStringAsFixed(2)}",
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: titilliumRegular.copyWith(
@@ -199,13 +202,7 @@ class CartWidget extends StatelessWidget {
                                             color: ColorResources
                                                 .getReviewRattingColor(
                                                     context))),
-                                    Text(
-                                        '${PriceConverter.convertPrice(context, cartModel.shippingCost ?? 0)}',
-                                        style: robotoRegular.copyWith(
-                                          fontSize: Dimensions.FONT_SIZE_SMALL,
-                                          color:
-                                              Theme.of(context).disabledColor,
-                                        )),
+
                                   ]),
                                 )
                               : SizedBox(),

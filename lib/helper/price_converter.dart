@@ -26,7 +26,8 @@ class PriceConverter {
         'right';
 
     return '${_inRight ? '' : Provider.of<SplashProvider>(context, listen: false).myCurrency?.symbol}'
-        '${(_singleCurrency ? price : price * (Provider.of<SplashProvider>(context, listen: false).myCurrency?.exchangeRate ?? 1) * (1 / (Provider.of<SplashProvider>(context, listen: false).usdCurrency?.exchangeRate ?? 1))).toStringAsFixed(Provider.of<SplashProvider>(context, listen: false).configModel?.decimalPointSetting ?? 2).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}'
+        '${(_singleCurrency ? price
+        : price * (Provider.of<SplashProvider>(context, listen: false).myCurrency?.exchangeRate ?? 1) * (1 / (Provider.of<SplashProvider>(context, listen: false).usdCurrency?.exchangeRate ?? 1))).toStringAsFixed(Provider.of<SplashProvider>(context, listen: false).configModel?.decimalPointSetting ?? 2).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}'
         '${_inRight ? Provider.of<SplashProvider>(context, listen: false).myCurrency?.symbol : ''}';
   }
 

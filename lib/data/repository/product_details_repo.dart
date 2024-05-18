@@ -14,6 +14,8 @@ class ProductDetailsRepo {
     try {
       final response =
           await dioClient.get(AppConstants.PRODUCT_DETAILS_URI + productID);
+          print("product details") ;
+          print(response);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

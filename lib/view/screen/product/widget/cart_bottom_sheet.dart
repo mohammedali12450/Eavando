@@ -109,7 +109,7 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                         _startingPrice,
                         discount: widget.product?.discount ?? 0.0,
                         discountType: widget.product?.discountType ?? "",
-                      ).replaceAll(RegExp(r'€'), ""))) *
+                      ).replaceAll(RegExp(r'\s*[₹\€\$\¥\£৳]\s*'), "").replaceAll(',', ''))) *
                       (1 + (widget.product?.tax ?? 1) / 100))
                   .toStringAsFixed(2);
               // print(startTotalPrice);
@@ -278,7 +278,7 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "€" + startTotalPrice,
+                                      "${Provider.of<SplashProvider>(context,listen: false).myCurrency!.symbol}" + startTotalPrice,
                                       // PriceConverter.convertPrice(context, widget.product.unitPrice, discountType: widget.product.discountType, discount: widget.product.discount),
                                       style: titilliumRegular.copyWith(
                                           color: ColorResources.getPrimary(
@@ -303,7 +303,7 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                                     ? Padding(
                                         padding: const EdgeInsets.only(top: 3),
                                         child: Text(
-                                          "€" + startTotalPrice,
+                                          "${Provider.of<SplashProvider>(context,listen: false).myCurrency!.symbol}" + startTotalPrice,
                                           // PriceConverter.convertPrice(context, widget.product.unitPrice),
                                           style: titilliumRegular.copyWith(
                                               color: ColorResources.getRed(

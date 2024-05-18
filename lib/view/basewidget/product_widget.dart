@@ -40,7 +40,7 @@ class ProductWidget extends StatelessWidget {
               _startingPrice,
               discount: productModel?.discount ?? 0.0,
               discountType: productModel?.discountType ?? "",
-            ).replaceAll(RegExp(r'€'), ""))) *
+            ).replaceAll(RegExp(r'\s*[₹\€\$\¥\£৳]\s*'), "").replaceAll(',', ''))) *
             (1 + (productModel?.tax ?? 1) / 100))
         .toStringAsFixed(2);
 
@@ -151,7 +151,7 @@ class ProductWidget extends StatelessWidget {
                       ),
                       Text(
                         // PriceConverter.convertPrice(context,productModel.unitPrice),
-                        "€" + startTotalPrice,
+                        "${Provider.of<SplashProvider>(context,listen: false).myCurrency!.symbol}" + startTotalPrice,
                         style: titilliumSemiBold.copyWith(
                             color: ColorResources.getPrimary(context)),
                       ),
